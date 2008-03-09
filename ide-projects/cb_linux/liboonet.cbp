@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="liboonet" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="liboonet" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="liboonet" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="../../liboonet" />
+		</Compiler>
+		<Unit filename="../../liboonet/Base64.cpp" />
+		<Unit filename="../../liboonet/Base64.h" />
+		<Unit filename="../../liboonet/BinaryData.cpp" />
+		<Unit filename="../../liboonet/BinaryData.h" />
+		<Unit filename="../../liboonet/Buffer.cpp" />
+		<Unit filename="../../liboonet/Buffer.h" />
+		<Unit filename="../../liboonet/Exception.cpp" />
+		<Unit filename="../../liboonet/Exception.h" />
+		<Unit filename="../../liboonet/HostInet.cpp" />
+		<Unit filename="../../liboonet/HostInet.h" />
+		<Unit filename="../../liboonet/HostResolver.cpp" />
+		<Unit filename="../../liboonet/HostResolver.h" />
+		<Unit filename="../../liboonet/Http/Client.cpp" />
+		<Unit filename="../../liboonet/Http/Client.h" />
+		<Unit filename="../../liboonet/Http/ClientHandler.cpp" />
+		<Unit filename="../../liboonet/Http/ClientHandler.h" />
+		<Unit filename="../../liboonet/Http/Headers.cpp" />
+		<Unit filename="../../liboonet/Http/Headers.h" />
+		<Unit filename="../../liboonet/Http/Packet.cpp" />
+		<Unit filename="../../liboonet/Http/Packet.h" />
+		<Unit filename="../../liboonet/Http/Request.cpp" />
+		<Unit filename="../../liboonet/Http/Request.h" />
+		<Unit filename="../../liboonet/Http/Response.cpp" />
+		<Unit filename="../../liboonet/Http/Response.h" />
+		<Unit filename="../../liboonet/Http/Server.cpp" />
+		<Unit filename="../../liboonet/Http/Server.h" />
+		<Unit filename="../../liboonet/Http/Url.cpp" />
+		<Unit filename="../../liboonet/Http/Url.h" />
+		<Unit filename="../../liboonet/InetClient.cpp" />
+		<Unit filename="../../liboonet/InetClient.h" />
+		<Unit filename="../../liboonet/InetPeer.cpp" />
+		<Unit filename="../../liboonet/InetPeer.h" />
+		<Unit filename="../../liboonet/InetServer.cpp" />
+		<Unit filename="../../liboonet/InetServer.h" />
+		<Unit filename="../../liboonet/MultiReference.h" />
+		<Unit filename="../../liboonet/Mutex.h" />
+		<Unit filename="../../liboonet/MutexPosix.cpp" />
+		<Unit filename="../../liboonet/PortInet.cpp" />
+		<Unit filename="../../liboonet/PortInet.h" />
+		<Unit filename="../../liboonet/Semaphore.h" />
+		<Unit filename="../../liboonet/SemaphorePosix.cpp" />
+		<Unit filename="../../liboonet/Slib.h" />
+		<Unit filename="../../liboonet/Socket.cpp" />
+		<Unit filename="../../liboonet/Socket.h" />
+		<Unit filename="../../liboonet/SocketAddress.cpp" />
+		<Unit filename="../../liboonet/SocketAddress.h" />
+		<Unit filename="../../liboonet/SocketAddressInet.cpp" />
+		<Unit filename="../../liboonet/SocketAddressInet.h" />
+		<Unit filename="../../liboonet/StringConverter.cpp" />
+		<Unit filename="../../liboonet/StringConverter.h" />
+		<Unit filename="../../liboonet/Thread.cpp" />
+		<Unit filename="../../liboonet/Thread.h" />
+		<Unit filename="../../liboonet/ThreadPosix.cpp" />
+		<Unit filename="../../liboonet/ThreadWin32.cpp" />
+		<Unit filename="../../liboonet/config.h" />
+		<Unit filename="../../liboonet/platform.h" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
