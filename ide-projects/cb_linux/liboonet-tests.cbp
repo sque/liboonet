@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="liboonet-tests" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/liboonet-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option external_deps="liboonet_d.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="liboonet_d.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/liboonet-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option external_deps="liboonet.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="liboonet.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../../liboonet" />
+		</Compiler>
+		<Linker>
+			<Add library="pthread" />
+			<Add directory="." />
+		</Linker>
+		<Unit filename="../../oonet-tests/SubTest.cpp" />
+		<Unit filename="../../oonet-tests/SubTest.h" />
+		<Unit filename="../../oonet-tests/Test.cpp" />
+		<Unit filename="../../oonet-tests/Test.h" />
+		<Unit filename="../../oonet-tests/TestBinaryData.cpp" />
+		<Unit filename="../../oonet-tests/TestBinaryData.h" />
+		<Unit filename="../../oonet-tests/TestBuffer.cpp" />
+		<Unit filename="../../oonet-tests/TestBuffer.h" />
+		<Unit filename="../../oonet-tests/TestEssentials.h" />
+		<Unit filename="../../oonet-tests/TestHTTPClient.cpp" />
+		<Unit filename="../../oonet-tests/TestHTTPClient.h" />
+		<Unit filename="../../oonet-tests/TestHTTPHeaders.cpp" />
+		<Unit filename="../../oonet-tests/TestHTTPHeaders.h" />
+		<Unit filename="../../oonet-tests/TestHTTPPacket.cpp" />
+		<Unit filename="../../oonet-tests/TestHTTPPacket.h" />
+		<Unit filename="../../oonet-tests/TestHTTPRequest.cpp" />
+		<Unit filename="../../oonet-tests/TestHTTPRequest.h" />
+		<Unit filename="../../oonet-tests/TestHTTPResponse.cpp" />
+		<Unit filename="../../oonet-tests/TestHTTPResponse.h" />
+		<Unit filename="../../oonet-tests/TestHTTPServer.cpp" />
+		<Unit filename="../../oonet-tests/TestHTTPServer.h" />
+		<Unit filename="../../oonet-tests/TestHostInet.cpp" />
+		<Unit filename="../../oonet-tests/TestHostInet.h" />
+		<Unit filename="../../oonet-tests/TestHostResolver.cpp" />
+		<Unit filename="../../oonet-tests/TestHostResolver.h" />
+		<Unit filename="../../oonet-tests/TestInetClient.cpp" />
+		<Unit filename="../../oonet-tests/TestInetClient.h" />
+		<Unit filename="../../oonet-tests/TestInetServer.cpp" />
+		<Unit filename="../../oonet-tests/TestInetServer.h" />
+		<Unit filename="../../oonet-tests/TestMutex.cpp" />
+		<Unit filename="../../oonet-tests/TestMutex.h" />
+		<Unit filename="../../oonet-tests/TestPortInet.cpp" />
+		<Unit filename="../../oonet-tests/TestPortInet.h" />
+		<Unit filename="../../oonet-tests/TestSemaphore.cpp" />
+		<Unit filename="../../oonet-tests/TestSemaphore.h" />
+		<Unit filename="../../oonet-tests/TestSocket.cpp" />
+		<Unit filename="../../oonet-tests/TestSocket.h" />
+		<Unit filename="../../oonet-tests/TestSocketAddressInet.cpp" />
+		<Unit filename="../../oonet-tests/TestSocketAddressInet.h" />
+		<Unit filename="../../oonet-tests/TestStringConverter.cpp" />
+		<Unit filename="../../oonet-tests/TestStringConverter.h" />
+		<Unit filename="../../oonet-tests/TestThread.cpp" />
+		<Unit filename="../../oonet-tests/TestThread.h" />
+		<Unit filename="../../oonet-tests/TestUrl.cpp" />
+		<Unit filename="../../oonet-tests/TestUrl.h" />
+		<Unit filename="../../oonet-tests/main.cpp" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
