@@ -1,16 +1,30 @@
 # OONet Library
-lib_LIBRARIES = libSlib.a
+lib_LIBRARIES = liboonet.a
 
-libSlib_a_includedir=$(includedir)/oonet
+liboonet_a_includedir=$(includedir)/oonet
 
 # Source files
-libSlib_a_SOURCES = Base64.cpp HostInet.cpp InetServer.cpp Socket.cpp \
-BinaryData.cpp HostResolver.cpp SemaphorePosix.cpp StringConverter.cpp \
-Buffer.cpp InetClient.cpp MutexPosix.cpp SocketAddress.cpp Thread.cpp \
-Exception.cpp InetPeer.cpp PortInet.cpp SocketAddressInet.cpp ThreadPosix.cpp
+liboonet_a_SOURCES = Base64.cpp \
+	HostInet.cpp \
+	InetServer.cpp \
+	Socket.cpp \
+	BinaryData.cpp \
+	HostResolver.cpp \
+	SemaphorePosix.cpp \
+	StringConverter.cpp \
+	Buffer.cpp \
+	InetClient.cpp \
+	MutexPosix.cpp \
+	SocketAddress.cpp \
+	Thread.cpp \
+	Exception.cpp \
+	InetPeer.cpp \
+	PortInet.cpp \
+	SocketAddressInet.cpp \
+	ThreadPosix.cpp
 
 # Header files
-libSlib_a_include_HEADERS = \
+liboonet_a_include_HEADERS = \
 	Base64.h \
 	HostInet.h \
 	MultiReference.h \
