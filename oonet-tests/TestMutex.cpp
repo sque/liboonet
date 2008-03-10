@@ -2,7 +2,7 @@
 #include "Thread.h"
 #include <time.h>
 
-namespace Slib
+namespace OONet
 {
 	static TestMutex theTestMutex;
 
@@ -185,4 +185,4 @@ namespace Slib
 		mymut.lock(1500);
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

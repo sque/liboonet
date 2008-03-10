@@ -2,7 +2,7 @@
 #include "Thread.h"
 #include <time.h>
 
-namespace Slib
+namespace OONet
 {
 	static TestThread theTestThread;
 
@@ -182,7 +182,7 @@ namespace Slib
 
 		BlockThread  bThread;
 
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 		HANDLE hOrigThread, hThread;
 
 		bThread.Start();
@@ -200,7 +200,7 @@ namespace Slib
 		// Kill it
 		MT::Thread::sleep(1000);
 
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 		// Check if stopped
 		DWORD dwExitCode = 0;
 		if (! GetExitCodeThread(hThread, &dwExitCode))
@@ -247,5 +247,5 @@ namespace Slib
 			return false;
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace
 

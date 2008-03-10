@@ -4,7 +4,7 @@
 #include "BinaryData.h"
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestPortInet
 		:public Test
@@ -12,28 +12,28 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestDefaultCtor, _T("Default Ctor must be 0"));
-		SLIB_DECLARESUBTEST(TestUshortCtor,  _T("PortInet(ushort) ctor") );
-		SLIB_DECLARESUBTEST(TestCopyConstructor,  _T("PortInet() copy ctor") );
-		SLIB_DECLARESUBTEST(TestCopyOperator,  _T("operator= quality test") );
-		SLIB_DECLARESUBTEST(TestComparisonOperator,  _T("operator== quality test") );
-		SLIB_DECLARESUBTEST(TestInComparisonOperator,  _T("operator!= quality test") );
-		SLIB_DECLARESUBTEST(TestGetInetPort, _T("GetInetPort() net-b-order"));
+		OONET_DECLARESUBTEST(TestDefaultCtor, _T("Default Ctor must be 0"));
+		OONET_DECLARESUBTEST(TestUshortCtor,  _T("PortInet(ushort) ctor") );
+		OONET_DECLARESUBTEST(TestCopyConstructor,  _T("PortInet() copy ctor") );
+		OONET_DECLARESUBTEST(TestCopyOperator,  _T("operator= quality test") );
+		OONET_DECLARESUBTEST(TestComparisonOperator,  _T("operator== quality test") );
+		OONET_DECLARESUBTEST(TestInComparisonOperator,  _T("operator!= quality test") );
+		OONET_DECLARESUBTEST(TestGetInetPort, _T("GetInetPort() net-b-order"));
 	public:
 		// Constructor
 		TestPortInet()
 			:Test(_T("PortInet"))
 		{
-			SLIB_REGISTERSUBTEST(TestDefaultCtor);
-			SLIB_REGISTERSUBTEST(TestUshortCtor);
-			SLIB_REGISTERSUBTEST(TestCopyConstructor);
-			SLIB_REGISTERSUBTEST(TestCopyOperator);
-			SLIB_REGISTERSUBTEST(TestComparisonOperator);
-			SLIB_REGISTERSUBTEST(TestInComparisonOperator);
-			SLIB_REGISTERSUBTEST(TestGetInetPort);
+			OONET_REGISTERSUBTEST(TestDefaultCtor);
+			OONET_REGISTERSUBTEST(TestUshortCtor);
+			OONET_REGISTERSUBTEST(TestCopyConstructor);
+			OONET_REGISTERSUBTEST(TestCopyOperator);
+			OONET_REGISTERSUBTEST(TestComparisonOperator);
+			OONET_REGISTERSUBTEST(TestInComparisonOperator);
+			OONET_REGISTERSUBTEST(TestGetInetPort);
 		}
 
-	} ;	//! TestPortInet test
-};	//! Slib namespace
+	} ;	// !TestPortInet class
+};	// !OONet namespace
 
 #endif // PORTINET_TEST_H_DEFINED

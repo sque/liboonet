@@ -1,15 +1,15 @@
-#ifndef SLIB_HTTP_PACKET_H
-#define SLIB_HTTP_PACKET_H
+#ifndef OONET_HTTP_PACKET_H
+#define OONET_HTTP_PACKET_H
 
 #include "../platform.h"
 #include "Headers.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
 		//! Exception raised when http traffic is incomplete
-		SLIB_DECLARE_EXCEPTION(ExceptionIncomplete);
+		OONET_DECLARE_EXCEPTION(ExceptionIncomplete);
 
 		//! A general class for handling HTTP Packets
 		/**
@@ -97,8 +97,8 @@ namespace Slib
 			inline BinaryData & setBody(const BinaryData & r)
 			{	return _Body = r;	}
 
-		};	// Packet Class
-	};	// HTTP namespace
-};	// Slib namespace
+		};	// !Packet Class
+	};	// !HTTP namespace
+};	// !OONet namespace
 
-#endif // SLIB_HTTP_PACKET_H
+#endif // !OONET_HTTP_PACKET_H

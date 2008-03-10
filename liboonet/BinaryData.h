@@ -1,10 +1,10 @@
-#ifndef SLIB_BINARYDATA_H_INCLUDED
-#define SLIB_BINARYDATA_H_INCLUDED
+#ifndef OONET_BINARYDATA_H_INCLUDED
+#define OONET_BINARYDATA_H_INCLUDED
 
 #include "platform.h"
 #include "Exception.h"
 
-namespace Slib
+namespace OONet
 {
 	//! Object representing data blocks
 	/**
@@ -250,6 +250,6 @@ namespace Slib
 		{	return (sData == 0);	}
 
 	};  // !BinaryData class
-};  // !Slib namespace
+};  // !OONet namespace
 
-#endif // SLIB_BINARYDATA_H_INCLUDED
+#endif // OONET_BINARYDATA_H_INCLUDED

@@ -4,7 +4,7 @@
 */
 #include "Http/Client.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -21,19 +21,19 @@ namespace Slib
 
 		// Copy constructor
 		Client::Client(const Client & r)
-		{	SLIB_THROW_EXCEPTION(ExceptionUnimplemented, "Never tested this function!");		}
+		{	OONET_THROW_EXCEPTION(ExceptionUnimplemented, "Never tested this function!");		}
 
 		// Destructor
 		Client::~Client()
 		{
-		    SLIB_DEBUG_L2(_T("~HTTPClient()_\n"));
+		    OONET_DEBUG_L2(_T("~HTTPClient()_\n"));
 		    initializeDestruction();
 		}
 
 		// Copy operator
 		Client & Client::operator=(const Client &r)
 		{
-			SLIB_THROW_EXCEPTION(ExceptionUnimplemented, "Never implemented this function!");
+			OONET_THROW_EXCEPTION(ExceptionUnimplemented, "Never implemented this function!");
 			return *this;
 		}
 
@@ -44,7 +44,7 @@ namespace Slib
 
 			// Check if we are connected
 			if (! isConnected())
-				SLIB_THROW_EXCEPTION(ExceptionNotConnected, "Client is not yet connected!");
+				OONET_THROW_EXCEPTION(ExceptionNotConnected, "Client is not yet connected!");
 
 			// Process the request
 			BinaryRequest = req.render();
@@ -53,20 +53,20 @@ namespace Slib
 			InetClient::send(BinaryRequest);
 
 			// Wait for an answer to arrive
-			SLIB_DEBUG_L2(_T("HTTPClient::Send() request send waiting for result...\n"));
+			OONET_DEBUG_L2(_T("HTTPClient::Send() request send waiting for result...\n"));
 			try
 			{
 				SemAnswerArrived.wait(TimeOutMS);
-				SLIB_DEBUG_L2(_T("HTTPClient::Send() We got result!\n"));
+				OONET_DEBUG_L2(_T("HTTPClient::Send() We got result!\n"));
 			}
 			catch(ExceptionTimeOut)
 			{
-			    SLIB_DEBUG_L2(_T("HTTPClient::Send() timed out waiting for result..\n"));
+			    OONET_DEBUG_L2(_T("HTTPClient::Send() timed out waiting for result..\n"));
 				// Disconnect if connected
 				if (isConnected())
 					disconnect();
 				// Maximum time reached
-				SLIB_THROW_EXCEPTION(ExceptionTimeOut, "Maximum time has been reached while waiting for an answer.");
+				OONET_THROW_EXCEPTION(ExceptionTimeOut, "Maximum time has been reached while waiting for an answer.");
 			}
 
 			// Gather answer
@@ -93,11 +93,11 @@ namespace Slib
 			catch(ExceptionIncomplete)
 			{
 				// No error here.. we must gather more packets
-				SLIB_DEBUG_L2(_T("HTTPClient::OnDataArrived() incomplete packet arrived\n"));
+				OONET_DEBUG_L2(_T("HTTPClient::OnDataArrived() incomplete packet arrived\n"));
 			}
 			catch(ExceptionWrongFormat)
 			{
-			    SLIB_DEBUG_L2(_T("HTTPClient::OnDataArrived() wrong formated packet arrived\n"));
+			    OONET_DEBUG_L2(_T("HTTPClient::OnDataArrived() wrong formated packet arrived\n"));
 
 				// Wrong response
 				try {
@@ -131,5 +131,5 @@ namespace Slib
 			serv_addr = _s_addr;	// Store new server
 			reconnect();			// And reconnect
 		}
-	}; //! HTTP Namespace
-};	// Slib namespace
+	}; // !HTTP Namespace
+};	// !OONet namespace

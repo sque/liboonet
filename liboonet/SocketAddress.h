@@ -1,10 +1,10 @@
-#ifndef SOCKETADDRESS_H_INCLUDED
-#define SOCKETADDRESS_H_INCLUDED
+#ifndef OONET_SOCKETADDRESS_H_INCLUDED
+#define OONET_SOCKETADDRESS_H_INCLUDED
 
 #include "platform.h"
 #include "Exception.h"
 
-namespace Slib
+namespace OONet
 {
 	//! A Handler for socket's generic address (protocol independant)
     class SocketAddress
@@ -60,7 +60,7 @@ namespace Slib
         //! Get the address family of this socket address
         inline int getAddressFamily() const throw()
         {   return mSockAddr.sa_family; }
-    };  // SocketAddress class
-};  // Slib namespace
+    };  // !SocketAddress class
+};  // !OONet namespace
 
-#endif // SOCKETADDRESS_H_INCLUDED
+#endif // !OONET_SOCKETADDRESS_H_INCLUDED

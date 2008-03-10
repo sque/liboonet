@@ -1,11 +1,11 @@
-#ifndef SLIB_HTTP_RESPONSE_H_DEFINED
-#define SLIB_HTTP_RESPONSE_H_DEFINED
+#ifndef OONET_HTTP_RESPONSE_H_DEFINED
+#define OONET_HTTP_RESPONSE_H_DEFINED
 
 #include "../platform.h"
 #include "Headers.h"
 #include "Packet.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -55,7 +55,7 @@ namespace Slib
 			@see HTTP::Packet::parse() for further explanation.
 			*/
 			virtual size_t parse(const BinaryData & data);
-		};	// Response class
-	};	// HTTP namespace
-};	// Slib namespace
-#endif // SLIB_HTTP_RESPONSE_H_DEFINED
+		};	// !Response class
+	};	// !HTTP namespace
+};	// !OONet namespace
+#endif // OONET_HTTP_RESPONSE_H_DEFINED

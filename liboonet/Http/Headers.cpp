@@ -5,7 +5,7 @@
 #include "Http/Headers.h"
 #include "config.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -52,7 +52,7 @@ namespace Slib
 
 		// Add a new header
 		void Headers::setHeader(const string & name, const string &value)
-		{	SLIB_ASSERT(name != "");
+		{	OONET_ASSERT(name != "");
 			map_headers[name] = value;
 		}
 
@@ -62,7 +62,7 @@ namespace Slib
 
 			It = map_headers.find(name);
 			if (It == map_headers.end())
-				SLIB_THROW_EXCEPTION(ExceptionNotFound, "Cannot remove a header that doesnot exist!");
+				OONET_THROW_EXCEPTION(ExceptionNotFound, "Cannot remove a header that doesnot exist!");
 			// Erase it finally
 			map_headers.erase(It);
 		}
@@ -73,7 +73,7 @@ namespace Slib
 
 			It = map_headers.find(name);
 			if (It == map_headers.end())
-				SLIB_THROW_EXCEPTION(ExceptionNotFound, "Header doesn't exist!");
+				OONET_THROW_EXCEPTION(ExceptionNotFound, "Header doesn't exist!");
 
 			return It->second;
 		}
@@ -137,7 +137,7 @@ namespace Slib
 
 				// Parse line
 				if ((sep_pos = StrLine.find(":")) == string::npos)
-					SLIB_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated HTTP::Headers!");
+					OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated HTTP::Headers!");
 
 				Name = _trim_back(StrLine.substr(0, sep_pos));
 				Value = _trim_front(StrLine.substr(sep_pos+1));
@@ -163,5 +163,5 @@ namespace Slib
 
 			return string(r, 0, len);
 		}
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace

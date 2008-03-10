@@ -1,12 +1,17 @@
 /*
-	Name:		S-Library
-	Author:		Paliouras Konstantinos; email:squarious@yahoo.com
-	Description:General purpose library. All the things that you can't find somewhere else
-	Date:		28 / 8 /2003
-	Version:	0.3.0alpha
-	Revision:	14 June 2007
+	Name:			Object Oriented Library
+	Author:			Paliouras Konstantinos; emeil: squarious_(at)_gmail_(dot)_com
+	Description:	Started as S-Library providing various stuff and ended as network library.
 
-	Copyright (C) 2003-2007  Paliouras Konstantinos
+					A library for talking with network in object oriented style. Using all the
+					programmatic techniques that C++ provides in a simple, clean, and cross-platform way.
+					It works with almost no external dependency on Windows, GNU/Linux and OSX
+	Date:			28 / 8 /2003
+	Website:		https://launchpad.net/liboonet
+	Version:		0.1
+	Revision:		10 Mar 2008
+
+	Copyright (C) 2003-2008  Paliouras Konstantinos
 
 	" TERMS OF USE "
 	READ THIS BEFORE YOU USE THIS LIBRARY
@@ -48,11 +53,11 @@
 	ABOVE "TERMS OF USE".
 
 */
-#if !defined(__SLIB_H_INCLUDED__)
-#define __SLIB_H_INCLUDED__
+#if !defined(__OONET_H_INCLUDED__)
+#define __OONET_H_INCLUDED__
 
 #ifndef __cplusplus
-	#error SLib requires C++ compilation (use a .cpp suffix)
+	#error liboonet requires C++ compilation (use a .cpp suffix)
 #endif // __cplusplus
 
 // Include platform specific
@@ -84,17 +89,17 @@
 	#pragma comment(lib, "ws2_32.lib")	// Winsock 2 library
 #endif	// _MSC_VER
 
-//! Slib namespace contains all the class imported by Slib library.
+//! OONet namespace contains all the class imported by oonet library.
 /**
-	Everything in Slib library are well organized under this namespace.
-	If you want to use anything, be sure to define the namespace ;)
+	Everything in oonet library are well organized under this namespace.
+	If you want to use anything, be sure to define usage of the namespace ;)
  */
-namespace Slib
+namespace OONet
 {
-	//! Slib's sub namespace to organize all multi-thread related classes
+	//! OONet's sub namespace to organize all multi-thread related classes
 	namespace MT{};
 
-	//! Slib's sub namespace to organize all http internal implentation
+	//! OONet's sub namespace to organize all http internal implentation
 	namespace HTTP{};
 };
 
@@ -102,4 +107,4 @@ namespace Slib
 #include "Exception.h"
 #include "StringConverter.h"
 
-#endif // !__SLIB_H_INCLUDED__
+#endif // !__OONET_H_INCLUDED__

@@ -1,7 +1,7 @@
 #include "TestHTTPRequest.h"
 #include "Http/Request.h"
 
-namespace Slib
+namespace OONet
 {
 	TestHTTPRequest theTestHTTPRequest;
 
@@ -243,4 +243,4 @@ namespace Slib
 		return true;
 	}
 
-};	//! Slib namespace
+};	// !OONet namespace

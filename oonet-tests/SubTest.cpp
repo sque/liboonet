@@ -3,7 +3,7 @@
 #include <time.h>
 
 
-namespace Slib
+namespace OONet
 {
 	// Constructor
 	SubTest::SubTest(string Name)
@@ -59,7 +59,7 @@ namespace Slib
 	// Get last system error description
 	string SubTest::GetSystemLastErrorDescription()
 	{
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 		char cTmpErrorString[MAX_PATH];
 		DWORD uLastError;
 		string FullMsgDescription;
@@ -88,4 +88,4 @@ namespace Slib
         return "unsupported";
 #endif
 	}
-};	//! Slib namespace
+};	// !OONet namespace

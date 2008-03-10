@@ -1,12 +1,12 @@
-#ifndef SLIB_INETPEER_H_DEFINED
-#define SLIB_INETPEER_H_DEFINED
+#ifndef OONET_INETPEER_H_DEFINED
+#define OONET_INETPEER_H_DEFINED
 
 #include "platform.h"
 #include "Thread.h"
 #include "Socket.h"
 #include "SocketAddressInet.h"
 
-namespace Slib
+namespace OONet
 {
 	//! Class handling an established connection
 	/**
@@ -113,7 +113,7 @@ namespace Slib
 		virtual void OnDisconnect(){};
 
 		//! @}
-	};	// InetPeer class
-};	// Slib namespace
+	};	// !InetPeer class
+};	// !OONet namespace
 
-#endif // SLIB_INETPEER_H_DEFINED
+#endif // !OONET_INETPEER_H_DEFINED

@@ -1,11 +1,11 @@
-#ifndef SOCKETADDRESSINET_H_INCLUDED
-#define SOCKETADDRESSINET_H_INCLUDED
+#ifndef OONET_SOCKETADDRESSINET_H_INCLUDED
+#define OONET_SOCKETADDRESSINET_H_INCLUDED
 
 #include "SocketAddress.h"
 #include "HostResolver.h"
 #include "PortInet.h"
 
-namespace Slib
+namespace OONet
 {
 	//! A Handler for socket's address for TCP/IP protocols
     class SocketAddressInet : public SocketAddress
@@ -66,8 +66,7 @@ namespace Slib
         inline HostInet getHostInet() const
         {   return HostInet(ntohl(_cast_at_sockaddrin()->sin_addr.s_addr)); }
 
-    };  //! SocketAddressInet
-};  //! Slib namespace
+    };  // !SocketAddressInet
+};  // !OONet namespace
 
-
-#endif // SOCKETADDRESSINET_H_INCLUDED
+#endif // !OONET_SOCKETADDRESSINET_H_INCLUDED

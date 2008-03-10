@@ -1,5 +1,5 @@
-#ifndef SLIB_HTTP_HEADERS_H_DEFINED
-#define SLIB_HTTP_HEADERS_H_DEFINED
+#ifndef OONET_HTTP_HEADERS_H_DEFINED
+#define OONET_HTTP_HEADERS_H_DEFINED
 
 #include <map>
 #include "../config.h"
@@ -9,12 +9,12 @@
 
 using std::map;
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
 		//! Exception raised when the parsed item is not in proper format.
-		SLIB_DECLARE_EXCEPTION(ExceptionWrongFormat);
+		OONET_DECLARE_EXCEPTION(ExceptionWrongFormat);
 
 		// Constant values
 		const extern string LF;		//!< Constant string of LineFeed
@@ -124,8 +124,8 @@ namespace Slib
 				formatted headers.
 			*/
 			void parse(const string & data);
-		}; // Headers class
-	};	// HTTP namespace
-};	// Slib namespace
+		}; // !Headers class
+	};	// !HTTP namespace
+};	// !OONet namespace
 
-#endif //! SLIB_HTTP_HEADERS_H_DEFINED
+#endif // !OONET_HTTP_HEADERS_H_DEFINED

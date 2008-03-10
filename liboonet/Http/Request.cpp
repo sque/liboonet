@@ -4,7 +4,7 @@
 */
 #include "Http/Request.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -71,7 +71,7 @@ namespace Slib
 
 			// Get Command
 			if ((commandend_pos = _Title.find(' '))== string::npos)
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
 			_command_string = _Title.substr(0, commandend_pos);
 			if (_command_string == "GET")
@@ -81,27 +81,27 @@ namespace Slib
 			else
 			{
 				http_type = REQUEST_UNKNOWN;
-				SLIB_THROW_EXCEPTION(ExceptionUnimplemented,
+				OONET_THROW_EXCEPTION(ExceptionUnimplemented,
 					"This http request is not implemented!");
 			}
 
 			// Get URL
 			commandend_pos ++;	// Start one position lower
 			if ((urlend_pos =  _Title.find(' ', commandend_pos))== string::npos)
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
 			url = getTitle().substr(commandend_pos, urlend_pos - commandend_pos);
 			if ((string)url == "")
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
 
 			// Get version
 			urlend_pos ++;
 			_version_string = _Title.substr(urlend_pos);
 			if ((_version_string != "HTTP/1.1") && (_version_string != "HTTP/1.0"))
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
 			return BlockSize;
 		}
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace

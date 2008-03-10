@@ -4,7 +4,7 @@
 */
 #include "./InetClient.h"
 
-namespace Slib
+namespace OONet
 {
     // Default constructor
     InetClient::InetClient()
@@ -12,7 +12,7 @@ namespace Slib
 
     // Default destructor
     InetClient::~InetClient()
-    {   SLIB_DEBUG_L2(_T("~InetClient()_\n"));
+    {   OONET_DEBUG_L2(_T("~InetClient()_\n"));
 		initializeDestruction();
     }
 
@@ -21,13 +21,13 @@ namespace Slib
 
     // Connect at a server
     void InetClient::connect(const SocketAddressInet & serv_addr) throw(Exception)
-    {   SLIB_DEBUG_L2(_T("InetClient::Connect()_\n"));
+    {   OONET_DEBUG_L2(_T("InetClient::Connect()_\n"));
 
 		// Check if it is connected
         if (isConnected())
         {
             // Throw exception if already connected
-			SLIB_THROW_EXCEPTION(ExceptionAlreadyConnected,
+			OONET_THROW_EXCEPTION(ExceptionAlreadyConnected,
 				"InetClient is already connected!"
 				);
         }
@@ -43,4 +43,4 @@ namespace Slib
     void InetClient::disconnect()
 	{	return InetPeer::disconnect();	}
 
-};  // !Slib namespace
+};  // !OONet namespace

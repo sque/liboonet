@@ -1,11 +1,11 @@
-#ifndef SLIB_TESTS_TESTBASE_H_DEFINED
-#define SLIB_TESTS_TESTBASE_H_DEFINED
+#ifndef OONET_TESTS_TESTBASE_H_DEFINED
+#define OONET_TESTS_TESTBASE_H_DEFINED
 
 #include "Slib.h"
 #include "SubTest.h"
 #include <deque>
 
-namespace Slib
+namespace OONet
 {
 	class Test
 	{
@@ -26,7 +26,7 @@ namespace Slib
 
 	};
 
-#define SLIB_REGISTERSUBTEST(subtype) \
+#define OONET_REGISTERSUBTEST(subtype) \
 	SubTests.push_back(new subtype());
-};	//! Slib namespace
-#endif //! SLIB_TESTS_TESTBASE_H_DEFINED
+};	// !OONet namespace
+#endif // !OONET_TESTS_TESTBASE_H_DEFINED

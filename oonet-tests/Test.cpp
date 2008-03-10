@@ -1,7 +1,7 @@
 #include "Test.h"
 #include "TestEssentials.h"
 
-namespace Slib
+namespace OONet
 {
 	// Constructor
 	Test::Test(const string & Name)
@@ -55,4 +55,4 @@ namespace Slib
 		}
 
 	}
-};	//! Slib namespace
+};	// !OONet namespace

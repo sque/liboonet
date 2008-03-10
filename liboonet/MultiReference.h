@@ -1,5 +1,5 @@
-#ifndef MULTIREFERENCE_H_DEFINED
-#define MULTIREFERENCE_H_DEFINED
+#ifndef OONET_MULTIREFERENCE_H_DEFINED
+#define OONET_MULTIREFERENCE_H_DEFINED
 
 #include <map>
 #include <vector>
@@ -7,12 +7,12 @@
 #include "Slib.h"
 #include "Mutex.h"
 
-namespace Slib
+namespace OONet
 {
 
 	#define MULTIREFERNCE_OBJECTFILE(_ObjectType, _HandleType) \
-		template<> Slib::MultiReference<_ObjectType, _HandleType>::HandlesList_t * Slib::MultiReference<_ObjectType, _HandleType>::pHandlesList = NULL;\
-        template<> Slib::MT::Mutex * Slib::MultiReference<_ObjectType, _HandleType>::pHandlesListMutex = NULL;
+		template<> OONet::MultiReference<_ObjectType, _HandleType>::HandlesList_t * OONet::MultiReference<_ObjectType, _HandleType>::pHandlesList = NULL;\
+        template<> OONet::MT::Mutex * OONet::MultiReference<_ObjectType, _HandleType>::pHandlesListMutex = NULL;
 
 	template<
 		class ObjectType,
@@ -63,12 +63,12 @@ namespace Slib
 
 			// Find handle map
 			hIt = pHandlesList->find(h);
-			SLIB_ASSERT(hIt != pHandlesList->end());
+			OONET_ASSERT(hIt != pHandlesList->end());
 			pObjectsList = hIt->second;
 
 			// Find pointer and erase it
 			pIt = find(pObjectsList->begin(), pObjectsList->end(), this);
-			SLIB_ASSERT(pIt != pObjectsList->end());
+			OONET_ASSERT(pIt != pObjectsList->end());
 			pObjectsList->erase(pIt);
 
 			// Check if it was the last object that used this handle
@@ -110,7 +110,7 @@ namespace Slib
 		virtual ~MultiReference()
 		{
 			if (!bZombie)
-				SLIB_THROW_EXCEPTION(Exception, "This class has not been initialize to destruct!");
+				OONET_THROW_EXCEPTION(Exception, "This class has not been initialize to destruct!");
 		}
 
 		// Copy constructor
@@ -170,6 +170,6 @@ namespace Slib
 
 		// Virtual functions to be overloaded
 		virtual void OnAbandonedHandle(const HandleType & pHandle) = 0;
-	};
-};	//! Slib namespace
-#endif //! MULTIREFERENCE_H_DEFINED
+	};	// !MultiReference class
+};	// !OONet namespace
+#endif // !OONET_MULTIREFERENCE_H_DEFINED

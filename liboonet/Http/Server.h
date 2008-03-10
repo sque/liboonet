@@ -1,5 +1,5 @@
-#ifndef SLIB_HTTP_SERVER_H_DEFINED
-#define SLIB_HTTP_SERVER_H_DEFINED
+#ifndef OONET_HTTP_SERVER_H_DEFINED
+#define OONET_HTTP_SERVER_H_DEFINED
 
 #include "../platform.h"
 #include "../InetServer.h"
@@ -8,7 +8,7 @@
 #include "Request.h"
 #include "ClientHandler.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -52,7 +52,7 @@ namespace Slib
 			//! @}
 
 		};
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace
 
-#endif //!  SLIB_HTTP_SERVER_H_DEFINED
+#endif // !OONET_HTTP_SERVER_H_DEFINED

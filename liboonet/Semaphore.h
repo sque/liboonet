@@ -1,10 +1,10 @@
-#ifndef SEMAPHORE_H_INCLUDED
-#define SEMAPHORE_H_INCLUDED
+#ifndef OONET_MT_SEMAPHORE_H_INCLUDED
+#define OONET_MT_SEMAPHORE_H_INCLUDED
 
 #include "platform.h"
 #include "Exception.h"
 
-namespace Slib
+namespace OONet
 {
     namespace MT
     {
@@ -54,8 +54,8 @@ namespace Slib
 				thread.
 			*/
             void post();
-        };
-    }   // MT namespace
-} // Slib namespace
+        };	// !Semaphore class
+    }   // !MT namespace
+} // !OONet namespace
 
-#endif // SEMAPHORE_H_INCLUDED
+#endif // OONET_MT_SEMAPHORE_H_INCLUDED

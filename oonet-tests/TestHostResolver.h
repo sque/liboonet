@@ -4,7 +4,7 @@
 #include "BinaryData.h"
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestHostResolver
 		:public Test
@@ -12,25 +12,25 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTESTEXC(TestErrorResolv, _T("Resolve koukouroukou"), _T("ExceptionServerNotFound"));
-		SLIB_DECLARESUBTEST(TestLocalhost, _T("Resolve localhost"));
-		SLIB_DECLARESUBTEST(TestResolveIPs, _T("Resolve ready ips"));
-		SLIB_DECLARESUBTEST(TestCopyCtor, _T("Copy constructor"));
-		SLIB_DECLARESUBTESTEXC(TestGetAddressOver, _T("getAddress() overflow"), _T("ExceptionNotFound"));
+		OONET_DECLARESUBTESTEXC(TestErrorResolv, _T("Resolve koukouroukou"), _T("ExceptionServerNotFound"));
+		OONET_DECLARESUBTEST(TestLocalhost, _T("Resolve localhost"));
+		OONET_DECLARESUBTEST(TestResolveIPs, _T("Resolve ready ips"));
+		OONET_DECLARESUBTEST(TestCopyCtor, _T("Copy constructor"));
+		OONET_DECLARESUBTESTEXC(TestGetAddressOver, _T("getAddress() overflow"), _T("ExceptionNotFound"));
 	public:
 		// Constructor
 		TestHostResolver()
 			:Test(_T("HostResolver"))
 		{
-			SLIB_REGISTERSUBTEST(TestErrorResolv);
-			SLIB_REGISTERSUBTEST(TestLocalhost);
-			SLIB_REGISTERSUBTEST(TestResolveIPs);
-			SLIB_REGISTERSUBTEST(TestCopyCtor);
-			SLIB_REGISTERSUBTEST(TestGetAddressOver);
+			OONET_REGISTERSUBTEST(TestErrorResolv);
+			OONET_REGISTERSUBTEST(TestLocalhost);
+			OONET_REGISTERSUBTEST(TestResolveIPs);
+			OONET_REGISTERSUBTEST(TestCopyCtor);
+			OONET_REGISTERSUBTEST(TestGetAddressOver);
 		}
 
-	} ;	//! TestMutex test
-};	//! Slib namespace
+	} ;	// !TestHostResolver class
+};	// !OONet namespace
 
 #endif // HOSTRESOLVER_TEST_H_DEFINED
 

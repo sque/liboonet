@@ -1,5 +1,5 @@
-#ifndef SOCKET_H_DEFINED
-#define SOCKET_H_DEFINED
+#ifndef OONET_SOCKET_H_DEFINED
+#define OONET_SOCKET_H_DEFINED
 
 #include "platform.h"
 #include "Buffer.h"
@@ -9,7 +9,7 @@
 #include <map>
 #include <vector>
 
-namespace Slib
+namespace OONet
 {
     // Socket exceptions
 
@@ -64,22 +64,22 @@ namespace Slib
 	public:
 
 		//! Exception raised when actions was performed on invalid socket
-		SLIB_DECLARE_EXCEPTION(ExceptionInvalidSocket);
+		OONET_DECLARE_EXCEPTION(ExceptionInvalidSocket);
 		//! Exception raised when requested address is used by another socket.
-		SLIB_DECLARE_EXCEPTION(ExceptionAddressInUse);
+		OONET_DECLARE_EXCEPTION(ExceptionAddressInUse);
 		//! Exception raised when desired address is not available in local scope.
-		SLIB_DECLARE_EXCEPTION(ExceptionAddressNotAvailable);
+		OONET_DECLARE_EXCEPTION(ExceptionAddressNotAvailable);
 		//! Exception raised when connection attempt was aborted due to time out
-		SLIB_DECLARE_EXCEPTION(ExceptionConnectionAborted);
+		OONET_DECLARE_EXCEPTION(ExceptionConnectionAborted);
 		//! Exception raised when connection attempt was refused by the other end.
-		SLIB_DECLARE_EXCEPTION(ExceptionConnectionRefused);
+		OONET_DECLARE_EXCEPTION(ExceptionConnectionRefused);
 		//! Exception raised when action was perform on broken connected socket.
-		SLIB_DECLARE_EXCEPTION(ExceptionConnectionReset);
+		OONET_DECLARE_EXCEPTION(ExceptionConnectionReset);
 
         //! Enumeration of socket families
         enum SocketFamily
         {
-#if (SLIB_OS == SLIB_OS_LINUX)
+#if (OONET_OS == OONET_OS_LINUX)
             FAMILY_LOCAL = PF_LOCAL,	    //!<   Local communication              unix(7)
             FAMILY_INET = PF_INET,          //!<   IPv4 Internet protocols          ip(7)
             FAMILY_INET6 = PF_INET6,        //!<   IPv6 Internet protocols
@@ -90,7 +90,7 @@ namespace Slib
             FAMILY_ATMPVC = PF_ATMPVC,      //!<   Access to raw ATM PVCs
             FAMILY_APPLETALK = PF_APPLETALK,//!<   Appletalk                        ddp(7)
             FAMILY_PACKET = PF_PACKET       //!<   Low level packet interface       packet(7)
-#elif (SLIB_OS == SLIB_OS_WIN32)
+#elif (OONET_OS == OONET_OS_WIN32)
 			// Win 32 enumerations
 			FAMILY_INET = AF_INET
 #endif
@@ -241,7 +241,7 @@ namespace Slib
 			library for extended explanation.
 		*/
         void setOption(int level, int opt_name, const void * opt_val, int opt_size);
-	};  // Socket class
-};  // Slib namespace
+	};  // !Socket class
+};  // !OONet namespace
 
-#endif // SOCKET_H_DEFINED
+#endif // !OONET_SOCKET_H_DEFINED

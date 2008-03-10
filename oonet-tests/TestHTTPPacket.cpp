@@ -1,6 +1,6 @@
 #include "TestHTTPPacket.h"
 #include "Http/Packet.h"
-namespace Slib
+namespace OONet
 {
 	TestHTTPPacket theTestHTTPPacket;
 
@@ -248,4 +248,4 @@ namespace Slib
 		a.parse(PacketNoDoubleNewLine);
 		return false;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

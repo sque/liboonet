@@ -5,7 +5,7 @@
 #include "Mutex.h"
 #include <iostream>
 
-namespace Slib
+namespace OONet
 {
 	namespace MT
 	{
@@ -31,7 +31,7 @@ namespace Slib
 		void Mutex::unlock() throw(Exception)
 		{
 			if (0 != pthread_mutex_unlock(&hMutex))
-				SLIB_THROW_EXCEPTION(ExceptionSystemError, "Unable to unlock mutex!");
+				OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to unlock mutex!");
 		}
 
 		void Mutex::lock(ulong tm_timeoutms) throw(Exception)
@@ -40,7 +40,7 @@ namespace Slib
 			if (tm_timeoutms == Infinity)
 			{
 				if (0 != pthread_mutex_lock(&hMutex))
-					SLIB_THROW_EXCEPTION(ExceptionSystemError, "Unable to lock mutex!");
+					OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to lock mutex!");
 				return;
 			}
 
@@ -57,13 +57,13 @@ namespace Slib
             int ret_error = pthread_mutex_timedlock(&hMutex, &expireTime);
             if (ret_error == ETIMEDOUT)
             {
-                SLIB_THROW_EXCEPTION(ExceptionTimeOut, _T("TimeOute waiting to lock mutex!)"));
+                OONET_THROW_EXCEPTION(ExceptionTimeOut, _T("TimeOute waiting to lock mutex!)"));
             }
             else
             {
-                SLIB_THROW_EXCEPTION(ExceptionSystemError,
+                OONET_THROW_EXCEPTION(ExceptionSystemError,
 					_T("Unable to lock mutex!"));
             }
 		}
-	}; // MT namespace
-};	// Slib namespace
+	}; // !MT namespace
+};	// !OONet namespace

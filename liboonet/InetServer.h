@@ -1,5 +1,5 @@
-#ifndef SLIB_INETSERVER_H_DEFINED
-#define SLIB_INETSERVER_H_DEFINED
+#ifndef OONET_INETSERVER_H_DEFINED
+#define OONET_INETSERVER_H_DEFINED
 
 #include "platform.h"
 #include "Thread.h"
@@ -7,7 +7,7 @@
 #include "InetPeer.h"
 #include <deque>
 
-namespace Slib
+namespace OONet
 {
 	//! Abstract class for creating a server for TCP/IP family
 	/**
@@ -143,7 +143,7 @@ namespace Slib
 		const std::vector<InetPeer *> & getClients() const
 		{	return mClList;	}
 
-	};	// InetServer class
-};	// Slib namespace
+	};	// !InetServer class
+};	// !OONet namespace
 
-#endif //! SLIB_INETSERVER_H_DEFINED
+#endif // !OONET_INETSERVER_H_DEFINED

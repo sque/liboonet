@@ -4,7 +4,7 @@
 */
 #include "./HostInet.h"
 
-namespace Slib
+namespace OONet
 {
 	const HostInet HostInet::LOCALHOST = HostInet(0x7f000001);
 	const HostInet HostInet::ANY = HostInet(0);
@@ -45,4 +45,4 @@ namespace Slib
 
 	ulong HostInet::getNBOAddress() const
 	{   return htonl(host_ip);  }
-};	//! Slib namespace
+};	// !OONet namespace

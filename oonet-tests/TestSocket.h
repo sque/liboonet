@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestSocket
 		:public Test
@@ -11,43 +11,43 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestTCPCtor, _T("Ctor() IPv4/TCP"));
-		SLIB_DECLARESUBTEST(TestUDPCtor, _T("Ctor() IPv4/UDP"));
+		OONET_DECLARESUBTEST(TestTCPCtor, _T("Ctor() IPv4/TCP"));
+		OONET_DECLARESUBTEST(TestUDPCtor, _T("Ctor() IPv4/UDP"));
 
-#if SLIB_OS == SLIB_OS_WIN32
-		SLIB_DECLARESUBTEST(TestRAWCtor, _T("Ctor() IPv4/RAW"));
+#if OONET_OS == OONET_OS_WIN32
+		OONET_DECLARESUBTEST(TestRAWCtor, _T("Ctor() IPv4/RAW"));
 #else
-		SLIB_DECLARESUBTESTEXC(TestRAWCtor, _T("Ctor() IPv4/RAW"), _T("ExceptionNotSupported"));
+		OONET_DECLARESUBTESTEXC(TestRAWCtor, _T("Ctor() IPv4/RAW"), _T("ExceptionNotSupported"));
 #endif
 
 
-#if SLIB_OS == SLIB_OS_WIN32
-		SLIB_DECLARESUBTESTEXC(TestWhateverCtor, _T("Ctor() IPv4/Invalid"), _T("ExceptionNotSupported"));
+#if OONET_OS == OONET_OS_WIN32
+		OONET_DECLARESUBTESTEXC(TestWhateverCtor, _T("Ctor() IPv4/Invalid"), _T("ExceptionNotSupported"));
 #else
-        SLIB_DECLARESUBTESTEXC(TestWhateverCtor, _T("Ctor() IPv4/Invalid"), _T("ExceptionWrongArgument"));
+        OONET_DECLARESUBTESTEXC(TestWhateverCtor, _T("Ctor() IPv4/Invalid"), _T("ExceptionWrongArgument"));
 #endif
-		SLIB_DECLARESUBTEST(TestTCPConnect, _T("Connect() IPv4/TCP"));
-		SLIB_DECLARESUBTESTEXC(TestTCPConnectWrong, _T("Connect() wrong"), _T("ExceptionConnectionRefused"));
-		SLIB_DECLARESUBTESTEXC(TestBindWrong, _T("Bind() wrong"), _T("ExceptionAddressNotAvailable"));
-		SLIB_DECLARESUBTESTEXC(TestBindRebind, _T("Bind() twice"), _T("ExceptionWrongArgument"));
-		SLIB_DECLARESUBTEST(TestBind, _T("Bind() normal"));
+		OONET_DECLARESUBTEST(TestTCPConnect, _T("Connect() IPv4/TCP"));
+		OONET_DECLARESUBTESTEXC(TestTCPConnectWrong, _T("Connect() wrong"), _T("ExceptionConnectionRefused"));
+		OONET_DECLARESUBTESTEXC(TestBindWrong, _T("Bind() wrong"), _T("ExceptionAddressNotAvailable"));
+		OONET_DECLARESUBTESTEXC(TestBindRebind, _T("Bind() twice"), _T("ExceptionWrongArgument"));
+		OONET_DECLARESUBTEST(TestBind, _T("Bind() normal"));
 	public:
 		// Constructor
 		TestSocket()
 			:Test(_T("Socket"))
 		{
-			SLIB_REGISTERSUBTEST(TestTCPCtor);
-			SLIB_REGISTERSUBTEST(TestUDPCtor);
-			SLIB_REGISTERSUBTEST(TestRAWCtor);
-			SLIB_REGISTERSUBTEST(TestWhateverCtor);
-			SLIB_REGISTERSUBTEST(TestTCPConnect);
-			SLIB_REGISTERSUBTEST(TestTCPConnectWrong);
-			SLIB_REGISTERSUBTEST(TestBindWrong);
-			SLIB_REGISTERSUBTEST(TestBindRebind);
-			SLIB_REGISTERSUBTEST(TestBind);
+			OONET_REGISTERSUBTEST(TestTCPCtor);
+			OONET_REGISTERSUBTEST(TestUDPCtor);
+			OONET_REGISTERSUBTEST(TestRAWCtor);
+			OONET_REGISTERSUBTEST(TestWhateverCtor);
+			OONET_REGISTERSUBTEST(TestTCPConnect);
+			OONET_REGISTERSUBTEST(TestTCPConnectWrong);
+			OONET_REGISTERSUBTEST(TestBindWrong);
+			OONET_REGISTERSUBTEST(TestBindRebind);
+			OONET_REGISTERSUBTEST(TestBind);
 		}
 
-	} ;	//! TestSocket test
-};	//! Slib namespace
+	} ;	// !TestSocket class
+};	// !OONet namespace
 
 #endif // SOCKET_TEST_H_DEFINED

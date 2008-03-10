@@ -1,12 +1,12 @@
-#ifndef SLIB_HTTP_URL_H_DEFINED
-#define SLIB_HTTP_URL_H_DEFINED
+#ifndef OONET_HTTP_URL_H_DEFINED
+#define OONET_HTTP_URL_H_DEFINED
 #include "../platform.h"
 #include "../Exception.h"
 
 #include <vector>
 using std::vector;
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -83,7 +83,7 @@ namespace Slib
 		{
 		public:
 			//! Exception raised when the url was not properly formated.
-			SLIB_DECLARE_EXCEPTION(ExceptionWrongUrl);
+			OONET_DECLARE_EXCEPTION(ExceptionWrongUrl);
 
 			//! Parameter List definition
 			typedef vector<UrlParam> ParameterList;
@@ -173,7 +173,7 @@ namespace Slib
 			*/
 			void _split_params(const string & par_string, ParameterList & param_list) const;
 
-		}; // Url class
-	};	// HTTP namespace
-};	// Slib namespace
-#endif // SLIB_HTTP_URL_H_DEFINED
+		}; // !Url class
+	};	// !HTTP namespace
+};	// !OONet namespace
+#endif // OONET_HTTP_URL_H_DEFINED

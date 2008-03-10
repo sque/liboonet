@@ -5,7 +5,7 @@
 #include "Http/Packet.h"
 #include "platform.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -88,7 +88,7 @@ namespace Slib
 				{	BodyStart_pos = HeadEnd_pos + 2;
 				}
 				else
-				{	SLIB_THROW_EXCEPTION(ExceptionIncomplete,
+				{	OONET_THROW_EXCEPTION(ExceptionIncomplete,
 						"Incomplete HTTP packet"
 					);
 				}
@@ -99,7 +99,7 @@ namespace Slib
 
 			// Get title
 			if ((nl_pos = _find_smart_new_line(Head, nl_str)) == string::npos)
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an HTTP packet!");
 			_Title = Head.substr(0, nl_pos);					// Extract Title
 			Head = Head.substr(nl_pos + nl_str.size());			// Cat rest of head.
@@ -112,12 +112,12 @@ namespace Slib
 			{	_StrBodySize = _Headers.getHeader("Content-Length");
 				// Validate length
 				if ((_BodySize = atol(_StrBodySize.c_str())) < 0)
-					SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+					OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 						"HTTP Packet says that contains body with size less than 0!?!"
 					);
 				// Validate if we have body
 				if ((data.size() - BodyStart_pos) < (size_t)_BodySize)
-					SLIB_THROW_EXCEPTION(ExceptionIncomplete,
+					OONET_THROW_EXCEPTION(ExceptionIncomplete,
 						"Headers arrived, but not all the body..."
 					);
 				HasBody = true;
@@ -135,5 +135,5 @@ namespace Slib
 
 			return BodyStart_pos + _BodySize;
 		}
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace

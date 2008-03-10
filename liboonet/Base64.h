@@ -1,12 +1,12 @@
-#ifndef SLIB_BASE64_H_DEFINED
-#define SLIB_BASE64_H_DEFINED
+#ifndef OONET_BASE64_H_DEFINED
+#define OONET_BASE64_H_DEFINED
 
 #include "platform.h"
 #include "BinaryData.h"
 
-namespace Slib
+namespace OONet
 {
-	//! CBase64 is a handy tool for Base64 encodings/decondings.
+	//! Base64 is a handy tool for Base64 encodings/decondings.
 	/**
 		It provides encoding/decoding with base64 encoding. It uses
 		the default base64 table, but it is possible to provide a custom
@@ -58,7 +58,7 @@ namespace Slib
 		*/
 		BinaryData Decode(const string & b64_encoded);
 
-	};	// Base64 class
+	};	// !Base64 class
 
-};	// Slib namespace
-#endif //! SLIB_BASE64_H_DEFINED
+};	// !OONet namespace
+#endif // !OONET_BASE64_H_DEFINED

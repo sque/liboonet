@@ -4,7 +4,7 @@
 */
 #include "SocketAddress.h"
 
-namespace Slib
+namespace OONet
 {
 	// Construct with family
 	SocketAddress::SocketAddress(int addr_family) throw()
@@ -41,4 +41,4 @@ namespace Slib
 	// Get a pointer to berkley sockaddr structure
 	const struct sockaddr * SocketAddress::getSockaddrPtr() const throw()
 	{   return &mSockAddr;        }
-};	// Slib namespace
+};	// !OONet namespace

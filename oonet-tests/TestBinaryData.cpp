@@ -1,6 +1,6 @@
 #include "TestBinaryData.h"
 
-namespace Slib
+namespace OONet
 {
 	static TestBinaryData theBinaryTest;
 
@@ -510,4 +510,4 @@ namespace Slib
 
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

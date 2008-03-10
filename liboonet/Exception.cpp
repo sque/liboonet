@@ -4,7 +4,7 @@
  */
 #include "./Exception.h"
 
-namespace Slib
+namespace OONet
 {
 	// Copy Operator
 	Exception & Exception::operator=(const Exception & r)
@@ -47,5 +47,5 @@ namespace Slib
 	}
 
 
-};	//! Slib namespace
+};	// !OONet namespace
 

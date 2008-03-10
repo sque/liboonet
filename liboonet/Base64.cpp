@@ -5,7 +5,7 @@
 
 #include "./Base64.h"
 
-namespace Slib
+namespace OONet
 {
 	// Constructor
 	Base64::Base64()
@@ -180,4 +180,4 @@ namespace Slib
 		// Return object
 		return DecodedData;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

@@ -5,7 +5,7 @@
 #include "Http/ClientHandler.h"
 #include "Http/Server.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -17,7 +17,7 @@ namespace Slib
 
 		// Copy Constructor
 		ClientHandler::ClientHandler(const ClientHandler &r)
-		{	SLIB_THROW_EXCEPTION(ExceptionUnimplemented,
+		{	OONET_THROW_EXCEPTION(ExceptionUnimplemented,
 				"ClientHandler is not yet supported to be copiable"
 			);
 		}
@@ -30,7 +30,7 @@ namespace Slib
 		// Copy operator
 		ClientHandler & ClientHandler::operator=(const ClientHandler &r)
 		{
-			SLIB_THROW_EXCEPTION(ExceptionUnimplemented,
+			OONET_THROW_EXCEPTION(ExceptionUnimplemented,
 				"ClientHandler is not yet supported to be copiable"
 			);
 			return *this;
@@ -82,5 +82,5 @@ namespace Slib
 				disconnect();
 			}
 		}
-	};	//! HTTP Namespace
-};	//! Slib namespace
+	};	// !HTTP Namespace
+};	// !OONet namespace

@@ -1,10 +1,10 @@
-#ifndef SLIB_INETCLIENT_H_INCLUDED
-#define SLIB_INETCLIENT_H_INCLUDED
+#ifndef OONET_INETCLIENT_H_INCLUDED
+#define OONET_INETCLIENT_H_INCLUDED
 
 #include "platform.h"
 #include "InetPeer.h"
 
-namespace Slib
+namespace OONet
 {
 	//! Abstract class for creating a client for TCP/IP family
 	/**
@@ -59,7 +59,7 @@ namespace Slib
 		virtual void OnDisconnect(){};
 
 		//! @}
-    };  // InetClient class
-};  // Slib namespace
+    };  // !InetClient class
+};  // !OONet namespace
 
-#endif // SLIB_INETCLIENT_H_INCLUDED
+#endif // !OONET_INETCLIENT_H_INCLUDED

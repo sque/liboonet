@@ -1,7 +1,7 @@
 #include "TestSocketAddressInet.h"
 #include "SocketAddressInet.h"
 
-namespace Slib
+namespace OONet
 {
 	TestSocketAddressInet theSocketAddressInetTest;
 
@@ -236,7 +236,7 @@ namespace Slib
 
 		return true;
 	}
-};
+};	// !OONet namespace
 /*
 bool TestSocketAddressInet(void)
 {

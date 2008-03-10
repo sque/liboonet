@@ -1,7 +1,7 @@
 #include "TestInetClient.h"
 #include "InetClient.h"
 
-namespace Slib
+namespace OONet
 {
 	TestInetClient theTestInetClient;
 
@@ -74,12 +74,12 @@ namespace Slib
 	public:
 	MyClient()
 		:InetClient()
-	{   SLIB_DEBUG_L2(_T("MyClient()_\n"));  }
+	{   OONET_DEBUG_L2(_T("MyClient()_\n"));  }
 
 	~MyClient()
-    {   SLIB_DEBUG_L2(_T("~MyClient()_\n"));
+    {   OONET_DEBUG_L2(_T("~MyClient()_\n"));
         initializeDestruction();
-        SLIB_DEBUG_L2(_T("~MyClient()^\n"));
+        OONET_DEBUG_L2(_T("~MyClient()^\n"));
     }
 
 
@@ -187,4 +187,4 @@ namespace Slib
 		return false;
 	}
 
-};	//! Slib namespace
+};	// !OONet namespace

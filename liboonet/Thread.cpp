@@ -6,28 +6,28 @@
 #include "./Thread.h"
 #include "./config.h"
 
-namespace Slib
+namespace OONet
 {
     namespace MT
     {
         /////////////////////////////////
         // OS-Independant -> OS-Specific
         // NOTHREAD
-    #if (SLIB_OS == SLIB_OS_WIN32)
+    #if (OONET_OS == OONET_OS_WIN32)
         #define NOTHREAD NULL
-    #elif (SLIB_OS == SLIB_OS_LINUX)
+    #elif (OONET_OS == OONET_OS_LINUX)
         #define NOTHREAD 0
     #endif
 
 
         // Start Implementation
-    #if (SLIB_OS == SLIB_OS_LINUX)
-    #elif (SLIB_OS == SLIB_OS_WIN32)
+    #if (OONET_OS == OONET_OS_LINUX)
+    #elif (OONET_OS == OONET_OS_WIN32)
         void Thread::_win32_start(void) throw(Exception)
         {
             if (bRunning == true)
             {
-                SLIB_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
+                OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
 					"Thread alreay running!"
 				);
                 return;   // Error thread already started
@@ -51,7 +51,7 @@ namespace Slib
 
             if (hThread == NULL)
             {
-                SLIB_THROW_EXCEPTION(ExceptionSystemError,
+                OONET_THROW_EXCEPTION(ExceptionSystemError,
 					"Cannot start thread.."
 				);
                 return;	// Error on starting the thread
@@ -64,8 +64,8 @@ namespace Slib
     #endif
 
 
-    #if (SLIB_OS == SLIB_OS_LINUX)
-	#elif (SLIB_OS == SLIB_OS_WIN32)
+    #if (OONET_OS == OONET_OS_LINUX)
+	#elif (OONET_OS == OONET_OS_WIN32)
 		void Thread::_win32_join(long ms) throw(Exception)
         {
 			DWORD dwResult;
@@ -75,22 +75,22 @@ namespace Slib
 			switch(dwResult)
 			{
 			case WAIT_TIMEOUT:
-				SLIB_DEBUG_L2(_T("Thread::_win32_join() time-out!\n"));
-				SLIB_THROW_EXCEPTION(ExceptionTimeOut,
+				OONET_DEBUG_L2(_T("Thread::_win32_join() time-out!\n"));
+				OONET_THROW_EXCEPTION(ExceptionTimeOut,
 					"TimeOut waiting to join thread!");
 				return;
 			case WAIT_OBJECT_0:
-				SLIB_DEBUG_L2(_T("Thread::_win32_join() succeed!\n"));
+				OONET_DEBUG_L2(_T("Thread::_win32_join() succeed!\n"));
 				return;
 			default:
-                SLIB_DEBUG_L1(_T("Thread::_win32_join() failed for unknown reason!\n"));
-				SLIB_THROW_EXCEPTION(ExceptionSystemError, "Unable to join thread!");
+                OONET_DEBUG_L1(_T("Thread::_win32_join() failed for unknown reason!\n"));
+				OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to join thread!");
 			}
 		}
     #endif
 
         void Thread::_soft_join(ulong tm_timeoutms) throw(Exception)
-        {   SLIB_DEBUG_L2("Thread::_soft_join()_\n");
+        {   OONET_DEBUG_L2("Thread::_soft_join()_\n");
             // Local variables
             ulong tm_passed;		// A counter for time passed
 
@@ -106,7 +106,7 @@ namespace Slib
             }
 
             // time out reached
-			SLIB_THROW_EXCEPTION(ExceptionTimeOut,
+			OONET_THROW_EXCEPTION(ExceptionTimeOut,
 				"TimeOut waiting to join thread!");
         }
 
@@ -123,7 +123,7 @@ namespace Slib
                 pthis->ThreadRoutine();
 			}
             catch(std::exception)
-            {   SLIB_DEBUG_L1(_T("Thread::_thread_func() exception was thrown from thread!\n"));    }
+            {   OONET_DEBUG_L1(_T("Thread::_thread_func() exception was thrown from thread!\n"));    }
 
             // To lock exei noima giati to bRunning mporei na tropopoihthei apo allo thread
             pthis->lock();
@@ -156,7 +156,7 @@ namespace Slib
         {
             // Skip join if we never started thread
             if (hThread == NOTHREAD)
-			{   SLIB_DEBUG_L2(_T("Thread::Join() skipping we don't have handle\n"));
+			{   OONET_DEBUG_L2(_T("Thread::Join() skipping we don't have handle\n"));
 				return;
 			}
 
@@ -188,16 +188,16 @@ namespace Slib
 //        // Stops the calling thread for a period of time
 //        void Thread::sleep(long tm_sleepms) throw(Exception)
 //        {
-//            #if (SLIB_OS == SLIB_OS_WIN32)
+//            #if (_OS == OONET_OS_WIN32)
 //                ::Sleep( tm_sleepms); 	//Windows sleep gets mseconds
-//            #elif (SLIB_OS == SLIB_OS_LINUX)
+//            #elif (OONET_OS == OONET_OS_LINUX)
 //                int err;
 //                err = usleep( tm_sleepms * 1000.0);		// Unix sleep gets seconds
 //                if (err == EINTR)
-//                    SLIB_THROW_EXCEPTION(ExceptionInterrupted,
+//                    OONET_THROW_EXCEPTION(ExceptionInterrupted,
 //                        _T("Thread::Sleep() Action interrupted by a singal!")
 //                        );
 //            #endif
 //        }
-    };  // MT namespace
-};	// Slib namespace
+    };  // !MT namespace
+};	// !OONet namespace

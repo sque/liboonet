@@ -1,10 +1,10 @@
-#ifndef SLIB_STRING_CONVERTER_H_DEFINED
-#define SLIB_STRING_CONVERTER_H_DEFINED
+#ifndef OONET_STRING_CONVERTER_H_DEFINED
+#define OONET_STRING_CONVERTER_H_DEFINED
 
 #include "platform.h"
 #include "Exception.h"
 
-namespace Slib
+namespace OONet
 {
 	class StringConverter
 	{
@@ -51,7 +51,7 @@ namespace Slib
 		{	return _convert_to_mbr(wide_string);	}
 
 		// Cast to current selected character type
-#if (SLIB_CHAR == SLIB_CHAR_WIDE)
+#if (OONET_CHAR == OONET_CHAR_WIDE)
 		inline c wstring & toCurrent()
 		{	return wide_string;	}
 #else
@@ -61,4 +61,4 @@ namespace Slib
 	};
 };
 
-#endif //! SLIB_STRING_CONVERTER_H_DEFINED
+#endif // !OONET_STRING_CONVERTER_H_DEFINED

@@ -1,10 +1,10 @@
-#ifndef MUTEX_H_DEFINED
-#define MUTEX_H_DEFINED
+#ifndef OONET_MT_MUTEX_H_DEFINED
+#define OONET_MT_MUTEX_H_DEFINED
 
 #include "platform.h"
 #include "Exception.h"
 
-namespace Slib
+namespace OONet
 {
     namespace MT
     {
@@ -47,8 +47,8 @@ namespace Slib
 			@throw ExceptionSystemError Raised if there was a system error while trying to lock mutex.
             */
             void unlock() throw(Exception);
-        };	// Mutex class
-    };  // MT namespace
-};	// Slib namespace
+        };	// !Mutex class
+    };  // !MT namespace
+};	// !OONet namespace
 
-#endif //! MUTEX_H_DEFINED
+#endif // !OONET_MT_MUTEX_H_DEFINED

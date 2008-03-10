@@ -4,7 +4,7 @@
 */
 #include "Http/Response.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -57,18 +57,18 @@ namespace Slib
 
 			// Get version of HTTP
 			if ((httpversionend_pos = _Title.find(' ')) == string::npos)
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"Wrong formated header!");
 			_httpversion_str = _Title.substr(0, httpversionend_pos);
 			if ((_httpversion_str != "HTTP/1.0") && (_httpversion_str != "HTTP/1.1"))
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"Unknown version of HTTP packet!");
 
 			// Get error code
 			httpversionend_pos++;
 			errorcodeend_pos = _Title.find(' ', httpversionend_pos);
 			if ((ErrorCode = _Title.substr(httpversionend_pos, errorcodeend_pos - httpversionend_pos)) == "")
-				SLIB_THROW_EXCEPTION(ExceptionWrongFormat,
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"HTTP Response without error code!");
 
 			// Get error message
@@ -86,5 +86,5 @@ namespace Slib
 			// Return packet
 			return BlockSize;
 		}
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace

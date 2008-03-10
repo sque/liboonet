@@ -5,32 +5,32 @@
 	Version:	0.3.x
 	Revision:	17 September 2006
 */
-#ifndef SLIB_PLATFORM_H_DEFINED
-#define SLIB_PLATFORM_H_DEFINED
+#ifndef OONET_PLATFORM_H_DEFINED
+#define OONET_PLATFORM_H_DEFINED
 
 /************************************/
 // Examine OS
-#define SLIB_OS_WIN32	1
-#define SLIB_OS_LINUX	2
-#define SLIB_OS_UNKNOWN 3
-#define SLIB_CHAR_NARROW 1
-#define SLIB_CHAR_WIDE   2
+#define OONET_OS_WIN32	1
+#define OONET_OS_LINUX	2
+#define OONET_OS_UNKNOWN 3
+#define OONET_CHAR_NARROW 1
+#define OONET_CHAR_WIDE   2
 
 #if defined(WIN32)
-	#define SLIB_OS	SLIB_OS_WIN32
+	#define OONET_OS	OONET_OS_WIN32
 #elif defined(linux)
-	#define SLIB_OS	SLIB_OS_LINUX
+	#define OONET_OS	OONET_OS_LINUX
 #else
-	#define	SLIB_OS SLIB_OS_UNKNOWN
+	#define	OONET_OS	OONET_OS_UNKNOWN
 	#error Unsupported or unknown OS!
 #endif
 
 /************************************/
 // Unicode - Ansi Abstraction Layer
 #if (defined(UNICODE) || defined(_UNICODE))
-	#define SLIB_CHAR SLIB_CHAR_WIDE
+	#define OONET_CHAR OONET_CHAR_WIDE
 #else
-	#define SLIB_CHAR SLIB_CHAR_NARROW
+	#define OONET_CHAR OONET_CHAR_NARROW
 #endif
 
 /************************************
@@ -44,13 +44,13 @@
 #include <time.h>
 
 // WIN_32 libraries
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 	#include <winsock2.h>
 	#include <windows.h>
 	#include <process.h>
 	#include <tchar.h>
 // Linux
-#elif (SLIB_OS == SLIB_OS_LINUX)
+#elif (OONET_OS == OONET_OS_LINUX)
 	#include <netinet/in.h>
 	#include <sys/socket.h>
 	#include <sys/types.h>
@@ -68,7 +68,7 @@
  * OS independant -> OS specific macros
  */
 // MUTEX definition
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 	#define MUTEX HANDLE						// Mutex handle
 	#define SEMAPHORE HANDLE                    // Semapore handle
 	#define THREAD HANDLE						// Thread handle
@@ -77,7 +77,7 @@
 	#define THREADPROC_RETURN DWORD				// Thread routin return type
 	#define CLOSESOCKET ::closesocket			// Function to close a socket
 	#define SOCKLEN int                         // The socklen used by getsockname
-#elif (SLIB_OS == SLIB_OS_LINUX)
+#elif (OONET_OS == OONET_OS_LINUX)
 	#define MUTEX pthread_mutex_t				// Mutex handle
 	#define SOCKET int							// Socket handle
 	#define DWORD unsigned long					// realy needed?
@@ -95,7 +95,7 @@
 // Create TCHAR Macros and routines for systems that doens't exist
 #ifndef _T
     // Text macros
-    #if (SLIB_CHAR == SLIB_CHAR_WIDE)
+    #if (OONET_CHAR == OONET_CHAR_WIDE)
         #define __ST(quote) L##quote
         #define TCHAR wchar_t
 	#else
@@ -106,7 +106,7 @@
 
     // TCHAR Functions
     #define _snprintf snprintf
-	#if (SLIB_CHAR == SLIB_CHAR_WIDE)
+	#if (OONET_CHAR == OONET_CHAR_WIDE)
         #define _tprintf wprintf
         #define _sntprintf wprintf
         #define _tmain wmain
@@ -120,18 +120,18 @@
 
 // Externsive debug info on console output
 //#define SLIB_DEBUG_LEVEL_2
-#if defined(SLIB_DEBUG_LEVEL_1)
-    #define SLIB_DEBUG_L1(x) _tprintf(_T(" DBGL2: %s"), x)
-    #define SLIB_DEBUG_L2(x)
-#elif defined(SLIB_DEBUG_LEVEL_2)
-    #define SLIB_DEBUG_L1(x) _tprintf(_T(" DBGL1: %s"), x)
-    #define SLIB_DEBUG_L2(x) _tprintf(_T(" DBGL2: %s"), x)
+#if defined(OONET_DEBUG_LEVEL_1)
+    #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL2: %s"), x)
+    #define OONET_DEBUG_L2(x)
+#elif defined(OONET_DEBUG_LEVEL_2)
+    #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL1: %s"), x)
+    #define OONET_DEBUG_L2(x) _tprintf(_T(" DBGL2: %s"), x)
 #else
-    #define SLIB_DEBUG_L1(x)
-    #define SLIB_DEBUG_L2(x)
+    #define OONET_DEBUG_L1(x)
+    #define OONET_DEBUG_L2(x)
 #endif
 
-namespace Slib
+namespace OONet
 {
 	/* Type Definitions */
 	using std::wstring;	// Wide string
@@ -150,8 +150,8 @@ namespace Slib
 };
 
 /** Specific compiler options */
-#if (SLIB_OS == SLIB_OS_WIN32) && defined(_MSC_VER)
+#if (OONET_OS == OONET_OS_WIN32) && defined(_MSC_VER)
 	// C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
 	#pragma warning( disable : 4290 )	// Disable warning
 #endif
-#endif //!  SLIB_PLATFORM_H_DEFINED
+#endif //!  OONET_PLATFORM_H_DEFINED

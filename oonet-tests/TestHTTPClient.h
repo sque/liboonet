@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestHTTPClient
 		:public Test
@@ -11,34 +11,34 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestCtor, _T("Ctor() default"));
-		SLIB_DECLARESUBTESTEXC(TestCtorWrong, _T("Ctor() on imposible svr"), _T("ExceptionConnectionRefused"));
-		SLIB_DECLARESUBTEST(TestChangeHost, _T("ChangeHost() on not con"));
-		SLIB_DECLARESUBTEST(TestChangeHostConnected, _T("ChangeHost() on connected"));
-		SLIB_DECLARESUBTEST(TestReconnect, _T("Reconnect() check quality"));
-		SLIB_DECLARESUBTEST(TestReconnectWrong, _T("Reconnect() on no svr"));
-		SLIB_DECLARESUBTEST(TestSend, _T("Send() quality"));
-		SLIB_DECLARESUBTESTEXC(TestSendTimeOut, _T("Send() time out"), _T("ExceptionTimeOut"));
-		SLIB_DECLARESUBTESTEXC(TestSendWrongResponse, _T("Send() wrong response"), _T("ExceptionWrongFormat"));
-		SLIB_DECLARESUBTEST(TestReuseDisconnected, _T("Reuse disconencted"));
+		OONET_DECLARESUBTEST(TestCtor, _T("Ctor() default"));
+		OONET_DECLARESUBTESTEXC(TestCtorWrong, _T("Ctor() on imposible svr"), _T("ExceptionConnectionRefused"));
+		OONET_DECLARESUBTEST(TestChangeHost, _T("ChangeHost() on not con"));
+		OONET_DECLARESUBTEST(TestChangeHostConnected, _T("ChangeHost() on connected"));
+		OONET_DECLARESUBTEST(TestReconnect, _T("Reconnect() check quality"));
+		OONET_DECLARESUBTEST(TestReconnectWrong, _T("Reconnect() on no svr"));
+		OONET_DECLARESUBTEST(TestSend, _T("Send() quality"));
+		OONET_DECLARESUBTESTEXC(TestSendTimeOut, _T("Send() time out"), _T("ExceptionTimeOut"));
+		OONET_DECLARESUBTESTEXC(TestSendWrongResponse, _T("Send() wrong response"), _T("ExceptionWrongFormat"));
+		OONET_DECLARESUBTEST(TestReuseDisconnected, _T("Reuse disconencted"));
 	public:
 		// Constructor
 		TestHTTPClient()
 			:Test(_T("HTTP::Client"))
 		{
-			SLIB_REGISTERSUBTEST(TestCtor);
-			SLIB_REGISTERSUBTEST(TestCtorWrong);
-			SLIB_REGISTERSUBTEST(TestChangeHost);
-			SLIB_REGISTERSUBTEST(TestChangeHostConnected);
-			SLIB_REGISTERSUBTEST(TestReconnect);
-			SLIB_REGISTERSUBTEST(TestReconnectWrong);
-			SLIB_REGISTERSUBTEST(TestSend);
-			SLIB_REGISTERSUBTEST(TestSendTimeOut);
-			SLIB_REGISTERSUBTEST(TestSendWrongResponse);
-			SLIB_REGISTERSUBTEST(TestReuseDisconnected);
+			OONET_REGISTERSUBTEST(TestCtor);
+			OONET_REGISTERSUBTEST(TestCtorWrong);
+			OONET_REGISTERSUBTEST(TestChangeHost);
+			OONET_REGISTERSUBTEST(TestChangeHostConnected);
+			OONET_REGISTERSUBTEST(TestReconnect);
+			OONET_REGISTERSUBTEST(TestReconnectWrong);
+			OONET_REGISTERSUBTEST(TestSend);
+			OONET_REGISTERSUBTEST(TestSendTimeOut);
+			OONET_REGISTERSUBTEST(TestSendWrongResponse);
+			OONET_REGISTERSUBTEST(TestReuseDisconnected);
 		}
 
-	} ;	//! TestHTTPClient test
-};	//! Slib namespace
+	} ;	// !TestHTTPClient class
+};	// !OONet namespace
 
 #endif // HTTPCLIENT_TEST_H_DEFINED

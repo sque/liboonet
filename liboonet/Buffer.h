@@ -1,11 +1,11 @@
-#ifndef SLIB_BUFFER_H_DEFINED
-#define SLIB_BUFFER_H_DEFINED
+#ifndef OONET_BUFFER_H_DEFINED
+#define OONET_BUFFER_H_DEFINED
 
 #include "./platform.h"
 #include "./Mutex.h"
 #include "./BinaryData.h"
 
-namespace Slib
+namespace OONet
 {
 	//! A flexible multi-thread buffer object
 	/**
@@ -70,6 +70,6 @@ namespace Slib
 		{	return BinaryData::size();	}
 
 	};	// Buffer class
-};	// Slib namespace
+};	// !OONet namespace
 
-#endif //! SLIB_BUFFER_H_DEFINED
+#endif // !OONET_BUFFER_H_DEFINED

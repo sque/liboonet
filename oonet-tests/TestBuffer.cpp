@@ -1,7 +1,7 @@
 #include "TestBuffer.h"
 #include "Buffer.h"
 
-namespace Slib
+namespace OONet
 {
 	static TestBuffer theBufferTest;
 
@@ -303,4 +303,4 @@ namespace Slib
 
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

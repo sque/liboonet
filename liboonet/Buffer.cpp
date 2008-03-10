@@ -5,7 +5,7 @@
 
 #include "./Buffer.h"
 
-namespace Slib
+namespace OONet
 {
 	// Push at front
 	void Buffer::pushFront(const BinaryData & r)
@@ -88,4 +88,4 @@ namespace Slib
 			clear();
 		unlock();
 	}
-};	//! Slib namespace
+};	// !OONet namespace

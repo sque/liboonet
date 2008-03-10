@@ -4,7 +4,7 @@
 #include "BinaryData.h"
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestSemaphore
 		:public Test
@@ -12,22 +12,22 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTESTEXC(TestLockTimeOut, _T("Wait() time out 3s"), _T("ExceptionTimeOut"));
-		SLIB_DECLARESUBTEST(TestPostWait,  _T("Post() and Wait()") );
-		SLIB_DECLARESUBTEST(TestInitialState,  _T("Test initial state") );
-		SLIB_DECLARESUBTEST(TestDestructorSignaled,  _T("Destroy when signaled") );
+		OONET_DECLARESUBTESTEXC(TestLockTimeOut, _T("Wait() time out 3s"), _T("ExceptionTimeOut"));
+		OONET_DECLARESUBTEST(TestPostWait,  _T("Post() and Wait()") );
+		OONET_DECLARESUBTEST(TestInitialState,  _T("Test initial state") );
+		OONET_DECLARESUBTEST(TestDestructorSignaled,  _T("Destroy when signaled") );
 	public:
 		// Constructor
 		TestSemaphore()
 			:Test(_T("Semaphore"))
 		{
-			SLIB_REGISTERSUBTEST(TestLockTimeOut);
-			SLIB_REGISTERSUBTEST(TestPostWait);
-			SLIB_REGISTERSUBTEST(TestInitialState);
-			SLIB_REGISTERSUBTEST(TestDestructorSignaled);
+			OONET_REGISTERSUBTEST(TestLockTimeOut);
+			OONET_REGISTERSUBTEST(TestPostWait);
+			OONET_REGISTERSUBTEST(TestInitialState);
+			OONET_REGISTERSUBTEST(TestDestructorSignaled);
 		}
 
-	} ;	//! TestSemaphore test
-};	//! Slib namespace
+	} ;	// !TestSemaphore test
+};	// !OONet namespace
 
 #endif // MUTEX_TEST_H_DEFINED

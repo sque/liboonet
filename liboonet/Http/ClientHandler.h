@@ -1,12 +1,12 @@
-#ifndef SLIB_HTTP_CLIENTHANDLER_H
-#define SLIB_HTTP_CLIENTHANDLER_H
+#ifndef OONET_HTTP_CLIENTHANDLER_H
+#define OONET_HTTP_CLIENTHANDLER_H
 
 #include "../platform.h"
 #include "../InetPeer.h"
 #include "Response.h"
 #include "Request.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -53,7 +53,7 @@ namespace Slib
 			// When client is disconnected
 			virtual void OnDisconnect(){};
 		};
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace
 
-#endif //! SLIB_HTTP_CLIENTHANDLER_H
+#endif // !OONET_HTTP_CLIENTHANDLER_H

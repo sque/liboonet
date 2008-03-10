@@ -5,7 +5,7 @@
 #include "./PortInet.h"
 #include <sstream>
 
-namespace Slib
+namespace OONet
 {
 	// Default constructor
 	PortInet::PortInet() : in_port(0) {}
@@ -26,4 +26,4 @@ namespace Slib
 		_snprintf(cTmp, 100, "%u", in_port);
 		return cTmp;
 	}
-};  //! Slib namespace
+};  // !OONet namespace

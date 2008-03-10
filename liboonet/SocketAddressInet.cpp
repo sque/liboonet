@@ -5,7 +5,7 @@
 
 #include "./SocketAddressInet.h"
 
-namespace Slib
+namespace OONet
 {
 
     // Constructor with host and port
@@ -22,8 +22,8 @@ namespace Slib
     SocketAddressInet::SocketAddressInet(const SocketAddress & r):
         SocketAddress(FAMILY_INET)
     {   // Check that family is inet
-        SLIB_ASSERT(r.getAddressFamily() == FAMILY_INET);
+        OONET_ASSERT(r.getAddressFamily() == FAMILY_INET);
         // Copy data
 		SocketAddress::operator=(r);
     }
-};  // !Slib namespace
+};  // !OONet namespace

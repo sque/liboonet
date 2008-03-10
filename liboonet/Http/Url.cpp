@@ -5,7 +5,7 @@
 #include "Http/Url.h"
 #include "StringConverter.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -67,7 +67,7 @@ namespace Slib
 
 			// Check size
 			if (full_url.size() == 0)
-				SLIB_THROW_EXCEPTION(ExceptionWrongUrl, "Cannot parse an empty url..");
+				OONET_THROW_EXCEPTION(ExceptionWrongUrl, "Cannot parse an empty url..");
 
 			// Initialize data
 			scheme = hostport = resource = "";
@@ -78,7 +78,7 @@ namespace Slib
 				// Scheme
 				Offset1 = full_url.find("://");	// lest find scheme ending
 				if (Offset1 == string::npos)
-					SLIB_THROW_EXCEPTION(ExceptionWrongUrl, string("Cannot parse url: ") + full_url);
+					OONET_THROW_EXCEPTION(ExceptionWrongUrl, string("Cannot parse url: ") + full_url);
 
 				scheme = full_url.substr(0, Offset1);
 				tmp_host = full_url.substr(Offset1 + 3, string::npos);
@@ -167,5 +167,5 @@ namespace Slib
 			}
 			while((off_start = par_string.find('&', off_end)) != string::npos);
 		}
-	};	// HTTP namespace
-};	// Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace

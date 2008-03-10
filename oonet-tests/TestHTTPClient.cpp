@@ -1,7 +1,7 @@
 #include "TestHTTPClient.h"
 #include "Http/Client.h"
 
-namespace Slib
+namespace OONet
 {
 	TestHTTPClient theHTTPClient;
 
@@ -352,4 +352,4 @@ namespace Slib
 			return false;
 		return true;
 	}
-}; //! Slib namespace
+}; // !OONet namespace

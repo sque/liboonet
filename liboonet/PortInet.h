@@ -1,9 +1,9 @@
-#ifndef SLIB_PORTINET_H_INCLUDED
-#define SLIB_PORTINET_H_INCLUDED
+#ifndef OONET_PORTINET_H_INCLUDED
+#define OONET_PORTINET_H_INCLUDED
 
 #include "platform.h"
 
-namespace Slib
+namespace OONet
 {
 	//! Class representing the port of a host on Inet protocol
 	class PortInet
@@ -46,7 +46,7 @@ namespace Slib
 		ushort getNBOPort() const
 		{   return htons(in_port);  }
 
-	};  // PortInet class
-};	// Slib namespace
+	};  // !PortInet class
+};	// !OONet namespace
 
-#endif // SLIB_PORTINET_H_INCLUDED
+#endif // !OONET_PORTINET_H_INCLUDED

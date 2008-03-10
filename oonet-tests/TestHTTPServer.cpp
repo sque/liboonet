@@ -1,7 +1,7 @@
 #include "TestHTTPServer.h"
 #include "Http/Server.h"
 
-namespace Slib
+namespace OONet
 {
 	TestHTTPServer theHTTPServer;
 
@@ -307,4 +307,4 @@ namespace Slib
 
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

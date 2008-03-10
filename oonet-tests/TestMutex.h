@@ -4,7 +4,7 @@
 #include "BinaryData.h"
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestMutex
 		:public Test
@@ -12,23 +12,23 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestRecursiveMutex, _T("Assure Recursive mutex"));
-		SLIB_DECLARESUBTESTEXC(TestLockTimeOut, _T("Lock() time out 3s"), _T("ExceptionTimeOut"));
-		SLIB_DECLARESUBTEST(TestNonSafe,  _T("1000 Thread unsafe data") );
-		SLIB_DECLARESUBTEST(TestSafeData,  _T("1000 Thread safe data") );
+		OONET_DECLARESUBTEST(TestRecursiveMutex, _T("Assure Recursive mutex"));
+		OONET_DECLARESUBTESTEXC(TestLockTimeOut, _T("Lock() time out 3s"), _T("ExceptionTimeOut"));
+		OONET_DECLARESUBTEST(TestNonSafe,  _T("1000 Thread unsafe data") );
+		OONET_DECLARESUBTEST(TestSafeData,  _T("1000 Thread safe data") );
 
 	public:
 		// Constructor
 		TestMutex()
 			:Test(_T("Mutex"))
 		{
-			SLIB_REGISTERSUBTEST(TestRecursiveMutex);
-			SLIB_REGISTERSUBTEST(TestLockTimeOut);
-			SLIB_REGISTERSUBTEST(TestNonSafe);
-			SLIB_REGISTERSUBTEST(TestSafeData);
+			OONET_REGISTERSUBTEST(TestRecursiveMutex);
+			OONET_REGISTERSUBTEST(TestLockTimeOut);
+			OONET_REGISTERSUBTEST(TestNonSafe);
+			OONET_REGISTERSUBTEST(TestSafeData);
 		}
 
-	} ;	//! TestMutex test
-};	//! Slib namespace
+	} ;	// !TestMutex class
+};	// !OONet namespace
 
 #endif // MUTEX_TEST_H_DEFINED

@@ -1,9 +1,9 @@
-#ifndef HOSTINET_H_INCLUDED
-#define HOSTINET_H_INCLUDED
+#ifndef OONET_HOSTINET_H_INCLUDED
+#define OONET_HOSTINET_H_INCLUDED
 
 #include "platform.h"
 
-namespace Slib
+namespace OONet
 {
 	//! Class representing the address of host on Inet protocol
 	class HostInet
@@ -47,7 +47,7 @@ namespace Slib
 
 		//! Get the ip in Network-Byte-Order
 		ulong getNBOAddress() const;
-	};  // ! HostInet
+	};  // ! HostInet class
 
-};	// Slib namespace
-#endif // HOSTINET_H_INCLUDED
+};	// !OONet namespace
+#endif // !OONET_HOSTINET_H_INCLUDED

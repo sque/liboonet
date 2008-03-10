@@ -1,7 +1,7 @@
 #include "TestInetServer.h"
 #include "InetServer.h"
 
-namespace Slib
+namespace OONet
 {
 	TestInetServer theTestInetSErver;
 
@@ -431,4 +431,4 @@ namespace Slib
 		mEchoServer2.freeAllDisconnectedHandlers();
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

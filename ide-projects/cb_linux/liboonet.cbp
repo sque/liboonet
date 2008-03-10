@@ -90,7 +90,6 @@
 		<Unit filename="../../liboonet/Thread.cpp" />
 		<Unit filename="../../liboonet/Thread.h" />
 		<Unit filename="../../liboonet/ThreadPosix.cpp" />
-		<Unit filename="../../liboonet/ThreadWin32.cpp" />
 		<Unit filename="../../liboonet/config.h" />
 		<Unit filename="../../liboonet/platform.h" />
 		<Extensions>

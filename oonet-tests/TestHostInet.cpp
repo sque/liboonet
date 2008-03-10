@@ -1,7 +1,7 @@
 #include "TestHostInet.h"
 #include "HostInet.h"
 
-namespace Slib
+namespace OONet
 {
 	TestHostInet theTestHostInet;
 
@@ -107,7 +107,7 @@ namespace Slib
 
 	bool TestHostInet::TestGetInetHost::OnExecute()
 	{	HostInet t1(11324);
-		Slib::ulong u_temp = htonl(11324);
+		OONet::ulong u_temp = htonl(11324);
 
 		if (t1.getNBOAddress() != u_temp)
 			return false;
@@ -125,4 +125,4 @@ namespace Slib
 		return true;
 	}
 
-}; //! Slib namespace
+}; // !OONet namespace

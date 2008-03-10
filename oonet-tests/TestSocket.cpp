@@ -3,7 +3,7 @@
 #include "SocketAddressInet.h"
 #include "Thread.h"
 
-namespace Slib
+namespace OONet
 {
 	TestSocket theSocket;
 
@@ -154,7 +154,7 @@ namespace Slib
 			return false;
 		return true;
 	}
-};	 //! Slib namespace
+};	 // !OONet namespace
 /*
 
 class SimpleClient : public MT::Thread

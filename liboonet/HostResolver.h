@@ -1,12 +1,12 @@
-#ifndef SLIB_HOSTRESOLVER_H_INCLUDED
-#define SLIB_HOSTRESOLVER_H_INCLUDED
+#ifndef OONET_HOSTRESOLVER_H_INCLUDED
+#define OONET_HOSTRESOLVER_H_INCLUDED
 
 #include "platform.h"
 #include "HostInet.h"
 #include "config.h"
 #include "Exception.h"
 
-namespace Slib
+namespace OONet
 {
 
 	//! A class for resolving a dns to HostInet
@@ -18,7 +18,7 @@ namespace Slib
 	{
 	public:
 		// Exceptions
-		SLIB_DECLARE_EXCEPTION(ExceptionServerNotFound);
+		OONET_DECLARE_EXCEPTION(ExceptionServerNotFound);
 	private:
 		//! The official name of the host
 		string sOfficialName;
@@ -70,7 +70,7 @@ namespace Slib
 		//! Get the quantity of addresses of this host.
 		int getAddressCount() const;
 
-	};  // HostResolver class
-};	// Slib namespace
+	};  // !HostResolver class
+};	// !OONet namespace
 
-#endif // SLIB_HOSTRESOLVER_H_INCLUDED
+#endif // OONET_HOSTRESOLVER_H_INCLUDED

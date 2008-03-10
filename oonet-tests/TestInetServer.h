@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestInetServer
 		:public Test
@@ -11,38 +11,38 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestCtor, _T("Ctor()"));
-		SLIB_DECLARESUBTEST(TestStart, _T("Start()"));
-		SLIB_DECLARESUBTESTEXC(TestDoubleStart, _T("Start() double"), _T("ExceptionAlreadyConnected"));
-		SLIB_DECLARESUBTEST(TestStartRecovery, _T("Start() recovery"));
-		SLIB_DECLARESUBTEST(TestStop, _T("Stop() quality test"));
-		SLIB_DECLARESUBTESTEXC(TestStopWrong1, _T("Start() wrong"), _T("ExceptionNotConnected"));
-		SLIB_DECLARESUBTESTEXC(TestStopWrong2, _T("Start() wrong"), _T("ExceptionNotConnected"));
-		SLIB_DECLARESUBTEST(TestStopCleanup, _T("Stop() cleanup"));
-		SLIB_DECLARESUBTEST(TestFree, _T("Free() quality"));
-		SLIB_DECLARESUBTESTEXC(TestFreeWrong1, _T("Free() wrong"), _T("ExceptionResourceBusy"));
-		SLIB_DECLARESUBTESTEXC(TestFreeWrong2, _T("Free() wrong"), _T("ExceptionAccessDenied"));
-		SLIB_DECLARESUBTEST(TestFreeDisconnected, _T("FreeDisconnected()"));
+		OONET_DECLARESUBTEST(TestCtor, _T("Ctor()"));
+		OONET_DECLARESUBTEST(TestStart, _T("Start()"));
+		OONET_DECLARESUBTESTEXC(TestDoubleStart, _T("Start() double"), _T("ExceptionAlreadyConnected"));
+		OONET_DECLARESUBTEST(TestStartRecovery, _T("Start() recovery"));
+		OONET_DECLARESUBTEST(TestStop, _T("Stop() quality test"));
+		OONET_DECLARESUBTESTEXC(TestStopWrong1, _T("Start() wrong"), _T("ExceptionNotConnected"));
+		OONET_DECLARESUBTESTEXC(TestStopWrong2, _T("Start() wrong"), _T("ExceptionNotConnected"));
+		OONET_DECLARESUBTEST(TestStopCleanup, _T("Stop() cleanup"));
+		OONET_DECLARESUBTEST(TestFree, _T("Free() quality"));
+		OONET_DECLARESUBTESTEXC(TestFreeWrong1, _T("Free() wrong"), _T("ExceptionResourceBusy"));
+		OONET_DECLARESUBTESTEXC(TestFreeWrong2, _T("Free() wrong"), _T("ExceptionAccessDenied"));
+		OONET_DECLARESUBTEST(TestFreeDisconnected, _T("FreeDisconnected()"));
 	public:
 		// Constructor
 		TestInetServer()
 			:Test(_T("InetServer"))
 		{
-			SLIB_REGISTERSUBTEST(TestCtor);
-			SLIB_REGISTERSUBTEST(TestStart);
-			SLIB_REGISTERSUBTEST(TestDoubleStart);
-			SLIB_REGISTERSUBTEST(TestStartRecovery);
-			SLIB_REGISTERSUBTEST(TestStop);
-			SLIB_REGISTERSUBTEST(TestStopWrong1);
-			SLIB_REGISTERSUBTEST(TestStopWrong2);
-			SLIB_REGISTERSUBTEST(TestStopCleanup);
-			SLIB_REGISTERSUBTEST(TestFree);
-			SLIB_REGISTERSUBTEST(TestFreeWrong1);
-			SLIB_REGISTERSUBTEST(TestFreeWrong2);
-			SLIB_REGISTERSUBTEST(TestFreeDisconnected);
+			OONET_REGISTERSUBTEST(TestCtor);
+			OONET_REGISTERSUBTEST(TestStart);
+			OONET_REGISTERSUBTEST(TestDoubleStart);
+			OONET_REGISTERSUBTEST(TestStartRecovery);
+			OONET_REGISTERSUBTEST(TestStop);
+			OONET_REGISTERSUBTEST(TestStopWrong1);
+			OONET_REGISTERSUBTEST(TestStopWrong2);
+			OONET_REGISTERSUBTEST(TestStopCleanup);
+			OONET_REGISTERSUBTEST(TestFree);
+			OONET_REGISTERSUBTEST(TestFreeWrong1);
+			OONET_REGISTERSUBTEST(TestFreeWrong2);
+			OONET_REGISTERSUBTEST(TestFreeDisconnected);
 		}
 
-	} ;	//! TestInetServer test
-};	//! Slib namespace
+	} ;	// !TestInetServer class
+};	// !OONet namespace
 
 #endif // INETCLIENT_TEST_H_DEFINED

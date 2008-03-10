@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestUrl
 		:public Test
@@ -11,54 +11,54 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestUrlParamCtor, _T("UrlParam() default"));
-		SLIB_DECLARESUBTEST(TestUrlParamParseCtor, _T("UrlParam Ctor() parse"));
-		SLIB_DECLARESUBTEST(TestUrlParamCopyCtor, _T("UrlParam copy Ctor()"));
-		SLIB_DECLARESUBTEST(TestUrlParamParse,  _T("UrlParam 100k Parse()"));
-		SLIB_DECLARESUBTEST(TestUrlParamCopyOperator, _T("UrlParam operator="));
-		SLIB_DECLARESUBTEST(TestUrlCtor, _T("Ctor() default"));
-		SLIB_DECLARESUBTEST(TestUrlCtorString, _T("Ctor() from string"));
-		SLIB_DECLARESUBTEST(TestCopyCtor, _T("Ctor() copy"));
-		SLIB_DECLARESUBTEST(TestCopyOperatorUrl, _T("operator= (Url)"));
-		SLIB_DECLARESUBTEST(TestCopyOperatorString, _T("operator= (string)"));
-		SLIB_DECLARESUBTESTEXC(TestSplit3Wrong1, _T("Split3() wrong"), _T("ExceptionWrongUrl"));
-		SLIB_DECLARESUBTESTEXC(TestSplit3Wrong2, _T("Split3() wrong"), _T("ExceptionWrongUrl"));
-		SLIB_DECLARESUBTEST(TestSplit3Speed, _T("Split3() speed 10K"));
-		SLIB_DECLARESUBTEST(TestSplit3Quality, _T("Split3() quality"));
-		SLIB_DECLARESUBTESTEXC(TestSplit4Wrong1, _T("Split4() wrong"), _T("ExceptionWrongUrl"));
-		SLIB_DECLARESUBTEST(TestSplit4Quality, _T("Split4() quality"));
-		SLIB_DECLARESUBTEST(TestSplit4Speed, _T("Split4() speed 10K"));
-		SLIB_DECLARESUBTESTEXC(TestSplit5Wrong1, _T("Split5() wrong"), _T("ExceptionWrongUrl"));
-		SLIB_DECLARESUBTEST(TestSplit5Quality, _T("Split5() quality"));
-		SLIB_DECLARESUBTEST(TestSplit5Speed, _T("Split5() speed 10K"));
+		OONET_DECLARESUBTEST(TestUrlParamCtor, _T("UrlParam() default"));
+		OONET_DECLARESUBTEST(TestUrlParamParseCtor, _T("UrlParam Ctor() parse"));
+		OONET_DECLARESUBTEST(TestUrlParamCopyCtor, _T("UrlParam copy Ctor()"));
+		OONET_DECLARESUBTEST(TestUrlParamParse,  _T("UrlParam 100k Parse()"));
+		OONET_DECLARESUBTEST(TestUrlParamCopyOperator, _T("UrlParam operator="));
+		OONET_DECLARESUBTEST(TestUrlCtor, _T("Ctor() default"));
+		OONET_DECLARESUBTEST(TestUrlCtorString, _T("Ctor() from string"));
+		OONET_DECLARESUBTEST(TestCopyCtor, _T("Ctor() copy"));
+		OONET_DECLARESUBTEST(TestCopyOperatorUrl, _T("operator= (Url)"));
+		OONET_DECLARESUBTEST(TestCopyOperatorString, _T("operator= (string)"));
+		OONET_DECLARESUBTESTEXC(TestSplit3Wrong1, _T("Split3() wrong"), _T("ExceptionWrongUrl"));
+		OONET_DECLARESUBTESTEXC(TestSplit3Wrong2, _T("Split3() wrong"), _T("ExceptionWrongUrl"));
+		OONET_DECLARESUBTEST(TestSplit3Speed, _T("Split3() speed 10K"));
+		OONET_DECLARESUBTEST(TestSplit3Quality, _T("Split3() quality"));
+		OONET_DECLARESUBTESTEXC(TestSplit4Wrong1, _T("Split4() wrong"), _T("ExceptionWrongUrl"));
+		OONET_DECLARESUBTEST(TestSplit4Quality, _T("Split4() quality"));
+		OONET_DECLARESUBTEST(TestSplit4Speed, _T("Split4() speed 10K"));
+		OONET_DECLARESUBTESTEXC(TestSplit5Wrong1, _T("Split5() wrong"), _T("ExceptionWrongUrl"));
+		OONET_DECLARESUBTEST(TestSplit5Quality, _T("Split5() quality"));
+		OONET_DECLARESUBTEST(TestSplit5Speed, _T("Split5() speed 10K"));
 	public:
 		// Constructor
 		TestUrl()
 			:Test(_T("HTTP::Url"))
 		{
-			SLIB_REGISTERSUBTEST(TestUrlParamCtor);
-			SLIB_REGISTERSUBTEST(TestUrlParamParseCtor);
-			SLIB_REGISTERSUBTEST(TestUrlParamCopyCtor);
-			SLIB_REGISTERSUBTEST(TestUrlParamParse);
-			SLIB_REGISTERSUBTEST(TestUrlParamCopyOperator);
-			SLIB_REGISTERSUBTEST(TestUrlCtor);
-			SLIB_REGISTERSUBTEST(TestUrlCtorString);
-			SLIB_REGISTERSUBTEST(TestCopyCtor);
-			SLIB_REGISTERSUBTEST(TestCopyOperatorUrl);
-			SLIB_REGISTERSUBTEST(TestCopyOperatorString);
-			SLIB_REGISTERSUBTEST(TestSplit3Wrong1);
-			SLIB_REGISTERSUBTEST(TestSplit3Wrong2);
-			SLIB_REGISTERSUBTEST(TestSplit3Speed);
-			SLIB_REGISTERSUBTEST(TestSplit3Quality);
-			// Must reade the full specification to make proper tests SLIB_REGISTERSUBTEST(TestSplit4Wrong1);
-			SLIB_REGISTERSUBTEST(TestSplit4Quality);
-			SLIB_REGISTERSUBTEST(TestSplit4Speed);
-			SLIB_REGISTERSUBTEST(TestSplit5Wrong1);
-			SLIB_REGISTERSUBTEST(TestSplit5Quality);
-			SLIB_REGISTERSUBTEST(TestSplit5Speed);
+			OONET_REGISTERSUBTEST(TestUrlParamCtor);
+			OONET_REGISTERSUBTEST(TestUrlParamParseCtor);
+			OONET_REGISTERSUBTEST(TestUrlParamCopyCtor);
+			OONET_REGISTERSUBTEST(TestUrlParamParse);
+			OONET_REGISTERSUBTEST(TestUrlParamCopyOperator);
+			OONET_REGISTERSUBTEST(TestUrlCtor);
+			OONET_REGISTERSUBTEST(TestUrlCtorString);
+			OONET_REGISTERSUBTEST(TestCopyCtor);
+			OONET_REGISTERSUBTEST(TestCopyOperatorUrl);
+			OONET_REGISTERSUBTEST(TestCopyOperatorString);
+			OONET_REGISTERSUBTEST(TestSplit3Wrong1);
+			OONET_REGISTERSUBTEST(TestSplit3Wrong2);
+			OONET_REGISTERSUBTEST(TestSplit3Speed);
+			OONET_REGISTERSUBTEST(TestSplit3Quality);
+			// Must reade the full specification to make proper tests OONET_REGISTERSUBTEST(TestSplit4Wrong1);
+			OONET_REGISTERSUBTEST(TestSplit4Quality);
+			OONET_REGISTERSUBTEST(TestSplit4Speed);
+			OONET_REGISTERSUBTEST(TestSplit5Wrong1);
+			OONET_REGISTERSUBTEST(TestSplit5Quality);
+			OONET_REGISTERSUBTEST(TestSplit5Speed);
 		}
 
-	} ;	//! TestThread test
-};	//! Slib namespace
+	} ;	// !TestUrl class
+};	// !OONet namespace
 
 #endif // URL_TEST_H_DEFINED

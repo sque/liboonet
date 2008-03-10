@@ -2,7 +2,7 @@
 #include "Semaphore.h"
 #include "Thread.h"
 
-namespace Slib
+namespace OONet
 {
 	TestSemaphore theTestSemaphore;
 
@@ -65,4 +65,4 @@ namespace Slib
 		mySema.post();	// Signale it and wait to destruct on exit of function
 		return true;
 	}
-};
+};	// !OONet namespace

@@ -1,10 +1,10 @@
 #include "./StringConverter.h"
 
-namespace Slib
+namespace OONet
 {
 	wstring StringConverter::_convert_to_wide(const string &r)
 	{
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 		// Calculate size of wchar needed
 		size_t sAr = r.size() * sizeof(wchar_t);
 
@@ -16,7 +16,7 @@ namespace Slib
 		if (sAr <= 0)
 		{
 			delete pAr;
-			SLIB_THROW_EXCEPTION(Slib::ExceptionConvertionUnsupported, "Cannot convert ANSI string to unicode");
+			OONET_THROW_EXCEPTION(OONet::ExceptionConvertionUnsupported, "Cannot convert ANSI string to unicode");
 		}
 
 		// Create object
@@ -40,12 +40,12 @@ namespace Slib
 		}
 
 		return wideText;
-		//SLIB_THROW_EXCEPTION(ExceptionUnimplemented, _T("String convertion is not supported yet on this platform!"));
+		//OONET_THROW_EXCEPTION(ExceptionUnimplemented, _T("String convertion is not supported yet on this platform!"));
 #endif
 
 	}
 	string StringConverter::_convert_to_mbr(const wstring &r) 	{
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 		// Calculate size of char needed
 		size_t sAr = r.size() + 2;
 
@@ -57,7 +57,7 @@ namespace Slib
 		if (sAr <= 0)
 		{
 			delete pAr;
-			SLIB_THROW_EXCEPTION(Slib::ExceptionConvertionUnsupported, "Cannot convert unicode back to ANSI");
+			OONET_THROW_EXCEPTION(OONet::ExceptionConvertionUnsupported, "Cannot convert unicode back to ANSI");
 		}
 
 		// Create object
@@ -79,13 +79,13 @@ namespace Slib
 		{
 			wideChar = *It;
 			if (wideChar > 255)
-				SLIB_THROW_EXCEPTION(ExceptionConvertionUnsupported, _T("Cannot convert this unicode string to ansi!"));
+				OONET_THROW_EXCEPTION(ExceptionConvertionUnsupported, _T("Cannot convert this unicode string to ansi!"));
 			ansiChar = (char) wideChar;
 			ansiText += ansiChar;
 		}
 		return ansiText;
-		//SLIB_THROW_EXCEPTION(ExceptionUnimplemented, _T("String convertion is not supported yet on this platform!"));
+		//OONET_THROW_EXCEPTION(ExceptionUnimplemented, _T("String convertion is not supported yet on this platform!"));
 #endif
 	}
 
-};	//! Slib namespace
+};	// !OONet namespace

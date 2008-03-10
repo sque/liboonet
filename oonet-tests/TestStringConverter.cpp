@@ -1,7 +1,7 @@
 #include "TestStringConverter.h"
 #include "StringConverter.h"
 
-namespace Slib
+namespace OONet
 {
 	TestStringConverter theTestStringConverter;
 
@@ -92,4 +92,4 @@ namespace Slib
 			return false;
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

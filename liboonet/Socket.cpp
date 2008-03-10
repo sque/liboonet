@@ -5,7 +5,7 @@
 #include "./Socket.h"
 #include <algorithm>
 
-namespace Slib
+namespace OONet
 {
 	MULTIREFERNCE_OBJECTFILE(Socket, SOCKET);
 
@@ -40,7 +40,7 @@ namespace Slib
 
 	////////////////////////////////////////
 	// OS Specific implementations
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 	int Socket::_win32_get_last_error()
 	{
 		int errorNum;
@@ -74,7 +74,7 @@ namespace Slib
 			return ERR_UNKNWON;
 		}
 	}
-#elif (SLIB_OS == SLIB_OS_LINUX)
+#elif (OONET_OS == OONET_OS_LINUX)
 	int Socket::_linux_get_last_error()
 	{
 		switch(errno)
@@ -108,9 +108,9 @@ namespace Slib
 
 	int Socket::_get_last_error()
 	{
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 		return _win32_get_last_error();
-#elif (SLIB_OS == SLIB_OS_LINUX)
+#elif (OONET_OS == OONET_OS_LINUX)
 		return _linux_get_last_error();
 #endif
 	}
@@ -121,31 +121,31 @@ namespace Slib
 		switch(errcode)
 		{
 		case ERR_ALREADY_CONNECTED:
-			SLIB_THROW_EXCEPTION(ExceptionAlreadyConnected, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionAlreadyConnected, ErrorMessage);
 		case ERR_ACCESS_DENIED:
-			SLIB_THROW_EXCEPTION(ExceptionAccessDenied, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionAccessDenied, ErrorMessage);
 		case ERR_NOT_A_SOCKET:
-			SLIB_THROW_EXCEPTION(ExceptionInvalidSocket, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionInvalidSocket, ErrorMessage);
 		case ERR_ADDRESS_IN_USE:
-			SLIB_THROW_EXCEPTION(ExceptionAddressInUse, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionAddressInUse, ErrorMessage);
 		case ERR_NOT_SUPPORTED:
-			SLIB_THROW_EXCEPTION(ExceptionNotSupported, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionNotSupported, ErrorMessage);
 		case ERR_CONNECTION_ABORTED:
-			SLIB_THROW_EXCEPTION(ExceptionConnectionAborted, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionConnectionAborted, ErrorMessage);
 		case ERR_INVALID_ARGUMENT:
-			SLIB_THROW_EXCEPTION(ExceptionWrongArgument, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionWrongArgument, ErrorMessage);
 		case ERR_NOT_CONNECTED:
-			SLIB_THROW_EXCEPTION(ExceptionNotConnected, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionNotConnected, ErrorMessage);
 		case ERR_ADDRESS_NOT_AVAIL:
-			SLIB_THROW_EXCEPTION(ExceptionAddressNotAvailable, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionAddressNotAvailable, ErrorMessage);
 		case ERR_CONNECTION_REFUSED:
-			SLIB_THROW_EXCEPTION(ExceptionConnectionRefused, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionConnectionRefused, ErrorMessage);
 		case ERR_CONNECTION_RESET:
-			SLIB_THROW_EXCEPTION(ExceptionConnectionReset, ErrorMessage);
+			OONET_THROW_EXCEPTION(ExceptionConnectionReset, ErrorMessage);
 		}
 
 		// Default
-		SLIB_THROW_EXCEPTION(ExceptionSystemError, ErrorMessage);
+		OONET_THROW_EXCEPTION(ExceptionSystemError, ErrorMessage);
 	}
 
 
@@ -271,9 +271,9 @@ namespace Slib
     // Shutdown socket
     void Socket::shutdown() throw(Exception)
     {
-#if (SLIB_OS == SLIB_OS_LINUX)
+#if (OONET_OS == OONET_OS_LINUX)
         ::shutdown(GetHandle(), SHUT_RDWR);
-#elif (SLIB_OS == SLIB_OS_WIN32)
+#elif (OONET_OS == OONET_OS_WIN32)
 		::shutdown(GetHandle(), SD_BOTH);
 #endif
     }
@@ -292,13 +292,13 @@ namespace Slib
 	// Set option on socket
     void Socket::setOption(int level, int opt_name, const void * opt_val, int opt_size)
     {
-#if (SLIB_OS == SLIB_OS_LINUX)
+#if (OONET_OS == OONET_OS_LINUX)
         if (0 != setsockopt(GetHandle(), level, opt_name, opt_val, opt_size))
             _throw_last_error("Error on setting socket option SetOption()");
-#elif (SLIB_OS == SLIB_OS_WIN32)
+#elif (OONET_OS == OONET_OS_WIN32)
 		if (0 != setsockopt(GetHandle(), level, opt_name, (char*)opt_val, opt_size))
             _throw_last_error("Error on setting socket option SetOption()");
 #endif
     }
 
-};  // !Slib namespace
+};  // !OONet namespace

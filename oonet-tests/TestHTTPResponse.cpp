@@ -1,7 +1,7 @@
 #include "TestHTTPResponse.h"
 #include "Http/Response.h"
 
-namespace Slib
+namespace OONet
 {
 	TestHTTPResponse theTestHTTPResponse;
 
@@ -238,4 +238,4 @@ namespace Slib
 			return false;
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

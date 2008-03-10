@@ -5,7 +5,7 @@
 #include "./InetServer.h"
 #include <algorithm>
 
-namespace Slib
+namespace OONet
 {
 	// Constructor
 	InetServer::InetServer()
@@ -72,7 +72,7 @@ namespace Slib
 	{
 		// Check if it is already started
 		if (bRunning)
-			SLIB_THROW_EXCEPTION(ExceptionAlreadyConnected,
+			OONET_THROW_EXCEPTION(ExceptionAlreadyConnected,
 				"Server is already started!!!");
 
 		// Save address
@@ -100,7 +100,7 @@ namespace Slib
 	// Stop server
 	void InetServer::stop()
 	{	if (! bRunning)
-			SLIB_THROW_EXCEPTION(ExceptionNotConnected,
+			OONET_THROW_EXCEPTION(ExceptionNotConnected,
 				"Cannot stop server while it is not started!");
 
 		// Call prestop event
@@ -138,17 +138,17 @@ namespace Slib
 
 		// Check if it is null
 		if (pToBeRemoved == NULL)
-			SLIB_THROW_EXCEPTION(ExceptionAccessDenied,
+			OONET_THROW_EXCEPTION(ExceptionAccessDenied,
 				"Cannot free a NULL pointer!");
 
 		if (pToBeRemoved->isConnected())
-			SLIB_THROW_EXCEPTION(ExceptionResourceBusy,
+			OONET_THROW_EXCEPTION(ExceptionResourceBusy,
 				"Peer is connected, cannot remove him"
 				);
 
 		it= std::find(mClList.begin(), mClList.end(), pToBeRemoved);
 		if (it == mClList.end())
-			SLIB_THROW_EXCEPTION(ExceptionNotFound,
+			OONET_THROW_EXCEPTION(ExceptionNotFound,
 				"Cannot find peer in clients list!"
 				);
 
@@ -195,4 +195,4 @@ namespace Slib
 		catch(std::exception)
 		{}
 	}
-};	//! Slib namespace
+};	// !OONet namespace

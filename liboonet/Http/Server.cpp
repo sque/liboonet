@@ -4,7 +4,7 @@
 */
 #include "Http/Server.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -33,5 +33,5 @@ namespace Slib
 			return true;
 		}
 
-	};	//! HTTP namespace
-};	//! Slib namespace
+	};	// !HTTP namespace
+};	// !OONet namespace

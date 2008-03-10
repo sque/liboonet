@@ -1,11 +1,11 @@
-#ifndef SLIB_HTTP_REQUEST_H_DEFINED
-#define SLIB_HTTP_REQUEST_H_DEFINED
+#ifndef OONET_HTTP_REQUEST_H_DEFINED
+#define OONET_HTTP_REQUEST_H_DEFINED
 
 #include "../platform.h"
 #include "Packet.h"
 #include "Url.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -64,8 +64,8 @@ namespace Slib
 			@see HTTP::Packet::parse() for further explanation.
 			*/
 			virtual size_t parse(const BinaryData & data);
-		};	// Request class
-	};	// HTTP namespace
-};	// Slib namespace
+		};	// !Request class
+	};	// !HTTP namespace
+};	// !OONet namespace
 
-#endif // SLIB_HTTP_REQUEST_H_DEFINED
+#endif // !OONET_HTTP_REQUEST_H_DEFINED

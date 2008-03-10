@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace Slib
+namespace OONet
 {
 	class TestBuffer
 		:public Test
@@ -11,41 +11,41 @@ namespace Slib
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		SLIB_DECLARESUBTEST(TestCtor, _T("Ctor() "));
-		SLIB_DECLARESUBTEST(TestSize, _T("Size() quality "));
-		SLIB_DECLARESUBTEST(TestSizeSpeed, _T("Size() speed 1Mtimes"));
-		SLIB_DECLARESUBTEST(TestFlush, _T("Flush()"));
-		SLIB_DECLARESUBTEST(TestFlushSpeed, _T("Flush() speed 100Ktimes"));
-		SLIB_DECLARESUBTEST(TestByteOrder, _T("Push,Pop order check"));
-		SLIB_DECLARESUBTEST(TestPeekPopCompability, _T("Peek&Pop must be same"));
-		SLIB_DECLARESUBTEST(TestPushFrontSpeed, _T("PushFront() speed 1k"));
-		SLIB_DECLARESUBTEST(TestPopFrontSpeed, _T("PopFront() speed 100k"));
-		SLIB_DECLARESUBTEST(TestPeekFrontSpeed, _T("PeekFront() speed 100k"));
-		SLIB_DECLARESUBTEST(TestPushBackSpeed, _T("PushFront() speed 1k"));
-		SLIB_DECLARESUBTEST(TestPopBackSpeed, _T("PopFront() speed 100k"));
-		SLIB_DECLARESUBTEST(TestPeekBackSpeed, _T("PeekFront() speed 100k"));
+		OONET_DECLARESUBTEST(TestCtor, _T("Ctor() "));
+		OONET_DECLARESUBTEST(TestSize, _T("Size() quality "));
+		OONET_DECLARESUBTEST(TestSizeSpeed, _T("Size() speed 1Mtimes"));
+		OONET_DECLARESUBTEST(TestFlush, _T("Flush()"));
+		OONET_DECLARESUBTEST(TestFlushSpeed, _T("Flush() speed 100Ktimes"));
+		OONET_DECLARESUBTEST(TestByteOrder, _T("Push,Pop order check"));
+		OONET_DECLARESUBTEST(TestPeekPopCompability, _T("Peek&Pop must be same"));
+		OONET_DECLARESUBTEST(TestPushFrontSpeed, _T("PushFront() speed 1k"));
+		OONET_DECLARESUBTEST(TestPopFrontSpeed, _T("PopFront() speed 100k"));
+		OONET_DECLARESUBTEST(TestPeekFrontSpeed, _T("PeekFront() speed 100k"));
+		OONET_DECLARESUBTEST(TestPushBackSpeed, _T("PushFront() speed 1k"));
+		OONET_DECLARESUBTEST(TestPopBackSpeed, _T("PopFront() speed 100k"));
+		OONET_DECLARESUBTEST(TestPeekBackSpeed, _T("PeekFront() speed 100k"));
 
 	public:
 		// Constructor
 		TestBuffer()
 			:Test(_T("Buffer"))
 		{
-			SLIB_REGISTERSUBTEST(TestCtor);
-			SLIB_REGISTERSUBTEST(TestSize);
-			SLIB_REGISTERSUBTEST(TestSizeSpeed);
-			SLIB_REGISTERSUBTEST(TestFlush);
-			SLIB_REGISTERSUBTEST(TestFlushSpeed);
-			SLIB_REGISTERSUBTEST(TestByteOrder);
-			SLIB_REGISTERSUBTEST(TestPeekPopCompability);
-			SLIB_REGISTERSUBTEST(TestPushFrontSpeed);
-			SLIB_REGISTERSUBTEST(TestPopFrontSpeed);
-			SLIB_REGISTERSUBTEST(TestPeekFrontSpeed);
-			SLIB_REGISTERSUBTEST(TestPushBackSpeed);
-			SLIB_REGISTERSUBTEST(TestPopBackSpeed);
-			SLIB_REGISTERSUBTEST(TestPeekBackSpeed);
+			OONET_REGISTERSUBTEST(TestCtor);
+			OONET_REGISTERSUBTEST(TestSize);
+			OONET_REGISTERSUBTEST(TestSizeSpeed);
+			OONET_REGISTERSUBTEST(TestFlush);
+			OONET_REGISTERSUBTEST(TestFlushSpeed);
+			OONET_REGISTERSUBTEST(TestByteOrder);
+			OONET_REGISTERSUBTEST(TestPeekPopCompability);
+			OONET_REGISTERSUBTEST(TestPushFrontSpeed);
+			OONET_REGISTERSUBTEST(TestPopFrontSpeed);
+			OONET_REGISTERSUBTEST(TestPeekFrontSpeed);
+			OONET_REGISTERSUBTEST(TestPushBackSpeed);
+			OONET_REGISTERSUBTEST(TestPopBackSpeed);
+			OONET_REGISTERSUBTEST(TestPeekBackSpeed);
 		}
 
-	} ;	//! BinaryData test
-};	//! Slib namespace
+	} ;	// !TestBuffer
+};	// !OONet namespace
 
 #endif // BUFFER_TEST_H_INCLUDED

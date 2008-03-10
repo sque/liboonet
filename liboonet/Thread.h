@@ -1,19 +1,15 @@
-#ifndef THREAD_H_INCLUDED
-#define THREAD_H_INCLUDED
+#ifndef OONET_MT_THREAD_H_INCLUDED
+#define OONET_MT_THREAD_H_INCLUDED
 
 #include "platform.h"
 #include "Mutex.h"
 #include "Exception.h"
 #include "Semaphore.h"
 
-namespace Slib
+namespace OONet
 {
-
-
     namespace MT
     {
-
-
 		//! A thread abstract class.
         /**
             Thread is used as base class to create threads. The idea is to deriver a class that implements
@@ -26,7 +22,7 @@ namespace Slib
         class Thread : private Mutex
         {
         	public:
-				SLIB_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
+				OONET_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
 
             private:
                 //! The handle of the thread
@@ -142,6 +138,6 @@ namespace Slib
 
         };  // Thread class
     };  // MT namespace
-};	// Slib namespace
+};	// !OONet namespace
 
-#endif //!  THREAD_H_INCLUDED
+#endif // !OONET_MT_THREAD_H_INCLUDED

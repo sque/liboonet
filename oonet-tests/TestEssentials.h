@@ -7,7 +7,7 @@
 #include "Exception.h"
 #include "Test.h"
 
-using namespace Slib;
+using namespace OONet;
 
 // Constant bytes
 const Byte c_m = (Byte) 'm';

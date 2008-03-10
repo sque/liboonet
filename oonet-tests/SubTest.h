@@ -1,10 +1,10 @@
-#ifndef SLIB_TESTS_SUBTESTBASE_H_DEFINED
-#define SLIB_TESTS_SUBTESTBASE_H_DEFINED
+#ifndef OONET_TESTS_SUBTESTBASE_H_DEFINED
+#define OONET_TESTS_SUBTESTBASE_H_DEFINED
 
 #include "Slib.h"
 #include <time.h>
 
-namespace Slib
+namespace OONet
 {
 	class Test;	// Prototype of Test class
 
@@ -42,19 +42,19 @@ namespace Slib
 	};	//! SubTest class
 
 	// Fast declare a subtest
-#define SLIB_DECLARESUBTEST(testtype, name) \
+#define OONET_DECLARESUBTEST(testtype, name) \
 		class testtype :public SubTest	\
 		{	public: testtype()	\
 				:SubTest(name) {} \
 			protected: virtual bool OnExecute(); \
 		};
 
-#define SLIB_DECLARESUBTESTEXC(testtype, name, exctype) \
+#define OONET_DECLARESUBTESTEXC(testtype, name, exctype) \
 		class testtype :public SubTest	\
 		{	public: testtype()	\
 				:SubTest(name, exctype) {} \
 			protected: virtual bool OnExecute(); \
 		};
-};	//! Slib namespace
+};	// !OONet namespace
 
-#endif //! SLIB_TESTS_SUBTESTBASE_H_DEFINED
+#endif // !OONET_TESTS_SUBTESTBASE_H_DEFINED

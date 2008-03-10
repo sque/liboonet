@@ -4,7 +4,7 @@
 */
 #include "Semaphore.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace MT
 	{
@@ -59,8 +59,8 @@ namespace Slib
             // Try to time out sema
             if ((0 != sem_timedwait(&semHandle, &expireTime))
                 &&  (errno == ETIMEDOUT))
-                SLIB_THROW_EXCEPTION(ExceptionTimeOut, _T("Semaphore was abandoned"));
+                OONET_THROW_EXCEPTION(ExceptionTimeOut, _T("Semaphore was abandoned"));
 
 		}
-	}; // MT namepsace
-};	// Slib namespace
+	}; // !MT namepsace
+};	// !OONet namespace

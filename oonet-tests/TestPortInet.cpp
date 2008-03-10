@@ -1,7 +1,7 @@
 #include "TestPortInet.h"
 #include "PortInet.h"
 
-namespace Slib
+namespace OONet
 {
 	TestPortInet theTestPortInet;
 
@@ -85,7 +85,7 @@ namespace Slib
 
 	bool TestPortInet::TestGetInetPort::OnExecute()
 	{	PortInet t1(32);
-		Slib::ushort u_temp = htons(32);
+		OONet::ushort u_temp = htons(32);
 
 		if (t1.getNBOPort() != u_temp)
 			return false;
@@ -93,4 +93,4 @@ namespace Slib
 			return false;
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

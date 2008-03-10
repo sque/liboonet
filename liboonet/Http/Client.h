@@ -1,5 +1,5 @@
-#ifndef SLIB_HTTP_CLIENT_H_INCLUDED
-#define SLIB_HTTP_CLIENT_H_INCLUDED
+#ifndef OONET_HTTP_CLIENT_H_INCLUDED
+#define OONET_HTTP_CLIENT_H_INCLUDED
 
 #include "../platform.h"
 #include "../BinaryData.h"
@@ -10,7 +10,7 @@
 #include "Response.h"
 #include "Request.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace HTTP
 	{
@@ -107,7 +107,7 @@ namespace Slib
 
 			// An event when an error is raised when collecting data
 			virtual void OnError(Exception &e){}
-		};	// Client class
-	};	// HTTP namespace
-};	// Slib namespace
-#endif // SLIB_HTTP_CLIENT_H_INCLUDED
+		};	// !Client class
+	};	// !HTTP namespace
+};	// !OONet namespace
+#endif // !OONET_HTTP_CLIENT_H_INCLUDED

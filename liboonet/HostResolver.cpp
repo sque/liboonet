@@ -5,7 +5,7 @@
 #include "./HostResolver.h"
 #include "./StringConverter.h"
 
-namespace Slib
+namespace OONet
 {
 	// Copy constructor
 	HostResolver::HostResolver(const HostResolver &r) throw()
@@ -56,7 +56,7 @@ namespace Slib
 		}
 
 		// Error not found
-		SLIB_THROW_EXCEPTION(ExceptionServerNotFound,
+		OONET_THROW_EXCEPTION(ExceptionServerNotFound,
 			string("Cannot resolve host's address: ") + hostname);
 	}
 
@@ -73,7 +73,7 @@ namespace Slib
 		// Check if there is that address
 		if (a >= mAddresses)
 		{
-			SLIB_THROW_EXCEPTION(ExceptionNotFound,
+			OONET_THROW_EXCEPTION(ExceptionNotFound,
 				"Requested address out of address-list limits!");
 			return HostInet::ANY;
 		}
@@ -91,4 +91,4 @@ namespace Slib
 	{
 		return mAddresses;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

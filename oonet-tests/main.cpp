@@ -3,7 +3,7 @@
 #include "TestEssentials.h"
 
 using namespace std;
-using namespace Slib;
+using namespace OONet;
 
 typedef map<string, Test *> TestMap_t;
 typedef map<string, Test *>::iterator TestMapIterator;
@@ -22,7 +22,7 @@ int _tmain(int argc, TCHAR * argv[])
 	bool res;
 
 	// For windows
-#if (SLIB_OS ==  SLIB_OS_WIN32)
+#if (OONET_OS ==  OONET_OS_WIN32)
 	WSADATA wsaData;
 	WORD wVersionRequested = MAKEWORD( 2, 2 );
 	WSAStartup(wVersionRequested, &wsaData);
@@ -65,7 +65,7 @@ int _tmain(int argc, TCHAR * argv[])
         }
     }
 
-#if (SLIB_OS == SLIB_OS_WIN32)
+#if (OONET_OS == OONET_OS_WIN32)
 	WSACleanup();
 #endif
 	_tprintf(_T("Finished.. PRESS anykey to continue\n"));

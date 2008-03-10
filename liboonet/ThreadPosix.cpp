@@ -4,7 +4,7 @@
 */
 #include "Thread.h"
 
-namespace Slib
+namespace OONet
 {
 	namespace MT
 	{
@@ -14,7 +14,7 @@ namespace Slib
             // Check if an instance already exists
             if (bRunning == true)
             {
-                SLIB_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
+                OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
 					_T("Thread alreay running!")
 				);
                 return;   // Error thread already started
@@ -34,11 +34,11 @@ namespace Slib
                 switch(ret_error)
                 {
                 case EAGAIN:
-                    SLIB_THROW_EXCEPTION(ExceptionTryAgain,
+                    OONET_THROW_EXCEPTION(ExceptionTryAgain,
                         _T("Cannot start thread, you must try later, or maximum threads reached!"));
                     break;
                 default:
-                    SLIB_THROW_EXCEPTION(ExceptionSystemError,
+                    OONET_THROW_EXCEPTION(ExceptionSystemError,
                         _T("Cannot start thread for unknown reason.."));
                     break;
 				};
@@ -52,7 +52,7 @@ namespace Slib
         }
 
         void Thread::_system_join(ulong tm_timeoutms) throw(Exception)
-        {   SLIB_DEBUG_L2("Thread::_linux_join()_\n");
+        {   OONET_DEBUG_L2("Thread::_linux_join()_\n");
 
             // Skip if thread is already joine
             if (bJoined)
@@ -66,12 +66,12 @@ namespace Slib
                     switch(errno)
                     {
                     case EINVAL:
-						SLIB_THROW_EXCEPTION(ExceptionNotSupported,
+						OONET_THROW_EXCEPTION(ExceptionNotSupported,
 							_T("This implementation of pthread doens't create joinable theads")
 						);
                         return;
                     default:
-						SLIB_THROW_EXCEPTION(ExceptionNotSupported,
+						OONET_THROW_EXCEPTION(ExceptionNotSupported,
 							_T("Unknown error when trying to join thread")
 						);
                         return;
@@ -91,10 +91,10 @@ namespace Slib
         {	int err;
 			err = usleep( tm_sleepms * 1000);		// Unix usleep gets microseconds
 			if (err == EINTR)
-				SLIB_THROW_EXCEPTION(ExceptionInterrupted,
+				OONET_THROW_EXCEPTION(ExceptionInterrupted,
 					_T("Thread::Sleep() Action interrupted by a singal!")
 					);
         }
 
-	};	// MT namespace
-};	// Slib namespace
+	};	// !MT namespace
+};	// !OONet namespace

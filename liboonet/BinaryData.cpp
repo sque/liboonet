@@ -5,7 +5,7 @@
 #include "./BinaryData.h"
 #include <math.h>
 
-namespace Slib
+namespace OONet
 {
 	///////////////////////////////////////////////
 	// Constants
@@ -43,7 +43,7 @@ namespace Slib
 		// In any case check it... (realloc doesn't throw exceptions)
 		if (ptemp == NULL)
 			// Throw our's exception
-			SLIB_THROW_EXCEPTION(ExceptionBadAllocation, "Cannot allocate memory for BinaryData");
+			OONET_THROW_EXCEPTION(ExceptionBadAllocation, "Cannot allocate memory for BinaryData");
 
 
 		// Save new size of buffer
@@ -80,7 +80,7 @@ namespace Slib
 		sBuff(0),
 		pData(&dummyByte)
 	{
-		SLIB_ASSERT(p_data != NULL);
+		OONET_ASSERT(p_data != NULL);
 
 		// Scale memory to fit data
 		_scale_mem(sz_data);
@@ -172,7 +172,7 @@ namespace Slib
 	Byte BinaryData::operator[](size_t offset) const throw(Exception)
 	{
 		if (offset > sData)
-			SLIB_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
 		return pData[offset];
 	}
 	// Add action
@@ -267,7 +267,7 @@ namespace Slib
 	{
 		// If requested is more than available, then throw
 		if (offset > sData)
-			SLIB_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
 
 		return BinaryData(pData, offset);
 	}
@@ -277,7 +277,7 @@ namespace Slib
 	{
 		// If requested is more than available, then return empty
 		if (offset > sData)
-			SLIB_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
 
 		return BinaryData(pData + offset, sData - offset);
 	}
@@ -286,7 +286,7 @@ namespace Slib
 	BinaryData BinaryData::slice(size_t offset, size_t sz) const
 	{
 		if (offset + sz > sData)
-			SLIB_THROW_EXCEPTION(ExceptionNotFound, "Offset and size can't work in the size of this data");
+			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset and size can't work in the size of this data");
 
 		return BinaryData(pData + offset, sz);
 	}
@@ -296,7 +296,7 @@ namespace Slib
 
 		// Check if there are data
 		if (pattern.sData == 0)
-			SLIB_THROW_EXCEPTION(ExceptionWrongArgument, "Pattern is empty! Cannot search for something that does not exists");
+			OONET_THROW_EXCEPTION(ExceptionWrongArgument, "Pattern is empty! Cannot search for something that does not exists");
 
         // Check if data fits in search
         if (pattern.sData > sData)
@@ -328,4 +328,4 @@ namespace Slib
 		// Empty data
 		sData = 0;
 	}
-};	//! Slib Namespace
+};	// !OONet namespace

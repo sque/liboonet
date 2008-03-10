@@ -1,6 +1,6 @@
 #include "TestHTTPHeaders.h"
 #include "Http/Headers.h"
-namespace Slib
+namespace OONet
 {
 	TestHTTPHeaders theHTTPHeaders;
 
@@ -461,4 +461,4 @@ namespace Slib
 
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace

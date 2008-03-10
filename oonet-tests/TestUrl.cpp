@@ -1,7 +1,7 @@
 #include "TestUrl.h"
 #include "Http/Url.h"
 
-namespace Slib
+namespace OONet
 {
 	TestUrl theTestUrl;
 
@@ -425,4 +425,4 @@ namespace Slib
 			return false;
 		return true;
 	}
-};	//! Slib namespace
+};	// !OONet namespace
