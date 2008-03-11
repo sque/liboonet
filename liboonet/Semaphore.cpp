@@ -1,6 +1,6 @@
 #include "./Semaphore.h"
 
-namespace Slib
+namespace OONet
 {
     namespace MT
     {
@@ -97,4 +97,4 @@ namespace Slib
 		}
 
     };
-};
+};	// !OONet
