@@ -10,6 +10,6 @@ AC_PROG_RANLIB
 AC_LANG_CPLUSPLUS
 AC_HEADER_STDC
 
-AC_CONFIG_FILES([Makefile liboonet/Makefile])
+AC_CONFIG_FILES([Makefile liboonet/Makefile oonet-tests/Makefile])
 AC_OUTPUT
 

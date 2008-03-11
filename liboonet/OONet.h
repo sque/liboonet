@@ -1,6 +1,6 @@
 /*
 	Name:			Object Oriented Network Library
-	Author:			Paliouras Konstantinos; emeil: squarious_(at)_gmail_(dot)_com
+	Author:			SqUe emeil: squarious_(at)_gmail_(dot)_com
 	Description:	Started as S-Library providing various stuff and ended as network library.
 
 					A library for talking with network in object oriented style. Using all the
@@ -10,8 +10,6 @@
 	Website:		https://launchpad.net/liboonet
 	Version:		0.1
 	Revision:		10 Mar 2008
-
-	Copyright (C) 2003-2008  Paliouras Konstantinos
 
 	" TERMS OF USE "
 	READ THIS BEFORE YOU USE THIS LIBRARY
