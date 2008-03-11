@@ -161,7 +161,7 @@ namespace OONet
     BinaryData Socket::receive(size_t max) throw(Exception)
     {   // Allocate space for incoming data
         Byte * pTemp = new Byte[max];
-        ssize_t szReceived;
+        int szReceived;
         BinaryData received;
 
         // Get data
@@ -186,7 +186,7 @@ namespace OONet
     // Send
     size_t Socket::send(const BinaryData & trans_data) throw (Exception)
     {
-        ssize_t sent = ::send(GetHandle(),(char *) trans_data.getDataPtr(), trans_data.size(), 0);
+        int sent = ::send(GetHandle(),(char *) trans_data.getDataPtr(), trans_data.size(), 0);
         if (sent <= 0)
         {
 			// Throw exception

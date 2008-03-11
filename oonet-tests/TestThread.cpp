@@ -185,9 +185,9 @@ namespace OONet
 #if (OONET_OS == OONET_OS_WIN32)
 		HANDLE hOrigThread, hThread;
 
-		bThread.Start();
+		bThread.start();
 		// Get Handle and duplicate it
-		hOrigThread = bThread.GetThreadHandle();
+		hOrigThread = bThread.getThreadHandle();
 		DuplicateHandle(
 		  GetCurrentProcess(),
 		  hOrigThread,

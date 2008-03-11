@@ -8,14 +8,13 @@ namespace OONet
 {
 	namespace MT
 	{
-
         void Thread::_system_start(void) throw(Exception)
         {
             // Check if an instance already exists
             if (bRunning == true)
             {
                 OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
-					_T("Thread alreay running!")
+					"Thread alreay running!")
 				);
                 return;   // Error thread already started
             }
@@ -35,11 +34,11 @@ namespace OONet
                 {
                 case EAGAIN:
                     OONET_THROW_EXCEPTION(ExceptionTryAgain,
-                        _T("Cannot start thread, you must try later, or maximum threads reached!"));
+                        "Cannot start thread, you must try later, or maximum threads reached!");
                     break;
                 default:
                     OONET_THROW_EXCEPTION(ExceptionSystemError,
-                        _T("Cannot start thread for unknown reason.."));
+                        "Cannot start thread for unknown reason..");
                     break;
 				};
                 return;	// Error on starting the thread
@@ -67,13 +66,11 @@ namespace OONet
                     {
                     case EINVAL:
 						OONET_THROW_EXCEPTION(ExceptionNotSupported,
-							_T("This implementation of pthread doens't create joinable theads")
-						);
+							"This implementation of pthread doens't create joinable theads");
                         return;
                     default:
 						OONET_THROW_EXCEPTION(ExceptionNotSupported,
-							_T("Unknown error when trying to join thread")
-						);
+							"Unknown error when trying to join thread");
                         return;
                     }
                 }
@@ -92,8 +89,7 @@ namespace OONet
 			err = usleep( tm_sleepms * 1000);		// Unix usleep gets microseconds
 			if (err == EINTR)
 				OONET_THROW_EXCEPTION(ExceptionInterrupted,
-					_T("Thread::Sleep() Action interrupted by a singal!")
-					);
+					"Thread::Sleep() Action interrupted by a singal!");
         }
 
 	};	// !MT namespace

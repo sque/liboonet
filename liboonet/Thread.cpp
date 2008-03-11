@@ -18,76 +18,6 @@ namespace OONet
         #define NOTHREAD 0
     #endif
 
-
-        // Start Implementation
-    #if (OONET_OS == OONET_OS_LINUX)
-    #elif (OONET_OS == OONET_OS_WIN32)
-        void Thread::_win32_start(void) throw(Exception)
-        {
-            if (bRunning == true)
-            {
-                OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
-					"Thread alreay running!"
-				);
-                return;   // Error thread already started
-            }
-
-            // Clear previous handles if exist
-            if (hThread != NOTHREAD)
-            {
-                CloseHandle(hThread);	// Close handle
-                hThread = NOTHREAD;		// Mark it unused
-            }
-
-            /////////////////
-            // Start Thread
-            hThread = CreateThread(NULL,	// No security attributes
-                0,							// Default stack size
-                this->_thread_func,			// The address of the thread procedure
-                this,						// A pointer to this object
-                0,							// No creation flag
-                &ThreadId);					// The thread id
-
-            if (hThread == NULL)
-            {
-                OONET_THROW_EXCEPTION(ExceptionSystemError,
-					"Cannot start thread.."
-				);
-                return;	// Error on starting the thread
-            }
-
-            // Thread started...
-            bRunning = true;
-            return;		// Thread started succesfully
-        }
-    #endif
-
-
-    #if (OONET_OS == OONET_OS_LINUX)
-	#elif (OONET_OS == OONET_OS_WIN32)
-		void Thread::_win32_join(long ms) throw(Exception)
-        {
-			DWORD dwResult;
-			// Wait for joining
-			dwResult = WaitForSingleObject(hThread, ms);
-
-			switch(dwResult)
-			{
-			case WAIT_TIMEOUT:
-				OONET_DEBUG_L2(_T("Thread::_win32_join() time-out!\n"));
-				OONET_THROW_EXCEPTION(ExceptionTimeOut,
-					"TimeOut waiting to join thread!");
-				return;
-			case WAIT_OBJECT_0:
-				OONET_DEBUG_L2(_T("Thread::_win32_join() succeed!\n"));
-				return;
-			default:
-                OONET_DEBUG_L1(_T("Thread::_win32_join() failed for unknown reason!\n"));
-				OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to join thread!");
-			}
-		}
-    #endif
-
         void Thread::_soft_join(ulong tm_timeoutms) throw(Exception)
         {   OONET_DEBUG_L2("Thread::_soft_join()_\n");
             // Local variables
@@ -183,20 +113,5 @@ namespace OONet
             unlock();
             return;
         }
-//
-//        // Stops the calling thread for a period of time
-//        void Thread::sleep(long tm_sleepms) throw(Exception)
-//        {
-//            #if (_OS == OONET_OS_WIN32)
-//                ::Sleep( tm_sleepms); 	//Windows sleep gets mseconds
-//            #elif (OONET_OS == OONET_OS_LINUX)
-//                int err;
-//                err = usleep( tm_sleepms * 1000.0);		// Unix sleep gets seconds
-//                if (err == EINTR)
-//                    OONET_THROW_EXCEPTION(ExceptionInterrupted,
-//                        _T("Thread::Sleep() Action interrupted by a singal!")
-//                        );
-//            #endif
-//        }
     };  // !MT namespace
 };	// !OONet namespace

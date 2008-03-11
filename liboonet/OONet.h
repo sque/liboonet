@@ -197,15 +197,15 @@
 	// Linking directives
 	#if defined(_DEBUG)
 		#if defined(_DLL)
-			#pragma comment(lib, "oonetLD.lib")
+			#pragma comment(lib, "liboonetLD.lib")
 		#else
-			#pragma comment(lib, "oonetD.lib")
+			#pragma comment(lib, "liboonetD.lib")
 		#endif
 	#else
 		#if defined(_DLL)
-			#pragma comment(lib, "oonetL.lib")
+			#pragma comment(lib, "liboonetL.lib")
 		#else
-			#pragma comment(lib, "oonet.lib")
+			#pragma comment(lib, "liboonet.lib")
 		#endif
 	#endif // _DEBUG
 

@@ -59,7 +59,7 @@ namespace OONet
             // Try to time out sema
             if ((0 != sem_timedwait(&semHandle, &expireTime))
                 &&  (errno == ETIMEDOUT))
-                OONET_THROW_EXCEPTION(ExceptionTimeOut, _T("Semaphore was abandoned"));
+                OONET_THROW_EXCEPTION(ExceptionTimeOut, "Semaphore was abandoned");
 
 		}
 	}; // !MT namepsace

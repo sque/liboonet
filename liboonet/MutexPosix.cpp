@@ -57,12 +57,13 @@ namespace OONet
             int ret_error = pthread_mutex_timedlock(&hMutex, &expireTime);
             if (ret_error == ETIMEDOUT)
             {
-                OONET_THROW_EXCEPTION(ExceptionTimeOut, _T("TimeOute waiting to lock mutex!)"));
+                OONET_THROW_EXCEPTION(ExceptionTimeOut, 
+					"TimeOut waiting to lock mutex!");
             }
             else
             {
                 OONET_THROW_EXCEPTION(ExceptionSystemError,
-					_T("Unable to lock mutex!"));
+					"Unable to lock mutex!");
             }
 		}
 	}; // !MT namespace
