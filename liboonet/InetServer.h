@@ -1,7 +1,7 @@
 #ifndef OONET_INETSERVER_H_DEFINED
 #define OONET_INETSERVER_H_DEFINED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Thread.h"
 #include "SocketAddressInet.h"
 #include "InetPeer.h"

@@ -74,11 +74,11 @@
 		<Unit filename="../../liboonet/MultiReference.h" />
 		<Unit filename="../../liboonet/Mutex.h" />
 		<Unit filename="../../liboonet/MutexPosix.cpp" />
+		<Unit filename="../../liboonet/OONet.h" />
 		<Unit filename="../../liboonet/PortInet.cpp" />
 		<Unit filename="../../liboonet/PortInet.h" />
 		<Unit filename="../../liboonet/Semaphore.h" />
 		<Unit filename="../../liboonet/SemaphorePosix.cpp" />
-		<Unit filename="../../liboonet/Slib.h" />
 		<Unit filename="../../liboonet/Socket.cpp" />
 		<Unit filename="../../liboonet/Socket.h" />
 		<Unit filename="../../liboonet/SocketAddress.cpp" />
@@ -90,8 +90,6 @@
 		<Unit filename="../../liboonet/Thread.cpp" />
 		<Unit filename="../../liboonet/Thread.h" />
 		<Unit filename="../../liboonet/ThreadPosix.cpp" />
-		<Unit filename="../../liboonet/config.h" />
-		<Unit filename="../../liboonet/platform.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

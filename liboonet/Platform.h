@@ -1,10 +1,7 @@
-/*************************************************************************
-	Project: 	S-lib
-	File:		platform.h
-	Descr:		This file is an disambigution for OS-specific libraries
-	Version:	0.3.x
-	Revision:	17 September 2006
+/**
+ @file This file is an disambigution for OS-specific libraries
 */
+
 #ifndef OONET_PLATFORM_H_DEFINED
 #define OONET_PLATFORM_H_DEFINED
 
@@ -13,8 +10,6 @@
 #define OONET_OS_WIN32	1
 #define OONET_OS_LINUX	2
 #define OONET_OS_UNKNOWN 3
-#define OONET_CHAR_NARROW 1
-#define OONET_CHAR_WIDE   2
 
 #if defined(WIN32)
 	#define OONET_OS	OONET_OS_WIN32
@@ -27,6 +22,8 @@
 
 /************************************/
 // Unicode - Ansi Abstraction Layer
+#define OONET_CHAR_NARROW 1
+#define OONET_CHAR_WIDE   2
 #if (defined(UNICODE) || defined(_UNICODE))
 	#define OONET_CHAR OONET_CHAR_WIDE
 #else
@@ -43,7 +40,7 @@
 #include <ctype.h>
 #include <time.h>
 
-// WIN_32 libraries
+// Win32 libraries
 #if (OONET_OS == OONET_OS_WIN32)
 	#include <winsock2.h>
 	#include <windows.h>
@@ -115,11 +112,10 @@
         #define _sntprintf snprintf
         #define _tmain main
     #endif
-#endif  //! _T
+#endif  // !_T
 
 
 // Externsive debug info on console output
-//#define SLIB_DEBUG_LEVEL_2
 #if defined(OONET_DEBUG_LEVEL_1)
     #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL2: %s"), x)
     #define OONET_DEBUG_L2(x)
@@ -148,6 +144,13 @@ namespace OONet
 		const static ulong Infinity = -1;
 	};
 };
+
+/*******************************
+ * Configuration
+ **/
+#define OONET_RESOLVER_MAX_ADDRESSES  256	// Maximum addresses resolved by HostResolver
+#define OONET_DEFAULT_HTTP_NEWLINE "\r\n"	// Type of new line added at new packets
+
 
 /** Specific compiler options */
 #if (OONET_OS == OONET_OS_WIN32) && defined(_MSC_VER)

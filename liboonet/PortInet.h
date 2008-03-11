@@ -1,7 +1,7 @@
 #ifndef OONET_PORTINET_H_INCLUDED
 #define OONET_PORTINET_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 
 namespace OONet
 {

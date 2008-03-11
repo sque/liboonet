@@ -1,7 +1,7 @@
 #ifndef OONET_INETPEER_H_DEFINED
 #define OONET_INETPEER_H_DEFINED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Thread.h"
 #include "Socket.h"
 #include "SocketAddressInet.h"

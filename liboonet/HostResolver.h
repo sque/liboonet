@@ -1,9 +1,8 @@
 #ifndef OONET_HOSTRESOLVER_H_INCLUDED
 #define OONET_HOSTRESOLVER_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 #include "HostInet.h"
-#include "config.h"
 #include "Exception.h"
 
 namespace OONet
@@ -23,7 +22,7 @@ namespace OONet
 		//! The official name of the host
 		string sOfficialName;
 		//! The address list saved in host byte-order.
-		HostInet aAddressList[RESOLVER_MAX_ADDRESSES];
+		HostInet aAddressList[OONET_RESOLVER_MAX_ADDRESSES];
 		//! The quantity of addresses
 		int mAddresses;
 	public:

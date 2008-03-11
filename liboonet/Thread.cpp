@@ -4,7 +4,6 @@
  */
 
 #include "./Thread.h"
-#include "./config.h"
 
 namespace OONet
 {

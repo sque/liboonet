@@ -1,7 +1,7 @@
 #ifndef OONET_EXCEPTION_H_DEFINED
 #define OONET_EXCEPTION_H_DEFINED
 
-#include "platform.h"
+#include "OONet.h"
 
 namespace OONet
 {

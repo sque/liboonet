@@ -1,7 +1,7 @@
 #ifndef OONET_MT_SEMAPHORE_H_INCLUDED
 #define OONET_MT_SEMAPHORE_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Exception.h"
 
 namespace OONet

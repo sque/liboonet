@@ -1,7 +1,7 @@
 #ifndef OONET_INETCLIENT_H_INCLUDED
 #define OONET_INETCLIENT_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 #include "InetPeer.h"
 
 namespace OONet

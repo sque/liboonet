@@ -1,6 +1,6 @@
 #ifndef OONET_HTTP_URL_H_DEFINED
 #define OONET_HTTP_URL_H_DEFINED
-#include "../platform.h"
+#include "../OONet.h"
 #include "../Exception.h"
 
 #include <vector>

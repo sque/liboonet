@@ -1,7 +1,7 @@
 #ifndef OONET_HOSTINET_H_INCLUDED
 #define OONET_HOSTINET_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 
 namespace OONet
 {

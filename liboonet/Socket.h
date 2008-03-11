@@ -1,7 +1,7 @@
 #ifndef OONET_SOCKET_H_DEFINED
 #define OONET_SOCKET_H_DEFINED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Buffer.h"
 #include "Exception.h"
 #include "SocketAddress.h"

@@ -1,7 +1,7 @@
 #ifndef OONET_HTTP_SERVER_H_DEFINED
 #define OONET_HTTP_SERVER_H_DEFINED
 
-#include "../platform.h"
+#include "../OONet.h"
 #include "../InetServer.h"
 #include "../SocketAddressInet.h"
 #include "Response.h"

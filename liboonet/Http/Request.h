@@ -1,7 +1,7 @@
 #ifndef OONET_HTTP_REQUEST_H_DEFINED
 #define OONET_HTTP_REQUEST_H_DEFINED
 
-#include "../platform.h"
+#include "../OONet.h"
 #include "Packet.h"
 #include "Url.h"
 
@@ -51,7 +51,7 @@ namespace OONet
 				the packet, it will render the title from variables: Request::http_type, Request::url and Request::http_version.
 			@see HTTP::Packet::render() for further explanation.
 			*/
-			virtual BinaryData render(const string & new_line = DEFAULT_HTTP_NEWLINE);
+			virtual BinaryData render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse an HTTP Request packet
 			/**

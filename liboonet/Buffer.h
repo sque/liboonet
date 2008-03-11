@@ -1,7 +1,7 @@
 #ifndef OONET_BUFFER_H_DEFINED
 #define OONET_BUFFER_H_DEFINED
 
-#include "./platform.h"
+#include "./OONet.h"
 #include "./Mutex.h"
 #include "./BinaryData.h"
 

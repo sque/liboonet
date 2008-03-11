@@ -1,7 +1,7 @@
 #ifndef OONET_MT_MUTEX_H_DEFINED
 #define OONET_MT_MUTEX_H_DEFINED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Exception.h"
 
 namespace OONet

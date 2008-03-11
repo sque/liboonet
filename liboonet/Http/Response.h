@@ -1,7 +1,7 @@
 #ifndef OONET_HTTP_RESPONSE_H_DEFINED
 #define OONET_HTTP_RESPONSE_H_DEFINED
 
-#include "../platform.h"
+#include "../OONet.h"
 #include "Headers.h"
 #include "Packet.h"
 
@@ -42,7 +42,7 @@ namespace OONet
 				the packet, it will render the title from variables: Response::ErrorCode and Response::ErrorMsg.
 			@see HTTP::Packet::render() for further explanation.
 			*/
-			virtual BinaryData render(const string & new_line = DEFAULT_HTTP_NEWLINE);
+			virtual BinaryData render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse an HTTP Response packet
 			/**

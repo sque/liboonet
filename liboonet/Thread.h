@@ -1,7 +1,7 @@
 #ifndef OONET_MT_THREAD_H_INCLUDED
 #define OONET_MT_THREAD_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Mutex.h"
 #include "Exception.h"
 #include "Semaphore.h"

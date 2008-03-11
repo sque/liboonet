@@ -1,7 +1,7 @@
 #ifndef OONET_BASE64_H_DEFINED
 #define OONET_BASE64_H_DEFINED
 
-#include "platform.h"
+#include "OONet.h"
 #include "BinaryData.h"
 
 namespace OONet

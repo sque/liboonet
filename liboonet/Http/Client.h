@@ -1,7 +1,7 @@
 #ifndef OONET_HTTP_CLIENT_H_INCLUDED
 #define OONET_HTTP_CLIENT_H_INCLUDED
 
-#include "../platform.h"
+#include "../OONet.h"
 #include "../BinaryData.h"
 #include "../Exception.h"
 #include "../SocketAddressInet.h"

@@ -28,7 +28,7 @@ liboonet_a_include_HEADERS = \
 	Base64.h \
 	HostInet.h \
 	MultiReference.h \
-	Slib.h \
+	OONet.h \
 	Thread.h \
 	BinaryData.h \
 	HostResolver.h \
@@ -38,7 +38,6 @@ liboonet_a_include_HEADERS = \
 	InetClient.h \
 	platform.h \
 	SocketAddressInet.h \
-	config.h \
 	InetPeer.h \
 	PortInet.h \
 	Socket.h \

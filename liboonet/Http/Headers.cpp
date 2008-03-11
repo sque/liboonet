@@ -3,7 +3,6 @@
 @brief Implementation of HTTP::Headers class
 */
 #include "Http/Headers.h"
-#include "config.h"
 
 namespace OONet
 {

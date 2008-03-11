@@ -1,7 +1,7 @@
 #ifndef OONET_HTTP_CLIENTHANDLER_H
 #define OONET_HTTP_CLIENTHANDLER_H
 
-#include "../platform.h"
+#include "../OONet.h"
 #include "../InetPeer.h"
 #include "Response.h"
 #include "Request.h"

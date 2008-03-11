@@ -1,6 +1,7 @@
 #ifndef OONET_SOCKETADDRESSINET_H_INCLUDED
 #define OONET_SOCKETADDRESSINET_H_INCLUDED
 
+#include "OONet.h"
 #include "SocketAddress.h"
 #include "HostResolver.h"
 #include "PortInet.h"

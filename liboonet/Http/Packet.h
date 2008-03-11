@@ -1,7 +1,7 @@
 #ifndef OONET_HTTP_PACKET_H
 #define OONET_HTTP_PACKET_H
 
-#include "../platform.h"
+#include "../OONet.h"
 #include "Headers.h"
 
 namespace OONet
@@ -53,7 +53,7 @@ namespace OONet
 			@param nl_str The string to use for new lines.
 			@return The rendered packet, ready for transmition
 			*/
-			virtual BinaryData render(const string & nl_str = DEFAULT_HTTP_NEWLINE);
+			virtual BinaryData render(const string & nl_str = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse HTTP traffic and extract the leading HTTP packet
 			/**

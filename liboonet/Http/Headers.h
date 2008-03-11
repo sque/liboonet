@@ -2,8 +2,7 @@
 #define OONET_HTTP_HEADERS_H_DEFINED
 
 #include <map>
-#include "../config.h"
-#include "../platform.h"
+#include "../OONet.h"
 #include "../BinaryData.h"
 #include "../Exception.h"
 
@@ -111,7 +110,7 @@ namespace OONet
 			@param new_line The string to use for indicating new line
 			@remarks The output string will not have a leading or trailing new line.
 			*/
-			string render(const string & new_line = DEFAULT_HTTP_NEWLINE);
+			string render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse headers from HTTP format
 			/**

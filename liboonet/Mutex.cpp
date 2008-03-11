@@ -6,7 +6,7 @@
 #include "./Mutex.h"
 #include <iostream>
 
-namespace Slib
+namespace OONet
 {
 	namespace MT
 	{
@@ -116,4 +116,4 @@ namespace Slib
 		#endif
 		}
 	}; //! MT namespace
-};	//! Slib namespace
+};	//! OONet namespace

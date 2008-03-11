@@ -1,7 +1,7 @@
 #ifndef OONET_TESTS_SUBTESTBASE_H_DEFINED
 #define OONET_TESTS_SUBTESTBASE_H_DEFINED
 
-#include "Slib.h"
+#include "OONet.h"
 #include <time.h>
 
 namespace OONet

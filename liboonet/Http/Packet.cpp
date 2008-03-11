@@ -3,7 +3,7 @@
 @brief Implementation of HTTP::Packet class
 */
 #include "Http/Packet.h"
-#include "platform.h"
+#include "OONet.h"
 
 namespace OONet
 {

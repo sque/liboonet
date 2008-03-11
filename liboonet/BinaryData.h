@@ -1,7 +1,7 @@
 #ifndef OONET_BINARYDATA_H_INCLUDED
 #define OONET_BINARYDATA_H_INCLUDED
 
-#include "platform.h"
+#include "OONet.h"
 #include "Exception.h"
 
 namespace OONet
