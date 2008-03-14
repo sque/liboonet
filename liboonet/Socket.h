@@ -126,7 +126,7 @@ namespace OONet
         /**
 			It will send data to socket that will be transmitted
 			to the other end of communication.
-		@param trans_data The data to transimt through socket
+		@param trans_data The data to transmit through socket
 		@return The number of data that was actually transmitted.
 		*/
         size_t send(const BinaryData &trans_data) throw (Exception);
