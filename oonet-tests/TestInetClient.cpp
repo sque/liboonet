@@ -18,7 +18,7 @@ namespace OONet
 			:lSocket(Socket::FAMILY_INET, _inetType, Socket::PROTO_DEFAULT)
 		{
 		    int reuse = 1;
-		    lSocket.setOption(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+		    lSocket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 			lSocket.bind(SocketAddressInet(HostResolver("127.0.0.1"), PortInet(55123)));
 			lSocket.listen(1000);
 			for(int i = 0;i < 1000;i++)
@@ -29,7 +29,7 @@ namespace OONet
 		~MiniServer()
 		{
 			lSocket.shutdown();
-			lSocket.close();
+			lSocket = Socket();
 			join(MT::Infinity);
 
 			for(int i = 0;i < 1000;i++)
@@ -55,7 +55,7 @@ namespace OONet
 		void StopS()
 		{
 		    lSocket.shutdown();
-			lSocket.close();
+			lSocket = Socket();
 			join(MT::Infinity);
 
 			for(int i = 0;i < 1000;i++)

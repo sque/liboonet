@@ -71,7 +71,6 @@
 		<Unit filename="../../liboonet/InetPeer.h" />
 		<Unit filename="../../liboonet/InetServer.cpp" />
 		<Unit filename="../../liboonet/InetServer.h" />
-		<Unit filename="../../liboonet/MultiReference.h" />
 		<Unit filename="../../liboonet/Mutex.h" />
 		<Unit filename="../../liboonet/MutexPosix.cpp" />
 		<Unit filename="../../liboonet/OONet.h" />

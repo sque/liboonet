@@ -18,44 +18,54 @@ namespace OONet
 		bool bRunning;
 		Exception LastExc;
 		bool bException;
+		Socket clSocket;
 
 		MiniEchoServer(int _inetType)
 			:lSocket(Socket::FAMILY_INET, _inetType, Socket::PROTO_DEFAULT),
 			bRunning(false),
-			LastExc(_T("no fike"), -1, _T("123123"), _T("!unknown"))
+			LastExc(_T("no fike"), -1, _T("123123"), _T("!unknown")),
+			clSocket(Socket::FAMILY_INET, _inetType, Socket::PROTO_DEFAULT)
 		{
 			bException = false;
 			int reuse_addr = 1;
-			lSocket.setOption(SOL_SOCKET , SO_REUSEADDR, &reuse_addr, sizeof(int));
+			lSocket.set_option(SOL_SOCKET , SO_REUSEADDR, &reuse_addr, sizeof(int));
 			lSocket.bind(SocketAddressInet(HostResolver("127.0.0.1"), PortInet(55123)));
 		}
 
 		~MiniEchoServer()
 		{
             lSocket.shutdown();
-            lSocket.close();
+            lSocket = Socket();
             join(MT::Infinity);
 		}
 
 		virtual void ThreadRoutine()
-		{
+		{	lSocket.listen(1000);
 			bRunning = true;
+
 			try
 			{
-				lSocket.listen(1);
-				Socket clSocket = lSocket.accept();
+				while(1)
+				{
+					clSocket = lSocket.accept();
 
-				// Wait for data
-				BinaryData data = clSocket.receive(1000);
+					while(1)
+					{
+						try
+						{
+							// Wait for data
+							BinaryData data = clSocket.receive(1000);
 
-				// Send back
-				clSocket.send(data);
+							// Send back
+							clSocket.send(data);
 
-				// Raise semaphore
-				semArrived.post();
-
-				// Close socket
-				clSocket.shutdown();
+							// Raise semaphore
+							semArrived.post();
+						}
+						catch(Exception & e)
+						{	break;	}
+					}
+				}
 			}
 			catch(Exception & e)
 			{	LastExc = e;
@@ -67,7 +77,9 @@ namespace OONet
 
 		// Exit server
 		void StopS()
-		{	lSocket.shutdown();}
+		{	lSocket.shutdown();
+			clSocket.shutdown(); clSocket = Socket();
+		}
 	};
 
 	bool TestSocket::TestTCPCtor::OnExecute()
@@ -90,6 +102,76 @@ namespace OONet
 		return true;
 	}
 
+	bool TestSocket::TestTCPCopyConstructor::OnExecute()
+	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		BinaryData msg("LOULOU'm!");
+
+		// Start a tcp echo server
+		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		EchoServer.start();
+		MT::Thread::sleep(1500);
+		if (EchoServer.bException)
+			throw(EchoServer.LastExc);
+		// Connect to server and send smthing
+		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+
+		// Send some shit
+		TCPSocket.send(msg);
+		EchoServer.semArrived.wait(1000);
+		BinaryData reply = TCPSocket.receive(1000);
+		if (reply != msg)
+			return false;
+
+		Socket DuppedSocket(TCPSocket);
+
+		DuppedSocket.send(msg);
+		EchoServer.semArrived.wait(1000);
+		reply = TCPSocket.receive(1000);
+		if (reply != msg)
+			return false;
+
+		// Close server
+		EchoServer.StopS();
+
+		return true;
+	}
+
+	bool TestSocket::TestTCPCopyOperator::OnExecute()
+	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		Socket DuppedSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		BinaryData msg1("Mess 1 -!");
+		BinaryData msg2("Mess 2 -   !");
+
+		// Start a tcp echo server
+		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		EchoServer.start();
+		MT::Thread::sleep(1500);
+		if (EchoServer.bException)
+			throw(EchoServer.LastExc);
+		// Connect to server and send smthing
+		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+
+		// Send some shit
+		TCPSocket.send(msg1);
+		EchoServer.semArrived.wait(1000);
+		BinaryData reply = TCPSocket.receive(1000);
+		if (reply != msg1)
+			return false;
+
+		DuppedSocket = TCPSocket;
+
+		DuppedSocket.send(msg2);
+		EchoServer.semArrived.wait(1000);
+		reply = TCPSocket.receive(1000);
+		if (reply !=msg2)
+			return false;
+
+		// Close server
+		EchoServer.StopS();
+
+		return true;
+	}
+
 	bool TestSocket::TestTCPConnect::OnExecute()
 	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 		BinaryData msg("LOULOU'm!");
@@ -100,6 +182,7 @@ namespace OONet
 		MT::Thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
+
 		// Connect to server and send smthing
 		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
@@ -148,167 +231,78 @@ namespace OONet
 		TCPSocket.bind(bind_addr);
 
 		// Get local peer
-		SocketAddressInet realb_addr = TCPSocket.getLocalAddress();
+		SocketAddressInet realb_addr = TCPSocket.get_local_address();
 
 		if (realb_addr != bind_addr)
 			return false;
 		return true;
 	}
-};	 // !OONet namespace
-/*
 
-class SimpleClient : public MT::Thread
-{
-private:
-    Socket * sock;
-public:
-    void ThreadRoutine(void)
-    {
-        sock = new Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-        // Wait for server to start
-        MT::Thread::Sleep(3000);
-        sock->Connect(SocketAddressInet(HostInet::LOCALHOST, 4449));
+	bool TestSocket::TestStressConnect::OnExecute()
+	{	BinaryData msg("LOULOU'm!");
+		Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		// Start a tcp echo server
+		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		EchoServer.start();
+		MT::Thread::sleep(1500);
 
-        delete sock;
-    }
-} simpleClient;
+		if (EchoServer.bException)
+			throw(EchoServer.LastExc);
 
-bool TestSocket(void)
-{
+		for (int i = 0; i < 1000;i++)
+		{	//printf("%d\n", i );
+			TCPSocket = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 
-    // Test 1.
-    std::cout << "1. Create 2 ipv4 tcp socket\n";
-    Socket sockTcp = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-    Socket sockTcp2 = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-
-    // Test 2.
-    std::cout << "2. Create a ipv4 udp socket\n";
-    Socket sockUdp = Socket(Socket::FAMILY_INET, Socket::TYPE_DGRAM, Socket::PROTO_DEFAULT);
-
-    // Test 3.
-    std::cout << "3. Try to connect with one tcp sock at www.google.com:80\n";
-    sockTcp.Connect(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
-
-    // Test 4.
-    std::cout << "4. Try to connect with second tcp sock at www.google.com:80\n";
-    sockTcp2.Connect(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
-
-    // Test 5.
-    std::cout << "5. Trying to reconnect at the same address with the same socket\n";
-    try {
-        sockTcp.Connect(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
-    }
-    catch(ExceptionAlreadyConnected &e)
-    {   e=e; std::cout <<"Catched!\n";   }
-
-    // Test 6.
-    std::cout << "6. Send data and get data\n";
-    sockTcp.Send(BinaryData("GET / HTTP/1.1\nHost: www.google.com\n\n"));
-    BinaryData temp = sockTcp.Receive(1000);
-    std::cout << temp.GetStringA();
-
-    // Test 7.
-    std::cout << "7. Recreate tcp socket and try to connect again\n";
-    sockTcp = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-    sockTcp.Connect(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
+			// Connect to server and send smthing
+			TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
 
-    // Test 8.
-    std::cout << "8. Try to listen an unbinded socket\n";
-    sockTcp = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-	try
-	{
-		sockTcp.Listen(30);
-		SocketAddressInet addr = sockTcp.getLocalAddress();
-		std::cout << addr.getInetAddress().toString() << "\n";
-		std::cout << addr.getInetPort().toString() << std::endl;
+
+			// Send some shit
+			TCPSocket.send(msg);
+			EchoServer.semArrived.wait(1000);
+			BinaryData reply = TCPSocket.receive(1000);
+			if (reply != msg)
+			{	EchoServer.StopS();
+				return false;
+			}
+
+		}
+
+		// Close server
+		EchoServer.StopS();
+		return true;
 	}
-	catch(Exception & e)
-    {   e=e; std::cout <<"Catched!\n";   }
 
-    // Test 9
-    std::cout << "9. Test accept connections\n";
-    sockTcp = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-    sockTcp.Bind(SocketAddressInet(HostInet::LOCALHOST, 4449));
-    sockTcp.Listen(2);
+	bool TestSocket::TestBrutalConnect::OnExecute()
+	{	BinaryData msg("LOULOU'm!");
+		Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		// Start a tcp echo server
+		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		EchoServer.start();
+		MT::Thread::sleep(1500);
 
-    // Start client
-    simpleClient.Start();
-    Socket clsock = sockTcp.Accept();
-    SocketAddressInet claddr = clsock.getLocalAddress();
-    std::cout <<  claddr.getInetAddress().toString();
+		if (EchoServer.bException)
+			throw(EchoServer.LastExc);
 
+		for (int i = 0; i < 1000;i++)
+		{
+			TCPSocket = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 
-    // Create a tcp socket and try to connect twice
-    Socket * psock = new Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-    try
-    {
-        psock->Connect(SocketAddressInet(HostResolver("glaros"), 80));
-        psock->Bind(SocketAddressInet(HostResolver::ANY, 5002));
-        psock->Connect(SocketAddressInet(HostResolver("www.google.com"), 80));
-    }catch (Exception & e)
-    {
-    }
-	delete psock;
+			// Connect to server and send smthing
+			TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
-    // Create a tcp socket
-    std::cout << "Bind Test: (TCP)\n";
-    psock = new Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+			// Send some shit
+			TCPSocket.send(msg);
+			//EchoServer.semArrived.wait(1000);
 
-    std::cout << "TEST 1: Bind at an invalid address\n";
-    try{  psock->Bind(SocketAddressInet(HostResolver("130.2.2.2"), 2));    }
-    catch(Exception &e) {}
+			TCPSocket.shutdown();
+			TCPSocket = Socket();
 
-    std::cout << "TEST 2: Bind at super user port\n";
-    try{    psock->Bind(SocketAddressInet(HostResolver::ANY, 53));    }
-    catch(Exception &e){}
+		}
 
-    std::cout << "TEST 3: Bind at normal port\n";
-    psock->Bind(SocketAddressInet(HostResolver::LOCALHOST, 4000));
-   delete psock;
-
-    /////////////
-    // UDP / Binds
-    std::cout << "Bind Test: (UDP)\n";
-    psock = new Socket(Socket::FAMILY_INET, Socket::TYPE_DGRAM, Socket::PROTO_DEFAULT);
-
-    std::cout << "TEST 1: Bind at an invalid address\n";
-    try{  psock->Bind(SocketAddressInet(HostResolver("130.2.2.2"), 2));    }
-    catch(Exception &e) {}
-
-    std::cout << "TEST 2: Bind at super user port\n";
-    try{    psock->Bind(SocketAddressInet(HostResolver::ANY, 53));    }
-    catch(Exception &e){}
-
-    std::cout << "TEST 3: Bind at normal port\n";
-    psock->Bind(SocketAddressInet(HostResolver::LOCALHOST, 4000));
-    delete psock;
-
-
-    //////////////
-    // Listen TCP
-    std::cout << "Listen Test(TCP)\n";
-    psock = new Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-    psock->Bind(SocketAddressInet(HostResolver("0.0.0.0"), 3000));
-    psock->Listen(10);
-    delete psock;
-
-    ///////////////
-    // Listen UDP - Invalid
-    std::cout << "Listen Test(UDP)\n";
-    psock = new Socket(Socket::FAMILY_INET, Socket::TYPE_DGRAM, Socket::PROTO_DEFAULT);
-    psock->Bind(SocketAddressInet(HostResolver::ANY, 30001));
-    try { psock->Listen(10); }catch(Exception &e){}
-    delete psock;
-
-
-    //////////////
-    // Accept connections
-    std::cout << "Accept 1 connection at port 3000\n";
-    psock = new Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-    psock->Bind(SocketAddressInet(HostResolver::ANY, 3000));
-    psock->Listen(1);
-    try {Socket ClientSocket = psock->Accept();}catch(Exception &e){}
-	return true;
-}
-*/
+		// Close server
+		EchoServer.StopS();
+		return true;
+	}
+};	 // !OONet namespace

@@ -33,7 +33,7 @@ namespace OONet
 		virtual void OnPreStart(Socket & listen_socket)
 		{
 			int reuse = 1;
-		    listen_socket.setOption(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 		};
 	};
 
@@ -255,7 +255,7 @@ namespace OONet
 		//r = mClient.GetLocalAddress();
 		//printf("%s:%s -> %s:%s", l.GetHostInet().toString().c_str(), l.GetPortInet().toString().c_str(), r.GetHostInet().toString().c_str(),r.GetPortInet().toString().c_str());
 		// Check if client is connected
-		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.getLocalAddress())
+		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.get_local_address())
 			return false;
 
 
@@ -315,7 +315,7 @@ namespace OONet
 			return false;
 
 		// Check if client is connected
-		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.getLocalAddress())
+		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.get_local_address())
 			return false;
 
 		// Free peer while not disconnected
@@ -361,7 +361,7 @@ namespace OONet
 			return false;
 
 		// Check if client is connected
-		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.getLocalAddress())
+		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.get_local_address())
 			return false;
 
 		// Free peer while not disconnected
@@ -400,7 +400,7 @@ namespace OONet
 			return false;
 
 		// Check if client is connected
-		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.getLocalAddress())
+		if ((SocketAddress)mEchoServer.getClients()[0]->getRemotePeerAddress() != mClient.get_local_address())
 			return false;
 
 		// Try to free all disconnected

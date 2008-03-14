@@ -36,7 +36,7 @@ namespace OONet
 
 		// Assure termination of any previous
 		mSock.shutdown();
-		mSock.close();
+		mSock = Socket();
 		join(MT::Infinity);
 
 		// Assign new socket
@@ -102,7 +102,7 @@ namespace OONet
 		OONET_DEBUG_L2(_T("InetClient::Disconnect() Closing sockets\n"));
 		bConnected = false;		// Turn flag off so that it wont spawn errors
 		mSock.shutdown();
-		mSock.close();
+		mSock = Socket();
 
 		// We don't wait for thread to stop,
 		// so that this function is callable by OnDataArrived
@@ -117,7 +117,7 @@ namespace OONet
 	{	if (!bConnected)
 			OONET_THROW_EXCEPTION(ExceptionNotConnected,
 				"Not connected");
-		return mSock.getPeerAddress();
+		return mSock.get_peer_address();
 	}
 
 	// Get local address
@@ -125,7 +125,7 @@ namespace OONet
 	{	if (!bConnected)
 			OONET_THROW_EXCEPTION(ExceptionNotConnected,
 				"Not connected");
-		return mSock.getLocalAddress();
+		return mSock.get_local_address();
 	}
 
 	size_t InetPeer::send(const BinaryData & r)
@@ -140,7 +140,7 @@ namespace OONet
 	    bConnected = false;
 		mSock.shutdown();
 		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown 1/3\n"));
-		mSock.close();
+		mSock = Socket();
 		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown 2/3\n"));
 		join(MT::Infinity);
 		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown OK\n"));

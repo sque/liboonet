@@ -26,14 +26,14 @@ namespace OONet
 		{
 			bException = false;
 			int reuse = 1;
-			lSocket.setOption(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+			lSocket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 			lSocket.bind(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 		}
 
 		~MiniHTTPServer()
 		{
 			lSocket.shutdown();
-			lSocket.close();
+			lSocket = Socket();
 			join(MT::Infinity);
 
 		}
@@ -72,7 +72,7 @@ namespace OONet
 				semArrived.post();
 
 				clSocket.shutdown();
-				clSocket.close();
+				clSocket = Socket();
 			}
 			catch(Exception & e)
 			{	LastExc = e;
@@ -85,7 +85,7 @@ namespace OONet
 		// Exit server
 		void StopS()
 		{	lSocket.shutdown();
-		    lSocket.close();
+		    lSocket = Socket();
 		    join(MT::Infinity);
 		}
 	};

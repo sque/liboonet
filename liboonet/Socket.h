@@ -5,33 +5,29 @@
 #include "Buffer.h"
 #include "Exception.h"
 #include "SocketAddress.h"
-#include "MultiReference.h"
 #include <map>
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
 namespace OONet
 {
-    // Socket exceptions
 
 	//! Berkley network socket wrapper
 	/**
-		A good wrapper for berkley sockets, it has all the needed functionality
+		A wrapper for berkley sockets, it has all the needed functionality
 		and incorporates very well with BinaryData for sending and receiving data,
 		and SocketAddress for defining address of sockets.
 
 	 */
 	class Socket
-		:public MultiReference<Socket, SOCKET>
 	{
+	private:
+
+		// Pimpl Idiom
+		class impl;
+		boost::shared_ptr<impl> pimpl_;
+
 	protected:
-		/** Derived from MultiReference */
-		inline virtual void OnAbandonedHandle(const SOCKET & pHandle)
-		{	if (pHandle != INVALID_SOCKET)
-            {
-                shutdown();
-				CLOSESOCKET(pHandle);
-            }
-		}
 
 		//! Get last error linux implementation.
 		int _linux_get_last_error();
@@ -91,8 +87,7 @@ namespace OONet
             FAMILY_APPLETALK = PF_APPLETALK,//!<   Appletalk                        ddp(7)
             FAMILY_PACKET = PF_PACKET       //!<   Low level packet interface       packet(7)
 #elif (OONET_OS == OONET_OS_WIN32)
-			// Win 32 enumerations
-			FAMILY_INET = AF_INET
+			FAMILY_INET = AF_INET			//!<   IPv4 Internet protocols
 #endif
         };
 
@@ -120,29 +115,21 @@ namespace OONet
 		*/
 		Socket(int s_family, int s_type, int s_proto) throw(Exception);
 
+		//! Constructor to create an invalid socket
+		/**
+			This is used to create an object that doesn't really
+			handle any socket. This is very usefull for creating
+			variables of Socket that may be assigned later.
+		*/
+		Socket();
+
         //! Constructor to use an existing handle on a socket
         /**
 			This constructor will not create a new socket
 			but will use the provided socket handle.
 		*/
-        inline explicit Socket(SOCKET h_socket)
-			:MultiReference<Socket, SOCKET>(h_socket)
-        {}
+        explicit Socket(SOCKET h_socket);
 
-		//! Destructor
-		virtual ~Socket();
-
-		//! Copy constructor
-        Socket(const Socket &r);
-
-        //! Copy operator
-        Socket & operator=(const Socket &r);
-
-		//! Close socket
-		/**
-			It will close the handle of this socket and abandon it.
-		*/
-		void close();
 
 		//! Receive data from socket
 		/**
@@ -206,7 +193,7 @@ namespace OONet
 			to SocketAddressInet.
 		@see getPeerAddress
 		*/
-        SocketAddress getLocalAddress() const throw(Exception);
+        SocketAddress get_local_address() const throw(Exception);
 
         //! Get the address of the peer socket
         /**
@@ -214,7 +201,7 @@ namespace OONet
 			at the other end of connection.
 		@see getLocalAddress
 		*/
-        SocketAddress getPeerAddress() const throw(Exception);
+        SocketAddress get_peer_address() const throw(Exception);
 
         //! Wait for incoming connection and return socket of client
         /**
@@ -240,7 +227,7 @@ namespace OONet
 			See manual of setsockopt() at your systems developping
 			library for extended explanation.
 		*/
-        void setOption(int level, int opt_name, const void * opt_val, int opt_size);
+        void set_option(int level, int opt_name, const void * opt_val, int opt_size);
 	};  // !Socket class
 };  // !OONet namespace
 

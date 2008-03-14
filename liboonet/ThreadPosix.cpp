@@ -14,7 +14,7 @@ namespace OONet
             if (bRunning == true)
             {
                 OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
-					"Thread alreay running!")
+					"Thread alreay running!"
 				);
                 return;   // Error thread already started
             }

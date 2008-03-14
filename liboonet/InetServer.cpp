@@ -34,7 +34,7 @@ namespace OONet
 
 				// Raise event
 				pDstHandler = NULL;
-				if (OnAccept(clSocket.getPeerAddress(), pDstHandler))
+				if (OnAccept(clSocket.get_peer_address(), pDstHandler))
 				{
 					if (pDstHandler != NULL)
 					{
@@ -44,12 +44,12 @@ namespace OONet
 						pDstHandler->handleSocket(clSocket);
 					}
 					else
-						clSocket.close();
+						clSocket = Socket();
 				}
 				else
 				{
 					// If not accepted, close connection
-					clSocket.close();
+					clSocket = Socket();
 				}
 			}
 			catch(std::exception)
@@ -58,7 +58,7 @@ namespace OONet
 				bRunning = false;
 
 				// Disconnect listen socket
-				lSocket.close();
+				lSocket = Socket();
 
 				// Free all clients
 				_freeAllHandlers();
@@ -109,7 +109,7 @@ namespace OONet
 		// Disconnect listen socket so we don't have any new
 		// and the thread server will cleanup
 		lSocket.shutdown();
-		lSocket.close();
+		lSocket = Socket();
 
 		// And join with master thread
 		join(MT::Infinity);

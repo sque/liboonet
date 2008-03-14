@@ -3,40 +3,83 @@
 @brief Implementation of Socket class
 */
 #include "./Socket.h"
+#include <boost/scoped_ptr.hpp>
 #include <algorithm>
 
 namespace OONet
 {
-	MULTIREFERNCE_OBJECTFILE(Socket, SOCKET);
+	// Internal implementation of socket
+	class Socket::impl
+	{
+	private:
+		impl(const impl & );
+		impl & operator=(const impl &);
+
+		// Handle to socket
+		SOCKET _handle;
+	public:
+
+		// Construct a new socket
+		impl(int s_family, int s_type, int s_proto)
+		{
+			_handle = socket(s_family, s_type, s_proto);
+			//printf("new socket %d\n", _handle);
+		}
+
+		// Assign an existing socket handle
+		explicit impl(SOCKET _assigned_handle)
+			:_handle(_assigned_handle)
+		{}
+
+		// Destructor
+		~impl()
+		{
+			if (_handle != INVALID_SOCKET)
+			{
+				//printf("socket abandoned(%d)\n", _handle);
+				shutdown();
+				CLOSESOCKET(_handle);
+			}
+		}
+
+		// Implementation of shutdown
+		void shutdown()
+		{
+#if (OONET_OS == OONET_OS_LINUX)
+			::shutdown(_handle, SHUT_RDWR);
+#elif (OONET_OS == OONET_OS_WIN32)
+			::shutdown(_handle, SD_BOTH);
+#endif
+		}
+
+		// Get socket that we are refereeing to
+		SOCKET get_socket()
+		{	return _handle;	}
+
+	};	// !impl class
+
+
+
 
     // Constructor to create new socket
     Socket::Socket(int s_family, int s_type, int s_proto) throw(Exception)
-		:MultiReference<Socket, SOCKET>(INVALID_SOCKET)
-    {	SOCKET tmp_sock_handl;
-
-		// We try to create socket
-        if ((tmp_sock_handl = socket(s_family, s_type, s_proto)) == INVALID_SOCKET)
-		{
-			// We Declare start destruction so that MultiReferences constructur works smoothly
-			StartDestruction();
-
+		:pimpl_(new impl(s_family, s_type, s_proto))
+    {
+    	// Check construction
+    	if (pimpl_->get_socket() == INVALID_SOCKET)
 			// then we throw exception
 			_throw_last_error("Cannot create Socket()");
-		};
-        // Save handle
-		SetHandle(tmp_sock_handl);
-    }
-
-    // Copy constructor
-    Socket::Socket(const Socket &r)
-		:MultiReference<Socket, SOCKET>(r)
-    { }
-
-    // Destructor
-    Socket::~Socket()
-	{
-		StartDestruction();
 	}
+
+	// Constructor that creates an invalid socket
+	Socket::Socket()
+		:pimpl_(new impl(INVALID_SOCKET))
+	{}
+
+	// Constructor to create new socket
+    Socket::Socket(SOCKET _handle)
+		:pimpl_(new impl(_handle))
+    {}
 
 	////////////////////////////////////////
 	// OS Specific implementations
@@ -149,44 +192,29 @@ namespace OONet
 	}
 
 
-    // Assignment operator
-    Socket &Socket::operator=(const Socket &r)
-    {
-		// Safe copy handle
-		SafeCopy(r);
-        return (*this);
-    }
-
     // Receive action
-    BinaryData Socket::receive(size_t max) throw(Exception)
+    BinaryData Socket::receive(size_t max_data) throw(Exception)
     {   // Allocate space for incoming data
-        Byte * pTemp = new Byte[max];
-        int szReceived;
-        BinaryData received;
+        boost::scoped_ptr<Byte> tmp_data(new Byte[max_data]);
+        int received_size;
+        BinaryData received_data;
 
         // Get data
-		szReceived = ::recv(GetHandle(), (char *)pTemp, max, 0);
+		received_size = ::recv(pimpl_->get_socket(), (char *)tmp_data.get(), max_data, 0);
 
         // Create a binary data block
-        if ((szReceived != INVALID_SOCKET) && (szReceived > 0))
-        {
-            received = BinaryData(pTemp, szReceived);
-            delete [] pTemp;
-        }
-        else
-        {
-			// Free memory
-            delete [] pTemp;
-			// Throw exception
+        if ((received_size == INVALID_SOCKET) || (received_size <= 0))
 			_throw_last_error("Cannot Socket::Receive()");
-        }
-        return received;
+
+		// Return data
+		received_data = BinaryData(tmp_data.get(), received_size);
+		return received_data;
     }
 
     // Send
     size_t Socket::send(const BinaryData & trans_data) throw (Exception)
     {
-        int sent = ::send(GetHandle(),(char *) trans_data.getDataPtr(), trans_data.size(), 0);
+        int sent = ::send(pimpl_->get_socket(),(char *) trans_data.getDataPtr(), trans_data.size(), 0);
         if (sent <= 0)
         {
 			// Throw exception
@@ -198,7 +226,7 @@ namespace OONet
     // Connect
     void Socket::connect(const SocketAddress & serv_addr) throw(Exception)
     {
-        if (0 != ::connect(GetHandle(), (sockaddr *) serv_addr.getSockaddrPtr(), serv_addr.size()) )
+        if (0 != ::connect(pimpl_->get_socket(), (sockaddr *) serv_addr.getSockaddrPtr(), serv_addr.size()) )
         {
 			// Throw exception
 			_throw_last_error("Cannot Socket::Connect()");
@@ -208,7 +236,7 @@ namespace OONet
     // Bind at an addres
     void Socket::bind(const SocketAddress & local_addr) throw(Exception)
     {
-        if(0 != ::bind(GetHandle(), (sockaddr *) local_addr.getSockaddrPtr(), local_addr.size()))
+        if(0 != ::bind(pimpl_->get_socket(), (sockaddr *) local_addr.getSockaddrPtr(), local_addr.size()))
         {	// Throw exception
 			_throw_last_error("Cannot Socket::Bind()");
         }
@@ -217,7 +245,7 @@ namespace OONet
     // Change socket in listen mode
     void Socket:: listen(int max_connections) throw(Exception)
     {
-        if (0 != ::listen(GetHandle(), max_connections))
+        if (0 != ::listen(pimpl_->get_socket(), max_connections))
         {
 			// Throw exception
 			_throw_last_error("Cannot Socket::Listen()");
@@ -226,11 +254,10 @@ namespace OONet
 
     // Wait for incoming connection and return socket of client
     Socket Socket::accept() throw(Exception)
-    {
-        SOCKET temp_sock_handler;
+    {	SOCKET temp_sock_handler;
 
         // Try to accept
-        temp_sock_handler = ::accept(GetHandle(), NULL, 0);
+        temp_sock_handler = ::accept(pimpl_->get_socket(), NULL, 0);
 
         if (temp_sock_handler == INVALID_SOCKET)
         {
@@ -243,26 +270,26 @@ namespace OONet
     }
 
     // Get the local address of the socket
-    SocketAddress Socket::getLocalAddress() const throw(Exception)
+    SocketAddress Socket::get_local_address() const throw(Exception)
     {
         // Ask from system the address of the local socket
         struct sockaddr l_addr;
         SOCKLEN addr_len = sizeof(sockaddr);
 
-        getsockname(GetHandle(),  &l_addr, &addr_len);
+        getsockname(pimpl_->get_socket(),  &l_addr, &addr_len);
 
         // Create a SocketAddress and return it
         return SocketAddress(l_addr);
     }
 
     // Get the address of the peer socket
-    SocketAddress Socket::getPeerAddress() const throw(Exception)
+    SocketAddress Socket::get_peer_address() const throw(Exception)
     {
         // Ask from system the address of the other-end socket
         struct sockaddr p_addr;
         SOCKLEN addr_len = sizeof(sockaddr);
 
-        getpeername(GetHandle(),  &p_addr, &addr_len);
+        getpeername(pimpl_->get_socket(),  &p_addr, &addr_len);
 
         // Create a SocketAddress and return it
         return SocketAddress(p_addr);
@@ -271,32 +298,17 @@ namespace OONet
     // Shutdown socket
     void Socket::shutdown() throw(Exception)
     {
-#if (OONET_OS == OONET_OS_LINUX)
-        ::shutdown(GetHandle(), SHUT_RDWR);
-#elif (OONET_OS == OONET_OS_WIN32)
-		::shutdown(GetHandle(), SD_BOTH);
-#endif
+    	pimpl_->shutdown();
     }
 
-	// Close socket
-	void Socket::close()
-	{
-		// Close previous socket
-		CLOSESOCKET(GetHandle());
-
-		// Abandon socket
-		if (GetHandle() != INVALID_SOCKET)
-			SetHandle(INVALID_SOCKET);
-	}
-
 	// Set option on socket
-    void Socket::setOption(int level, int opt_name, const void * opt_val, int opt_size)
+    void Socket::set_option(int level, int opt_name, const void * opt_val, int opt_size)
     {
 #if (OONET_OS == OONET_OS_LINUX)
-        if (0 != setsockopt(GetHandle(), level, opt_name, opt_val, opt_size))
+        if (0 != setsockopt(pimpl_->get_socket(), level, opt_name, opt_val, opt_size))
             _throw_last_error("Error on setting socket option SetOption()");
 #elif (OONET_OS == OONET_OS_WIN32)
-		if (0 != setsockopt(GetHandle(), level, opt_name, (char*)opt_val, opt_size))
+		if (0 != setsockopt(pimpl_->get_socket(), level, opt_name, (char*)opt_val, opt_size))
             _throw_last_error("Error on setting socket option SetOption()");
 #endif
     }

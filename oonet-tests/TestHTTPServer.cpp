@@ -28,7 +28,7 @@ namespace OONet
 		virtual void OnPreStart(Socket & listen_socket)
 		{
 			int reuse = 1;
-		    listen_socket.setOption(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 		};
 
 	};
@@ -296,7 +296,7 @@ namespace OONet
 				mHttpClient.send(invalidRequest);
 
 				mHttpClient.shutdown();
-				mHttpClient.close();
+				mHttpClient = Socket();
 
 			}
 		}
