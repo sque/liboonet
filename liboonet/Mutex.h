@@ -19,6 +19,10 @@ namespace OONet
             //! A handle to mutex object that will be used
             MUTEX hMutex;
 
+            // Mutex is uncopiable
+            Mutex(const Mutex &r);
+            Mutex & operator=(const Mutex & r);
+
         public:
 
 			//! Constructs mutex object, <b>UNLOCKED</b>

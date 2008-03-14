@@ -40,7 +40,7 @@ namespace OONet
 			}
 		}
 
-		virtual void ThreadRoutine()
+		virtual void thread_routine()
 		{	i = 0;
 			try
 			{

@@ -50,7 +50,7 @@ namespace OONet
 	}
 
 	// Thread routine
-	void InetPeer::ThreadRoutine()
+	void InetPeer::thread_routine()
 	{	OONET_DEBUG_L2(_T("InetClient::ThreadRoutine()_\n"));
 	    BinaryData data_Received;
 
@@ -146,7 +146,7 @@ namespace OONet
 		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown OK\n"));
 
 	    // Assure that has finished
-	    if (MT::Thread::isRunning())
+	    if (MT::Thread::is_running())
         {   OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() although DCed, thread is running!\n"));
             join(MT::Infinity);
         }

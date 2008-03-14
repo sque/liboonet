@@ -59,8 +59,6 @@ namespace OONet
 	};	// !impl class
 
 
-
-
     // Constructor to create new socket
     Socket::Socket(int s_family, int s_type, int s_proto) throw(Exception)
 		:pimpl_(new impl(s_family, s_type, s_proto))
@@ -72,19 +70,36 @@ namespace OONet
 	}
 
 	// Constructor that creates an invalid socket
-	Socket::Socket()
+	Socket::Socket() throw()
 		:pimpl_(new impl(INVALID_SOCKET))
 	{}
 
 	// Constructor to create new socket
-    Socket::Socket(SOCKET _handle)
+    Socket::Socket(SOCKET _handle) throw()
 		:pimpl_(new impl(_handle))
     {}
+
+	// Internal errors enumeration
+	enum InternalErrrors
+	{
+		ERR_UNKNWON,			//!< Unknown error
+		ERR_ALREADY_CONNECTED,	//!< Already connected error
+		ERR_NOT_CONNECTED,		//!< This operation requires a connected socket
+		ERR_ACCESS_DENIED,		//!< Access denied
+		ERR_NOT_A_SOCKET,		//!< Error this is not a socket
+		ERR_ADDRESS_IN_USE,		//!< Address is already in use
+		ERR_ADDRESS_NOT_AVAIL,	//!< Address is not available
+		ERR_NOT_SUPPORTED,		//!< Operation not supported
+		ERR_CONNECTION_ABORTED,	//!< Connection aborted
+		ERR_CONNECTION_REFUSED, //!< Connection Refused
+		ERR_CONNECTION_RESET,	//!< Connection reset by peer
+		ERR_INVALID_ARGUMENT,	//!< Invalid argument
+	};
 
 	////////////////////////////////////////
 	// OS Specific implementations
 #if (OONET_OS == OONET_OS_WIN32)
-	int Socket::_win32_get_last_error()
+	int Socket::_win32_get_last_error() const
 	{
 		int errorNum;
 		errorNum = WSAGetLastError();
@@ -118,7 +133,7 @@ namespace OONet
 		}
 	}
 #elif (OONET_OS == OONET_OS_LINUX)
-	int Socket::_linux_get_last_error()
+	int Socket::_linux_get_last_error() const
 	{
 		switch(errno)
 		{
@@ -149,7 +164,7 @@ namespace OONet
 	}
 #endif
 
-	int Socket::_get_last_error()
+	int Socket::_get_last_error() const
 	{
 #if (OONET_OS == OONET_OS_WIN32)
 		return _win32_get_last_error();
@@ -158,7 +173,7 @@ namespace OONet
 #endif
 	}
 
-	void Socket::_throw_last_error(const string & ErrorMessage)
+	void Socket::_throw_last_error(const string & ErrorMessage) const
 	{	int errcode = _get_last_error();
 
 		switch(errcode)
@@ -204,7 +219,7 @@ namespace OONet
 
         // Create a binary data block
         if ((received_size == INVALID_SOCKET) || (received_size <= 0))
-			_throw_last_error("Cannot Socket::Receive()");
+			_throw_last_error("Cannot Socket::receive()");
 
 		// Return data
 		received_data = BinaryData(tmp_data.get(), received_size);
@@ -218,7 +233,7 @@ namespace OONet
         if (sent <= 0)
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::Send()");
+			_throw_last_error("Cannot Socket::send()");
         }
         return sent;
     }
@@ -229,7 +244,7 @@ namespace OONet
         if (0 != ::connect(pimpl_->get_socket(), (sockaddr *) serv_addr.getSockaddrPtr(), serv_addr.size()) )
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::Connect()");
+			_throw_last_error("Cannot Socket::connect()");
         }
     }
 
@@ -238,7 +253,7 @@ namespace OONet
     {
         if(0 != ::bind(pimpl_->get_socket(), (sockaddr *) local_addr.getSockaddrPtr(), local_addr.size()))
         {	// Throw exception
-			_throw_last_error("Cannot Socket::Bind()");
+			_throw_last_error("Cannot Socket::bind()");
         }
     }
 
@@ -248,7 +263,7 @@ namespace OONet
         if (0 != ::listen(pimpl_->get_socket(), max_connections))
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::Listen()");
+			_throw_last_error("Cannot Socket::listen()");
         }
     }
 
@@ -262,7 +277,7 @@ namespace OONet
         if (temp_sock_handler == INVALID_SOCKET)
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::Accept()");
+			_throw_last_error("Cannot Socket::accept()");
         }
 
         // Return a Socket object representing this handler
@@ -276,7 +291,8 @@ namespace OONet
         struct sockaddr l_addr;
         SOCKLEN addr_len = sizeof(sockaddr);
 
-        getsockname(pimpl_->get_socket(),  &l_addr, &addr_len);
+        if (0 != ::getsockname(pimpl_->get_socket(),  &l_addr, &addr_len))
+			_throw_last_error("Cannot Socket::get_local_address()");
 
         // Create a SocketAddress and return it
         return SocketAddress(l_addr);
@@ -289,7 +305,8 @@ namespace OONet
         struct sockaddr p_addr;
         SOCKLEN addr_len = sizeof(sockaddr);
 
-        getpeername(pimpl_->get_socket(),  &p_addr, &addr_len);
+        if (0 != ::getpeername(pimpl_->get_socket(),  &p_addr, &addr_len))
+			_throw_last_error("Cannot Socket::get_peer_address()");
 
         // Create a SocketAddress and return it
         return SocketAddress(p_addr);
@@ -304,13 +321,8 @@ namespace OONet
 	// Set option on socket
     void Socket::set_option(int level, int opt_name, const void * opt_val, int opt_size)
     {
-#if (OONET_OS == OONET_OS_LINUX)
-        if (0 != setsockopt(pimpl_->get_socket(), level, opt_name, opt_val, opt_size))
-            _throw_last_error("Error on setting socket option SetOption()");
-#elif (OONET_OS == OONET_OS_WIN32)
-		if (0 != setsockopt(pimpl_->get_socket(), level, opt_name, (char*)opt_val, opt_size))
-            _throw_last_error("Error on setting socket option SetOption()");
-#endif
+        if (0 != setsockopt(pimpl_->get_socket(), level, opt_name, (char*)opt_val, opt_size))
+            _throw_last_error("Error on setting socket option set_option()");
     }
 
 };  // !OONet namespace

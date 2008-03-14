@@ -20,7 +20,7 @@ namespace OONet
 	}
 
 	// Thread routine
-	void InetServer::ThreadRoutine()
+	void InetServer::thread_routine()
 	{	Socket clSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);	// client socket
 		InetPeer * pDstHandler;					// Destination client handler
 

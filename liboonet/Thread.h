@@ -13,8 +13,8 @@ namespace OONet
 		//! A thread abstract class.
         /**
             Thread is used as base class to create threads. The idea is to deriver a class that implements
-            the function Thread::ThreadRoutine. When you start the thread, it will create a new thread and
-            run Thread::ThreadRoutine at the new one.
+            the function Thread::thread_routine. When you start the thread, it will create a new thread and
+            run Thread::thread_routine at the new one.
         @remarks At the derivered class you should take care of shutting down thread before destroying the
             object, otherwise you'll be at the risk of "pure virtual function was called" error.
         @brief
@@ -25,6 +25,10 @@ namespace OONet
 				OONET_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
 
             private:
+				// Thread is uncopiable
+				Thread(const Thread &r);
+				Thread & operator=(const Thread & r);
+
                 //! The handle of the thread
                 THREAD hThread;
 
@@ -76,7 +80,7 @@ namespace OONet
 					This is the core of the thread, everything works, to run this
 					function at new thread ;)
                 */
-                virtual void ThreadRoutine() = 0;
+                virtual void thread_routine() = 0;
 
             public:
 
@@ -95,7 +99,7 @@ namespace OONet
                 virtual ~Thread();
 
                 //! Check if the thread is running.
-                inline bool isRunning() const
+                inline bool is_running() const
                 {   return bRunning; }
 
 				//! Join with this thread in a predefined maximum time.
@@ -133,7 +137,7 @@ namespace OONet
 					The return value type, varies from platform to platform, so take care
 					for cross-platform probs.
                 */
-                THREAD getThreadHandle()
+                THREAD get_thread_handle()
                 {   return hThread; }
 
         };  // Thread class

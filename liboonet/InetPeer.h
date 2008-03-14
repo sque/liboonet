@@ -60,12 +60,13 @@ namespace OONet
 		@throw ExceptionNotConnected If the InetPeer is not hanlding any connection.
 		*/
 		const SocketAddressInet getLocalAddress() const;
+
 	private:
 		Socket mSock;			//!< The connection socket
 		bool bConnected;		//!< If peer is connected
 		bool bZombie;           //!< If peer is a zombie
 
-		virtual void ThreadRoutine();
+		virtual void thread_routine();
 	protected:
 
 		//! Send data to the other end

@@ -18,6 +18,10 @@ namespace OONet
 			//! Handle of system's semaphore
             SEMAPHORE semHandle;
 
+			// Semaphore is uncopiable
+            Semaphore(const Semaphore &r);
+            Semaphore & operator=(const Semaphore & r);
+
         public:
             //! Default constructor
             /**

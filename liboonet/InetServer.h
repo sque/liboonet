@@ -31,7 +31,7 @@ namespace OONet
 		std::vector<InetPeer *> mClList;	//!< List of clients
 
 		// Thread routine waiting for incoming connections
-		void ThreadRoutine();
+		void thread_routine();
 
 		//! Free all clients
 		void _freeAllHandlers();

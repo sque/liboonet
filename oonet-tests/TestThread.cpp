@@ -21,7 +21,7 @@ namespace OONet
 		}
 		protected:
 			// Implement run
-			virtual void ThreadRoutine(void)
+			virtual void thread_routine(void)
 			{
 				ThreadRunned = true;
 				threadCount ++;
@@ -50,7 +50,7 @@ namespace OONet
 		}
 		protected:
 			// Implement run
-			virtual void ThreadRoutine(void)
+			virtual void thread_routine(void)
 			{
 			    bPlay = true;
 				ThreadRunned = true;
@@ -71,7 +71,7 @@ namespace OONet
 		}
 		protected:
 			// Implement run
-			virtual void ThreadRoutine(void)
+			virtual void thread_routine(void)
 			{
 				ThreadRunned = true;
 				join();	// kill from the same thread
@@ -161,10 +161,10 @@ namespace OONet
 
 		// Try twice to join
 		bThread.join(MT::Infinity);
-        if (bThread.isRunning())
+        if (bThread.is_running())
 			return false;
 		bThread.join(MT::Infinity);
-		if (bThread.isRunning())
+		if (bThread.is_running())
             return false;
 
 		return true;
@@ -243,7 +243,7 @@ namespace OONet
 
 		kThread.start();
 		kThread.join(3000);
-		if (kThread.isRunning())
+		if (kThread.is_running())
 			return false;
 		return true;
 	}

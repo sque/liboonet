@@ -23,7 +23,7 @@ namespace OONet
             // Local variables
             ulong tm_passed;		// A counter for time passed
 
-            // Check every 500 ms the state of Thread
+            // Check every 250 ms the state of Thread
 			for(tm_passed = 0;(tm_passed <  tm_timeoutms) || (tm_timeoutms == Infinity); tm_passed+= 250)
             {
                 // If thread stopped exit
@@ -49,7 +49,7 @@ namespace OONet
 			pthis->semStartThread.post();
 			try
 			{
-                pthis->ThreadRoutine();
+                pthis->thread_routine();
 			}
             catch(std::exception)
             {   OONET_DEBUG_L1(_T("Thread::_thread_func() exception was thrown from thread!\n"));    }
@@ -97,9 +97,10 @@ namespace OONet
         {
             lock();		// Lock object for single use
 
-            // Call OS-specific start code
+
             try // Wait for possible exceptions
             {
+            	// Start it
                 _system_start();
 				// Wait for thread to start
 				semStartThread.wait();

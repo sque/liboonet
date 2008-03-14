@@ -27,36 +27,17 @@ namespace OONet
 		class impl;
 		boost::shared_ptr<impl> pimpl_;
 
-	protected:
-
 		//! Get last error linux implementation.
-		int _linux_get_last_error();
+		int _linux_get_last_error() const;
 
 		//! Get last error win32 implementation.
-		int _win32_get_last_error();
+		int _win32_get_last_error() const;
 
 		//! General get last error function
-		int _get_last_error();
-
-		//! Internal errors enumeration
-		enum InternalErrrors
-		{
-			ERR_UNKNWON,			//!< Unknown error
-			ERR_ALREADY_CONNECTED,	//!< Already connected error
-			ERR_NOT_CONNECTED,		//!< This operation requires a connected socket
-			ERR_ACCESS_DENIED,		//!< Access denied
-			ERR_NOT_A_SOCKET,		//!< Error this is not a socket
-			ERR_ADDRESS_IN_USE,		//!< Address is already in use
-			ERR_ADDRESS_NOT_AVAIL,	//!< Address is not available
-			ERR_NOT_SUPPORTED,		//!< Operation not supported
-			ERR_CONNECTION_ABORTED,	//!< Connection aborted
-			ERR_CONNECTION_REFUSED, //!< Connection Refused
-			ERR_CONNECTION_RESET,	//!< Connection reset by peer
-			ERR_INVALID_ARGUMENT,	//!< Invalid argument
-		};
+		int _get_last_error() const;
 
 		//! Internal function for converting system errors to exceptions
-		void _throw_last_error(const string & ErrorMessage);
+		void _throw_last_error(const string & ErrorMessage) const;
 	public:
 
 		//! Exception raised when actions was performed on invalid socket
@@ -121,14 +102,14 @@ namespace OONet
 			handle any socket. This is very usefull for creating
 			variables of Socket that may be assigned later.
 		*/
-		Socket();
+		Socket() throw();
 
         //! Constructor to use an existing handle on a socket
         /**
 			This constructor will not create a new socket
 			but will use the provided socket handle.
 		*/
-        explicit Socket(SOCKET h_socket);
+        explicit Socket(SOCKET h_socket) throw();
 
 
 		//! Receive data from socket
@@ -191,7 +172,7 @@ namespace OONet
 			It will return the local address that socket is binded, either automatically or
 			manual.	If socket is a TCP/IP socket then you can cast safely returned address
 			to SocketAddressInet.
-		@see getPeerAddress
+		@see get_peer_address
 		*/
         SocketAddress get_local_address() const throw(Exception);
 
@@ -199,7 +180,7 @@ namespace OONet
         /**
 			This is valid for connected sockets and will return the address of socket
 			at the other end of connection.
-		@see getLocalAddress
+		@see get_local_address
 		*/
         SocketAddress get_peer_address() const throw(Exception);
 

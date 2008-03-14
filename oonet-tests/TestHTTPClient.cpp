@@ -38,7 +38,7 @@ namespace OONet
 
 		}
 
-		virtual void ThreadRoutine()
+		virtual void thread_routine()
 		{	BinaryData data;
 			HTTP::Request myReq;
 

@@ -74,7 +74,7 @@ namespace OONet
 			join();
 		}
 
-		virtual void ThreadRoutine(void)
+		virtual void thread_routine(void)
 		{
 			nonSafe.add(10);
 		}
@@ -90,7 +90,7 @@ namespace OONet
 			join();
 		}
 
-		virtual void ThreadRoutine(void)
+		virtual void thread_routine(void)
 		{
 			Safe.add(10);
 		}
@@ -103,7 +103,7 @@ namespace OONet
 	protected:
 		MT::Mutex mut;
 
-		virtual void ThreadRoutine(void)
+		virtual void thread_routine(void)
 		{
 			// Try to lock twice from same thread
 			mut.lock();
@@ -116,7 +116,7 @@ namespace OONet
 	public:
 		MT::Mutex * pMutex;
 		long waitfor_ms;
-		virtual void ThreadRoutine(void)
+		virtual void thread_routine(void)
 		{
 			// Try to lock twice from same thread
 			pMutex->lock();
