@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\liboonet"
+				AdditionalIncludeDirectories="..\..\liboonet;&quot;C:\Program Files\boost\boost_1_34_1&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="1"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="..\..\liboonet"
+				AdditionalIncludeDirectories="..\..\liboonet;&quot;C:\Program Files\boost\boost_1_34_1&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="TRUE"
 				BasicRuntimeChecks="0"
@@ -224,9 +224,6 @@
 			</File>
 			<File
 				RelativePath="..\..\liboonet\InetServer.h">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\MultiReference.h">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Mutex.h">

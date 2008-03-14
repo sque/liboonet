@@ -187,7 +187,7 @@ namespace OONet
 
 		bThread.start();
 		// Get Handle and duplicate it
-		hOrigThread = bThread.getThreadHandle();
+		hOrigThread = bThread.get_thread_handle();
 		DuplicateHandle(
 		  GetCurrentProcess(),
 		  hOrigThread,
