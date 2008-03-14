@@ -3,7 +3,7 @@
 @brief Implementation of Socket class
 */
 #include "./Socket.h"
-#include <boost/scoped_ptr.hpp>
+#include <boost/scoped_array.hpp>
 #include <algorithm>
 
 namespace OONet
@@ -195,7 +195,7 @@ namespace OONet
     // Receive action
     BinaryData Socket::receive(size_t max_data) throw(Exception)
     {   // Allocate space for incoming data
-        boost::scoped_ptr<Byte> tmp_data(new Byte[max_data]);
+        boost::scoped_array<Byte> tmp_data(new Byte[max_data]);
         int received_size;
         BinaryData received_data;
 
