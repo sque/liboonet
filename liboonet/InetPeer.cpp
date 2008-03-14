@@ -22,8 +22,8 @@ namespace OONet
     }
 
 	// Handle a connected socket
-	void InetPeer::handleSocket(const Socket & _AssignedSocket)
-	{   OONET_DEBUG_L2(_T("InetClient::HandleSocket()_\n"));
+	void InetPeer::handle_connection(const Socket & _AssignedSocket)
+	{   OONET_DEBUG_L2(_T("InetClient::handle_connection()_\n"));
 
 	    // Skip it if we are zombie class
 	    if (bZombie)
@@ -109,11 +109,11 @@ namespace OONet
 	}
 
 	// Check if it is connected
-	bool InetPeer::isConnected() const
+	bool InetPeer::is_connected() const
 	{	return bConnected;	};
 
 	// Get address of remote peer
-	const SocketAddressInet InetPeer::getRemotePeerAddress() const
+	const SocketAddressInet InetPeer::get_peer_address() const
 	{	if (!bConnected)
 			OONET_THROW_EXCEPTION(ExceptionNotConnected,
 				"Not connected");
@@ -121,7 +121,7 @@ namespace OONet
 	}
 
 	// Get local address
-	const SocketAddressInet InetPeer::getLocalAddress() const
+	const SocketAddressInet InetPeer::get_local_address() const
 	{	if (!bConnected)
 			OONET_THROW_EXCEPTION(ExceptionNotConnected,
 				"Not connected");

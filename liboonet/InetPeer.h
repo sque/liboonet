@@ -24,6 +24,17 @@ namespace OONet
 	class InetPeer
 		:private MT::Thread
 	{
+	private:
+		// Uncopiable
+		InetPeer(const InetPeer &);
+		InetPeer & operator=(const InetPeer &);
+
+		Socket mSock;			//!< The connection socket
+		bool bConnected;		//!< If peer is connected
+		bool bZombie;           //!< If peer is a zombie
+
+		virtual void thread_routine();
+
 	public:
 		//! Constructor
 		InetPeer();
@@ -44,29 +55,23 @@ namespace OONet
 			its mechanisms, starts receiving thread
 			and calls appropriate events
 		*/
-		void handleSocket(const Socket & _AssignedSocket);
+		void handle_connection(const Socket & _AssignedSocket);
 
         //! Check if InetPeer is connected
-		bool isConnected() const;
+		bool is_connected() const;
 
 		//! Get address of remote peer
 		/**
 		@throw ExceptionNotConnected If the InetPeer is not hanlding any connection.
 		*/
-		const SocketAddressInet getRemotePeerAddress() const;
+		const SocketAddressInet get_peer_address() const;
 
 		//! Get local address
 		/**
 		@throw ExceptionNotConnected If the InetPeer is not hanlding any connection.
 		*/
-		const SocketAddressInet getLocalAddress() const;
+		const SocketAddressInet get_local_address() const;
 
-	private:
-		Socket mSock;			//!< The connection socket
-		bool bConnected;		//!< If peer is connected
-		bool bZombie;           //!< If peer is a zombie
-
-		virtual void thread_routine();
 	protected:
 
 		//! Send data to the other end

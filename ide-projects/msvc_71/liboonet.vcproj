@@ -116,16 +116,10 @@
 				RelativePath="..\..\liboonet\Buffer.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\Client.cpp">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\Http\ClientHandler.cpp">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Exception.cpp">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Headers.cpp">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\HostInet.cpp">
@@ -146,22 +140,10 @@
 				RelativePath="..\..\liboonet\MutexWin32.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\Packet.cpp">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\PortInet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\Request.cpp">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Response.cpp">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\SemaphoreWin32.cpp">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Server.cpp">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Socket.cpp">
@@ -181,9 +163,31 @@
 			<File
 				RelativePath="..\..\liboonet\ThreadWin32.cpp">
 			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Url.cpp">
-			</File>
+			<Filter
+				Name="http"
+				Filter="">
+				<File
+					RelativePath="..\..\liboonet\Http\Client.cpp">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Headers.cpp">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Packet.cpp">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Request.cpp">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Response.cpp">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Server.cpp">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Url.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -199,16 +203,10 @@
 				RelativePath="..\..\liboonet\Buffer.h">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\Client.h">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\Http\ClientHandler.h">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Exception.h">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Headers.h">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\HostInet.h">
@@ -232,22 +230,10 @@
 				RelativePath="..\..\liboonet\OONet.h">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\Packet.h">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\PortInet.h">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\Request.h">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Response.h">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\Semaphore.h">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Server.h">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Socket.h">
@@ -264,9 +250,31 @@
 			<File
 				RelativePath="..\..\liboonet\Thread.h">
 			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\Url.h">
-			</File>
+			<Filter
+				Name="http"
+				Filter="">
+				<File
+					RelativePath="..\..\liboonet\Http\Client.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Headers.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Packet.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Request.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Response.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Server.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\Url.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

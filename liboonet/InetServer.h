@@ -18,7 +18,7 @@ namespace OONet
 	@remarks This is not a templated class of a custom client handler,
 		so <b>YOU</b> need to create a new instance of your client handler
 		every time OnAccept() is executed and pass back its pointer to
-		server
+		server 
 	*/
 	class InetServer
 		:protected MT::Thread

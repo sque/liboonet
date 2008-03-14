@@ -21,8 +21,8 @@ namespace OONet
 
 	// Thread routine
 	void InetServer::thread_routine()
-	{	Socket clSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);	// client socket
-		InetPeer * pDstHandler;					// Destination client handler
+	{	Socket clSocket;			// client socket
+		InetPeer * pDstHandler;		// Destination client handler
 
 		// Loop to accept new connections
 		while (1)
@@ -41,7 +41,7 @@ namespace OONet
 						// Register him
 						mClList.push_back(pDstHandler);
 						// Start serving
-						pDstHandler->handleSocket(clSocket);
+						pDstHandler->handle_connection(clSocket);
 					}
 					else
 						clSocket = Socket();
@@ -141,7 +141,7 @@ namespace OONet
 			OONET_THROW_EXCEPTION(ExceptionAccessDenied,
 				"Cannot free a NULL pointer!");
 
-		if (pToBeRemoved->isConnected())
+		if (pToBeRemoved->is_connected())
 			OONET_THROW_EXCEPTION(ExceptionResourceBusy,
 				"Peer is connected, cannot remove him"
 				);
@@ -171,7 +171,7 @@ namespace OONet
 		{	pPeer = *it;
 
 			// Try to remove disconnected
-			if (!pPeer->isConnected())
+			if (!pPeer->is_connected())
 			{
 				freeHandler(pPeer);
 				it = mClList.begin();	// Back at start

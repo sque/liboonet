@@ -17,7 +17,7 @@ namespace OONet
     }
 
 	bool InetClient::isConnected() const
-	{	return InetPeer::isConnected();	}
+	{	return InetPeer::is_connected();	}
 
     // Connect at a server
     void InetClient::connect(const SocketAddressInet & serv_addr) throw(Exception)
@@ -37,7 +37,7 @@ namespace OONet
         sock.connect(serv_addr);
 
         // Connected, let the InetPeer to handle the rest
-		handleSocket(sock);
+		handle_connection(sock);
     }
 
     void InetClient::disconnect()
