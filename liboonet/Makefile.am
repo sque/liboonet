@@ -36,7 +36,6 @@ liboonet_a_SOURCES = Base64.cpp \
 liboonet_a_include_HEADERS = \
 	Base64.h \
 	HostInet.h \
-	MultiReference.h \
 	OONet.h \
 	Thread.h \
 	BinaryData.h \
