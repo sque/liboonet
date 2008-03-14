@@ -116,9 +116,6 @@
 				RelativePath="..\..\liboonet\Buffer.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Http\ClientHandler.cpp">
-			</File>
-			<File
 				RelativePath="..\..\liboonet\Exception.cpp">
 			</File>
 			<File
@@ -170,6 +167,9 @@
 					RelativePath="..\..\liboonet\Http\Client.cpp">
 				</File>
 				<File
+					RelativePath="..\..\liboonet\Http\ClientHandler.cpp">
+				</File>
+				<File
 					RelativePath="..\..\liboonet\Http\Headers.cpp">
 				</File>
 				<File
@@ -201,9 +201,6 @@
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Buffer.h">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\Http\ClientHandler.h">
 			</File>
 			<File
 				RelativePath="..\..\liboonet\Exception.h">
@@ -255,6 +252,9 @@
 				Filter="">
 				<File
 					RelativePath="..\..\liboonet\Http\Client.h">
+				</File>
+				<File
+					RelativePath="..\..\liboonet\Http\ClientHandler.h">
 				</File>
 				<File
 					RelativePath="..\..\liboonet\Http\Headers.h">
