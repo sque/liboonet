@@ -24,7 +24,7 @@ namespace OONet
 
 		ClientHandler::~ClientHandler(void)
 		{
-			initializeDestruction();
+			initialize_destruction();
 		}
 
 		// Copy operator
@@ -68,7 +68,7 @@ namespace OONet
 				while(GetRequest(TmpRequest))
 				{
 					// Triger server event
-					CustomResponse = pServer->OnURLRequest(TmpRequest.url, TmpRequest, get_peer_address());
+					CustomResponse = pServer->OnURLRequest(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
 					// Add extra header for connection control
 					CustomResponse.getHeaders().setHeader("Connection", "Keep-Alive");
 					// Send response

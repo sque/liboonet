@@ -12,17 +12,16 @@ namespace OONet
 
     // Default destructor
     InetClient::~InetClient()
-    {   OONET_DEBUG_L2(_T("~InetClient()_\n"));
-		initializeDestruction();
+    {
+		initialize_destruction();
     }
 
 	bool InetClient::isConnected() const
-	{	return InetPeer::is_connected();	}
+	{	return InetPeer::connected();	}
 
     // Connect at a server
     void InetClient::connect(const SocketAddressInet & serv_addr) throw(Exception)
-    {   OONET_DEBUG_L2(_T("InetClient::Connect()_\n"));
-
+    {
 		// Check if it is connected
         if (isConnected())
         {

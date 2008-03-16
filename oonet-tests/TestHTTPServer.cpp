@@ -190,7 +190,7 @@ namespace OONet
 			return false;
 
 		// Check if client is connected
-		if (! myServer.getClients()[0]->is_connected())
+		if (! myServer.getClients()[0]->connected())
 			return false;
 
 		// Stop server

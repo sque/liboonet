@@ -161,10 +161,10 @@ namespace OONet
 
 		// Try twice to join
 		bThread.join(MT::Infinity);
-        if (bThread.is_running())
+        if (bThread.running())
 			return false;
 		bThread.join(MT::Infinity);
-		if (bThread.is_running())
+		if (bThread.running())
             return false;
 
 		return true;
@@ -243,7 +243,7 @@ namespace OONet
 
 		kThread.start();
 		kThread.join(3000);
-		if (kThread.is_running())
+		if (kThread.running())
 			return false;
 		return true;
 	}

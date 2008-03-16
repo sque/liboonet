@@ -99,7 +99,7 @@ namespace OONet
                 virtual ~Thread();
 
                 //! Check if the thread is running.
-                inline bool is_running() const
+                inline bool running() const
                 {   return bRunning; }
 
 				//! Join with this thread in a predefined maximum time.

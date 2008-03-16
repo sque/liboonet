@@ -58,20 +58,11 @@ namespace OONet
 		void handle_connection(const Socket & _AssignedSocket);
 
         //! Check if InetPeer is connected
-		bool is_connected() const;
+		bool connected() const;
 
-		//! Get address of remote peer
-		/**
-		@throw ExceptionNotConnected If the InetPeer is not hanlding any connection.
-		*/
-		const SocketAddressInet get_peer_address() const;
-
-		//! Get local address
-		/**
-		@throw ExceptionNotConnected If the InetPeer is not hanlding any connection.
-		*/
-		const SocketAddressInet get_local_address() const;
-
+		//! Get connection socket
+		const Socket & get_connection_socket() const
+		{	return mSock;	}
 	protected:
 
 		//! Send data to the other end
@@ -90,7 +81,7 @@ namespace OONet
 			so that InetPeer enters <i>zombie mode</i> and avoid of calling
 			of pure virtual functions.
 		*/
-		void initializeDestruction() throw();
+		void initialize_destruction() throw();
 
 		//! @name Exported Events
 		//! @{
@@ -111,9 +102,6 @@ namespace OONet
 			When event is called InetPeer will discard data.
 		*/
 		virtual void OnDataArrived(const BinaryData & data) = 0;
-
-		//! When error occurs
-		virtual void OnError(const std::exception & e){};
 
 		//! When client is disconnected
 		virtual void OnDisconnect(){};

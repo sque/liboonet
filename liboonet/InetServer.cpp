@@ -141,7 +141,7 @@ namespace OONet
 			OONET_THROW_EXCEPTION(ExceptionAccessDenied,
 				"Cannot free a NULL pointer!");
 
-		if (pToBeRemoved->is_connected())
+		if (pToBeRemoved->connected())
 			OONET_THROW_EXCEPTION(ExceptionResourceBusy,
 				"Peer is connected, cannot remove him"
 				);
@@ -171,7 +171,7 @@ namespace OONet
 		{	pPeer = *it;
 
 			// Try to remove disconnected
-			if (!pPeer->is_connected())
+			if (!pPeer->connected())
 			{
 				freeHandler(pPeer);
 				it = mClList.begin();	// Back at start

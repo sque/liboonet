@@ -18,13 +18,12 @@ namespace OONet
 	{	OONET_DEBUG_L2(_T("~InetPeer()_\n"));
 
 	    // Initialize destruction of Peer
-	    initializeDestruction();
+	    initialize_destruction();
     }
 
 	// Handle a connected socket
 	void InetPeer::handle_connection(const Socket & _AssignedSocket)
-	{   OONET_DEBUG_L2(_T("InetClient::handle_connection()_\n"));
-
+	{
 	    // Skip it if we are zombie class
 	    if (bZombie)
             return;
@@ -35,8 +34,6 @@ namespace OONet
 				"InetPeer already connected");
 
 		// Assure termination of any previous
-		mSock.shutdown();
-		mSock = Socket();
 		join(MT::Infinity);
 
 		// Assign new socket
@@ -69,7 +66,7 @@ namespace OONet
         }
         catch(std::exception & e)
         {	OONET_DEBUG_L1(_T("InetClient::ThreadRoutine() Exception thrown!\n"));
-            if (!bZombie) OnError(e);
+
         }
 
         bConnected = false;
@@ -109,44 +106,25 @@ namespace OONet
 	}
 
 	// Check if it is connected
-	bool InetPeer::is_connected() const
+	bool InetPeer::connected() const
 	{	return bConnected;	};
 
-	// Get address of remote peer
-	const SocketAddressInet InetPeer::get_peer_address() const
-	{	if (!bConnected)
-			OONET_THROW_EXCEPTION(ExceptionNotConnected,
-				"Not connected");
-		return mSock.get_peer_address();
-	}
-
-	// Get local address
-	const SocketAddressInet InetPeer::get_local_address() const
-	{	if (!bConnected)
-			OONET_THROW_EXCEPTION(ExceptionNotConnected,
-				"Not connected");
-		return mSock.get_local_address();
-	}
 
 	size_t InetPeer::send(const BinaryData & r)
 	{	return mSock.send(r);	}
 
 	// Initialize destruction
-	void InetPeer::initializeDestruction() throw()
+	void InetPeer::initialize_destruction() throw()
 	{   bZombie = true;
-	    OONET_DEBUG_L2(_T("InetPeer::InitializeDestruction()_\n"));
 
 		// Disconnect if it is connected
 	    bConnected = false;
 		mSock.shutdown();
-		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown 1/3\n"));
 		mSock = Socket();
-		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown 2/3\n"));
 		join(MT::Infinity);
-		OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() found connected, must shutdown OK\n"));
 
 	    // Assure that has finished
-	    if (MT::Thread::is_running())
+	    if (MT::Thread::running())
         {   OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() although DCed, thread is running!\n"));
             join(MT::Infinity);
         }

@@ -27,7 +27,7 @@ namespace OONet
 		Client::~Client()
 		{
 		    OONET_DEBUG_L2(_T("~HTTPClient()_\n"));
-		    initializeDestruction();
+		    initialize_destruction();
 		}
 
 		// Copy operator
