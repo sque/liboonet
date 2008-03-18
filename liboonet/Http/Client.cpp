@@ -3,39 +3,26 @@
 @brief Implementation of HTTP::Client class
 */
 #include "Http/Client.h"
+#include "scoped_lock.hpp"
 
 namespace OONet
 {
 	namespace HTTP
 	{
-		// Construct and connect
-		Client::Client(const SocketAddressInet & _s_addr)
-		{
-			serv_addr = _s_addr;
-			_ConnectToServer();
-		}
-
 		// Default constructor
 		Client::Client()
+			:b_waiting_anwser(false)
 		{}
 
-		// Copy constructor
-		Client::Client(const Client & r)
-		{	OONET_THROW_EXCEPTION(ExceptionUnimplemented, "Never tested this function!");		}
+		Client::Client(const SocketAddress & dst_addr)
+			:b_waiting_anwser(false)
+		{	connect(dst_addr);		}
 
 		// Destructor
 		Client::~Client()
-		{
-		    OONET_DEBUG_L2(_T("~HTTPClient()_\n"));
-		    initialize_destruction();
-		}
+		{}
 
-		// Copy operator
-		Client & Client::operator=(const Client &r)
-		{
-			OONET_THROW_EXCEPTION(ExceptionUnimplemented, "Never implemented this function!");
-			return *this;
-		}
+
 
 		// Make an http request
 		Response Client::send(Request & req, long TimeOutMS)
@@ -43,93 +30,82 @@ namespace OONet
 			BinaryData BinaryRequest, BinaryReply;
 
 			// Check if we are connected
-			if (! isConnected())
+			if (! connected())
 				OONET_THROW_EXCEPTION(ExceptionNotConnected, "Client is not yet connected!");
 
 			// Process the request
 			BinaryRequest = req.render();
 
 			// Send it to net
-			InetClient::send(BinaryRequest);
+			b_waiting_anwser = true;
+			netstream_threaded::send(BinaryRequest);
 
 			// Wait for an answer to arrive
-			OONET_DEBUG_L2(_T("HTTPClient::Send() request send waiting for result...\n"));
 			try
 			{
-				SemAnswerArrived.wait(TimeOutMS);
-				OONET_DEBUG_L2(_T("HTTPClient::Send() We got result!\n"));
+				sem_anwser_arrived.wait(TimeOutMS);
 			}
 			catch(ExceptionTimeOut)
-			{
-			    OONET_DEBUG_L2(_T("HTTPClient::Send() timed out waiting for result..\n"));
-				// Disconnect if connected
-				if (isConnected())
+			{	// Disconnect as the http pipeline will be broken
+				if (connected())
 					disconnect();
 				// Maximum time reached
 				OONET_THROW_EXCEPTION(ExceptionTimeOut, "Maximum time has been reached while waiting for an answer.");
 			}
 
 			// Gather answer
-			WaitingToProcessData = WaitingToProcessData.getFrom(tmpResponse.parse(WaitingToProcessData));
+			{scoped_lock m(mux_access_data);
+				WaitingToProcessData = WaitingToProcessData.getFrom(tmpResponse.parse(WaitingToProcessData));
+			}
 
 			return tmpResponse;
 		}
 
 		// When data arrives from net
-		void Client::OnDataArrived(const BinaryData & data)
+		void Client::on_data_received(const BinaryData & data)
 		{	Response ResponsePacket;
 
 			// Add data in queue
-			WaitingToProcessData += data;
+			{scoped_lock m(mux_access_data);
+				WaitingToProcessData += data;
+			}
 
 			// Check if a response arrived
 			try
 			{
 				// Parse data
 				ResponsePacket.parse(WaitingToProcessData);
+
 				// Raise semaphore
-				SemAnswerArrived.post();
+				b_waiting_anwser = false;
+				sem_anwser_arrived.post();
 			}
 			catch(ExceptionIncomplete)
-			{
-				// No error here.. we must gather more packets
-				OONET_DEBUG_L2(_T("HTTPClient::OnDataArrived() incomplete packet arrived\n"));
-			}
+			{}
 			catch(ExceptionWrongFormat)
 			{
-			    OONET_DEBUG_L2(_T("HTTPClient::OnDataArrived() wrong formated packet arrived\n"));
-
 				// Wrong response
-				try {
-                    disconnect();
-				}catch (std::exception){}
+				disconnect();
 
-				// And post semaphore
-				SemAnswerArrived.post();
+				// Unlock to get answer
+				b_waiting_anwser = false;
+				sem_anwser_arrived.post();
 			}
 		}
 
-		// Ask to reconnect at server
-		void Client::reconnect()
+		void Client::connect(const SocketAddressInet & dest_addr)
 		{
-			if (isConnected())
-				disconnect();
-
-			// Erase previous data
-			WaitingToProcessData.clear();
-
-			// And reconnect
-			_ConnectToServer();
+			{scoped_lock m(mux_access_data);
+				WaitingToProcessData.clear();
+			}
+			b_waiting_anwser = false;
+			netstream_threaded::connect(dest_addr);
 		}
 
-		void Client::_ConnectToServer()
-		{	connect(serv_addr);		}
-
-		// Change host
-		void Client::changeHost(const SocketAddressInet & _s_addr)
-		{
-			serv_addr = _s_addr;	// Store new server
-			reconnect();			// And reconnect
+		void Client::on_disconnected()
+		{	if (b_waiting_anwser)
+				sem_anwser_arrived.post();
 		}
+
 	}; // !HTTP Namespace
 };	// !OONet namespace

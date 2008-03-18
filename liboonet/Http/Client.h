@@ -9,6 +9,7 @@
 #include "../InetClient.h"
 #include "Response.h"
 #include "Request.h"
+#include "../netstream_threaded.hpp"
 
 namespace OONet
 {
@@ -23,15 +24,18 @@ namespace OONet
 			errors from receiving packets and report them.
 		*/
 		class Client:
-			private InetClient
+			private netstream_threaded
 		{
 		private:
-			SocketAddressInet serv_addr;		//!< The Server address
-			MT::Semaphore SemAnswerArrived;		//!< Semaphore triggered when an answer arrives
-			BinaryData WaitingToProcessData;	//!< Unprocessed received data
+			// NonCopyable
+			Client(const Client &);
+			Client & operator=(const Client &);
 
-			//! Internal implemenation of connect to new server
-			void _ConnectToServer();
+			// Private data
+			MT::Semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
+			BinaryData WaitingToProcessData;	//!< Unprocessed received data
+			MT::Mutex mux_access_data;			//!< Mutex for synchronization on stack
+			bool b_waiting_anwser;				//!< If someone is waiting for a server answer
 		public:
 			//! Default constructor
 			/**
@@ -39,31 +43,10 @@ namespace OONet
 			*/
 			Client();
 
-			//! Construct and connect
-			/**
-				Creates a client and connects it on a specific
-				address.
-			@remarks
-				Check InetClient::connect() for exceptions tha may be thrown.
-			*/
-			Client(const SocketAddressInet & _s_addr);
+			Client(const SocketAddress & dst_addr);
 
 			//! Destructor
-			~Client();
-
-			//! Copy constructor
-			/**
-			@throw ExceptionUnimplemented As this feature is not implemented and there is no
-				reason to do this now
-			*/
-			Client(const Client & r);
-
-			//! Copy operator
-			/**
-			@throw ExceptionUnimplemented As this feature is not implemented and there is no
-				reason to do this now
-			*/
-			Client & operator=(const Client &r);
+			virtual ~Client();
 
 			//! Make an http request and wait for response
 			/**
@@ -74,39 +57,31 @@ namespace OONet
 			@param tm_timeoutms The maximum time to wait for answer in milliseconds
 			@return An HTTP::Response object holding the answer from the server.
 			@throw ExceptionTimeOut If maximum time reached without receiving any answer
-			@throw ExceptionNotConnected If HTTP::Client is not connected in any server yet.
+			@throw ExceptionNotConnected If HTTP::Client is not connected in any server yet, or connection was closed
 			@remarks In case that a wrong formated packet
 				arrives, then the client is automatically disconnected
 				from server.
 			*/
 			Response send(Request & req, long tm_timeoutms);
 
-			//! Ask to reconnect at previous server
-			void reconnect();
+			//! Connect at a host
+			void connect(const SocketAddressInet & dest_addr);
 
-			//! Change host and connect to a new one
-			void changeHost(const SocketAddressInet & _s_addr);
+			//! Disconnect from host
+			inline void disconnect()
+			{	netstream_threaded::disconnect();	}
 
 			//! Check if it is connected
-			bool isConnected()
-			{	return InetClient::isConnected();	}
-
-		protected:
-			//! An event raised when client is disconnected
-		    virtual void OnDisconnect(){}
+			bool connected()
+			{	return netstream_threaded::connected();	}
 
 		private:
-			//* Functions derived from InetClient */
-			virtual void OnConnect(Socket & con_socket){};
-
 			// When data arrives
-			virtual void OnDataArrived(const BinaryData & data);
+			virtual void on_data_received(const BinaryData &);
 
-			// An event when client is connected
-		    virtual void OnConnect(){}
+			// Raised when we loose conenction from server
+		    virtual void on_disconnected();
 
-			// An event when an error is raised when collecting data
-			virtual void OnError(Exception &e){}
 		};	// !Client class
 	};	// !HTTP namespace
 };	// !OONet namespace

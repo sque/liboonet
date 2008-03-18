@@ -89,6 +89,11 @@
 		<Unit filename="../../liboonet/Thread.cpp" />
 		<Unit filename="../../liboonet/Thread.h" />
 		<Unit filename="../../liboonet/ThreadPosix.cpp" />
+		<Unit filename="../../liboonet/netstream.cpp" />
+		<Unit filename="../../liboonet/netstream.hpp" />
+		<Unit filename="../../liboonet/netstream_threaded.cpp" />
+		<Unit filename="../../liboonet/netstream_threaded.hpp" />
+		<Unit filename="../../liboonet/scoped_lock.hpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

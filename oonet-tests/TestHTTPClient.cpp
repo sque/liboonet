@@ -17,12 +17,14 @@ namespace OONet
 		Exception LastExc;
 		bool bException;
 		BinaryData myResp;
+		long wt_after_send;
 
-		MiniHTTPServer(const BinaryData & resp)
+		MiniHTTPServer(const BinaryData & resp, long wt_after = 0)
 			:lSocket(Socket::FAMILY_INET,Socket::TYPE_STREAM, Socket::PROTO_DEFAULT),
 			bRunning(false),
 			LastExc(_T("no fike"), -1, _T("123123"), _T("!unknown")),
-			myResp(resp)
+			myResp(resp),
+			wt_after_send(wt_after)
 		{
 			bException = false;
 			int reuse = 1;
@@ -68,6 +70,8 @@ namespace OONet
 				// Send back reply
 				clSocket.send(myResp);
 
+				if (wt_after_send)
+					MT::Thread::sleep(wt_after_send);
 				// Raise semaphore
 				semArrived.post();
 
@@ -90,10 +94,57 @@ namespace OONet
 		}
 	};
 
+	// Mini echo server
+	class MiniDCServer
+		: public MT::Thread
+	{
+	public:
+		Socket lSocket;
+
+		MiniDCServer()
+			:lSocket(Socket::FAMILY_INET,Socket::TYPE_STREAM, Socket::PROTO_DEFAULT)
+		{
+			int reuse = 1;
+			lSocket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+			lSocket.bind(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		}
+
+		~MiniDCServer()
+		{
+			lSocket.shutdown();
+			lSocket = Socket();
+			join(MT::Infinity);
+
+		}
+
+		virtual void thread_routine()
+		{
+			try
+			{
+				lSocket.listen(2);
+				Socket clSocket = lSocket.accept();
+
+				// dc client
+				sleep(1000);
+				clSocket.shutdown();
+				clSocket = Socket();
+			}
+			catch(Exception &)
+			{}
+		}
+
+		// Exit server
+		void StopS()
+		{	lSocket.shutdown();
+		    lSocket = Socket();
+		    join(MT::Infinity);
+		}
+	};
+
 	bool TestHTTPClient::TestCtor::OnExecute()
 	{	HTTP::Client mClient;
 
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 
 		return true;
@@ -102,76 +153,39 @@ namespace OONet
 	bool TestHTTPClient::TestCtorWrong::OnExecute()
 	{	HTTP::Client mClient(SocketAddressInet(HostInet::LOCALHOST, PortInet(44243)));
 
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 		return false;
 	}
 
-	bool TestHTTPClient::TestChangeHost::OnExecute()
+	bool TestHTTPClient::TestConnect::OnExecute()
 	{	HTTP::Client mClient;
 
-		mClient.changeHost(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
+		mClient.connect(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
 
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 		return true;
 	}
 
-	bool TestHTTPClient::TestChangeHostConnected::OnExecute()
+	bool TestHTTPClient::TestConnectConnected::OnExecute()
 	{	HTTP::Client mClient;
 
 		// Connect to server
-		mClient.changeHost(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
+		mClient.connect(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
 
 		// Check if it is connected
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 
 		// Connet to another server
-		mClient.changeHost(SocketAddressInet(HostResolver("www.in.gr"), PortInet(80)));
+		mClient.connect(SocketAddressInet(HostResolver("www.in.gr"), PortInet(80)));
 
 		// Check if it is connected
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 
 		return true;
-	}
-
-	bool TestHTTPClient::TestReconnect::OnExecute()
-	{	HTTP::Client mClient;
-
-		// Connect to server
-		mClient.changeHost(SocketAddressInet(HostResolver("www.google.com"), PortInet(80)));
-
-		// Check if it is connected
-		if (!mClient.isConnected())
-			return false;
-
-		// reconnect
-		mClient.reconnect();
-
-		// Check if it is connected
-		if (!mClient.isConnected())
-			return false;
-		return true;
-	}
-
-	bool TestHTTPClient::TestReconnectWrong::OnExecute()
-	{	HTTP::Client mClient;
-
-		// Check if it is connected
-		if (mClient.isConnected())
-			return false;
-
-		// reconnect with no server defined!
-		try
-		{
-            mClient.reconnect();
-		}
-		catch(Exception)
-		{   return true;    }
-
-		return false;
 	}
 
 	bool TestHTTPClient::TestSend::OnExecute()
@@ -199,14 +213,14 @@ namespace OONet
 		MT::Thread::sleep(1500);    //WAit to start
 
 		// Check if it is connected
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 
 		// Connect with client
-		mClient.changeHost(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
 		// Check if it is connected
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 
 		// Send request
@@ -231,21 +245,21 @@ namespace OONet
 		req.getHeaders().setHeader("Host", "www.google.com");
 
 		// Create http server
-		MiniHTTPServer myServer(respBinary);
+		MiniHTTPServer myServer(respBinary, 4000);
 
 		// Start server
 		myServer.start();
 		MT::Thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 
 		// Connect with client
-		mClient.changeHost(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
 		// Check if it is connected
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 
 		// Send request
@@ -273,14 +287,14 @@ namespace OONet
 		MT::Thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 
 		// Connect with client
-		mClient.changeHost(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
 		// Check if it is connected
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 
 		// Send request
@@ -314,14 +328,14 @@ namespace OONet
 		MT::Thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 
 		// Connect with client
-		mClient.changeHost(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
 		// Check if it is connected
-		if (!mClient.isConnected())
+		if (!mClient.connected())
 			return false;
 
 		// Send request
@@ -340,16 +354,37 @@ namespace OONet
 		MT::Thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
-		if (mClient.isConnected())
+		if (mClient.connected())
 			return false;
 
 		// Reconncet
-		mClient.reconnect();
+		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
 
 		theResp = mClient.send(req, 3000);
 
 		if (theResp.render() != resp.render())
 			return false;
 		return true;
+	}
+
+	bool TestHTTPClient::TestSendServerReset::OnExecute()
+	{	MiniDCServer myserver;
+		HTTP::Request req;
+		HTTP::Client mClient;
+
+		myserver.start();
+		MT::Thread::sleep(1500);    //Wait to star
+
+		// Format req
+		req.url = "/";
+		req.http_type = HTTP::Request::REQUEST_GET;
+		req.getHeaders().setHeader("Host", "www.google.com");
+
+		// Connect with client
+		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+
+		mClient.send(req, 3000);
+
+		return false;
 	}
 }; // !OONet namespace
