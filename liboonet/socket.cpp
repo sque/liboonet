@@ -210,21 +210,20 @@ namespace oonet
 
     // Receive action
     binary_data Socket::receive(size_t max_data) throw(Exception)
-    {   // Allocate space for incoming data
-        boost::scoped_array<byte> tmp_data(new byte[max_data]);
-        int received_size;
-        binary_data received_data;
+    {	int received_size;
+
+        // Allocate space for incoming data
+        binary_data received_data((byte)'\0', max_data);
 
         // Get data
-		received_size = ::recv(pimpl_->get_socket(), (char *)tmp_data.get(), max_data, 0);
+		received_size = ::recv(pimpl_->get_socket(), (char *)received_data.get_data_ptr(), max_data, 0);
 
         // Create a binary data block
         if ((received_size == INVALID_SOCKET) || (received_size <= 0))
 			_throw_last_error("Cannot Socket::receive()");
 
 		// Return data
-		received_data = binary_data(tmp_data.get(), received_size);
-		return received_data;
+		return received_data.get_until(received_size);
     }
 
     // Send

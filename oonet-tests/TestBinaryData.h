@@ -40,6 +40,8 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestElementGeneral, _T("operator[] general quality"));
 		OONET_DECLARESUBTEST(TestAStringExporter, _T("Test exporting to AString"));
 		OONET_DECLARESUBTEST(TestWStringExporter, _T("Test exporting to WString"));
+		OONET_DECLARESUBTEST(TestCoW, _T("Test CoW (basic)"));
+		OONET_DECLARESUBTEST(TestCoWExtend, _T("Test CoW (extended)"));
 
 	public:
 		// Constructor
@@ -74,9 +76,12 @@ namespace oonet
 			OONET_REGISTERSUBTEST(TestElementGeneral);
 			OONET_REGISTERSUBTEST(TestAStringExporter);
 			OONET_REGISTERSUBTEST(TestWStringExporter);
+			OONET_REGISTERSUBTEST(TestCoW);
+			OONET_REGISTERSUBTEST(TestCoWExtend);
 		}
 
 	} ;	// !TestBinaryData class
 };	// !oonet namespace
 
 #endif // BINARYDATA_TEST_H_INCLUDED
+

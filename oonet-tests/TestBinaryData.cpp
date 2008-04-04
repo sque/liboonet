@@ -510,4 +510,49 @@ namespace oonet
 
 		return true;
 	}
+
+	bool TestBinaryData::TestCoW::OnExecute()
+	{	binary_data b1 = binary_data(wstring(L"koukouroukou1"));
+		binary_data b2(b1);
+		binary_data b3;
+		b3 = b2;
+
+		if (b1.get_data_ptr() != b2.get_data_ptr())
+			return false;
+
+		if (b2.get_data_ptr() != b3.get_data_ptr())
+			return false;
+		return true;
+	}
+
+	bool TestBinaryData::TestCoWExtend::OnExecute()
+	{	binary_data b1 = binary_data(wstring(L"koukouroukou1"));
+		binary_data b2(b1);
+		binary_data b3;
+		b3 = b2;
+
+		if (b1.get_data_ptr() != b2.get_data_ptr())
+			return false;
+
+		if (b2.get_data_ptr() != b3.get_data_ptr())
+			return false;
+
+		// Change b2
+		b2 += binary_data(string("test"));
+		if (b2.get_data_ptr() == b3.get_data_ptr())
+			return false;
+
+		if (b3.get_data_ptr() != b1.get_data_ptr())
+			return false;
+
+		// Assign b3 equal to b2
+		b3 = b2;
+		if (b3.get_data_ptr() != b2.get_data_ptr())
+			return false;
+
+		if (b1.get_data_ptr() == b3.get_data_ptr())
+			return false;
+
+		return true;
+	}
 };	// !oonet namespace

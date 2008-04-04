@@ -12,7 +12,7 @@ namespace oonet
 	void Buffer::pushFront(const binary_data & r)
 	{	scoped_lock fun_lock(*this);
 
-		// scale memory to it all data
+		/*// scale memory to it all data
 		_scale_mem(s_data + r.size());
 
 		// move current data at end
@@ -22,7 +22,7 @@ namespace oonet
 		memcpy(p_data, r.get_data_ptr(), r.size());
 
 		// Save data size
-		s_data += r.size();
+		s_data += r.size();*/
 	}
 
 	// Push at end
@@ -41,7 +41,7 @@ namespace oonet
 		if (MaxSize == 0)
 			return binary_data::EMPTY;
 
-		scoped_lock fun_lock(*this);
+		/*scoped_lock fun_lock(*this);
 
 		// Fix maxsize
 		if (MaxSize > size())
@@ -50,7 +50,7 @@ namespace oonet
 		res = get_until(_finalSize);
 		if (!only_peek)
 			binary_data::operator=(get_from(res.size()));
-
+*/
 		return res;
 	}
 
@@ -63,7 +63,7 @@ namespace oonet
 		if (MaxSize == 0)
 			return binary_data::EMPTY;
 
-		scoped_lock fun_lock(*this);
+		/*scoped_lock fun_lock(*this);
 
 		// Fix maxsize
 		if (MaxSize > size())
@@ -76,7 +76,7 @@ namespace oonet
 			ReversePosition = size() - res.size();
 			binary_data::operator=( get_until(ReversePosition));
 		}
-
+*/
 		return res;
 	}
 

@@ -3,6 +3,9 @@
 
 #include "oonet.hpp"
 
+#include <vector>
+#include <boost/shared_ptr.hpp>
+
 namespace oonet
 {
 	//! Object representing data blocks
@@ -16,21 +19,15 @@ namespace oonet
 	class binary_data
 	{
 	private:
-		byte bt_dummy;	//!< An internal dummy byte when we dont have allocated mem
-		size_t s_buff;	//!< Size of current allocated buffer
+		class _mem_block;
+		boost::shared_ptr<_mem_block> p_mem_block;
 
 	protected:
-		byte * p_data;	//!< Pointer to our data
-		size_t s_data;	//!< Size of data
+		size_t off_data;	//!< Offset of memory block
+		size_t s_data;		//!< Size of data
 
-		//! Scales the current internal memmory to fit new data
-		/**
-		@param FitMem The desired size of data that we want to fit, it maybe less or more.
-		@param preservData If this flag is true, buffer is scaled and guarantees that previous data is still there.
-		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
-		*/
-		void _scale_mem(size_t s_fitmem, bool b_preserv_data = true);
-
+		// Create real copy if needed
+		void _assure_local_copy();
 	public:
 		//! A constant empty binary_data. Usefull for comparisons.
 		static const binary_data EMPTY;
@@ -47,12 +44,12 @@ namespace oonet
 		*/
 		binary_data();
 
-		//! Copy constructor
-		binary_data(const binary_data &r);
-
 		//! Destructor
 		virtual ~binary_data();
 
+		binary_data(const binary_data & r);
+
+		binary_data & operator=(const binary_data & r);
 		//! Constructor from std::string
 		/**
 			A new object is created and all the characters of std::string
@@ -96,15 +93,6 @@ namespace oonet
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
 		binary_data(const byte bt_repeated, size_t s_times) throw(Exception);
-
-		//! @name Operators
-		//! @{
-
-		//! Copy operator
-		/**
-		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
-		*/
-		binary_data &operator=(const binary_data &r) throw(Exception);
 
 		//! Add operator
 		/**
@@ -167,8 +155,7 @@ namespace oonet
 			It will return the pointer to internal buffer.
 		@see size()
 		*/
-		inline const byte * get_data_ptr() const
-		{   return p_data;   }
+		const byte * get_data_ptr() const;
 
 		//! Get size of data
 		/**
