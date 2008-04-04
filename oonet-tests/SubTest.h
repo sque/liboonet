@@ -31,9 +31,9 @@ namespace oonet
 		bool bMustThrow;		// When this test forces to throw exception
 		string ExceptionType;	// The exception type that must throw
 		Exception LastException;
-		ulong CpuTimeSpent;		// How many cpu time was spent
+		double CpuTimeSpent;		// How many cpu time was spent
 	protected:
-		clock_t StartTime, EndTime;
+		double StartTime, EndTime;
 
 		// On test run
 		virtual bool OnExecute() = 0;

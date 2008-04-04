@@ -12,6 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="benchmark" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -85,6 +86,8 @@
 		<Unit filename="../../oonet-tests/TestUrl.cpp" />
 		<Unit filename="../../oonet-tests/TestUrl.h" />
 		<Unit filename="../../oonet-tests/main.cpp" />
+		<Unit filename="../../oonet-tests/test_benchmark.cpp" />
+		<Unit filename="../../oonet-tests/test_benchmark.hpp" />
 		<Unit filename="../../oonet-tests/test_netserver.cpp" />
 		<Unit filename="../../oonet-tests/test_netserver.hpp" />
 		<Unit filename="../../oonet-tests/test_netstream_threaded.cpp" />

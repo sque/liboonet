@@ -27,10 +27,10 @@ namespace oonet
 
 			// Test
 			if (pSubTest->Execute())
-				_tprintf(_T("| ok   |%5ld |%-20s\n"), pSubTest->CpuTimeSpent,pSubTest->LastException.getType().c_str());
+				_tprintf(_T("| ok   |%4.1F |%-20s\n"), pSubTest->CpuTimeSpent,pSubTest->LastException.getType().c_str());
 			else
 			{
-				_tprintf(_T("| FAIL |%5ld |%-20s\n"), pSubTest->CpuTimeSpent, pSubTest->LastException.getType().c_str());
+				_tprintf(_T("| FAIL |%4.1F |%-20s\n"), pSubTest->CpuTimeSpent, pSubTest->LastException.getType().c_str());
 				_tprintf(_T("    >> %s - %s(%ld)\n       %s\n"), pSubTest->LastException.getType().c_str(),
                     pSubTest->LastException.getFile().c_str(), pSubTest->LastException.getLine(),
                     pSubTest->LastException.getDescription().c_str());

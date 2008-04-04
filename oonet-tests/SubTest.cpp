@@ -1,15 +1,27 @@
 #include "SubTest.h"
 #include "Test.h"
+#include <sys/time.h>
 #include <time.h>
-
 
 namespace oonet
 {
+
+	double get_current_msecs()
+	{	struct timeval t;
+		double tmp_out;
+
+		gettimeofday(&t, NULL);
+		tmp_out = t.tv_sec * 1000.0;
+		tmp_out += ((double)t.tv_usec /1000.0);
+
+		return tmp_out;
+	}
+
 	// Constructor
 	SubTest::SubTest(string Name)
 		:bMustThrow(false),
 		LastException("", 0, "", ""),
-		CpuTimeSpent(0)
+		CpuTimeSpent(0.0)
 	{
 		SubTestName = Name;
 	}
@@ -18,7 +30,7 @@ namespace oonet
 	SubTest::SubTest(string Name, string ExcType)
 		:bMustThrow(true),
 		LastException("", 0, "", ""),
-		CpuTimeSpent(0)
+		CpuTimeSpent(0.0)
 	{
 		SubTestName = Name;
 		ExceptionType = ExcType;
@@ -29,14 +41,14 @@ namespace oonet
 
 		try
 		{
-			StartTime = clock();
+			StartTime = get_current_msecs();
 			bResult = OnExecute();
-			EndTime = clock();
+			EndTime = get_current_msecs();
 			if (bMustThrow) bResult = false;
 
 		}
 		catch(Exception & e)
-		{	EndTime = clock();
+		{	EndTime = get_current_msecs();
 			LastException = e;
 			if ((bMustThrow) && (e.getType() == ExceptionType))
 				bResult = true;
@@ -45,15 +57,14 @@ namespace oonet
 		}
 
 		// Save time
-		CpuTimeSpent = (EndTime - StartTime) * 1000;
-        CpuTimeSpent = CpuTimeSpent / CLOCKS_PER_SEC;
+		CpuTimeSpent = (EndTime - StartTime);
 		return bResult;
 	}
 
 	// Reset timer
 	void SubTest::ResetTimer()
 	{
-		StartTime = clock();
+		StartTime = get_current_msecs();
 	}
 
 	// Get last system error description
