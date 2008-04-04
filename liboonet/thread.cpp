@@ -79,8 +79,6 @@ namespace OONet
             join(Infinity);
         }
 
-
-
         // Wait a specific amount of time to see if thread was stopped
         void thread::join(ulong tm_timeoutms) throw(Exception)
         {
@@ -98,18 +96,11 @@ namespace OONet
         {
 			scoped_lock tmp_lock(*this);	// Lock object for single use
 
-            try // Wait for possible exceptions
-            {
-            	// Start it
-                _system_start();
-				// Wait for thread to start
-				semStartThread.wait();
-            }
-            catch(std::exception)
-            {
-				// Oups
-                throw;		// Forward exception
-            }
+			// Start it
+			_system_start();
+
+			// Wait for thread to start
+			semStartThread.wait();
 
             return;
         }

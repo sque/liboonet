@@ -16,8 +16,8 @@ namespace OONet
 		OONET_DECLARESUBTESTEXC(TestDoubleStart, _T("Start() double"), _T("ExceptionAlreadyConnected"));
 		OONET_DECLARESUBTEST(TestStartRecovery, _T("Start() recovery"));
 		OONET_DECLARESUBTEST(TestStop, _T("Stop() quality test"));
-		OONET_DECLARESUBTESTEXC(TestStopWrong1, _T("Start() wrong"), _T("ExceptionNotConnected"));
-		OONET_DECLARESUBTESTEXC(TestStopWrong2, _T("Start() wrong"), _T("ExceptionNotConnected"));
+		OONET_DECLARESUBTEST(TestStopWrong1, _T("Start() wrong"));
+		OONET_DECLARESUBTEST(TestStopWrong2, _T("Start() wrong"));
 		OONET_DECLARESUBTEST(TestStopCleanup, _T("Stop() cleanup"));
 		OONET_DECLARESUBTEST(TestDCInvalidClients, _T("DC invalid clients"));
 		OONET_DECLARESUBTEST(TestPureVirtuals1, _T("Pure Virtual Calls"));

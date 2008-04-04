@@ -34,7 +34,8 @@ namespace OONet
 		{	p_server = static_cast<S *>(_s);	}
 
 		// Just a default virtual destructor
-		virtual ~netserver_clienthandler(){}
+		virtual ~netserver_clienthandler()
+		{	disconnect();		}
 	};
 
 
@@ -52,8 +53,7 @@ namespace OONet
 
 		// Private data
 		Socket l_socket;			// Listen socket
-		std::list<C *> v_pclients;	// Pointer to clients list
-		typedef typename std::list<C *>::iterator client_iterator;
+		bool b_zombie;				// Flag if we are in zombie mode
 
 		// Thread routine
 		void thread_routine()
@@ -66,9 +66,8 @@ namespace OONet
 					// Wait for connection
 					cl_socket = l_socket.accept();
 
-					// Create a new handler
-					C * p_netstream_client = new C(this);
-					v_pclients.push_back(p_netstream_client);
+					// Allocate new handler
+					C * p_netstream_client = impl_new_handler(cl_socket);
 
 					// Start handling
 					p_netstream_client->assign_socket(cl_socket);
@@ -79,8 +78,7 @@ namespace OONet
 			}
 			catch(Exception & e)
 			{
-				printf("ERROR!!! %s", e.getReport().c_str());
-
+				printf("Error %s\n", e.getReport().c_str());
 				// Abandon sockets
 				l_socket = Socket();
 				cl_socket = Socket();
@@ -92,22 +90,56 @@ namespace OONet
 		// Parametrize listen socket at creation time
 		virtual void parametrize_listen_socket(Socket & l_sock)	{}
 
-	public:
-		// Constructor
-		netserver()
-		{}
+		/*	Implementation of new client allocation, this may be overloaded
+			and populated with code that recycles disconnected handlers.
+			By default it creates a new one and adds it to the list.
+		*/
+		virtual C * impl_new_handler(Socket & cl_socket)
+		{
+			// Create a new handler
+			C * p_tmp_server_streamhandler = new C(this);
+			v_pclients.push_back(p_tmp_server_streamhandler);
 
-		// Destructor
-		virtual ~netserver()
+			return p_tmp_server_streamhandler;
+		}
+
+		// Clients list
+		typedef typename std::list<C *>::iterator client_iterator;
+		std::list<C *> v_pclients;
+
+		// Must be called to enter zombie mode
+		void initialize_destruction()
 		{	client_iterator it;
+
+			// Enter zombie
+			b_zombie = true;
 
 			// Stop listening
 			if (listening())
 				stop_listen();
 
-			// Close all clients
-			for(it = v_pclients.begin();it != v_pclients.end();it++)
-			{	delete (*it);	}
+			// Delete all clients
+			while((it = v_pclients.begin()) != v_pclients.end())
+			{	delete (*it);
+				v_pclients.erase(it);
+			}
+		}
+
+	public:
+		// Constructor
+		netserver()
+			:b_zombie(false)
+		{}
+
+		// Destructor
+		virtual ~netserver()
+		{
+			/*
+				If this assertation failed
+				you propably forgot to call initialize_destruction()
+				from the last derived class destructor
+			*/
+			OONET_ASSERT(b_zombie);
 		}
 
 		// start listen

@@ -31,7 +31,7 @@ namespace OONet
 				on_data_received(tmp_data);
 			}
 		}
-		catch(std::exception &){}
+		catch(std::exception){}
 
 		b_connected = false;
 		netstream::disconnect();	// Disconnect for sure

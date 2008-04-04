@@ -11,12 +11,12 @@ namespace OONet
 	{
 	public:
 		virtual ~MyHTTPServer()
-		{
+		{	initialize_destruction();
 		}
 
 
 	protected:
-		virtual HTTP::Response OnURLRequest(const HTTP::Url & Uri, const HTTP::Request & full_request, const SocketAddressInet & client_addr)
+		virtual HTTP::Response on_url_request(const HTTP::Url & Uri, const HTTP::Request & full_request, const SocketAddressInet & client_addr)
 		{
 			HTTP::Response tmpResponse;
 
@@ -130,13 +130,13 @@ namespace OONet
 		myServer.stop_listen();
 
 		if (myServer.listening())
-		return false;
+			return false;
 
 		// Stop again
 		myServer.stop_listen();
 
 		if (myServer.listening())
-		return false;
+			return false;
 
 		return true;
 	}
@@ -199,7 +199,7 @@ namespace OONet
 			return false;
 
 		// Get count of clients
-		if (myServer.get_clients().size() != 0)
+		if (myServer.get_clients().size() != 1)
 			return false;
 		return true;
 	}
@@ -285,8 +285,7 @@ namespace OONet
 		{
 			for(i = 0;i < 1000;i++)
 			{
-				printf("%ld\n", i);
-
+				printf("%d\n", i);
 				mHttpClient = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 				// Connect client
 				mHttpClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44143)));

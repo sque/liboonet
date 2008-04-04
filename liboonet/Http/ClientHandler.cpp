@@ -41,7 +41,7 @@ namespace OONet
 				while(get_request(TmpRequest))
 				{
 					// Triger server event
-					CustomResponse = get_server_ptr()->OnURLRequest(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
+					CustomResponse = get_server_ptr()->on_url_request(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
 					// Add extra header for connection control
 					CustomResponse.getHeaders().setHeader("Connection", "Keep-Alive");
 					// Send response
@@ -50,7 +50,6 @@ namespace OONet
 			}
 			catch(Exception)
 			{
-
 				// This mean the end of connection
 				disconnect();
 			}

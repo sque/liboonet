@@ -29,6 +29,10 @@ namespace OONet
 			Server(const Server &);
 			Server & operator=(const Server &);
 
+			/*
+				Overide default behavior and recycle disconnected handlers
+			*/
+			virtual ClientHandler * impl_new_handler(Socket & cl_socket);
 		protected:
 			//! @name Exported events
 			//! @{
@@ -43,7 +47,7 @@ namespace OONet
 			@param client_addr Is the address of client that does the request.
 			@return The HTTP::Response that will be sent back to client.
 			*/
-			virtual Response OnURLRequest(const Url & Uri, const Request & full_request, const SocketAddressInet & client_addr) = 0;
+			virtual Response on_url_request(const Url & Uri, const Request & full_request, const SocketAddressInet & client_addr) = 0;
 			//! @}
 
 		public:
