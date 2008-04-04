@@ -18,7 +18,7 @@ namespace oonet
 		const netstream_threaded & operator=(const netstream_threaded &);
 
 		// Hide receive
-		BinaryData receive(size_t);
+		binary_data receive(size_t);
 
 		// Implement events
 		void thread_routine();
@@ -35,7 +35,7 @@ namespace oonet
 	protected:
 
 		// Events
-		virtual void on_data_received(const BinaryData &){};
+		virtual void on_data_received(const binary_data &){};
 		virtual void on_connected(){};
 		virtual void on_disconnected(){};
 

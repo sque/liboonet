@@ -24,13 +24,13 @@ namespace oonet
 	bool TestHTTPRequest::TestCopyCtor::OnExecute()
 	{	HTTP::Request a;
 
-		a.setBody(BinaryData("koukouroukou"));
+		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
 		a.setTitle("GET / HTTP/1.1");
 		a.http_type = HTTP::Request::REQUEST_POST;
 		a.url = "/index.html";
 
-		if (a.getBody()  != BinaryData("koukouroukou"))
+		if (a.getBody()  != binary_data("koukouroukou"))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 1)
 			return false;
@@ -44,7 +44,7 @@ namespace oonet
 			return false;
 
 		HTTP::Request b(a);
-		if (b.getBody()  != BinaryData("koukouroukou"))
+		if (b.getBody()  != binary_data("koukouroukou"))
 			return false;
 		if (b.getHeaders().getSTLMap().size() != 1)
 			return false;
@@ -61,13 +61,13 @@ namespace oonet
 	bool TestHTTPRequest::TestCopyOperator::OnExecute()
 	{	HTTP::Request a, b;
 
-		a.setBody(BinaryData("koukouroukou"));
+		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
 		a.setTitle("GET / HTTP/1.1");
 		a.http_type = HTTP::Request::REQUEST_POST;
 		a.url = "/index.html";
 
-		if (a.getBody()  != BinaryData("koukouroukou"))
+		if (a.getBody()  != binary_data("koukouroukou"))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 1)
 			return false;
@@ -81,7 +81,7 @@ namespace oonet
 			return false;
 
 		b = a;
-		if (b.getBody()  != BinaryData("koukouroukou"))
+		if (b.getBody()  != binary_data("koukouroukou"))
 			return false;
 		if (b.getHeaders().getSTLMap().size() != 1)
 			return false;
@@ -102,16 +102,16 @@ namespace oonet
 		string shouldbeCRLF = "POST /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
 		string out;
 
-		a.setBody(BinaryData("koukouroukou"));
+		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
 		a.http_type = HTTP::Request::REQUEST_POST;
 		a.url = "/index.html";
 
-		out = a.render(HTTP::LF).toString();
+		out = a.render(HTTP::LF).to_string();
 		if (out != shouldbeLF)
 			return false;
 
-		out = a.render(HTTP::CRLF).toString();
+		out = a.render(HTTP::CRLF).to_string();
 		if (out != shouldbeCRLF)
 			return false;
 
@@ -123,14 +123,14 @@ namespace oonet
 		string shouldbeLF = "POST /index.html HTTP/1.1\nContent-Length: 12\na: 123\n\nkoukouroukou";
 		string out;
 
-		a.setBody(BinaryData("koukouroukou"));
+		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
 		a.http_type = HTTP::Request::REQUEST_POST;
 		a.url = "/index.html";
 
 		ResetTimer();
 		for(long i = 0;i < 10000;i++)
-			out = a.render(HTTP::LF).toString();
+			out = a.render(HTTP::LF).to_string();
 		if (out != shouldbeLF)
 			return false;
 
@@ -144,7 +144,7 @@ namespace oonet
 		string renderedGETCRLF = "GET /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
 
 		// Post LF
-		if (a.parse(BinaryData(renderedLF)) != renderedLF.size())
+		if (a.parse(binary_data(renderedLF)) != renderedLF.size())
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -154,7 +154,7 @@ namespace oonet
 			return false;
 		if (a.getTitle() != "POST /index.html HTTP/1.1")
 			return false;
-		if (a.getBody() != BinaryData("koukouroukou"))
+		if (a.getBody() != binary_data("koukouroukou"))
 			return false;
 		if (a.http_type != HTTP::Request::REQUEST_POST)
 			return false;
@@ -162,7 +162,7 @@ namespace oonet
 			return false;
 
 		// Post CRLF
-		if (a.parse(BinaryData(renderedCRLF)) != renderedCRLF.size())
+		if (a.parse(binary_data(renderedCRLF)) != renderedCRLF.size())
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -172,7 +172,7 @@ namespace oonet
 			return false;
 		if (a.getTitle() != "POST /index.html HTTP/1.1")
 			return false;
-		if (a.getBody() != BinaryData("koukouroukou"))
+		if (a.getBody() != binary_data("koukouroukou"))
 			return false;
 		if (a.http_type != HTTP::Request::REQUEST_POST)
 			return false;
@@ -180,7 +180,7 @@ namespace oonet
 			return false;
 
 		// GET CRLF
-		if (a.parse(BinaryData(renderedGETCRLF)) != renderedGETCRLF.size())
+		if (a.parse(binary_data(renderedGETCRLF)) != renderedGETCRLF.size())
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -190,7 +190,7 @@ namespace oonet
 			return false;
 		if (a.getTitle() != "GET /index.html HTTP/1.1")
 			return false;
-		if (a.getBody() != BinaryData("koukouroukou"))
+		if (a.getBody() != binary_data("koukouroukou"))
 			return false;
 		if (a.http_type != HTTP::Request::REQUEST_GET)
 			return false;
@@ -202,7 +202,7 @@ namespace oonet
 	bool TestHTTPRequest::TestParseWrong1::OnExecute()
 	{	HTTP::Request a;
 		string renderedGETCRLF = "GET  HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
-		BinaryData rendered(renderedGETCRLF);
+		binary_data rendered(renderedGETCRLF);
 
 		a.parse(rendered);
 		return false;
@@ -211,7 +211,7 @@ namespace oonet
 	bool TestHTTPRequest::TestParseWrong2::OnExecute()
 	{	HTTP::Request a;
 		string renderedGETCRLF = "GET / \r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
-		BinaryData rendered(renderedGETCRLF);
+		binary_data rendered(renderedGETCRLF);
 
 		a.parse(rendered);
 		return false;
@@ -220,7 +220,7 @@ namespace oonet
 	bool TestHTTPRequest::TestParseSpeed::OnExecute()
 	{	HTTP::Request a;
 		string renderedGETCRLF = "GET /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
-		BinaryData rendered(renderedGETCRLF);
+		binary_data rendered(renderedGETCRLF);
 
 		ResetTimer();
 		// Post LF
@@ -234,7 +234,7 @@ namespace oonet
 			return false;
 		if (a.getTitle() != "GET /index.html HTTP/1.1")
 			return false;
-		if (a.getBody() != BinaryData("koukouroukou"))
+		if (a.getBody() != binary_data("koukouroukou"))
 			return false;
 		if (a.http_type != HTTP::Request::REQUEST_GET)
 			return false;

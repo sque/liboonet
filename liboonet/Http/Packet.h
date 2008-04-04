@@ -23,7 +23,7 @@ namespace oonet
 
 			string		_Title;		//!< The title of the packet
 			Headers		_Headers;	//!< The headers of the packet
-			BinaryData	_Body;		//!< The Body of the document
+			binary_data	_Body;		//!< The Body of the document
 			bool		HasBody;	//!< A flag if packet includes body
 
 		public:
@@ -53,7 +53,7 @@ namespace oonet
 			@param nl_str The string to use for new lines.
 			@return The rendered packet, ready for transmition
 			*/
-			virtual BinaryData render(const string & nl_str = OONET_DEFAULT_HTTP_NEWLINE);
+			virtual binary_data render(const string & nl_str = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse HTTP traffic and extract the leading HTTP packet
 			/**
@@ -67,7 +67,7 @@ namespace oonet
 			@throw ExceptionWrongFormat If the traffic doesn't meet the specification
 				of HTTP.
 			*/
-			virtual size_t parse(const BinaryData & data);
+			virtual size_t parse(const binary_data & data);
 
 			//! Get title of packet
 			inline const string & getTitle() const
@@ -82,7 +82,7 @@ namespace oonet
 			{	return _Headers;	}
 
 			//! Get bosy of packet
-			inline const BinaryData & getBody() const
+			inline const binary_data & getBody() const
 			{	return _Body;	}
 
 			//! Set title of packet
@@ -94,7 +94,7 @@ namespace oonet
 			{	return _Headers = r;	}
 
 			//! Set body of packet
-			inline BinaryData & setBody(const BinaryData & r)
+			inline binary_data & setBody(const binary_data & r)
 			{	return _Body = r;	}
 
 		};	// !Packet Class

@@ -53,9 +53,6 @@
 		<Unit filename="../../liboonet/Http/Server.h" />
 		<Unit filename="../../liboonet/Http/Url.cpp" />
 		<Unit filename="../../liboonet/Http/Url.h" />
-		<Unit filename="../../liboonet/Makefile" />
-		<Unit filename="../../liboonet/Makefile.am" />
-		<Unit filename="../../liboonet/Makefile.in" />
 		<Unit filename="../../liboonet/base64.cpp" />
 		<Unit filename="../../liboonet/base64.hpp" />
 		<Unit filename="../../liboonet/binary_data.cpp" />

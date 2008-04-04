@@ -22,13 +22,13 @@ namespace oonet
 			}
 
 			// Substract from stream
-			streamData = streamData.getFrom(ActualData);
+			streamData = streamData.get_from(ActualData);
 
 			return true;
 		}
 
 		// When data arrives
-		void ClientHandler::on_data_received(const BinaryData & data)
+		void ClientHandler::on_data_received(const binary_data & data)
 		{	Request TmpRequest;
 			Response CustomResponse;
 

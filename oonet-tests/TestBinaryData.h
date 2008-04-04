@@ -18,7 +18,7 @@ namespace oonet
 		OONET_DECLARESUBTESTEXC(TestEnormousReAlloc,  _T("Enormous reallocation"), _T("ExceptionBadAllocation"));
 		OONET_DECLARESUBTESTEXC(TestAssertNullPointer, _T("Assert on Null pointer"), _T("ExceptionAssertationFailed"));
 		OONET_DECLARESUBTEST(TestAddCompare, _T("Add and compare"));
-		OONET_DECLARESUBTEST(TestAddByte, _T("Addition of Byte"));
+		OONET_DECLARESUBTEST(TestAddByte, _T("Addition of byte"));
 		OONET_DECLARESUBTEST(TestFillCtor, _T("Fill constructors"));
 		OONET_DECLARESUBTEST(TestNotFoundEmpty, _T("Find() on empty string"));
 		OONET_DECLARESUBTEST(TestNotFound, _T("Find() for missing"));
@@ -44,7 +44,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestBinaryData()
-			:Test(_T("BinaryData"))
+			:Test(_T("binary_data"))
 		{
 			OONET_REGISTERSUBTEST(TestStringConstructor);
 			OONET_REGISTERSUBTEST(TestEqOperator);

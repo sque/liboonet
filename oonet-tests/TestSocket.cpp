@@ -12,7 +12,7 @@ namespace oonet
 		: public MT::thread
 	{
 	public:
-		BinaryData ReceivedData;
+		binary_data ReceivedData;
 		MT::semaphore semArrived;
 		Socket lSocket;
 		bool bRunning;
@@ -54,7 +54,7 @@ namespace oonet
 						try
 						{
 							// Wait for data
-							BinaryData data = clSocket.receive(1000);
+							binary_data data = clSocket.receive(1000);
 
 							// Send back
 							clSocket.send(data);
@@ -104,7 +104,7 @@ namespace oonet
 
 	bool TestSocket::TestTCPCopyConstructor::OnExecute()
 	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData msg("LOULOU'm!");
+		binary_data msg("LOULOU'm!");
 
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
@@ -118,7 +118,7 @@ namespace oonet
 		// Send some shit
 		TCPSocket.send(msg);
 		EchoServer.semArrived.wait(1000);
-		BinaryData reply = TCPSocket.receive(1000);
+		binary_data reply = TCPSocket.receive(1000);
 		if (reply != msg)
 			return false;
 
@@ -139,8 +139,8 @@ namespace oonet
 	bool TestSocket::TestTCPCopyOperator::OnExecute()
 	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 		Socket DuppedSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData msg1("Mess 1 -!");
-		BinaryData msg2("Mess 2 -   !");
+		binary_data msg1("Mess 1 -!");
+		binary_data msg2("Mess 2 -   !");
 
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
@@ -154,7 +154,7 @@ namespace oonet
 		// Send some shit
 		TCPSocket.send(msg1);
 		EchoServer.semArrived.wait(1000);
-		BinaryData reply = TCPSocket.receive(1000);
+		binary_data reply = TCPSocket.receive(1000);
 		if (reply != msg1)
 			return false;
 
@@ -174,7 +174,7 @@ namespace oonet
 
 	bool TestSocket::TestTCPConnect::OnExecute()
 	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData msg("LOULOU'm!");
+		binary_data msg("LOULOU'm!");
 
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
@@ -189,7 +189,7 @@ namespace oonet
 		// Send some shit
 		TCPSocket.send(msg);
 		EchoServer.semArrived.wait(1000);
-		BinaryData reply = TCPSocket.receive(1000);
+		binary_data reply = TCPSocket.receive(1000);
 		if (reply != msg)
 			return false;
 
@@ -239,7 +239,7 @@ namespace oonet
 	}
 
 	bool TestSocket::TestStressConnect::OnExecute()
-	{	BinaryData msg("LOULOU'm!");
+	{	binary_data msg("LOULOU'm!");
 		Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
@@ -261,7 +261,7 @@ namespace oonet
 			// Send some shit
 			TCPSocket.send(msg);
 			EchoServer.semArrived.wait(1000);
-			BinaryData reply = TCPSocket.receive(1000);
+			binary_data reply = TCPSocket.receive(1000);
 			if (reply != msg)
 			{	EchoServer.StopS();
 				return false;
@@ -275,7 +275,7 @@ namespace oonet
 	}
 
 	bool TestSocket::TestBrutalConnect::OnExecute()
-	{	BinaryData msg("LOULOU'm!");
+	{	binary_data msg("LOULOU'm!");
 		Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);

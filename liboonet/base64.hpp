@@ -49,14 +49,14 @@ namespace oonet
 		@param in The input data block which will be encoded in base64.
 		@return A string containing the data block encoded in base64 format.
 		*/
-		string Encode(const BinaryData & in);
+		string Encode(const binary_data & in);
 
 		//! Decodes a base64 string and returns binary data
 		/**
 		@param b64_encoded A string that contains the base64 encoded data block
 		@return The data block decoded.
 		*/
-		BinaryData Decode(const string & b64_encoded);
+		binary_data Decode(const string & b64_encoded);
 
 	};	// !Base64 class
 

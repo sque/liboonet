@@ -4,88 +4,86 @@
 */
 
 #include "./buffer.hpp"
+#include "./scoped_lock.hpp"
 
 namespace oonet
 {
 	// Push at front
-	void Buffer::pushFront(const BinaryData & r)
-	{	lock();
+	void Buffer::pushFront(const binary_data & r)
+	{	scoped_lock fun_lock(*this);
 
 		// scale memory to it all data
-		_scale_mem(sData + r.size());
+		_scale_mem(s_data + r.size());
 
 		// move current data at end
-		memmove(pData + r.size(), pData, sData);
+		memmove(p_data + r.size(), p_data, s_data);
 
 		// and copy at the begining of new buf
-		memcpy(pData, r.getDataPtr(), r.size());
+		memcpy(p_data, r.get_data_ptr(), r.size());
 
 		// Save data size
-		sData += r.size();
-		unlock();
+		s_data += r.size();
 	}
 
 	// Push at end
-	void Buffer::pushBack(const BinaryData & r)
-	{	lock();
-		BinaryData::operator +=(r);
-		unlock();
+	void Buffer::pushBack(const binary_data & r)
+	{	scoped_lock fun_lock(*this);
+
+		binary_data::operator +=(r);
+
 	}
 
 	// Pop at front
-	BinaryData Buffer::popFront(size_t MaxSize, bool only_peek)
-	{	BinaryData res;
+	binary_data Buffer::popFront(size_t MaxSize, bool only_peek)
+	{	binary_data res;
 		size_t _finalSize = MaxSize;
 
 		if (MaxSize == 0)
-			return BinaryData::EMPTY;
+			return binary_data::EMPTY;
 
-		lock();
+		scoped_lock fun_lock(*this);
 
 		// Fix maxsize
 		if (MaxSize > size())
 			_finalSize = size();
 
-		res = getUntil(_finalSize);
+		res = get_until(_finalSize);
 		if (!only_peek)
-			BinaryData::operator=(getFrom(res.size()));
+			binary_data::operator=(get_from(res.size()));
 
-		unlock();
 		return res;
 	}
 
 	// Pop from the back
-	BinaryData Buffer::popBack(size_t MaxSize, bool only_peek)
-	{	BinaryData res;
+	binary_data Buffer::popBack(size_t MaxSize, bool only_peek)
+	{	binary_data res;
 		size_t ReversePosition;
 		size_t _finalSize = MaxSize;
 
 		if (MaxSize == 0)
-			return BinaryData::EMPTY;
+			return binary_data::EMPTY;
 
-		lock();
+		scoped_lock fun_lock(*this);
 
 		// Fix maxsize
 		if (MaxSize > size())
 			_finalSize = size();
 
 		ReversePosition = size() - _finalSize;
-		res = getFrom(ReversePosition);
+		res = get_from(ReversePosition);
 		if (!only_peek)
 		{
 			ReversePosition = size() - res.size();
-			BinaryData::operator=( getUntil(ReversePosition));
+			binary_data::operator=( get_until(ReversePosition));
 		}
 
-		unlock();
 		return res;
 	}
 
 	// Flush buffer
 	void Buffer::flush()
-	{
-		lock();
-			clear();
-		unlock();
+	{	scoped_lock fun_lock(*this);
+
+		clear();
 	}
 };	// !oonet namespace

@@ -230,7 +230,7 @@ namespace oonet
 	using std::wstring;	// Wide string
 	using std::string;	// Ansii string
 
-	typedef unsigned char Byte;
+	typedef unsigned char byte;
 	typedef unsigned short ushort;
 	typedef unsigned long ulong;
 	typedef unsigned char uchar;

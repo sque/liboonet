@@ -19,7 +19,7 @@ namespace oonet
 		{}
 	protected:
 
-		virtual void on_data_received(const BinaryData & data)
+		virtual void on_data_received(const binary_data & data)
 		{	send(data);	}
 	};
 
@@ -184,7 +184,7 @@ namespace oonet
 	bool test_netserver::TestStopCleanup::OnExecute()
 	{	EchoServer mEchoServer;
 		Socket mClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData toBeSent("axaxaxaxxolxa");
+		binary_data toBeSent("axaxaxaxxolxa");
 		if (mEchoServer.listening())
 			return false;
 
@@ -226,7 +226,7 @@ namespace oonet
 	/*bool test_netserver::TestFree::OnExecute()
 	{	EchoServer mEchoServer;
 		Socket mClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData toBeSent("axaxaxaxxolxa");
+		binary_data toBeSent("axaxaxaxxolxa");
 
 		if (mEchoServer.listening())
 			return false;
@@ -291,7 +291,7 @@ namespace oonet
 	bool test_netserver::TestFreeWrong1::OnExecute()
 	{	EchoServer mEchoServer;
 		Socket mClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData toBeSent("axaxaxaxxolxa");
+		binary_data toBeSent("axaxaxaxxolxa");
 
 		if (mEchoServer.listening())
 			return false;
@@ -338,7 +338,7 @@ namespace oonet
 	bool test_netserver::TestFreeWrong2::OnExecute()
 	{	EchoServer mEchoServer;
 		Socket mClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData toBeSent("axaxaxaxxolxa");
+		binary_data toBeSent("axaxaxaxxolxa");
 
 		if (mEchoServer.listening())
 			return false;
@@ -377,7 +377,7 @@ namespace oonet
 	bool test_netserver::TestFreeDisconnected::OnExecute()
 	{	EchoServer mEchoServer;
 		Socket mClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData toBeSent("axaxaxaxxolxa");
+		binary_data toBeSent("axaxaxaxxolxa");
 
 		if (mEchoServer.listening())
 			return false;

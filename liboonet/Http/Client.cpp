@@ -27,7 +27,7 @@ namespace oonet
 		// Make an http request
 		Response Client::send(Request & req, long TimeOutMS)
 		{	Response tmpResponse;
-			BinaryData BinaryRequest, BinaryReply;
+			binary_data BinaryRequest, BinaryReply;
 
 			// Check if we are connected
 			if (! connected())
@@ -55,14 +55,14 @@ namespace oonet
 
 			// Gather answer
 			{scoped_lock m(mux_access_data);
-				WaitingToProcessData = WaitingToProcessData.getFrom(tmpResponse.parse(WaitingToProcessData));
+				WaitingToProcessData = WaitingToProcessData.get_from(tmpResponse.parse(WaitingToProcessData));
 			}
 
 			return tmpResponse;
 		}
 
 		// When data arrives from net
-		void Client::on_data_received(const BinaryData & data)
+		void Client::on_data_received(const binary_data & data)
 		{	Response ResponsePacket;
 
 			// Add data in queue

@@ -41,7 +41,7 @@ namespace oonet
 		}
 
 		// Render packet
-		BinaryData Request::render(const string & new_line)
+		binary_data Request::render(const string & new_line)
 		{
 			// Make up title
 			if (http_type == REQUEST_GET)
@@ -61,7 +61,7 @@ namespace oonet
 		}
 
 		// Parse packet
-		size_t Request::parse(const BinaryData & data)
+		size_t Request::parse(const binary_data & data)
 		{	size_t commandend_pos, urlend_pos;
 			string _command_string, _version_string;
 			size_t BlockSize;

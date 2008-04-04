@@ -51,7 +51,7 @@ namespace oonet
 				the packet, it will render the title from variables: Request::http_type, Request::url and Request::http_version.
 			@see HTTP::Packet::render() for further explanation.
 			*/
-			virtual BinaryData render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
+			virtual binary_data render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse an HTTP Request packet
 			/**
@@ -63,7 +63,7 @@ namespace oonet
 			@throw ExceptionWrongFormat if the title of HTTP packet is not an HTTP request's title.
 			@see HTTP::Packet::parse() for further explanation.
 			*/
-			virtual size_t parse(const BinaryData & data);
+			virtual size_t parse(const binary_data & data);
 		};	// !Request class
 	};	// !HTTP namespace
 };	// !oonet namespace

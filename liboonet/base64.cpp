@@ -28,12 +28,12 @@ namespace oonet
 
 
 	// Encodes a buffer & returns a pointer to a string with encoded data
-	string Base64::Encode(const BinaryData & r)
+	string Base64::Encode(const binary_data & r)
 	{
 		size_t i, j, iEnc=0;
 		TBase64 base64;
 		string b64string;
-		const char * pBuff = (const char *)r.getDataPtr();
+		const char * pBuff = (const char *)r.get_data_ptr();
 		char * EncBuff;		// A buffer with encoded string
 		size_t sBuff = r.size();
 
@@ -94,7 +94,7 @@ namespace oonet
 	}
 
 	// Decodes a string
-	BinaryData Base64::Decode(const string & b64string)
+	binary_data Base64::Decode(const string & b64string)
 	{
 		// Enumeration of states
 		enum
@@ -102,7 +102,7 @@ namespace oonet
 
 		// Initialize values
 		char * DecBuff;
-		BinaryData DecodedData;
+		binary_data DecodedData;
 		const char * pB64Buff = b64string.c_str();
 		size_t B64Size = b64string.size();
 		size_t SizeDecBuff;
@@ -175,7 +175,7 @@ namespace oonet
 
 	b64dec_finalize:
 		// Make binary object and relase buffer
-		DecodedData = BinaryData((Byte *)DecBuff, SizeDecBuff);
+		DecodedData = binary_data((byte *)DecBuff, SizeDecBuff);
 		delete [] DecBuff;
 		// Return object
 		return DecodedData;

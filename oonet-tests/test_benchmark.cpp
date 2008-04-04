@@ -23,12 +23,12 @@ namespace oonet
 		~bench_client()
 		{}
 
-		BinaryData saved;
+		binary_data saved;
 		MT::semaphore sem_arrived;
 		ulong cur_data;
 	protected:
 
-		virtual void on_data_received(const BinaryData & data)
+		virtual void on_data_received(const binary_data & data)
 		{	saved = data;
 			cur_data += data.size();
 
@@ -98,7 +98,7 @@ namespace oonet
 	bool test_benchmark::TestTCPSpeed4G::OnExecute()
 	{	bench_server server(4000000000);
 		netstream_threaded client;
-		BinaryData test_d('a', 1000);
+		binary_data test_d('a', 1000);
 
 		// Start server
 		server.start_listen(SocketAddressInet(HostInet::ANY, PortInet(40421)), 10);
@@ -117,13 +117,13 @@ namespace oonet
 	bool test_benchmark::TestHTTPSpeed500Mb::OnExecute()
 	{	bench_http_server server(500000000);
 		netstream client;
-		BinaryData test_d('a', 1000);
+		binary_data test_d('a', 1000);
 		HTTP::Request tmp_req;
 		tmp_req.setBody(test_d);
 		tmp_req.getHeaders().setHeader("Host", "www.google.com");
 		tmp_req.http_type = HTTP::Request::REQUEST_POST;
 		test_d = tmp_req.render();
-		BinaryData blabla;
+		binary_data blabla;
 		// Start server
 		server.start_listen(SocketAddressInet(HostInet::ANY, PortInet(40422)), 10);
 

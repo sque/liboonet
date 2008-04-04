@@ -13,15 +13,15 @@ namespace oonet
 		optimized and is easy to use it. It can supports creating binary objects
 		from std::string or std::wstring and converting back to them.
 	*/
-	class BinaryData
+	class binary_data
 	{
 	private:
-		Byte dummyByte;	//!< An internal dummy byte when we dont have allocated mem
-		size_t sBuff;	//!< Size of current allocated buffer
+		byte bt_dummy;	//!< An internal dummy byte when we dont have allocated mem
+		size_t s_buff;	//!< Size of current allocated buffer
 
 	protected:
-		Byte * pData;	//!< Pointer to our data
-		size_t sData;	//!< Size of data
+		byte * p_data;	//!< Pointer to our data
+		size_t s_data;	//!< Size of data
 
 		//! Scales the current internal memmory to fit new data
 		/**
@@ -29,11 +29,11 @@ namespace oonet
 		@param preservData If this flag is true, buffer is scaled and guarantees that previous data is still there.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		void _scale_mem(size_t FitMem, bool preservData = true);
+		void _scale_mem(size_t s_fitmem, bool b_preserv_data = true);
 
 	public:
-		//! A constant empty BinaryData. Usefull for comparisons.
-		static const BinaryData EMPTY;
+		//! A constant empty binary_data. Usefull for comparisons.
+		static const binary_data EMPTY;
 
 		//! A constant which means <b>no position</b>
 		/**
@@ -43,15 +43,15 @@ namespace oonet
 
 		//! Default constructor
 		/**
-			Creates an empty BinaryData object
+			Creates an empty binary_data object
 		*/
-		BinaryData();
+		binary_data();
 
 		//! Copy constructor
-		BinaryData(const BinaryData &r);
+		binary_data(const binary_data &r);
 
 		//! Destructor
-		virtual ~BinaryData();
+		virtual ~binary_data();
 
 		//! Constructor from std::string
 		/**
@@ -59,22 +59,22 @@ namespace oonet
 			are copied <b>WITHOUT</b> a null character at the end.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		explicit BinaryData(const string & str) throw(Exception);
+		explicit binary_data(const string & str) throw(Exception);
 
 		//! Constructor from std::wstring
 		/**
 			A new object is created and all the characters of std::string
 			are copied <b>WITHOUT</b> a null character at the end.
 		@remarks
-			The size of the BinaryData depends on the size of wchar_t on
+			The size of the binary_data depends on the size of wchar_t on
 			the current machine. If the size of wchar_t is 2 bytes then it
 			will have
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		explicit BinaryData(const wstring & str) throw(Exception);
+		explicit binary_data(const wstring & str) throw(Exception);
 
-		//! Constructor from a single Byte
-		explicit BinaryData(const Byte b);
+		//! Constructor from a single byte
+		explicit binary_data(const byte b);
 
 		//! Constructor from a byte array
 		/**
@@ -84,18 +84,18 @@ namespace oonet
 		@param sz_data Size of array in bytes.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData(const void * p_data, size_t sz_data) throw(Exception);
+		binary_data(const void * _p_data, size_t _sz_data) throw(Exception);
 
 		//! Constructor that fills buffer with a repeated byte
 		/**
 			It will fill the new object with the same byte as many
 			times as the user defines.
-		@param mByte Byte that will be repeated.
+		@param mByte byte that will be repeated.
 		@param bTimes How many times the byte will be repeat. This will
 			be the size of new buffer too.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData(const Byte mByte, size_t bTimes) throw(Exception);
+		binary_data(const byte bt_repeated, size_t s_times) throw(Exception);
 
 		//! @name Operators
 		//! @{
@@ -104,7 +104,7 @@ namespace oonet
 		/**
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData &operator=(const BinaryData &r) throw(Exception);
+		binary_data &operator=(const binary_data &r) throw(Exception);
 
 		//! Add operator
 		/**
@@ -112,15 +112,15 @@ namespace oonet
 			data of this object and then the data of the right object.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData operator+(const BinaryData &r) const throw(Exception);
+		binary_data operator+(const binary_data &r) const throw(Exception);
 
 		//! Add operator (one byte)
 		/**
 			It will create a new object that will have this object's
-			data and the end the Byte that we added.
+			data and the end the byte that we added.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData operator+(const Byte &r)const throw(Exception);
+		binary_data operator+(const byte &r)const throw(Exception);
 
 		//! Self-add operator (push action)
 		/**
@@ -129,14 +129,14 @@ namespace oonet
 			data block.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData &operator+=(const BinaryData &r) throw(Exception);
+		binary_data &operator+=(const binary_data &r) throw(Exception);
 
 		//! Self-add operator for one byte (push action)
 		/**
 			The byte will be copied at the end of this data block.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		BinaryData &operator+=(const Byte &r) throw(Exception);
+		binary_data &operator+=(const byte &r) throw(Exception);
 
 		//! Access element
 		/**
@@ -145,21 +145,21 @@ namespace oonet
 		@throw ExceptionNotFound When requested element is not in the boundries of
 			current data block's size.
 		*/
-		Byte operator[](size_t offset) const throw(Exception);
+		byte operator[](size_t offset) const throw(Exception);
 
 		//! Equal comparison operator
 		/**
-			It will return true if the two BinaryData objects
+			It will return true if the two binary_data objects
 			have the same size and same data.
 		*/
-		bool operator==(const BinaryData &r) const;
+		bool operator==(const binary_data &r) const;
 
 		//! InEqual comparison operator
 		/**
-			It will return false if the two BinaryData objects
+			It will return false if the two binary_data objects
 			have the same size and same data.
 		*/
-		bool operator!=(const BinaryData &r) const;
+		bool operator!=(const binary_data &r) const;
 		//! @}
 
 		//! Get const pointer to data
@@ -167,56 +167,56 @@ namespace oonet
 			It will return the pointer to internal buffer.
 		@see size()
 		*/
-		inline const Byte * getDataPtr() const
-		{   return pData;   }
+		inline const byte * get_data_ptr() const
+		{   return p_data;   }
 
 		//! Get size of data
 		/**
 			Returns the size of data that this object holds.
 		@remarks This is not the size of the allocated space
-			this is the size of data. BinaryData may have allocated
+			this is the size of data. binary_data may have allocated
 			more space for reasons of performance.
 		*/
 		inline size_t size() const
-		{   return sData;   }
+		{   return s_data;   }
 
 		//! Cast these data to a std::string
 		/**
 			It will create and return a std::string object
 			from the data that holds.
 		*/
-		string toString() const;
+		string to_string() const;
 
 		//! Cast these data to a std::wstring
 		/**
 			It will create and return a std::wstring object
 			from the data that holds.
 		*/
-		wstring toWString() const;
+		wstring to_wstring() const;
 
 		//! Get data until a specific offset
 		/**
 			It will cut this object from the start until
-			a specific offset and will return a new BinaryData
+			a specific offset and will return a new binary_data
 			object containing the sliced data.
 		@param offset The offset until data will be copied.
 		@throw ExceptionNotFound If desired offset is outside boundries
 			of current data.
 		@see getFrom
 		*/
-		BinaryData getUntil(const size_t & offset) const throw(ExceptionNotFound);
+		binary_data get_until(const size_t & offset) const throw(ExceptionNotFound);
 
 		//! Get data from a specific offset until the end
 		/**
 			It will cut this object from the specified offset
-			until the end of data and return a new BinaryData
+			until the end of data and return a new binary_data
 			object containing the sliced data
 		@param offset The offset from which it will start copying data.
 		@throw ExceptionNotFound If desired offset is outside boundries
 			of current data.
 		@see getUntil
 		*/
-		BinaryData getFrom(const size_t & offset) const throw(ExceptionNotFound);
+		binary_data get_from(const size_t & offset) const throw(ExceptionNotFound);
 
 		//! Find a pattern in the data block and return its offset
 		/**
@@ -224,31 +224,31 @@ namespace oonet
 			first succesfull matching, starting from the begining
 			of data, it will return its offset
 		@param pattern Pattern of data to search inside this object.
-		@return The offset of the matched data, or BinaryData::npos if pattern couldn't
+		@return The offset of the matched data, or binary_data::npos if pattern couldn't
 			be found.
-		@throw ExceptionWrongArgument If the pattern is an empty BinaryData object.
+		@throw ExceptionWrongArgument If the pattern is an empty binary_data object.
 		*/
-		size_t find(const BinaryData & pattern) const;
+		size_t find(const binary_data & pattern) const;
 
 		//! Slice data from a specific offset, with specific size
 		/**
-			It will copy the selected part at a new BinaryData object
+			It will copy the selected part at a new binary_data object
 			and return it.
 		@param offset The starting offset of the subpart.
 		@param sz The size of the subpart
 		@throw ExceptionNotFound If the offset along with size results at a subpart that
 			it is outside boundries of current data.
 		*/
-		BinaryData slice(size_t offset, size_t sz) const;
+		binary_data slice(size_t offset, size_t sz) const;
 
 		//! Clear data.
 		void clear();
 
 		//! Check if it is an empty object.
 		inline bool empty() const
-		{	return (sData == 0);	}
+		{	return (s_data == 0);	}
 
-	};  // !BinaryData class
+	};  // !binary_data class
 };  // !oonet namespace
 
 #endif // OONET_BINARYDATA_H_INCLUDED

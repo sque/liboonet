@@ -209,11 +209,11 @@ namespace oonet
 
 
     // Receive action
-    BinaryData Socket::receive(size_t max_data) throw(Exception)
+    binary_data Socket::receive(size_t max_data) throw(Exception)
     {   // Allocate space for incoming data
-        boost::scoped_array<Byte> tmp_data(new Byte[max_data]);
+        boost::scoped_array<byte> tmp_data(new byte[max_data]);
         int received_size;
-        BinaryData received_data;
+        binary_data received_data;
 
         // Get data
 		received_size = ::recv(pimpl_->get_socket(), (char *)tmp_data.get(), max_data, 0);
@@ -223,14 +223,14 @@ namespace oonet
 			_throw_last_error("Cannot Socket::receive()");
 
 		// Return data
-		received_data = BinaryData(tmp_data.get(), received_size);
+		received_data = binary_data(tmp_data.get(), received_size);
 		return received_data;
     }
 
     // Send
-    size_t Socket::send(const BinaryData & trans_data) throw (Exception)
+    size_t Socket::send(const binary_data & trans_data) throw (Exception)
     {
-        int sent = ::send(pimpl_->get_socket(),(char *) trans_data.getDataPtr(), trans_data.size(), 0);
+        int sent = ::send(pimpl_->get_socket(),(char *) trans_data.get_data_ptr(), trans_data.size(), 0);
         if (sent <= 0)
         {
 			// Throw exception

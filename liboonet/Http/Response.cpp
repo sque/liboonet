@@ -36,7 +36,7 @@ namespace oonet
 		}
 
 		// Render a packet from data
-		BinaryData Response::render(const string & new_line)
+		binary_data Response::render(const string & new_line)
 		{
 			// Prepare Title
 			_Title = "HTTP/1.1 ";
@@ -47,7 +47,7 @@ namespace oonet
 		}
 
 		// Parse data and save to packet
-		size_t Response::parse(const BinaryData & data)
+		size_t Response::parse(const binary_data & data)
 		{	size_t BlockSize;
 			size_t httpversionend_pos, errorcodeend_pos;
 			string _httpversion_str;

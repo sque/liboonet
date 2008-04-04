@@ -1,6 +1,6 @@
 /**
-@file BinaryData.cpp
-@brief Implementation of the BinaryData class.
+@file binary_data.cpp
+@brief Implementation of the binary_data class.
 */
 #include "./binary_data.hpp"
 
@@ -10,45 +10,43 @@ namespace oonet
 {
 	///////////////////////////////////////////////
 	// Constants
-	const BinaryData BinaryData::EMPTY = BinaryData();
-	const size_t BinaryData::npos = 0xFFFFFFFF;
+	const binary_data binary_data::EMPTY = binary_data();
+	const size_t binary_data::npos = 0xFFFFFFFF;
 
 	// Allocates space to fit specific amount
-	void BinaryData::_scale_mem(size_t MemBlock, bool preservData)
-	{	size_t newSz;
+	void binary_data::_scale_mem(size_t MemBlock, bool)
+	{	size_t sz_new;
 
 		// Check if we fit (Upper boundry) (Lowest boundry no need to calculate for shrinking) (Half of buff)
-		if ((MemBlock <= sBuff) && ((sBuff == 1024) || (MemBlock >= sBuff/2)))
+		if ((MemBlock <= s_buff) && ((s_buff == 1024) || (MemBlock >= s_buff/2)))
 			return;
 
 		// Calculate new size
-		newSz = ((MemBlock) / 1024) + 1;
-		newSz *= 1024;
+		sz_new = ((MemBlock) / 1024) + 1;
+		sz_new *= 1024;
 
 		// Allocate mem
-		Byte * ptemp;   // Temporary pointer
+		byte * p_temp;   // Temporary pointer
 		try
 		{
-			if (pData != &dummyByte)
+			if (p_data != &bt_dummy)
 				// Reallocate
-				ptemp = (Byte *)realloc(pData, newSz);
+				p_temp = (byte *)realloc(p_data, sz_new);
 			else
 				// Allocate
-				ptemp = new Byte[newSz];
-			pData = ptemp;
-		}catch(std::bad_alloc & b_alloc)
-		{	b_alloc = b_alloc;
-			ptemp = NULL;
-		}
+				p_temp = new byte[sz_new];
+			p_data = p_temp;
+		}catch(std::bad_alloc)
+		{	p_temp = NULL;	}
 
 		// In any case check it... (realloc doesn't throw exceptions)
-		if (ptemp == NULL)
+		if (p_temp == NULL)
 			// Throw our's exception
-			OONET_THROW_EXCEPTION(ExceptionBadAllocation, "Cannot allocate memory for BinaryData");
+			OONET_THROW_EXCEPTION(ExceptionBadAllocation, "Cannot allocate memory for binary_data");
 
 
 		// Save new size of buffer
-		sBuff = newSz;
+		s_buff = sz_new;
 
 		// Return pointer
 		return;
@@ -56,131 +54,131 @@ namespace oonet
 
 
 	// Simple constructor
-	BinaryData::BinaryData():
-        sBuff(0),
-		pData(&dummyByte)
+	binary_data::binary_data():
+        s_buff(0),
+		p_data(&bt_dummy),
+		s_data(0)
 	{
-		sData = 0;
 	}
 
 	// Copy constuctor
-	BinaryData::BinaryData(const BinaryData &r):
-		sBuff(0),
-		pData(&dummyByte)
+	binary_data::binary_data(const binary_data &r):
+		s_buff(0),
+		p_data(&bt_dummy)
 	{
 		// Scale memmory to fit new data
-		_scale_mem(r.sData);
+		_scale_mem(r.s_data);
 
 		// Copy new ones
-		sData = r.sData;
-		memcpy(pData, r.pData, sData);
+		s_data = r.s_data;
+		memcpy(p_data, r.p_data, s_data);
 	}
 
 	//Construtor from binary pointer
-	BinaryData::BinaryData(const void * p_data, size_t sz_data) throw(Exception):
-		sBuff(0),
-		pData(&dummyByte)
+	binary_data::binary_data(const void * _p_data, size_t _s_data) throw(Exception):
+		s_buff(0),
+		p_data(&bt_dummy)
 	{
-		OONET_ASSERT(p_data != NULL);
+		OONET_ASSERT(_p_data != NULL);
 
 		// Scale memory to fit data
-		_scale_mem(sz_data);
-		sData = sz_data;
+		_scale_mem(_s_data);
+		s_data = _s_data;
 
 		// Copy data
-		memcpy(pData, p_data, sz_data);
+		memcpy(p_data, _p_data, _s_data);
 
 	}
 
-	// Constructor from a single Byte
-	BinaryData::BinaryData(const Byte b):
-		sBuff(0),
-		pData(&dummyByte)
+	// Constructor from a single byte
+	binary_data::binary_data(const byte b):
+		s_buff(0),
+		p_data(&bt_dummy)
 	{
 		// Calculate space
-		sData = sizeof(Byte);
+		s_data = sizeof(byte);
 
 		// Allocate space
-		_scale_mem(sData);
+		_scale_mem(s_data);
 
 		// Copy data
-		*pData = b;
+		*p_data = b;
 	}
 
 	// Constructor from a byte replication
-	BinaryData::BinaryData(const Byte mByte, size_t bTimes) throw(Exception):
-		sBuff(0),
-		pData(&dummyByte)
+	binary_data::binary_data(const byte bt_repeated, size_t s_times) throw(Exception):
+		s_buff(0),
+		p_data(&bt_dummy)
 	{
 		// Scale memory to fit new data
-		_scale_mem(bTimes);
-		sData = bTimes;
+		_scale_mem(s_times);
+		s_data = s_times;
 
 		// Fill data with a byte
-		memset(pData , mByte, sData);
+		memset(p_data , bt_repeated, s_data);
 	}
 
 	// Constructor from Ansi String
-	BinaryData::BinaryData(const string & str) throw(Exception):
-		sBuff(0),
-		pData(&dummyByte)
+	binary_data::binary_data(const string & str) throw(Exception):
+		s_buff(0),
+		p_data(&bt_dummy)
 	{
 		// Count data and scale buffer
-		sData = str.size() * sizeof(string::value_type);
-		_scale_mem(sData);
+		s_data = str.size() * sizeof(string::value_type);
+		_scale_mem(s_data);
 
 		// Copy data
-		memcpy(pData, str.c_str(), sData);
+		memcpy(p_data, str.c_str(), s_data);
 	}
 
 	// Constructor from Unicode String
-	BinaryData::BinaryData(const wstring & str) throw(Exception):
-		sBuff(0),
-		pData(&dummyByte)
+	binary_data::binary_data(const wstring & str) throw(Exception):
+		s_buff(0),
+		p_data(&bt_dummy)
 	{
 		// Count data and scale buffer
-		sData = str.size() * sizeof(wstring::value_type);
-		_scale_mem(sData);
+		s_data = str.size() * sizeof(wstring::value_type);
+		_scale_mem(s_data);
 
 		// Copy data
-		memcpy(pData, str.c_str(), sData);
+		memcpy(p_data, str.c_str(), s_data);
 	}
 
 	// Destructor
-	BinaryData::~BinaryData()
+	binary_data::~binary_data()
 	{
 		// Free allocated space
-		if (pData != &dummyByte)
-			delete [] pData;
+		if (p_data != &bt_dummy)
+			delete [] p_data;
 	}
 
 	// Copy action
-	BinaryData &BinaryData::operator=(const BinaryData &r) throw(Exception)
+	binary_data &binary_data::operator=(const binary_data &r) throw(Exception)
 	{
 		// Scale memmory
-		_scale_mem(r.sData);
+		_scale_mem(r.s_data);
 
 		// Copy data from the right operand
-		sData = r.sData;
-		memcpy(pData, r.pData, sData);
+		s_data = r.s_data;
+		memcpy(p_data, r.p_data, s_data);
 		return *this;
 	}
 
-	bool BinaryData::operator!=(const BinaryData &r) const
+	bool binary_data::operator!=(const binary_data &r) const
 	{   return  (! ((*this) == r));    }
 
 	// Access elemnt operation
-	Byte BinaryData::operator[](size_t offset) const throw(Exception)
+	byte binary_data::operator[](size_t offset) const throw(Exception)
 	{
-		if (offset > sData)
+		if (offset > s_data)
 			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
-		return pData[offset];
+		return p_data[offset];
 	}
 	// Add action
-	BinaryData BinaryData::operator+(const BinaryData &r) const throw(Exception)
+	binary_data binary_data::operator+(const binary_data &r) const throw(Exception)
 	{
 		// Create a temp
-		BinaryData temp = *this;
+		binary_data temp = *this;
 
 		// Add the right assignment
 		temp +=r;
@@ -190,10 +188,10 @@ namespace oonet
 	}
 
 	// Add action (one byte)
-	BinaryData BinaryData::operator+(const Byte &r)const throw(Exception)
+	binary_data binary_data::operator+(const byte &r)const throw(Exception)
 	{
 		// Create a temp
-		BinaryData temp = *this;
+		binary_data temp = *this;
 
 		// Add the right assignment
 		temp += r;
@@ -203,44 +201,44 @@ namespace oonet
 	}
 
 	// Push action
-	BinaryData &BinaryData::operator+=(const BinaryData &r) throw(Exception)
+	binary_data & binary_data::operator+=(const binary_data &r) throw(Exception)
 	{
 		// Scale memory to fit all data
-		_scale_mem(sData + r.sData);
+		_scale_mem(s_data + r.s_data);
 
 		// Copy new data at the end
-		memcpy(pData + sData, r.pData, r.sData);
+		memcpy(p_data + s_data, r.p_data, r.s_data);
 
 		// Add size
-		sData += r.sData;
+		s_data += r.s_data;
 
 		return *this;
 	}
 
 	// Push action (one byte)
-	BinaryData & BinaryData::operator+=(const Byte &r) throw(Exception)
+	binary_data & binary_data::operator+=(const byte &r) throw(Exception)
 	{
 		// Scale memory to fit all data
-		_scale_mem(sData + 1);
+		_scale_mem(s_data + 1);
 
 		// Add byte at end of buffer
-		*(pData + sData) = r;
+		*(p_data + s_data) = r;
 
 		// Increase buffer
-		sData ++;
+		s_data ++;
 
 		return (*this);
 	}
 
 	// Comparison action
-	bool BinaryData::operator==(const BinaryData &r) const
+	bool binary_data::operator==(const binary_data &r) const
 	{
 		// Check sizes
-		if (sData != r.sData)
+		if (s_data != r.s_data)
 			return false;
 
 		// Compare data
-		if (0 != memcmp(pData, r.pData, sData))
+		if (0 != memcmp(p_data, r.p_data, s_data))
 			return false;
 
 		// Else everything is ok
@@ -249,70 +247,70 @@ namespace oonet
 
 
 	// Get Ansi String object
-	string BinaryData::toString() const
+	string binary_data::to_string() const
 	{
-		return string((char *)pData, sData);
+		return string((char *)p_data, s_data);
 	}
 
 	// Get Winde String object
-	wstring BinaryData::toWString() const
+	wstring binary_data::to_wstring() const
 	{	// Calculate size
-		float wstring_size = (float)sData;
+		float wstring_size = (float)s_data;
 		wstring_size /= sizeof(wchar_t);
 		wstring_size = floor(wstring_size);
-		return wstring((wchar_t *)pData, (wstring::size_type)wstring_size);
+		return wstring((wchar_t *)p_data, (wstring::size_type)wstring_size);
 	}
 
 	// Get starting packet until that size
-	BinaryData BinaryData::getUntil(const size_t & offset) const throw(ExceptionNotFound)
+	binary_data binary_data::get_until(const size_t & offset) const throw(ExceptionNotFound)
 	{
 		// If requested is more than available, then throw
-		if (offset > sData)
+		if (offset > s_data)
 			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
 
-		return BinaryData(pData, offset);
+		return binary_data(p_data, offset);
 	}
 
 	// Get the rest of packet from a specific offset
-	BinaryData BinaryData::getFrom(const size_t & offset) const throw(ExceptionNotFound)
+	binary_data binary_data::get_from(const size_t & offset) const throw(ExceptionNotFound)
 	{
 		// If requested is more than available, then return empty
-		if (offset > sData)
+		if (offset > s_data)
 			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
 
-		return BinaryData(pData + offset, sData - offset);
+		return binary_data(p_data + offset, s_data - offset);
 	}
 
 	// Slice data from a point, till some size
-	BinaryData BinaryData::slice(size_t offset, size_t sz) const
+	binary_data binary_data::slice(size_t offset, size_t sz) const
 	{
-		if (offset + sz > sData)
+		if (offset + sz > s_data)
 			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset and size can't work in the size of this data");
 
-		return BinaryData(pData + offset, sz);
+		return binary_data(p_data + offset, sz);
 	}
 	// Find a pattern in the data block
-	size_t BinaryData::find(const BinaryData & pattern) const
-	{	Byte  * p, * pEnd, firstChar;
+	size_t binary_data::find(const binary_data & pattern) const
+	{	byte  * p, * pEnd, firstChar;
 
 		// Check if there are data
-		if (pattern.sData == 0)
+		if (pattern.s_data == 0)
 			OONET_THROW_EXCEPTION(ExceptionWrongArgument, "Pattern is empty! Cannot search for something that does not exists");
 
         // Check if data fits in search
-        if (pattern.sData > sData)
+        if (pattern.s_data > s_data)
             return npos;
 
 		// Initialize values
-		pEnd = pData + sData - pattern.sData + 1;
-		firstChar = *pattern.pData;
+		pEnd = p_data + s_data - pattern.s_data + 1;
+		firstChar = *pattern.p_data;
 
 		// Search for pattern - general optimized (The class is general, so we cant optimize it more specificly)
-		p = pData;
-		while((p =(Byte *) memchr(p, firstChar, pEnd - p)))
+		p = p_data;
+		while((p =(byte *) memchr(p, firstChar, pEnd - p)))
 		{
-			if (0 == memcmp(p, pattern.pData, pattern.sData) )
-				return (p - pData);
+			if (0 == memcmp(p, pattern.p_data, pattern.s_data) )
+				return (p - p_data);
 			p++;
 		}
 
@@ -321,12 +319,12 @@ namespace oonet
 	}
 
 	// Clear
-	void BinaryData::clear()
+	void binary_data::clear()
 	{
 		// Scale the memory to zero size
 		_scale_mem(0);
 
 		// Empty data
-		sData = 0;
+		s_data = 0;
 	}
 };	// !oonet namespace

@@ -30,7 +30,7 @@ namespace oonet
 
 			// Private data
 			MT::semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
-			BinaryData WaitingToProcessData;	//!< Unprocessed received data
+			binary_data WaitingToProcessData;	//!< Unprocessed received data
 			MT::mutex mux_access_data;			//!< Mutex for synchronization on stack
 			bool b_waiting_anwser;				//!< If someone is waiting for a server answer
 		public:
@@ -74,7 +74,7 @@ namespace oonet
 
 		private:
 			// When data arrives
-			virtual void on_data_received(const BinaryData &);
+			virtual void on_data_received(const binary_data &);
 
 			// Raised when we loose conenction from server
 		    virtual void on_disconnected();

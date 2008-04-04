@@ -45,11 +45,11 @@ namespace oonet
 		void disconnect();
 
 		// Send data
-		inline size_t send(const BinaryData & data)
+		inline size_t send(const binary_data & data)
 		{	return m_socket.send(data);	}
 
 		// Receive data
-		BinaryData receive(size_t max_data)
+		binary_data receive(size_t max_data)
 		{	return m_socket.receive(max_data);	}
 
 		// Get connection socket

@@ -10,16 +10,16 @@ namespace oonet
 		: public MT::thread
 	{
 	public:
-		BinaryData ReceivedData;
+		binary_data ReceivedData;
 		MT::semaphore semArrived;
 		Socket lSocket;
 		bool bRunning;
 		Exception LastExc;
 		bool bException;
-		BinaryData myResp;
+		binary_data myResp;
 		long wt_after_send;
 
-		MiniHTTPServer(const BinaryData & resp, long wt_after = 0)
+		MiniHTTPServer(const binary_data & resp, long wt_after = 0)
 			:lSocket(Socket::FAMILY_INET,Socket::TYPE_STREAM, Socket::PROTO_DEFAULT),
 			bRunning(false),
 			LastExc(_T("no fike"), -1, _T("123123"), _T("!unknown")),
@@ -41,7 +41,7 @@ namespace oonet
 		}
 
 		virtual void thread_routine()
-		{	BinaryData data;
+		{	binary_data data;
 			HTTP::Request myReq;
 
 			bRunning = true;
@@ -192,12 +192,12 @@ namespace oonet
 	{	HTTP::Client mClient;
 		HTTP::Response resp, theResp;
 		HTTP::Request req;
-		BinaryData respBinary;
+		binary_data respBinary;
 
 		// Format response
 		resp.ErrorCode = "404";
 		resp.ErrorMsg = "Not Found";
-		resp.setBody(BinaryData('a', 60000));
+		resp.setBody(binary_data('a', 60000));
 		respBinary = resp.render();
 
 		// Format req
@@ -237,7 +237,7 @@ namespace oonet
 	{	HTTP::Client mClient;
 		HTTP::Response theResp;
 		HTTP::Request req;
-		BinaryData respBinary = BinaryData("Asdadsasdasdasdasdasd");
+		binary_data respBinary = binary_data("Asdadsasdasdasdasdasd");
 
 		// Format req
 		req.url = "/";
@@ -272,7 +272,7 @@ namespace oonet
 	{	HTTP::Client mClient;
 		HTTP::Response theResp;
 		HTTP::Request req;
-		BinaryData respBinary = BinaryData("asdfadsf\n\nadsf\n");
+		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n");
 
 		// Format req
 		req.url = "/";
@@ -307,12 +307,12 @@ namespace oonet
 	{	HTTP::Client mClient;
 		HTTP::Response resp, theResp;
 		HTTP::Request req;
-		BinaryData respBinary = BinaryData("asdfadsf\n\nadsf\n"), respBinary2;
+		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n"), respBinary2;
 
 		// Format response
 		resp.ErrorCode = "404";
 		resp.ErrorMsg = "Not Found";
-		resp.setBody(BinaryData('a', 60000));
+		resp.setBody(binary_data('a', 60000));
 		respBinary2 = resp.render();
 
 		// Format req

@@ -45,7 +45,7 @@ namespace oonet
 		//! Get a std::string with the address in dotted humman format
 		string toString() const;
 
-		//! Get the ip in Network-Byte-Order
+		//! Get the ip in Network-byte-Order
 		ulong getNBOAddress() const;
 	};  // ! HostInet class
 

@@ -86,7 +86,7 @@ namespace oonet
 
 
 	protected:
-        virtual void on_data_arrived(const BinaryData & data)
+        virtual void on_data_arrived(const binary_data & data)
         {	send(data);	}
 
 

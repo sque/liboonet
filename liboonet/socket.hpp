@@ -15,7 +15,7 @@ namespace oonet
 	//! Berkley network socket wrapper
 	/**
 		A wrapper for berkley sockets, it has all the needed functionality
-		and incorporates very well with BinaryData for sending and receiving data,
+		and incorporates very well with binary_data for sending and receiving data,
 		and SocketAddress for defining address of sockets.
 
 	 */
@@ -120,7 +120,7 @@ namespace oonet
 			the maximum that we requested will be popped from buffer.
 		@param max The maximum number of bytes that we want to receive
 		*/
-		BinaryData receive(size_t max) throw(Exception);
+		binary_data receive(size_t max) throw(Exception);
 
         //! Send data through socket
         /**
@@ -129,7 +129,7 @@ namespace oonet
 		@param trans_data The data to transmit through socket
 		@return The number of data that was actually transmitted.
 		*/
-        size_t send(const BinaryData &trans_data) throw (Exception);
+        size_t send(const binary_data &trans_data) throw (Exception);
 
         //! Ask the socket to connect to another socket
         /**

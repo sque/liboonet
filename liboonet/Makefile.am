@@ -9,7 +9,7 @@ liboonet_a_SOURCES = Base64.cpp \
 	HostInet.cpp \
 	InetServer.cpp \
 	Socket.cpp \
-	BinaryData.cpp \
+	binary_data.cpp \
 	HostResolver.cpp \
 	SemaphorePosix.cpp \
 	StringConverter.cpp \
@@ -31,14 +31,14 @@ liboonet_a_SOURCES = Base64.cpp \
 	Http/Packet.cpp \
 	Http/Response.cpp \
 	Http/Url.cpp
-	
+
 # Header files
 liboonet_a_include_HEADERS = \
 	Base64.h \
 	HostInet.h \
 	OONet.h \
 	Thread.h \
-	BinaryData.h \
+	binary_data.h \
 	HostResolver.h \
 	Mutex.h \
 	SocketAddress.h \

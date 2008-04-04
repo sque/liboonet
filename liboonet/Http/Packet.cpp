@@ -50,18 +50,18 @@ namespace oonet
 		}
 
 		// Render a packet from data
-		BinaryData Packet::render(const string & nl_str)
-		{	BinaryData TmpPacket;
+		binary_data Packet::render(const string & nl_str)
+		{	binary_data TmpPacket;
 
 			// Update Headers
 			_UpdateHeaders();
 
 			// Construct Packet
 			// Title
-			TmpPacket = BinaryData(_Title) + BinaryData(nl_str);
+			TmpPacket = binary_data(_Title) + binary_data(nl_str);
 
 			// Headers
-			TmpPacket += BinaryData(_Headers.render(nl_str)) + BinaryData(nl_str + nl_str);
+			TmpPacket += binary_data(_Headers.render(nl_str)) + binary_data(nl_str + nl_str);
 
 			// Body
 			if (HasBody)
@@ -71,7 +71,7 @@ namespace oonet
 		}
 
 		// Parse data and save to packet
-		size_t Packet::parse(const BinaryData & data)
+		size_t Packet::parse(const binary_data & data)
 		{	string Head, _StrBodySize, nl_str;
 			long _BodySize;
 			size_t HeadEnd_pos;		// Position where head stops
@@ -79,12 +79,12 @@ namespace oonet
 			size_t nl_pos;			// Position of new line
 
 			// Find two new lines that mention end of heads (CRLF and LF)
-			if ((HeadEnd_pos = data.find(BinaryData(CRLF+CRLF))) != BinaryData::npos)
+			if ((HeadEnd_pos = data.find(binary_data(CRLF+CRLF))) != binary_data::npos)
 			{	BodyStart_pos = HeadEnd_pos + 4;
 			}
 			else
 			{
-				if ((HeadEnd_pos = data.find(BinaryData(LF+LF))) != BinaryData::npos)
+				if ((HeadEnd_pos = data.find(binary_data(LF+LF))) != binary_data::npos)
 				{	BodyStart_pos = HeadEnd_pos + 2;
 				}
 				else
@@ -95,7 +95,7 @@ namespace oonet
 			}
 
 			// Get head
-			Head = data.slice(0, HeadEnd_pos).toString();
+			Head = data.slice(0, HeadEnd_pos).to_string();
 
 			// Get title
 			if ((nl_pos = _find_smart_new_line(Head, nl_str)) == string::npos)

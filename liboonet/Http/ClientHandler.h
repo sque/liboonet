@@ -20,11 +20,11 @@ namespace oonet
 		{
 		private:
 			// A buffer with the data
-			BinaryData streamData;
+			binary_data streamData;
 
 		protected:
 			// When data arrives
-			virtual void on_data_received(const BinaryData & data);
+			virtual void on_data_received(const binary_data & data);
 
 			// Get request
 			bool get_request(Request & req);

@@ -20,7 +20,7 @@ namespace oonet
 		{
 			HTTP::Response tmpResponse;
 
-			tmpResponse.setBody(BinaryData("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>"));
+			tmpResponse.setBody(binary_data("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>"));
 			return tmpResponse;
 		}
 
@@ -161,7 +161,7 @@ namespace oonet
 	bool TestHTTPServer::TestStopCleanup::OnExecute()
 	{	MyHTTPServer myServer;
 		Socket mHttpClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData RespShouldBe = BinaryData("HTTP/1.1 200 OK\r\nConnection: Keep-Alive\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
+		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nConnection: Keep-Alive\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
 		HTTP::Request myRequest;
 
 		// Format my request
@@ -207,8 +207,8 @@ namespace oonet
 	bool TestHTTPServer::TestDCInvalidClients::OnExecute()
 	{	MyHTTPServer myServer;
 		Socket mHttpClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData RespShouldBe = BinaryData("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
-		BinaryData invalidRequest = BinaryData("sfads\r\n\r\n\nasf");
+		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
+		binary_data invalidRequest = binary_data("sfads\r\n\r\n\nasf");
 
 		if (myServer.listening())
 			return false;
@@ -241,12 +241,12 @@ namespace oonet
 	{
 		MyHTTPServer * pServer;
 		Socket mHttpClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData RespShouldBe = BinaryData("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
+		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
 
 		HTTP::Request myRequest;
 		// Format my request
 		myRequest.getHeaders().setHeader("Host", "www.google.com");
-		BinaryData dRequest = myRequest.render();
+		binary_data dRequest = myRequest.render();
 
 		for(long i = 0;i < 1000;i++)
 		{
@@ -269,8 +269,8 @@ namespace oonet
 	bool TestHTTPServer::TestDoS1::OnExecute()
 	{	MyHTTPServer myServer;
 		Socket mHttpClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		BinaryData RespShouldBe = BinaryData("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
-		BinaryData invalidRequest = BinaryData("sfads\r\n\r\n\nasf");
+		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
+		binary_data invalidRequest = binary_data("sfads\r\n\r\n\nasf");
 		long i = 0;
 
 		if (myServer.listening())
