@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestSocket
 		:public Test
@@ -56,6 +56,6 @@ namespace OONet
 		}
 
 	} ;	// !TestSocket class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // SOCKET_TEST_H_DEFINED

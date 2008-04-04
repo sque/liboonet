@@ -1,13 +1,12 @@
 #ifndef OONET_HTTP_CLIENTHANDLER_H
 #define OONET_HTTP_CLIENTHANDLER_H
 
-#include "../OONet.h"
-#include "../InetPeer.h"
+#include "../oonet.hpp"
 #include "../netserver.hpp"
-#include "Response.h"
-#include "Request.h"
+#include "./Response.h"
+#include "./Request.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -42,6 +41,6 @@ namespace OONet
 
 		};
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // !OONET_HTTP_CLIENTHANDLER_H

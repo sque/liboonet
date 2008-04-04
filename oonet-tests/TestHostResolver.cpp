@@ -1,7 +1,7 @@
 #include "TestHostResolver.h"
-#include "HostResolver.h"
+#include "host_resolver.hpp"
 
-namespace OONet
+namespace oonet
 {
 	TestHostResolver theHostResolverTest;
 
@@ -58,5 +58,5 @@ namespace OONet
 		local.getAddress(local.getAddressCount());	// This will overflow
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace
 

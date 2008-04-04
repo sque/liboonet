@@ -4,7 +4,7 @@
 */
 #include "Http/Headers.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -163,4 +163,4 @@ namespace OONet
 			return string(r, 0, len);
 		}
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace

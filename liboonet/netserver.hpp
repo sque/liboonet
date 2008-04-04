@@ -1,11 +1,12 @@
 #ifndef NETSERVER_HPP_INCLUDED
 #define NETSERVER_HPP_INCLUDED
 
-#include "OONet.h"
-#include "netstream_threaded.hpp"
+#include "./oonet.hpp"
+#include "./netstream_threaded.hpp"
+
 #include <list>
 
-namespace OONet
+namespace oonet
 {
 
 	/**

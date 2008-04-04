@@ -1,10 +1,10 @@
 #ifndef PORTINET_TEST_H_DEFINED
 #define PORTINET_TEST_H_DEFINED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestPortInet
 		:public Test
@@ -34,6 +34,6 @@ namespace OONet
 		}
 
 	} ;	// !TestPortInet class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // PORTINET_TEST_H_DEFINED

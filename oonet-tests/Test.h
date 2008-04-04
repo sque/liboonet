@@ -4,7 +4,7 @@
 #include "SubTest.h"
 #include <deque>
 
-namespace OONet
+namespace oonet
 {
 	class Test
 	{
@@ -27,5 +27,5 @@ namespace OONet
 
 #define OONET_REGISTERSUBTEST(subtype) \
 	SubTests.push_back(new subtype());
-};	// !OONet namespace
+};	// !oonet namespace
 #endif // !OONET_TESTS_TESTBASE_H_DEFINED

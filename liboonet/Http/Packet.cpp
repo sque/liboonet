@@ -2,10 +2,10 @@
 @file Packet.cpp
 @brief Implementation of HTTP::Packet class
 */
-#include "Http/Packet.h"
-#include "OONet.h"
+#include "./Packet.h"
+#include "../netserver.hpp"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -136,4 +136,4 @@ namespace OONet
 			return BodyStart_pos + _BodySize;
 		}
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace

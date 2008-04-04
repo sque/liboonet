@@ -2,10 +2,9 @@
 @file Url.cpp
 @brief Implementation of HTTP::UrlParam and HTTP::Url class
 */
-#include "Http/Url.h"
-#include "StringConverter.h"
+#include "./Url.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -168,4 +167,4 @@ namespace OONet
 			while((off_start = par_string.find('&', off_end)) != string::npos);
 		}
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace

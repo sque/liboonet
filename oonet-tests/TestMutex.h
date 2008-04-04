@@ -1,10 +1,10 @@
 #ifndef MUTEX_TEST_H_DEFINED
 #define MUTEX_TEST_H_DEFINED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestMutex
 		:public Test
@@ -29,6 +29,6 @@ namespace OONet
 		}
 
 	} ;	// !TestMutex class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // MUTEX_TEST_H_DEFINED

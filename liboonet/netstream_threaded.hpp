@@ -1,12 +1,12 @@
 #ifndef NETSTREAM_THREADED_HPP_INCLUDED
 #define NETSTREAM_THREADED_HPP_INCLUDED
 
-#include "OONet.h"
-#include "thread.h"
-#include "Semaphore.h"
-#include "netstream.hpp"
+#include "./oonet.hpp"
+#include "./thread.hpp"
+#include "./semaphore.hpp"
+#include "./netstream.hpp"
 
-namespace OONet
+namespace oonet
 {
 
 	class netstream_threaded

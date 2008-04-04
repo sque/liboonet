@@ -1,10 +1,10 @@
 #ifndef THREAD_TEST_H_DEFINED
 #define THREAD_TEST_H_DEFINED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestThread
 		:public Test
@@ -38,6 +38,6 @@ namespace OONet
 		}
 
 	} ;	// !TestThread class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // THREAD_TEST_H_DEFINED

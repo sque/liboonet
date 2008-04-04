@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHTTPPacket
 		:public Test
@@ -45,6 +45,6 @@ namespace OONet
 		}
 
 	} ;	// !TestHTTPPacket class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HTTPPACKET_TEST_H_DEFINED

@@ -1,10 +1,10 @@
 #ifndef BINARYDATA_TEST_H_INCLUDED
 #define BINARYDATA_TEST_H_INCLUDED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestBinaryData
 		:public Test
@@ -77,6 +77,6 @@ namespace OONet
 		}
 
 	} ;	// !TestBinaryData class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // BINARYDATA_TEST_H_INCLUDED

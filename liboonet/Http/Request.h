@@ -1,11 +1,11 @@
 #ifndef OONET_HTTP_REQUEST_H_DEFINED
 #define OONET_HTTP_REQUEST_H_DEFINED
 
-#include "../OONet.h"
-#include "Packet.h"
-#include "Url.h"
+#include "../oonet.hpp"
+#include "./Packet.h"
+#include "./Url.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -66,6 +66,6 @@ namespace OONet
 			virtual size_t parse(const BinaryData & data);
 		};	// !Request class
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // !OONET_HTTP_REQUEST_H_DEFINED

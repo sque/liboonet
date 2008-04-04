@@ -2,10 +2,9 @@
 @file MutexPosix.cpp
 @brief Implementation of Mutex class on Posix Platform
 */
-#include "mutex.h"
-#include <iostream>
+#include "./mutex.hpp"
 
-namespace OONet
+namespace oonet
 {
 	namespace MT
 	{
@@ -69,4 +68,4 @@ namespace OONet
             }
 		}
 	}; // !MT namespace
-};	// !OONet namespace
+};	// !oonet namespace

@@ -1,10 +1,10 @@
 #ifndef MUTEX_TEST_H_DEFINED
 #define MUTEX_TEST_H_DEFINED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestSemaphore
 		:public Test
@@ -28,6 +28,6 @@ namespace OONet
 		}
 
 	} ;	// !TestSemaphore test
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // MUTEX_TEST_H_DEFINED

@@ -4,7 +4,7 @@
 */
 #include "Http/Request.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -104,4 +104,4 @@ namespace OONet
 			return BlockSize;
 		}
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace

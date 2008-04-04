@@ -2,9 +2,9 @@
 @file ThreadPosix.cpp
 @brief Implementation of Thread class on Posix Platform
 */
-#include "./thread.h"
+#include "./thread.hpp"
 
-namespace OONet
+namespace oonet
 {
 	namespace MT
 	{
@@ -93,4 +93,4 @@ namespace OONet
         }
 
 	};	// !MT namespace
-};	// !OONet namespace
+};	// !oonet namespace

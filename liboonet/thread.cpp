@@ -3,9 +3,9 @@
  @brief Implementation of general functions of Thread class.
  */
 
-#include "./thread.h"
+#include "./thread.hpp"
 
-namespace OONet
+namespace oonet
 {
     namespace MT
     {
@@ -105,4 +105,4 @@ namespace OONet
             return;
         }
     };  // !MT namespace
-};	// !OONet namespace
+};	// !oonet namespace

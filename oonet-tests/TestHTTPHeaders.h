@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHTTPHeaders
 		:public Test
@@ -59,6 +59,6 @@ namespace OONet
 		}
 
 	} ;	// !TestHTTPHeaders class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HTTPHEADERS_TEST_H_DEFINED

@@ -1,10 +1,10 @@
 #ifndef NETSTREAM_HPP_INCLUDED
 #define NETSTREAM_HPP_INCLUDED
 
-#include "OONet.h"
-#include "Socket.h"
+#include "./oonet.hpp"
+#include "./socket.hpp"
 
-namespace OONet
+namespace oonet
 {
 	class netstream
 	{

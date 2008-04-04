@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHTTPClient
 		:public Test
@@ -37,6 +37,6 @@ namespace OONet
 		}
 
 	} ;	// !TestHTTPClient class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HTTPCLIENT_TEST_H_DEFINED

@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestStringConverter
 		:public Test
@@ -35,6 +35,6 @@ namespace OONet
 		}
 
 	} ;	// !TestStringConverter class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // STRINGCONVERTER_TEST_H_DEFINED

@@ -1,8 +1,8 @@
 #include "TestThread.h"
-#include "thread.h"
+#include "thread.hpp"
 #include <time.h>
 
-namespace OONet
+namespace oonet
 {
 	static TestThread theTestThread;
 
@@ -201,5 +201,5 @@ namespace OONet
 		return false;
 	}
 
-};	// !OONet namespace
+};	// !oonet namespace
 

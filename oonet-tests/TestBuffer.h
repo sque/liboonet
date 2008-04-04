@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestBuffer
 		:public Test
@@ -46,6 +46,6 @@ namespace OONet
 		}
 
 	} ;	// !TestBuffer
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // BUFFER_TEST_H_INCLUDED

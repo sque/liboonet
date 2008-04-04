@@ -5,7 +5,7 @@
 #include "Http/ClientHandler.h"
 #include "Http/Server.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -55,4 +55,4 @@ namespace OONet
 			}
 		}
 	};	// !HTTP Namespace
-};	// !OONet namespace
+};	// !oonet namespace

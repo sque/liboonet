@@ -1,9 +1,9 @@
 #include "TestSocket.h"
-#include "Socket.h"
-#include "SocketAddressInet.h"
-#include "thread.h"
+#include "socket.hpp"
+#include "socket_address_inet.hpp"
+#include "thread.hpp"
 
-namespace OONet
+namespace oonet
 {
 	TestSocket theSocket;
 
@@ -305,4 +305,4 @@ namespace OONet
 		EchoServer.StopS();
 		return true;
 	}
-};	 // !OONet namespace
+};	 // !oonet namespace

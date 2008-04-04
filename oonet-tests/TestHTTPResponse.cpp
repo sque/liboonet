@@ -1,7 +1,7 @@
 #include "TestHTTPResponse.h"
 #include "Http/Response.h"
 
-namespace OONet
+namespace oonet
 {
 	TestHTTPResponse theTestHTTPResponse;
 
@@ -238,4 +238,4 @@ namespace OONet
 			return false;
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace

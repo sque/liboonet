@@ -1,10 +1,10 @@
 #ifndef OONET_HTTP_PACKET_H
 #define OONET_HTTP_PACKET_H
 
-#include "../OONet.h"
-#include "Headers.h"
+#include "../oonet.hpp"
+#include "./Headers.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -99,6 +99,6 @@ namespace OONet
 
 		};	// !Packet Class
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // !OONET_HTTP_PACKET_H

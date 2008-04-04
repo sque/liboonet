@@ -3,11 +3,10 @@
 
 #include <iostream>
 #include <memory.h>
-#include "OONet.h"
-#include "Exception.h"
+#include "oonet.hpp"
 #include "Test.h"
 
-using namespace OONet;
+using namespace oonet;
 
 // Constant bytes
 const Byte c_m = (Byte) 'm';

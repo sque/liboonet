@@ -1,7 +1,7 @@
 #include "TestPortInet.h"
-#include "PortInet.h"
+#include "port_inet.hpp"
 
-namespace OONet
+namespace oonet
 {
 	TestPortInet theTestPortInet;
 
@@ -85,7 +85,7 @@ namespace OONet
 
 	bool TestPortInet::TestGetInetPort::OnExecute()
 	{	PortInet t1(32);
-		OONet::ushort u_temp = htons(32);
+		oonet::ushort u_temp = htons(32);
 
 		if (t1.getNBOPort() != u_temp)
 			return false;
@@ -93,4 +93,4 @@ namespace OONet
 			return false;
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace

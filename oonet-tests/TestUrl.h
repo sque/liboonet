@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestUrl
 		:public Test
@@ -59,6 +59,6 @@ namespace OONet
 		}
 
 	} ;	// !TestUrl class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // URL_TEST_H_DEFINED

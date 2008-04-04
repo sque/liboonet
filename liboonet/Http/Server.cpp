@@ -4,7 +4,7 @@
 */
 #include "Http/Server.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -37,4 +37,4 @@ namespace OONet
 		}
 
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace

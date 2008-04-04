@@ -1,8 +1,8 @@
 #include "TestMutex.h"
-#include "thread.h"
+#include "thread.hpp"
 #include <time.h>
 
-namespace OONet
+namespace oonet
 {
 	static TestMutex theTestMutex;
 
@@ -185,4 +185,4 @@ namespace OONet
 		mymut.lock(1500);
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace

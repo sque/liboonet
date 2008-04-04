@@ -12,7 +12,6 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="HTTP::Server" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -69,10 +68,6 @@
 		<Unit filename="../../oonet-tests/TestHostInet.h" />
 		<Unit filename="../../oonet-tests/TestHostResolver.cpp" />
 		<Unit filename="../../oonet-tests/TestHostResolver.h" />
-		<Unit filename="../../oonet-tests/TestInetClient.cpp" />
-		<Unit filename="../../oonet-tests/TestInetClient.h" />
-		<Unit filename="../../oonet-tests/TestInetServer.cpp" />
-		<Unit filename="../../oonet-tests/TestInetServer.h" />
 		<Unit filename="../../oonet-tests/TestMutex.cpp" />
 		<Unit filename="../../oonet-tests/TestMutex.h" />
 		<Unit filename="../../oonet-tests/TestPortInet.cpp" />
@@ -90,6 +85,10 @@
 		<Unit filename="../../oonet-tests/TestUrl.cpp" />
 		<Unit filename="../../oonet-tests/TestUrl.h" />
 		<Unit filename="../../oonet-tests/main.cpp" />
+		<Unit filename="../../oonet-tests/test_netserver.cpp" />
+		<Unit filename="../../oonet-tests/test_netserver.hpp" />
+		<Unit filename="../../oonet-tests/test_netstream_threaded.cpp" />
+		<Unit filename="../../oonet-tests/test_netstream_threaded.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

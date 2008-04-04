@@ -3,7 +3,7 @@
 #include <time.h>
 
 
-namespace OONet
+namespace oonet
 {
 	// Constructor
 	SubTest::SubTest(string Name)
@@ -88,4 +88,4 @@ namespace OONet
         return "unsupported";
 #endif
 	}
-};	// !OONet namespace
+};	// !oonet namespace

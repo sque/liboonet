@@ -1,10 +1,10 @@
 #ifndef HOSTRESOLVER_TEST_H_DEFINED
 #define HOSTRESOLVER_TEST_H_DEFINED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHostResolver
 		:public Test
@@ -30,7 +30,7 @@ namespace OONet
 		}
 
 	} ;	// !TestHostResolver class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HOSTRESOLVER_TEST_H_DEFINED
 

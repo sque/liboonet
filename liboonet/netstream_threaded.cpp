@@ -1,6 +1,6 @@
 #include "netstream_threaded.hpp"
 
-namespace OONet
+namespace oonet
 {
 
 	netstream_threaded::netstream_threaded()

@@ -1,6 +1,6 @@
 #include "netstream.hpp"
 
-namespace OONet
+namespace oonet
 {
 	netstream::netstream(SocketAddress & dest_addr)
 		:m_socket()

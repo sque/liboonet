@@ -1,15 +1,15 @@
 #ifndef OONET_HTTP_SERVER_H_DEFINED
 #define OONET_HTTP_SERVER_H_DEFINED
 
-#include "../OONet.h"
-#include "../InetServer.h"
-#include "../SocketAddressInet.h"
-#include "Response.h"
-#include "Request.h"
-#include "ClientHandler.h"
-#include "netserver.hpp"
+#include "../oonet.hpp"
+#include "../socket_address_inet.hpp"
+#include "../netserver.hpp"
+#include "./Response.h"
+#include "./Request.h"
+#include "./ClientHandler.h"
 
-namespace OONet
+
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -59,6 +59,6 @@ namespace OONet
 
 		};
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // !OONET_HTTP_SERVER_H_DEFINED

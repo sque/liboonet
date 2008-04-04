@@ -1,14 +1,12 @@
 #ifndef OONET_HTTP_HEADERS_H_DEFINED
 #define OONET_HTTP_HEADERS_H_DEFINED
 
+#include "../oonet.hpp"
+#include "../binary_data.hpp"
+
 #include <map>
-#include "../OONet.h"
-#include "../BinaryData.h"
-#include "../Exception.h"
 
-using std::map;
-
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -125,6 +123,6 @@ namespace OONet
 			void parse(const string & data);
 		}; // !Headers class
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // !OONET_HTTP_HEADERS_H_DEFINED

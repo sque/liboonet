@@ -1,7 +1,7 @@
 #include "TestHTTPServer.h"
 #include "Http/Server.h"
 
-namespace OONet
+namespace oonet
 {
 	TestHTTPServer theHTTPServer;
 
@@ -285,7 +285,7 @@ namespace OONet
 		{
 			for(i = 0;i < 1000;i++)
 			{
-				printf("%d\n", i);
+				//printf("%d\n", i);
 				mHttpClient = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 				// Connect client
 				mHttpClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44143)));
@@ -305,4 +305,4 @@ namespace OONet
 
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace

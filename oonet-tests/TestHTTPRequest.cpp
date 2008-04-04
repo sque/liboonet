@@ -1,7 +1,7 @@
 #include "TestHTTPRequest.h"
 #include "Http/Request.h"
 
-namespace OONet
+namespace oonet
 {
 	TestHTTPRequest theTestHTTPRequest;
 
@@ -243,4 +243,4 @@ namespace OONet
 		return true;
 	}
 
-};	// !OONet namespace
+};	// !oonet namespace

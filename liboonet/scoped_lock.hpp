@@ -1,10 +1,10 @@
 #ifndef SCOPED_LOCK_HPP_INCLUDED
 #define SCOPED_LOCK_HPP_INCLUDED
 
-#include "OONet.h"
-#include "mutex.h"
+#include "./oonet.hpp"
+#include "./mutex.hpp"
 
-namespace OONet
+namespace oonet
 {
 	class scoped_lock
 	{

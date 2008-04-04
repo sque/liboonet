@@ -1,11 +1,11 @@
 #ifndef OONET_HTTP_RESPONSE_H_DEFINED
 #define OONET_HTTP_RESPONSE_H_DEFINED
 
-#include "../OONet.h"
+#include "../oonet.hpp"
 #include "Headers.h"
 #include "Packet.h"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -57,5 +57,5 @@ namespace OONet
 			virtual size_t parse(const BinaryData & data);
 		};	// !Response class
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 #endif // OONET_HTTP_RESPONSE_H_DEFINED

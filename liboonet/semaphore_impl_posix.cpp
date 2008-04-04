@@ -2,9 +2,9 @@
 @file SemaphorePosix.cpp
 @brief Implementation of Semaphore class on Posix Platform
 */
-#include "Semaphore.h"
+#include "./semaphore.hpp"
 
-namespace OONet
+namespace oonet
 {
 	namespace MT
 	{
@@ -63,4 +63,4 @@ namespace OONet
 
 		}
 	}; // !MT namepsace
-};	// !OONet namespace
+};	// !oonet namespace

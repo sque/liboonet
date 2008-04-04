@@ -1,17 +1,14 @@
 #ifndef OONET_HTTP_CLIENT_H_INCLUDED
 #define OONET_HTTP_CLIENT_H_INCLUDED
 
-#include "../OONet.h"
-#include "../BinaryData.h"
-#include "../Exception.h"
-#include "../SocketAddressInet.h"
-#include "../Semaphore.h"
-#include "../InetClient.h"
+#include "../oonet.hpp"
+#include "../binary_data.hpp"
+#include "../socket_address_inet.hpp"
+#include "../netstream_threaded.hpp"
 #include "Response.h"
 #include "Request.h"
-#include "../netstream_threaded.hpp"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -84,5 +81,5 @@ namespace OONet
 
 		};	// !Client class
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 #endif // !OONET_HTTP_CLIENT_H_INCLUDED

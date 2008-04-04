@@ -5,7 +5,7 @@
 #include "Http/Client.h"
 #include "scoped_lock.hpp"
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -108,4 +108,4 @@ namespace OONet
 		}
 
 	}; // !HTTP Namespace
-};	// !OONet namespace
+};	// !oonet namespace

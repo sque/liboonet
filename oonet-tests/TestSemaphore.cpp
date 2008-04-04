@@ -1,8 +1,8 @@
 #include "TestSemaphore.h"
-#include "Semaphore.h"
-#include "thread.h"
+#include "semaphore.hpp"
+#include "thread.hpp"
 
-namespace OONet
+namespace oonet
 {
 	TestSemaphore theTestSemaphore;
 
@@ -65,4 +65,4 @@ namespace OONet
 		mySema.post();	// Signale it and wait to destruct on exit of function
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace

@@ -1,7 +1,7 @@
 #include "TestHTTPClient.h"
 #include "Http/Client.h"
 
-namespace OONet
+namespace oonet
 {
 	TestHTTPClient theHTTPClient;
 
@@ -387,4 +387,4 @@ namespace OONet
 
 		return false;
 	}
-}; // !OONet namespace
+}; // !oonet namespace

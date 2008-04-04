@@ -1,6 +1,6 @@
 #include "TestBinaryData.h"
 
-namespace OONet
+namespace oonet
 {
 	static TestBinaryData theBinaryTest;
 
@@ -510,4 +510,4 @@ namespace OONet
 
 		return true;
 	}
-};	// !OONet namespace
+};	// !oonet namespace

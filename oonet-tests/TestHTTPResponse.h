@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHTTPResponse
 		:public Test
@@ -37,6 +37,6 @@ namespace OONet
 		}
 
 	} ;	// !TestHTTPResponse class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HTTPRESPONSE_TEST_H_DEFINED

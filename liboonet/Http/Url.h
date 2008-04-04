@@ -1,12 +1,11 @@
 #ifndef OONET_HTTP_URL_H_DEFINED
 #define OONET_HTTP_URL_H_DEFINED
-#include "../OONet.h"
-#include "../Exception.h"
+
+#include "../oonet.hpp"
 
 #include <vector>
-using std::vector;
 
-namespace OONet
+namespace oonet
 {
 	namespace HTTP
 	{
@@ -86,7 +85,7 @@ namespace OONet
 			OONET_DECLARE_EXCEPTION(ExceptionWrongUrl);
 
 			//! Parameter List definition
-			typedef vector<UrlParam> ParameterList;
+			typedef std::vector<UrlParam> ParameterList;
 
 			//! Default constructor
 			/**
@@ -175,5 +174,5 @@ namespace OONet
 
 		}; // !Url class
 	};	// !HTTP namespace
-};	// !OONet namespace
+};	// !oonet namespace
 #endif // OONET_HTTP_URL_H_DEFINED

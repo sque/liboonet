@@ -1,10 +1,10 @@
 #ifndef HOSTINET_TEST_H_DEFINED
 #define HOSTINET_TEST_H_DEFINED
 
-#include "BinaryData.h"
+#include "binary_data.hpp"
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHostInet
 		:public Test
@@ -37,6 +37,6 @@ namespace OONet
 		}
 
 	} ;	// !TestHostInet class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HOSTINET_TEST_H_DEFINED

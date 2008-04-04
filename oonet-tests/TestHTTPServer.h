@@ -3,7 +3,7 @@
 
 #include "Test.h"
 
-namespace OONet
+namespace oonet
 {
 	class TestHTTPServer
 		:public Test
@@ -41,6 +41,6 @@ namespace OONet
 		}
 
 	} ;	// !TestHTTPServer class
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // HTTPSERVER_TEST_H_DEFINED

@@ -1,10 +1,11 @@
 #ifndef OONET_TESTS_SUBTESTBASE_H_DEFINED
 #define OONET_TESTS_SUBTESTBASE_H_DEFINED
 
-#include "OONet.h"
+#include "oonet.hpp"
+
 #include <time.h>
 
-namespace OONet
+namespace oonet
 {
 	class Test;	// Prototype of Test class
 
@@ -55,6 +56,6 @@ namespace OONet
 				:SubTest(name, exctype) {} \
 			protected: virtual bool OnExecute(); \
 		};
-};	// !OONet namespace
+};	// !oonet namespace
 
 #endif // !OONET_TESTS_SUBTESTBASE_H_DEFINED
