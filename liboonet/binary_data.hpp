@@ -47,9 +47,12 @@ namespace oonet
 		//! Destructor
 		virtual ~binary_data();
 
+		//! Copy constructor
 		binary_data(const binary_data & r);
 
+		//! Copy operator
 		binary_data & operator=(const binary_data & r);
+
 		//! Constructor from std::string
 		/**
 			A new object is created and all the characters of std::string
@@ -189,7 +192,7 @@ namespace oonet
 		@param offset The offset until data will be copied.
 		@throw ExceptionNotFound If desired offset is outside boundries
 			of current data.
-		@see getFrom
+		@see get_from
 		*/
 		binary_data get_until(const size_t & offset) const throw(ExceptionNotFound);
 
@@ -201,7 +204,7 @@ namespace oonet
 		@param offset The offset from which it will start copying data.
 		@throw ExceptionNotFound If desired offset is outside boundries
 			of current data.
-		@see getUntil
+		@see get_until
 		*/
 		binary_data get_from(const size_t & offset) const throw(ExceptionNotFound);
 

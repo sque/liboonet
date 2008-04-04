@@ -40,7 +40,7 @@ namespace oonet
 					p_temp = (byte *)realloc(p_mem, sz_new);
 				else
 					// Allocate
-					p_temp = new byte[sz_new];
+					p_temp = (byte*)malloc(sizeof(byte) * sz_new);
 				p_mem = p_temp;
 			}catch(std::bad_alloc)
 			{	p_temp = NULL;	}
@@ -49,7 +49,6 @@ namespace oonet
 			if (p_temp == NULL)
 				// Throw our's exception
 				OONET_THROW_EXCEPTION(ExceptionBadAllocation, "Cannot allocate memory for binary_data");
-
 
 			// Save new size of buffer
 			sz_mem = sz_new;
@@ -100,9 +99,8 @@ namespace oonet
 		{
 			// Free allocated space
 			if (p_mem != &bt_dummy)
-				delete [] p_mem;
+				free(p_mem);
 		}
-
 	};
 
 
@@ -116,11 +114,11 @@ namespace oonet
 			p_mem_block = new_block;
 			off_data = 0;
 		}
-		else if (off_data != 0)
-		{	//Move data back
-			p_mem_block->shift_data_left(off_data);
-			off_data = 0;
-		}
+//		else if (off_data != 0)
+//		{	//Move data back
+//			p_mem_block->shift_data_left(off_data);
+//			off_data = 0;
+//		}
 	}
 
 	// Simple constructor
@@ -235,10 +233,10 @@ namespace oonet
 		_assure_local_copy();
 
 		// Scale memory to fit all data
-		p_mem_block->_scale_mem(s_data + r.s_data);
+		p_mem_block->_scale_mem(off_data + s_data + r.s_data);
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + s_data, r.get_data_ptr(), r.s_data);
+		memcpy(p_mem_block->p_mem + off_data + s_data, r.get_data_ptr(), r.s_data);
 
 		// Add size
 		s_data += r.s_data;
@@ -252,10 +250,10 @@ namespace oonet
 		_assure_local_copy();
 
 		// Scale memory to fit all data
-		p_mem_block->_scale_mem(s_data + 1);
+		p_mem_block->_scale_mem(off_data + s_data + 1);
 
 		// Add byte at end of buffer
-		*(p_mem_block->p_mem + s_data) = r;
+		*(p_mem_block->p_mem + off_data + s_data) = r;
 
 		// Increase buffer
 		s_data ++;
@@ -376,6 +374,7 @@ namespace oonet
 		p_mem_block->_scale_mem(0);
 
 		// Empty data
+		off_data = 0;
 		s_data = 0;
 	}
 

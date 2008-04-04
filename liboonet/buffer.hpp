@@ -13,8 +13,11 @@ namespace oonet
 		a stack. It is also multi-thread safe.
 	*/
 	class Buffer:
-		private MT::mutex, private binary_data
+		private MT::mutex
 	{
+	private:
+		binary_data bd_data;
+
 	public:
 		//! Default constructor
 		inline Buffer(){};
@@ -67,7 +70,7 @@ namespace oonet
 
 		//! Get size of data in buffer
 		inline size_t size()
-		{	return binary_data::size();	}
+		{	return bd_data.size();	}
 
 	};	// Buffer class
 };	// !oonet namespace

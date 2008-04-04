@@ -12,25 +12,18 @@ namespace oonet
 	void Buffer::pushFront(const binary_data & r)
 	{	scoped_lock fun_lock(*this);
 
-		/*// scale memory to it all data
-		_scale_mem(s_data + r.size());
+		binary_data tmp(r);
 
-		// move current data at end
-		memmove(p_data + r.size(), p_data, s_data);
+		tmp += bd_data;
 
-		// and copy at the begining of new buf
-		memcpy(p_data, r.get_data_ptr(), r.size());
-
-		// Save data size
-		s_data += r.size();*/
+		bd_data = tmp;
 	}
 
 	// Push at end
 	void Buffer::pushBack(const binary_data & r)
 	{	scoped_lock fun_lock(*this);
 
-		binary_data::operator +=(r);
-
+		bd_data += r;
 	}
 
 	// Pop at front
@@ -41,16 +34,16 @@ namespace oonet
 		if (MaxSize == 0)
 			return binary_data::EMPTY;
 
-		/*scoped_lock fun_lock(*this);
+		scoped_lock fun_lock(*this);
 
 		// Fix maxsize
-		if (MaxSize > size())
-			_finalSize = size();
+		if (MaxSize > bd_data.size())
+			_finalSize = bd_data.size();
 
-		res = get_until(_finalSize);
+		res = bd_data.get_until(_finalSize);
 		if (!only_peek)
-			binary_data::operator=(get_from(res.size()));
-*/
+			bd_data = (bd_data.get_from(res.size()));
+
 		return res;
 	}
 
@@ -63,20 +56,20 @@ namespace oonet
 		if (MaxSize == 0)
 			return binary_data::EMPTY;
 
-		/*scoped_lock fun_lock(*this);
+		scoped_lock fun_lock(*this);
 
 		// Fix maxsize
-		if (MaxSize > size())
-			_finalSize = size();
+		if (MaxSize > bd_data.size())
+			_finalSize = bd_data.size();
 
-		ReversePosition = size() - _finalSize;
-		res = get_from(ReversePosition);
+		ReversePosition = bd_data.size() - _finalSize;
+		res = bd_data.get_from(ReversePosition);
 		if (!only_peek)
 		{
-			ReversePosition = size() - res.size();
-			binary_data::operator=( get_until(ReversePosition));
+			ReversePosition = bd_data.size() - res.size();
+			bd_data = (bd_data.get_until(ReversePosition));
 		}
-*/
+
 		return res;
 	}
 
@@ -84,6 +77,6 @@ namespace oonet
 	void Buffer::flush()
 	{	scoped_lock fun_lock(*this);
 
-		clear();
+		bd_data.clear();
 	}
 };	// !oonet namespace
