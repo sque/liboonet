@@ -3,7 +3,7 @@
  @brief Implementation of general functions of Thread class.
  */
 
-#include "./Thread.h"
+#include "./thread.h"
 
 namespace OONet
 {
@@ -18,7 +18,7 @@ namespace OONet
         #define NOTHREAD 0
     #endif
 
-        void Thread::_soft_join(ulong tm_timeoutms) throw(Exception)
+        void thread::_soft_join(ulong tm_timeoutms) throw(Exception)
         {   OONET_DEBUG_L2("Thread::_soft_join()_\n");
             // Local variables
             ulong tm_passed;		// A counter for time passed
@@ -27,11 +27,11 @@ namespace OONet
 			for(tm_passed = 0;(tm_passed <  tm_timeoutms) || (tm_timeoutms == Infinity); tm_passed+= 250)
             {
                 // If thread stopped exit
-                if (!bRunning)
+                if (!b_running)
                     return;
 
                 // Else wait one step more
-                Thread::sleep(250);
+                thread::sleep(250);
             }
 
             // time out reached
@@ -41,9 +41,9 @@ namespace OONet
 
 
         // Thread real fuction
-        THREADPROC_RETURN THREADTYPE Thread::_thread_func(void * _caller)
+        THREADPROC_RETURN THREADTYPE thread::_thread_func(void * _caller)
         {
-            Thread * pthis = (Thread *)_caller;
+            thread * pthis = (thread *)_caller;
 
 			// Ok we started
 			pthis->semStartThread.post();
@@ -55,24 +55,25 @@ namespace OONet
             {   OONET_DEBUG_L1(_T("Thread::_thread_func() exception was thrown from thread!\n"));    }
 
             // To lock exei noima giati to bRunning mporei na tropopoihthei apo allo thread
-            pthis->lock();
-            pthis->bRunning = false;
-            pthis->unlock();
+            {scoped_lock tmp_lock(*pthis);
+
+				pthis->b_running = false;
+            }
             return NULL;
         }
 
         // Constructor of thread
-        Thread::Thread()
+        thread::thread()
         {
             // Initiliaze variables
-            hThread = NOTHREAD;					// No handle at startup
-            bRunning = false;					// Thread hasn't start yet
+            thread_h = NOTHREAD;					// No handle at startup
+            b_running = false;					// Thread hasn't start yet
             bJoined = false;                    // Thread hasn't joined yet
         }
 
 
         // Destructor of thread
-        Thread::~Thread()
+        thread::~thread()
         {
             // Join with thread
             join(Infinity);
@@ -81,10 +82,10 @@ namespace OONet
 
 
         // Wait a specific amount of time to see if thread was stopped
-        void Thread::join(ulong tm_timeoutms) throw(Exception)
+        void thread::join(ulong tm_timeoutms) throw(Exception)
         {
             // Skip join if we never started thread
-            if (hThread == NOTHREAD)
+            if (thread_h == NOTHREAD)
 			{   OONET_DEBUG_L2(_T("Thread::Join() skipping we don't have handle\n"));
 				return;
 			}
@@ -93,10 +94,9 @@ namespace OONet
         }
 
         // Start the thread
-        void Thread::start() throw(Exception)
+        void thread::start() throw(Exception)
         {
-            lock();		// Lock object for single use
-
+			scoped_lock tmp_lock(*this);	// Lock object for single use
 
             try // Wait for possible exceptions
             {
@@ -108,10 +108,9 @@ namespace OONet
             catch(std::exception)
             {
 				// Oups
-                unlock();   // Unlock before exiting
                 throw;		// Forward exception
             }
-            unlock();
+
             return;
         }
     };  // !MT namespace

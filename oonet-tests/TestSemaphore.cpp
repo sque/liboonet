@@ -1,25 +1,25 @@
 #include "TestSemaphore.h"
 #include "Semaphore.h"
-#include "Thread.h"
+#include "thread.h"
 
 namespace OONet
 {
 	TestSemaphore theTestSemaphore;
 
-	class TestThreadSemaphore : MT::Thread
+	class TestThreadSemaphore : MT::thread
 	{
 
 	};
 
 	bool TestSemaphore::TestLockTimeOut::OnExecute()
-	{	MT::Semaphore mySema;
+	{	MT::semaphore mySema;
 
 		mySema.wait(3000);
 		return false;
 	}
 
 	bool TestSemaphore::TestInitialState::OnExecute()
-	{	MT::Semaphore mySema(3);
+	{	MT::semaphore mySema(3);
 
 		// We can wait 3 times
 		mySema.wait(3000);
@@ -35,7 +35,7 @@ namespace OONet
 	}
 
 	bool TestSemaphore::TestPostWait::OnExecute()
-	{	MT::Semaphore mySema;
+	{	MT::semaphore mySema;
 
 		// Post 5 times
 		mySema.post();
@@ -60,7 +60,7 @@ namespace OONet
 	}
 
 	bool TestSemaphore::TestDestructorSignaled::OnExecute()
-	{	MT::Semaphore mySema;
+	{	MT::semaphore mySema;
 
 		mySema.post();	// Signale it and wait to destruct on exit of function
 		return true;

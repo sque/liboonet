@@ -7,6 +7,7 @@
 #include "Response.h"
 #include "Request.h"
 #include "ClientHandler.h"
+#include "netserver.hpp"
 
 namespace OONet
 {
@@ -20,19 +21,13 @@ namespace OONet
 			its response. To start/stop the server use Server::start() and Server::stop().
 		*/
 		class Server :
-			public InetServer
+			public netserver<ClientHandler>
 		{
 		friend class ClientHandler;
-		public:
-			//! Constructor
-			Server(void);
-
-			//! Destructor
-			virtual ~Server(void);
-
 		private:
-			//! When a new connection is accepted
-			virtual bool OnAccept(const SocketAddressInet & remote_addr, InetPeer *& pDstHandler);
+			// NonCopyable
+			Server(const Server &);
+			Server & operator=(const Server &);
 
 		protected:
 			//! @name Exported events
@@ -50,6 +45,13 @@ namespace OONet
 			*/
 			virtual Response OnURLRequest(const Url & Uri, const Request & full_request, const SocketAddressInet & client_addr) = 0;
 			//! @}
+
+		public:
+			//! Constructor
+			Server(void);
+
+			//! Destructor
+			virtual ~Server(void);
 
 		};
 	};	// !HTTP namespace

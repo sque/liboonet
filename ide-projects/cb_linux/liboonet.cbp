@@ -71,13 +71,10 @@
 		<Unit filename="../../liboonet/InetPeer.h" />
 		<Unit filename="../../liboonet/InetServer.cpp" />
 		<Unit filename="../../liboonet/InetServer.h" />
-		<Unit filename="../../liboonet/Mutex.h" />
-		<Unit filename="../../liboonet/MutexPosix.cpp" />
 		<Unit filename="../../liboonet/OONet.h" />
 		<Unit filename="../../liboonet/PortInet.cpp" />
 		<Unit filename="../../liboonet/PortInet.h" />
 		<Unit filename="../../liboonet/Semaphore.h" />
-		<Unit filename="../../liboonet/SemaphorePosix.cpp" />
 		<Unit filename="../../liboonet/Socket.cpp" />
 		<Unit filename="../../liboonet/Socket.h" />
 		<Unit filename="../../liboonet/SocketAddress.cpp" />
@@ -86,14 +83,18 @@
 		<Unit filename="../../liboonet/SocketAddressInet.h" />
 		<Unit filename="../../liboonet/StringConverter.cpp" />
 		<Unit filename="../../liboonet/StringConverter.h" />
-		<Unit filename="../../liboonet/Thread.cpp" />
-		<Unit filename="../../liboonet/Thread.h" />
-		<Unit filename="../../liboonet/ThreadPosix.cpp" />
+		<Unit filename="../../liboonet/mutex.h" />
+		<Unit filename="../../liboonet/mutex_impl_posix.cpp" />
+		<Unit filename="../../liboonet/netserver.hpp" />
 		<Unit filename="../../liboonet/netstream.cpp" />
 		<Unit filename="../../liboonet/netstream.hpp" />
 		<Unit filename="../../liboonet/netstream_threaded.cpp" />
 		<Unit filename="../../liboonet/netstream_threaded.hpp" />
 		<Unit filename="../../liboonet/scoped_lock.hpp" />
+		<Unit filename="../../liboonet/semaphore_impl_posix.cpp" />
+		<Unit filename="../../liboonet/thread.cpp" />
+		<Unit filename="../../liboonet/thread.h" />
+		<Unit filename="../../liboonet/thread_impl_posix.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

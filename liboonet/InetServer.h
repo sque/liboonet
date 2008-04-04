@@ -2,7 +2,7 @@
 #define OONET_INETSERVER_H_DEFINED
 
 #include "OONet.h"
-#include "Thread.h"
+#include "thread.h"
 #include "SocketAddressInet.h"
 #include "InetPeer.h"
 #include <deque>
@@ -18,10 +18,10 @@ namespace OONet
 	@remarks This is not a templated class of a custom client handler,
 		so <b>YOU</b> need to create a new instance of your client handler
 		every time OnAccept() is executed and pass back its pointer to
-		server 
+		server
 	*/
 	class InetServer
-		:protected MT::Thread
+		:protected MT::thread
 	{
 	private:
 		// Internal Data

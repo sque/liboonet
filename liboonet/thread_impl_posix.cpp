@@ -2,16 +2,16 @@
 @file ThreadPosix.cpp
 @brief Implementation of Thread class on Posix Platform
 */
-#include "Thread.h"
+#include "./thread.h"
 
 namespace OONet
 {
 	namespace MT
 	{
-        void Thread::_system_start(void) throw(Exception)
+        void thread::_system_start(void) throw(Exception)
         {
             // Check if an instance already exists
-            if (bRunning == true)
+            if (b_running == true)
             {
                 OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
 					"Thread alreay running!"
@@ -24,10 +24,10 @@ namespace OONet
                 join(Infinity);
 
             // Start Thread
-            int ret_error = pthread_create(&hThread, NULL, this->_thread_func, this);
+            int ret_error = pthread_create(&thread_h, NULL, this->_thread_func, this);
             if (ret_error != 0)
             {
-                hThread = 0; 		// We must reset it to default because specification says
+                thread_h = 0; 		// We must reset it to default because specification says
                                     // that if pthread_create fails the value is undefined
 
                 switch(ret_error)
@@ -46,11 +46,11 @@ namespace OONet
 
             // Thread started...
             bJoined = false;
-            bRunning = true;
+            b_running = true;
             return;		// Thread started succesfully
         }
 
-        void Thread::_system_join(ulong tm_timeoutms) throw(Exception)
+        void thread::_system_join(ulong tm_timeoutms) throw(Exception)
         {   OONET_DEBUG_L2("Thread::_linux_join()_\n");
 
             // Skip if thread is already joine
@@ -60,7 +60,7 @@ namespace OONet
             // For join
 			if (tm_timeoutms == Infinity)
             {
-                if (pthread_join(hThread, NULL) != 0)
+                if (pthread_join(thread_h, NULL) != 0)
                 {
                     switch(errno)
                     {
@@ -69,7 +69,7 @@ namespace OONet
 							"This implementation of pthread doens't create joinable theads");
                         return;
                     default:
-						OONET_THROW_EXCEPTION(ExceptionNotSupported,
+						OONET_THROW_EXCEPTION(ExceptionSystemError,
 							"Unknown error when trying to join thread");
                         return;
                     }
@@ -84,7 +84,7 @@ namespace OONet
         }
 
         // Stops the calling thread for a period of time
-        void Thread::sleep(ulong tm_sleepms) throw(Exception)
+        void thread::sleep(ulong tm_sleepms) throw(Exception)
         {	int err;
 			err = usleep( tm_sleepms * 1000);		// Unix usleep gets microseconds
 			if (err == EINTR)

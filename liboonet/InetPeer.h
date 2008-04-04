@@ -2,7 +2,7 @@
 #define OONET_INETPEER_H_DEFINED
 
 #include "OONet.h"
-#include "Thread.h"
+#include "thread.h"
 #include "Socket.h"
 #include "SocketAddressInet.h"
 
@@ -22,7 +22,7 @@ namespace OONet
 		will help to avoid calls to pure virtual calls
 	*/
 	class InetPeer
-		:private MT::Thread
+		:private MT::thread
 	{
 	private:
 		// Uncopiable

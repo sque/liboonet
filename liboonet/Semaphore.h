@@ -12,31 +12,31 @@ namespace OONet
     	/**
 			Cross-platform C++ semaphore objects.
 		*/
-        class Semaphore
+        class semaphore
         {
         private:
 			//! Handle of system's semaphore
-            SEMAPHORE semHandle;
+            SEMAPHORE_HANDLE sem_h;
 
-			// Semaphore is uncopiable
-            Semaphore(const Semaphore &r);
-            Semaphore & operator=(const Semaphore & r);
+			// Semaphore is NonCopyable
+            semaphore(const semaphore &r);
+            semaphore & operator=(const semaphore & r);
 
         public:
             //! Default constructor
             /**
 				Creates a semaphore that initially has 0 value.
 			*/
-            Semaphore();
+            semaphore();
 
             //! Constructor with custom initial value
             /**
 			@param initial The inital value of semaphore
 			*/
-            explicit Semaphore(int initial);
+            explicit semaphore(int initial);
 
             //! Destructor
-            ~Semaphore();
+            virtual ~semaphore();
 
             //! Wait for semaphore until someone posts it or a timeout is reached
             /**
@@ -58,7 +58,7 @@ namespace OONet
 				thread.
 			*/
             void post();
-        };	// !Semaphore class
+        };	// !semaphore class
     }   // !MT namespace
 } // !OONet namespace
 

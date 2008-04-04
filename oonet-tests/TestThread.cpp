@@ -1,5 +1,5 @@
 #include "TestThread.h"
-#include "Thread.h"
+#include "thread.h"
 #include <time.h>
 
 namespace OONet
@@ -11,7 +11,7 @@ namespace OONet
 	int threadCount;
 
 	// Throw a thread
-	class SimpleThread : public MT::Thread
+	class SimpleThread : public MT::thread
 	{
 	public:
 		~SimpleThread()
@@ -30,11 +30,11 @@ namespace OONet
 	};
 
 	// A thread for blocking infinitly
-	class BlockThread : public MT::Thread
+	class BlockThread : public MT::thread
 	{
     protected:
         bool bPlay, bUsed;
-		MT::Semaphore sema;
+		MT::semaphore sema;
 	public:
         BlockThread()
         {
@@ -62,7 +62,7 @@ namespace OONet
 	};
 
 	// A thread for blocking infinitly
-	class KillThread : public MT::Thread
+	class KillThread : public MT::thread
 	{
 	public:
 		~KillThread()
@@ -85,7 +85,7 @@ namespace OONet
 		ThreadRunned = false;
 
 		myThread.start();
-		MT::Thread::sleep(1000);	// Wait for 3 seconds
+		MT::thread::sleep(1000);	// Wait for 3 seconds
 
 		return ThreadRunned;
 	}
@@ -134,7 +134,7 @@ namespace OONet
 		long timediff, testtime = 5;
 
 		time(&startT);
-		MT::Thread::sleep(testtime * 1000);
+		MT::thread::sleep(testtime * 1000);
 		time(&endT);
 
 		timediff = (long)(endT - startT);
@@ -177,43 +177,6 @@ namespace OONet
 		return true;
 	}
 
-	bool TestThread::TestKill::OnExecute()
-	{
-
-		BlockThread  bThread;
-
-#if (OONET_OS == OONET_OS_WIN32)
-		HANDLE hOrigThread, hThread;
-
-		bThread.start();
-		// Get Handle and duplicate it
-		hOrigThread = bThread.get_thread_handle();
-		DuplicateHandle(
-		  GetCurrentProcess(),
-		  hOrigThread,
-		  GetCurrentProcess(),
-		  &hThread,
-		  0,
-		  TRUE,
-		  DUPLICATE_SAME_ACCESS);
-#endif
-		// Kill it
-		MT::Thread::sleep(1000);
-
-#if (OONET_OS == OONET_OS_WIN32)
-		// Check if stopped
-		DWORD dwExitCode = 0;
-		if (! GetExitCodeThread(hThread, &dwExitCode))
-		{
-			_tprintf(_T("%s"), GetSystemLastErrorDescription().c_str());
-			return false;
-		}
-
-		if (dwExitCode == STILL_ACTIVE)
-			return false;
-  #endif
-		return true;
-	}
 
 	bool TestThread::TestFastSpam100::OnExecute()
 	{	BlockThread *pThread[100];
@@ -238,14 +201,5 @@ namespace OONet
 		return false;
 	}
 
-	bool TestThread::TestBug2::OnExecute()
-	{	KillThread kThread;
-
-		kThread.start();
-		kThread.join(3000);
-		if (kThread.running())
-			return false;
-		return true;
-	}
 };	// !OONet namespace
 

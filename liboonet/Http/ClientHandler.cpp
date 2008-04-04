@@ -9,35 +9,8 @@ namespace OONet
 {
 	namespace HTTP
 	{
-		// Constructor
-		ClientHandler::ClientHandler(HTTP::Server * _pServer)
-		{
-			pServer = _pServer;
-		}
-
-		// Copy Constructor
-		ClientHandler::ClientHandler(const ClientHandler &r)
-		{	OONET_THROW_EXCEPTION(ExceptionUnimplemented,
-				"ClientHandler is not yet supported to be copiable"
-			);
-		}
-
-		ClientHandler::~ClientHandler(void)
-		{
-			initialize_destruction();
-		}
-
-		// Copy operator
-		ClientHandler & ClientHandler::operator=(const ClientHandler &r)
-		{
-			OONET_THROW_EXCEPTION(ExceptionUnimplemented,
-				"ClientHandler is not yet supported to be copiable"
-			);
-			return *this;
-		}
-
 		// Get request
-		bool ClientHandler::GetRequest(Request & req)
+		bool ClientHandler::get_request(Request & req)
 		{	size_t ActualData;
 
 			// Parse request
@@ -55,7 +28,7 @@ namespace OONet
 		}
 
 		// When data arrives
-		void ClientHandler::OnDataArrived(const BinaryData & data)
+		void ClientHandler::on_data_received(const BinaryData & data)
 		{	Request TmpRequest;
 			Response CustomResponse;
 
@@ -65,10 +38,10 @@ namespace OONet
 			try
 			{
 				// Gather all packets
-				while(GetRequest(TmpRequest))
+				while(get_request(TmpRequest))
 				{
 					// Triger server event
-					CustomResponse = pServer->OnURLRequest(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
+					CustomResponse = get_server_ptr()->OnURLRequest(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
 					// Add extra header for connection control
 					CustomResponse.getHeaders().setHeader("Connection", "Keep-Alive");
 					// Send response

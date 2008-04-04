@@ -94,7 +94,7 @@ namespace OONet
 		bRunning = true;
 
 		// Start thread
-		Thread::start();
+		thread::start();
 	}
 
 	// Stop server

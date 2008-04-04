@@ -7,7 +7,7 @@ namespace OONet
 
 	// Mini server
 	class MiniServer
-		: public MT::Thread
+		: public MT::thread
 	{
 	public:
 		Socket lSocket;

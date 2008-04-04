@@ -12,7 +12,6 @@ namespace OONet
 	public:
 		virtual ~MyHTTPServer()
 		{
-			initializeDestruction();
 		}
 
 
@@ -25,10 +24,10 @@ namespace OONet
 			return tmpResponse;
 		}
 
-		virtual void OnPreStart(Socket & listen_socket)
+		virtual void parametrize_listen_socket(Socket & l_sock)
 		{
 			int reuse = 1;
-		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+		    l_sock.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 		};
 
 	};
@@ -41,37 +40,37 @@ namespace OONet
 	bool TestHTTPServer::TestStart::OnExecute()
 	{	MyHTTPServer myServer;
 
-		myServer.start(SocketAddressInet(HostInet::ANY, PortInet(44130)), 100);
+		myServer.start_listen(SocketAddressInet(HostInet::ANY, PortInet(44130)), 100);
 		return true;
 	}
 
 	bool TestHTTPServer::TestDoubleStart::OnExecute()
 	{	MyHTTPServer myServer;
 
-		myServer.start(SocketAddressInet(HostInet::ANY, PortInet(44131)), 100);
-		myServer.start(SocketAddressInet(HostInet::ANY, PortInet(44132)), 100);
+		myServer.start_listen(SocketAddressInet(HostInet::ANY, PortInet(44131)), 100);
+		myServer.start_listen(SocketAddressInet(HostInet::ANY, PortInet(44132)), 100);
 		return true;
 	}
 
 	bool TestHTTPServer::TestStartRecovery::OnExecute()
 	{	MyHTTPServer myServer;
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44132)), 10);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44132)), 10);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
 		try
-		{myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44133)), 10);}
+		{myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44133)), 10);}
 		catch(ExceptionAlreadyConnected & e){ e = e; }
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
-		if (myServer.getClients().size() != 0)
+		if (myServer.get_clients().size() != 0)
 			return false;
 
 		return true;
@@ -80,34 +79,34 @@ namespace OONet
 	bool TestHTTPServer::TestStop::OnExecute()
 	{	MyHTTPServer myServer;
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44134)), 10);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44134)), 10);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
 		try
-		{myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44135)), 10);}
+		{myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44135)), 10);}
 		catch(ExceptionAlreadyConnected & e){ e = e; }
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
-		if (myServer.getClients().size() != 0)
+		if (myServer.get_clients().size() != 0)
 			return false;
 
 		// Stop server
-		myServer.stop();
+		myServer.stop_listen();
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 		return false;
 
 		// Start again
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44136)), 10);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44136)), 10);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
 		return true;
@@ -116,27 +115,27 @@ namespace OONet
 	bool TestHTTPServer::TestStopWrong1::OnExecute()
 	{	MyHTTPServer myServer;
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44137)), 10);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44137)), 10);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
-		if (myServer.getClients().size() != 0)
+		if (myServer.get_clients().size() != 0)
 			return false;
 
 		// Stop server
-		myServer.stop();
+		myServer.stop_listen();
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 		return false;
 
 		// Stop again
-		myServer.stop();
+		myServer.stop_listen();
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 		return false;
 
 		return true;
@@ -146,13 +145,13 @@ namespace OONet
 	bool TestHTTPServer::TestStopWrong2::OnExecute()
 	{	MyHTTPServer myServer;
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
 		// Stop immediatly
-		myServer.stop();
+		myServer.stop_listen();
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
 		return true;
@@ -167,12 +166,12 @@ namespace OONet
 
 		// Format my request
 		myRequest.getHeaders().setHeader("Host", "www.google.com");
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44138)), 10);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44138)), 10);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
 		// Connect client
@@ -186,21 +185,21 @@ namespace OONet
 			return false;
 
 		// Get count of clients
-		if (myServer.getClients().size() != 1)
+		if (myServer.get_clients().size() != 1)
 			return false;
 
 		// Check if client is connected
-		if (! myServer.getClients()[0]->connected())
+		if (! myServer.get_clients().front()->connected())
 			return false;
 
 		// Stop server
-		myServer.stop();
+		myServer.stop_listen();
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
 		// Get count of clients
-		if (myServer.getClients().size() != 0)
+		if (myServer.get_clients().size() != 0)
 			return false;
 		return true;
 	}
@@ -211,12 +210,12 @@ namespace OONet
 		BinaryData RespShouldBe = BinaryData("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
 		BinaryData invalidRequest = BinaryData("sfads\r\n\r\n\nasf");
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44140)), 10);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44140)), 10);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
 		// Connect client
@@ -252,7 +251,7 @@ namespace OONet
 		for(long i = 0;i < 1000;i++)
 		{
 			pServer = new MyHTTPServer();
-			pServer->start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44142)), 10);
+			pServer->start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44142)), 10);
 			mHttpClient = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 			// Connect client
 			mHttpClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44142)));
@@ -274,19 +273,19 @@ namespace OONet
 		BinaryData invalidRequest = BinaryData("sfads\r\n\r\n\nasf");
 		long i = 0;
 
-		if (myServer.isRunning())
+		if (myServer.listening())
 			return false;
 
-		myServer.start(SocketAddressInet(HostInet::LOCALHOST, PortInet(44143)), 1000);
+		myServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44143)), 1000);
 
-		if (!myServer.isRunning())
+		if (!myServer.listening())
 			return false;
 
 		try
 		{
 			for(i = 0;i < 1000;i++)
 			{
-//				printf("%ld\n", i);
+				printf("%ld\n", i);
 
 				mHttpClient = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
 				// Connect client

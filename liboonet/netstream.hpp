@@ -16,12 +16,18 @@ namespace OONet
 		// Socket of stream
 		Socket m_socket;
 	protected:
+		// Event raised when a new socket is assigned
 		virtual void pre_newsocket_impl(Socket & n_sock){}
+
+		// Event raised after a new socket is assigned
 		virtual void post_newsocket_impl(){}
 
 	public:
 		// Create a netstream and connect at specific address
 		netstream(SocketAddress &);
+
+		// Create a netstream and use a connected socket
+		netstream(Socket &);
 
 		// Create netstream without a binded address
 		netstream();

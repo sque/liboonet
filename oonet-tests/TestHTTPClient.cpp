@@ -7,11 +7,11 @@ namespace OONet
 
 	// Mini echo server
 	class MiniHTTPServer
-		: public MT::Thread
+		: public MT::thread
 	{
 	public:
 		BinaryData ReceivedData;
-		MT::Semaphore semArrived;
+		MT::semaphore semArrived;
 		Socket lSocket;
 		bool bRunning;
 		Exception LastExc;
@@ -65,13 +65,13 @@ namespace OONet
 				}
 
 				// Wait a bit to reproduce lag
-				MT::Thread::sleep(1000);
+				MT::thread::sleep(1000);
 
 				// Send back reply
 				clSocket.send(myResp);
 
 				if (wt_after_send)
-					MT::Thread::sleep(wt_after_send);
+					MT::thread::sleep(wt_after_send);
 				// Raise semaphore
 				semArrived.post();
 
@@ -96,7 +96,7 @@ namespace OONet
 
 	// Mini echo server
 	class MiniDCServer
-		: public MT::Thread
+		: public MT::thread
 	{
 	public:
 		Socket lSocket;
@@ -210,7 +210,7 @@ namespace OONet
 
 		// Start server
 		myServer.start();
-		MT::Thread::sleep(1500);    //WAit to start
+		MT::thread::sleep(1500);    //WAit to start
 
 		// Check if it is connected
 		if (mClient.connected())
@@ -249,7 +249,7 @@ namespace OONet
 
 		// Start server
 		myServer.start();
-		MT::Thread::sleep(1500);    //Wait to start
+		MT::thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
 		if (mClient.connected())
@@ -284,7 +284,7 @@ namespace OONet
 
 		// Start server
 		myServer.start();
-		MT::Thread::sleep(1500);    //Wait to start
+		MT::thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
 		if (mClient.connected())
@@ -325,7 +325,7 @@ namespace OONet
 
 		// Start server
 		myServer1.start();
-		MT::Thread::sleep(1500);    //Wait to start
+		MT::thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
 		if (mClient.connected())
@@ -351,7 +351,7 @@ namespace OONet
 		myServer1.StopS();
 		MiniHTTPServer myServer2(respBinary2);
 		myServer2.start();
-		MT::Thread::sleep(1500);    //Wait to start
+		MT::thread::sleep(1500);    //Wait to start
 
 		// Check if it is connected
 		if (mClient.connected())
@@ -373,7 +373,7 @@ namespace OONet
 		HTTP::Client mClient;
 
 		myserver.start();
-		MT::Thread::sleep(1500);    //Wait to star
+		MT::thread::sleep(1500);    //Wait to star
 
 		// Format req
 		req.url = "/";

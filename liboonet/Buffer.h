@@ -2,7 +2,7 @@
 #define OONET_BUFFER_H_DEFINED
 
 #include "./OONet.h"
-#include "./Mutex.h"
+#include "./mutex.h"
 #include "./BinaryData.h"
 
 namespace OONet
@@ -13,7 +13,7 @@ namespace OONet
 		a stack. It is also multi-thread safe.
 	*/
 	class Buffer:
-		private MT::Mutex, private BinaryData
+		private MT::mutex, private BinaryData
 	{
 	public:
 		//! Default constructor

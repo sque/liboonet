@@ -2,7 +2,6 @@
 #define OONET_BINARYDATA_H_INCLUDED
 
 #include "OONet.h"
-#include "Exception.h"
 
 namespace OONet
 {

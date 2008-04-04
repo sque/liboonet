@@ -9,41 +9,41 @@ namespace OONet
 	namespace MT
 	{
         // Constructor
-        Semaphore::Semaphore()
+        semaphore::semaphore()
         {
-            sem_init(&semHandle,
+            sem_init(&sem_h,
                 0,  // Not process-shared
                 0); // Initial value to 0
         }
 
 
-        Semaphore::Semaphore(int initial)
+        semaphore::semaphore(int initial)
         {
-            sem_init(&semHandle,
+            sem_init(&sem_h,
                 0,          // Not process-shared
                 initial);   // Initial value to custom
         }
 
         // Destructor
-        Semaphore::~Semaphore()
+        semaphore::~semaphore()
         {
             // Destroy semaphore
-            sem_destroy(&semHandle);
+            sem_destroy(&sem_h);
         }
 
 		// Post (increase counter)
-        void Semaphore::post()
+        void semaphore::post()
         {
-            sem_post(&semHandle);
+            sem_post(&sem_h);
         }
 
         // Wait for a semaphore for predefined time
-		void Semaphore::wait(ulong tm_timeoutms)
+		void semaphore::wait(ulong tm_timeoutms)
 		{
 			// Wait for infinity
 			if (tm_timeoutms == Infinity)
 			{
-				sem_wait(&semHandle);
+				sem_wait(&sem_h);
 				return;
 			}
 
@@ -57,7 +57,7 @@ namespace OONet
             expireTime.tv_nsec =  (tm_timeoutms % 1000) * 1000000;
 
             // Try to time out sema
-            if ((0 != sem_timedwait(&semHandle, &expireTime))
+            if ((0 != sem_timedwait(&sem_h, &expireTime))
                 &&  (errno == ETIMEDOUT))
                 OONET_THROW_EXCEPTION(ExceptionTimeOut, "Semaphore was abandoned");
 

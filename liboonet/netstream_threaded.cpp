@@ -32,7 +32,9 @@ namespace OONet
 			}
 		}
 		catch(std::exception &){}
+
 		b_connected = false;
+		netstream::disconnect();	// Disconnect for sure
 		on_disconnected();
 	}
 

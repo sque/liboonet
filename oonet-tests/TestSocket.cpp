@@ -1,7 +1,7 @@
 #include "TestSocket.h"
 #include "Socket.h"
 #include "SocketAddressInet.h"
-#include "Thread.h"
+#include "thread.h"
 
 namespace OONet
 {
@@ -9,11 +9,11 @@ namespace OONet
 
 	// Mini echo server
 	class MiniEchoServer
-		: public MT::Thread
+		: public MT::thread
 	{
 	public:
 		BinaryData ReceivedData;
-		MT::Semaphore semArrived;
+		MT::semaphore semArrived;
 		Socket lSocket;
 		bool bRunning;
 		Exception LastExc;
@@ -109,7 +109,7 @@ namespace OONet
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::Thread::sleep(1500);
+		MT::thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 		// Connect to server and send smthing
@@ -145,7 +145,7 @@ namespace OONet
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::Thread::sleep(1500);
+		MT::thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 		// Connect to server and send smthing
@@ -179,7 +179,7 @@ namespace OONet
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::Thread::sleep(1500);
+		MT::thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 
@@ -244,7 +244,7 @@ namespace OONet
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::Thread::sleep(1500);
+		MT::thread::sleep(1500);
 
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
@@ -280,7 +280,7 @@ namespace OONet
 		// Start a tcp echo server
 		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::Thread::sleep(1500);
+		MT::thread::sleep(1500);
 
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);

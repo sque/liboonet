@@ -2,7 +2,8 @@
 #define OONET_MT_THREAD_H_INCLUDED
 
 #include "OONet.h"
-#include "Mutex.h"
+#include "mutex.h"
+#include "scoped_lock.hpp"
 #include "Exception.h"
 #include "Semaphore.h"
 
@@ -19,30 +20,30 @@ namespace OONet
             object, otherwise you'll be at the risk of "pure virtual function was called" error.
         @brief
         */
-        class Thread : private Mutex
+        class thread : private mutex
         {
         	public:
 				OONET_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
 
             private:
-				// Thread is uncopiable
-				Thread(const Thread &r);
-				Thread & operator=(const Thread & r);
+				// Thread is NonCopiable
+				thread(const thread &r);
+				thread & operator=(const thread & r);
 
                 //! The handle of the thread
-                THREAD hThread;
+                THREAD_HANDLE thread_h;
 
                 //! The thread's Id
-                unsigned long ThreadId;
+                unsigned long thread_id;
 
                 //! A flag if the thread is running
-                bool bRunning;
+                bool b_running;
 
                 //! A flag if thread has been joined. (Only for linux)
                 bool bJoined;
 
 				//! An event to wait for thread to start
-				MT::Semaphore semStartThread;
+				MT::semaphore semStartThread;
 
 				//! The dispatcher for calling the appropriate ThreadRoutine
                 /**
@@ -89,18 +90,18 @@ namespace OONet
 					It initializes all the values and prepares the object so
 					that you can call start()
                 */
-                Thread();
+                thread();
 
                 /**
                 * You should kill object at the deriverd desctructor before reaching
                 * this point.
                 * @brief Destructor of thread, it tries to kill the thread.
                 */
-                virtual ~Thread();
+                virtual ~thread();
 
                 //! Check if the thread is running.
                 inline bool running() const
-                {   return bRunning; }
+                {   return b_running; }
 
 				//! Join with this thread in a predefined maximum time.
                 /**
@@ -137,8 +138,8 @@ namespace OONet
 					The return value type, varies from platform to platform, so take care
 					for cross-platform probs.
                 */
-                THREAD get_thread_handle()
-                {   return hThread; }
+                THREAD_HANDLE get_thread_handle()
+                {   return thread_h; }
 
         };  // Thread class
     };  // MT namespace

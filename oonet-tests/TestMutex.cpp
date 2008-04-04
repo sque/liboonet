@@ -1,5 +1,5 @@
 #include "TestMutex.h"
-#include "Thread.h"
+#include "thread.h"
 #include <time.h>
 
 namespace OONet
@@ -23,7 +23,7 @@ namespace OONet
 		{
 			int a;
 			a = total;
-			MT::Thread::sleep(100);
+			MT::thread::sleep(100);
 			a += val;
 			total = a;
 		}
@@ -33,7 +33,7 @@ namespace OONet
 		{
 			int a;
 			a = total;
-			MT::Thread::sleep(100);
+			MT::thread::sleep(100);
 			a -= val;
 			total = a;
 		}
@@ -47,7 +47,7 @@ namespace OONet
 	} nonSafe;
 
 	// A protected object
-	class SafeObj : public Obj , protected MT::Mutex
+	class SafeObj : public Obj , protected MT::mutex
 	{
 	public:
 		virtual void add(int val)
@@ -66,7 +66,7 @@ namespace OONet
 	}   Safe;
 
 	// A thread playing with unprotected
-	class NonSafeThread : public MT::Thread
+	class NonSafeThread : public MT::thread
 	{
 	public:
 		~NonSafeThread()
@@ -82,7 +82,7 @@ namespace OONet
 
 
 	// A thread playing with protected objects
-	class SafeThread : public MT::Thread
+	class SafeThread : public MT::thread
 	{
 	public:
 		~SafeThread()
@@ -98,10 +98,10 @@ namespace OONet
 
 
 	// Dead lock detector
-	class TestDoubleLockThread : public MT::Thread
+	class TestDoubleLockThread : public MT::thread
 	{
 	protected:
-		MT::Mutex mut;
+		MT::mutex mut;
 
 		virtual void thread_routine(void)
 		{
@@ -111,16 +111,16 @@ namespace OONet
 		}
 	};
 
-	class LockAMutexAndWait : public MT::Thread
+	class LockAMutexAndWait : public MT::thread
 	{
 	public:
-		MT::Mutex * pMutex;
+		MT::mutex * pMutex;
 		long waitfor_ms;
 		virtual void thread_routine(void)
 		{
 			// Try to lock twice from same thread
 			pMutex->lock();
-			MT::Thread::sleep(waitfor_ms);
+			MT::thread::sleep(waitfor_ms);
 		}
 
 		~LockAMutexAndWait()
@@ -173,13 +173,13 @@ namespace OONet
 	}
 
 	bool TestMutex::TestLockTimeOut::OnExecute()
-	{	MT::Mutex mymut;
+	{	MT::mutex mymut;
 		LockAMutexAndWait LockThread;
 
 		LockThread.pMutex = &mymut;
 		LockThread.waitfor_ms = 8000;
 		LockThread.start();
-		MT::Thread::sleep(2000);
+		MT::thread::sleep(2000);
 
 		// Try to lock
 		mymut.lock(1500);

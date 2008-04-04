@@ -8,6 +8,11 @@ namespace OONet
 		m_socket.connect(dest_addr);
 	}
 
+	// Create a netstream and use a connected socket
+	netstream::netstream(Socket & new_sock)
+		:m_socket(new_sock)
+	{}
+
 	netstream::netstream()
 		:m_socket()
 	{}
@@ -35,7 +40,8 @@ namespace OONet
 	}
 
 	void netstream::assign_socket(Socket & new_socket)
-	{	pre_newsocket_impl(new_socket);
+	{
+		pre_newsocket_impl(new_socket);
 		m_socket = new_socket;
 		post_newsocket_impl();
 	}

@@ -13,15 +13,15 @@ namespace OONet
 			Mutex is an easy way to make OOP mutexes. It provides Lock and UnLock functionality
 			and works the same in any platform
         */
-        class Mutex
+        class mutex
         {
         private:
             //! A handle to mutex object that will be used
-            MUTEX hMutex;
+            MUTEX_HANDLE mutex_h;
 
             // Mutex is uncopiable
-            Mutex(const Mutex &r);
-            Mutex & operator=(const Mutex & r);
+            mutex(const mutex &r);
+            mutex & operator=(const mutex & r);
 
         public:
 
@@ -29,10 +29,10 @@ namespace OONet
 			/**
 			@throw ExceptionSystemError Raised if system denied to provide us the mutex.
 			*/
-            Mutex();
+            mutex();
 
             //! Destructor
-            virtual ~Mutex();	// < Destructor
+            virtual ~mutex();
 
 			//! Used to lock mutex for an operation with a time limit.
 			/**
@@ -43,14 +43,14 @@ namespace OONet
 			@throw ExceptionTimeOut Raised when maximum time has passed and we couldn't take ownership of mutex.
 			@throw ExceptionSystemError Raised if there was a system error while trying to lock mutex.
 			*/
-			void lock(ulong tm_timeoutms = Infinity) throw(Exception);
+			void lock(ulong tm_timeoutms = Infinity);
 
 			//! Used to unlock object
             /**
 				This function releases the previous captured ownership of the mutex
 			@throw ExceptionSystemError Raised if there was a system error while trying to lock mutex.
             */
-            void unlock() throw(Exception);
+            void unlock();
         };	// !Mutex class
     };  // !MT namespace
 };	// !OONet namespace

@@ -2,7 +2,7 @@
 @file MutexPosix.cpp
 @brief Implementation of Mutex class on Posix Platform
 */
-#include "Mutex.h"
+#include "mutex.h"
 #include <iostream>
 
 namespace OONet
@@ -10,7 +10,7 @@ namespace OONet
 	namespace MT
 	{
 		// Constructor
-		Mutex::Mutex()
+		mutex::mutex()
 		{
 			// Create recursive mutex
             pthread_mutexattr_t attr;
@@ -18,29 +18,31 @@ namespace OONet
             pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 
 			// From the reference ptrhead_mutex_init always return 0;
-			pthread_mutex_init(&hMutex, &attr);
+			pthread_mutex_init(&mutex_h, &attr);
 		}
 
-
-		Mutex::~Mutex()
+		// Destructor
+		mutex::~mutex()
 		{
 			// Destroy mutex
-			pthread_mutex_destroy(&hMutex);
+			pthread_mutex_destroy(&mutex_h);
 		}
 
-		void Mutex::unlock() throw(Exception)
+		// Mutex unlock
+		void mutex::unlock()
 		{
-			if (0 != pthread_mutex_unlock(&hMutex))
+			if (0 != pthread_mutex_unlock(&mutex_h))
 				OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to unlock mutex!");
 		}
 
-		void Mutex::lock(ulong tm_timeoutms) throw(Exception)
+		// Mutex lock
+		void mutex::lock(ulong tm_timeoutms)
 		{
 			// Lock for ever if requested
 			if (tm_timeoutms == Infinity)
 			{
-				if (0 != pthread_mutex_lock(&hMutex))
-					OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to lock mutex!");
+				if (0 != pthread_mutex_lock(&mutex_h))
+					OONET_THROW_EXCEPTION(ExceptionLockError, "Unable to lock mutex!");
 				return;
 			}
 
@@ -54,15 +56,15 @@ namespace OONet
             expireTime.tv_nsec =  (tm_timeoutms % 1000) * 1000000;
 
             // Try to lock mutex with a time out
-            int ret_error = pthread_mutex_timedlock(&hMutex, &expireTime);
+            int ret_error = pthread_mutex_timedlock(&mutex_h, &expireTime);
             if (ret_error == ETIMEDOUT)
             {
-                OONET_THROW_EXCEPTION(ExceptionTimeOut, 
+                OONET_THROW_EXCEPTION(ExceptionTimeOut,
 					"TimeOut waiting to lock mutex!");
             }
             else
             {
-                OONET_THROW_EXCEPTION(ExceptionSystemError,
+                OONET_THROW_EXCEPTION(ExceptionLockError,
 					"Unable to lock mutex!");
             }
 		}

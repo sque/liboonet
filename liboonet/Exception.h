@@ -95,6 +95,8 @@ namespace OONet
 	// Standard Exceptions Definitions
 	//! Exception when something couldn't be found.
 	OONET_DECLARE_EXCEPTION(ExceptionNotFound);
+	//! Exception raised when mutex locking failed
+	OONET_DECLARE_EXCEPTION(ExceptionLockError);
 	//! Exception raised when access to a resource was denied.
 	OONET_DECLARE_EXCEPTION(ExceptionAccessDenied);
 	//! Exception raised when an entry or object already exist in a container.

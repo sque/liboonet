@@ -124,7 +124,7 @@ namespace OONet
 		join(MT::Infinity);
 
 	    // Assure that has finished
-	    if (MT::Thread::running())
+	    if (MT::thread::running())
         {   OONET_DEBUG_L1(_T("InetPeer::InitializeDestruction() although DCed, thread is running!\n"));
             join(MT::Infinity);
         }

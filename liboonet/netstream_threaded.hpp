@@ -2,7 +2,7 @@
 #define NETSTREAM_THREADED_HPP_INCLUDED
 
 #include "OONet.h"
-#include "Thread.h"
+#include "thread.h"
 #include "Semaphore.h"
 #include "netstream.hpp"
 
@@ -10,7 +10,7 @@ namespace OONet
 {
 
 	class netstream_threaded
-		: public netstream,	private MT::Thread
+		: public netstream,	private MT::thread
 	{
 	private:
 		// NonCopyable
@@ -27,8 +27,10 @@ namespace OONet
 
 		// Private Data
 		bool b_connected;			// A flag if we are connected
-		MT::Semaphore sem_connect;	// Semaphore used when data collection thread is started
+		MT::semaphore sem_connect;	// Semaphore used when data collection thread is started
+
 	protected:
+
 		// Events
 		virtual void on_data_received(const BinaryData &){};
 		virtual void on_connected(){};

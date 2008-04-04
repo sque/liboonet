@@ -32,9 +32,9 @@ namespace OONet
 			Client & operator=(const Client &);
 
 			// Private data
-			MT::Semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
+			MT::semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
 			BinaryData WaitingToProcessData;	//!< Unprocessed received data
-			MT::Mutex mux_access_data;			//!< Mutex for synchronization on stack
+			MT::mutex mux_access_data;			//!< Mutex for synchronization on stack
 			bool b_waiting_anwser;				//!< If someone is waiting for a server answer
 		public:
 			//! Default constructor

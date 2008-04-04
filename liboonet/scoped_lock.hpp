@@ -2,7 +2,7 @@
 #define SCOPED_LOCK_HPP_INCLUDED
 
 #include "OONet.h"
-#include "Mutex.h"
+#include "mutex.h"
 
 namespace OONet
 {
@@ -13,10 +13,10 @@ namespace OONet
 		scoped_lock(const scoped_lock&);
 		scoped_lock & operator=(const scoped_lock&);
 
-		MT::Mutex & m;
+		MT::mutex & m;
 	public:
 		// Constructor
-		scoped_lock(MT::Mutex & _m)
+		scoped_lock(MT::mutex & _m)
 			:m(_m)
 		{	m.lock();	}
 
