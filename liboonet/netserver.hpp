@@ -78,7 +78,7 @@ namespace OONet
 			}
 			catch(Exception & e)
 			{
-				printf("Error %s\n", e.getReport().c_str());
+				//printf("Error %s\n", e.getReport().c_str());
 				// Abandon sockets
 				l_socket = Socket();
 				cl_socket = Socket();

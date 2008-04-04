@@ -26,8 +26,11 @@ namespace OONet
 		void post_newsocket_impl();
 
 		// Private Data
-		bool b_connected;			// A flag if we are connected
-		MT::semaphore sem_connect;	// Semaphore used when data collection thread is started
+		bool b_zombie;					// A flag if we are getting destroyed
+		bool b_connected;				// A flag if we are connected
+		MT::semaphore sem_connect;		// Semaphore used when new assigned socket is ready
+		MT::semaphore sem_newsocket;	// Semaphore when new socket is assigned to stream
+		MT::semaphore sem_disconnect;	// Semaphore when current assigned socket gets disconnected
 
 	protected:
 
