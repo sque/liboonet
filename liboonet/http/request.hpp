@@ -2,8 +2,8 @@
 #define OONET_HTTP_REQUEST_H_DEFINED
 
 #include "../oonet.hpp"
-#include "./Packet.h"
-#include "./Url.h"
+#include "./packet.hpp"
+#include "./url.hpp"
 
 namespace oonet
 {
@@ -18,7 +18,7 @@ namespace oonet
 			functionality.
 		*/
 		class Request :
-			public Packet
+			public packet
 		{
 		public:
 			//! Enumerate the request type

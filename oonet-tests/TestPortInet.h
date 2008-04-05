@@ -22,7 +22,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestPortInet()
-			:Test(_T("PortInet"))
+			:Test(_T("port_inet"))
 		{
 			OONET_REGISTERSUBTEST(TestDefaultCtor);
 			OONET_REGISTERSUBTEST(TestUshortCtor);

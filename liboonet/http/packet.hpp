@@ -2,7 +2,7 @@
 #define OONET_HTTP_PACKET_H
 
 #include "../oonet.hpp"
-#include "./Headers.h"
+#include "./headers_list.hpp"
 
 namespace oonet
 {
@@ -15,36 +15,36 @@ namespace oonet
 		/**
 			It can render or parse HTTP packets from/to its major parts (Title, Headers, Body)
 		*/
-		class Packet
+		class packet
 		{
 		protected:
 			// Update headers
-			void _UpdateHeaders();
+			void _update_headers();
 
-			string		_Title;		//!< The title of the packet
-			Headers		_Headers;	//!< The headers of the packet
-			binary_data	_Body;		//!< The Body of the document
-			bool		HasBody;	//!< A flag if packet includes body
+			string			m_title;	//!< The title of the packet
+			headers_list	m_headers;	//!< The headers of the packet
+			binary_data		m_body;		//!< The Body of the document
+			bool			b_has_body;	//!< A flag if packet includes body
 
 		public:
 
 			//! Default Constructor
-			Packet(void);
+			packet(void);
 
 			//! Copy constructor. Creates an object based on another instance.
 			/**
 				@param r The source object to copy data.
 			*/
-			Packet(const Packet &r);
+			packet(const packet &r);
 
 			//! Destructor
-			virtual ~Packet(void);
+			virtual ~packet(void);
 
 			//! Copy operator
 			/**
 				@param r The right part of the assignment.
 			*/
-			Packet & operator=(const Packet & r);
+			packet & operator=(const packet & r);
 
 			//! Render a packet in HTTP format
 			/**
@@ -69,33 +69,29 @@ namespace oonet
 			*/
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
 
-			//! Get title of packet
-			inline const string & getTitle() const
-			{	return _Title;		}
+			//! Reference at title (const)
+			inline const string & title() const
+			{	return m_title;		}
 
-			//! Get constant headers of packet
-			inline const Headers & getHeaders() const
-			{	return _Headers;	}
+			//! Reference at title
+			inline string & title()
+			{	return m_title;	}
 
-			//! Get by reference headers to be changable
-			inline Headers & getHeaders()
-			{	return _Headers;	}
+			//! Reference at headers (const)
+			inline const headers_list & headers() const
+			{	return m_headers;	}
 
-			//! Get bosy of packet
-			inline const binary_data & getBody() const
-			{	return _Body;	}
+			//! Reference at headers
+			inline headers_list & headers()
+			{	return m_headers;	}
 
-			//! Set title of packet
-			inline string & setTitle(const string & r)
-			{	return _Title = r;	}
+			//! Reference at body (const)
+			inline const binary_data & body() const
+			{	return m_body;	}
 
-			//! Set headers of packet
-			inline Headers & setHeaders(const Headers & r)
-			{	return _Headers = r;	}
-
-			//! Set body of packet
-			inline binary_data & setBody(const binary_data & r)
-			{	return _Body = r;	}
+			//! Reference at body (const)
+			inline binary_data & body()
+			{	return m_body;	}
 
 		};	// !Packet Class
 	};	// !http namespace

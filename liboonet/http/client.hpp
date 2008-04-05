@@ -5,8 +5,8 @@
 #include "../binary_data.hpp"
 #include "../socket_address_inet.hpp"
 #include "../netstream_threaded.hpp"
-#include "Response.h"
-#include "Request.h"
+#include "./response.hpp"
+#include "./request.hpp"
 
 namespace oonet
 {

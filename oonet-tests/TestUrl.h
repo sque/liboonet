@@ -34,7 +34,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestUrl()
-			:Test(_T("http::Url"))
+			:Test(_T("http::url"))
 		{
 			OONET_REGISTERSUBTEST(TestUrlParamCtor);
 			OONET_REGISTERSUBTEST(TestUrlParamParseCtor);

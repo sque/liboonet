@@ -24,7 +24,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestThread()
-			:Test(_T("Thread"))
+			:Test(_T("mt::thread"))
 		{
 
 			OONET_REGISTERSUBTEST(TestCtor);

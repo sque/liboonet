@@ -24,7 +24,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHostInet()
-			:Test(_T("HostInet"))
+			:Test(_T("host_inet"))
 		{
 			OONET_REGISTERSUBTEST(TestDefaultCtor);
 			OONET_REGISTERSUBTEST(TestUlongCtor);

@@ -2,7 +2,7 @@
 @file Headers.cpp
 @brief Implementation of http::Headers class
 */
-#include "Http/Headers.h"
+#include "./headers_list.hpp"
 
 namespace oonet
 {
@@ -31,85 +31,82 @@ namespace oonet
 		}
 
 		// Constructor
-		Headers::Headers(void)
+		headers_list::headers_list(void)
+		{}
+
+		// Destructor
+		headers_list::~headers_list(void)
 		{}
 
 		// Copy constructor
-		Headers::Headers(const Headers &r)
-		{	map_headers = r.map_headers;	}
-
-		// Destructor
-		Headers::~Headers(void)
-		{}
+		headers_list::headers_list(const headers_list &r)
+		{	headers_map = r.headers_map;	}
 
 		// Copy operator
-		Headers & Headers::operator=(const Headers & r)
+		headers_list & headers_list::operator=(const headers_list & r)
 		{
-			map_headers = r.map_headers;
+			headers_map = r.headers_map;
 			return *this;
 		}
 
 		// Add a new header
-		void Headers::setHeader(const string & name, const string &value)
+		void headers_list::set(const string & name, const string &value)
 		{	OONET_ASSERT(name != "");
-			map_headers[name] = value;
+			headers_map[name] = value;
 		}
 
 		// Remove a header
-		void Headers::removeHeader(const string & name)
-		{	HeadersMapIterator It;
+		void headers_list::erase(const string & name)
+		{	headers_map_type::iterator It;
 
-			It = map_headers.find(name);
-			if (It == map_headers.end())
+			It = headers_map.find(name);
+			if (It == headers_map.end())
 				OONET_THROW_EXCEPTION(ExceptionNotFound, "Cannot remove a header that doesnot exist!");
+
 			// Erase it finally
-			map_headers.erase(It);
+			headers_map.erase(It);
 		}
 
 		// Get value of header
-		const string & Headers::getHeader(const string & name) const
-		{	HeadersMap::const_iterator It;
+		const string & headers_list::get(const string & name) const throw(ExceptionNotFound)
+		{	headers_map_type::const_iterator It;
 
-			It = map_headers.find(name);
-			if (It == map_headers.end())
+			It = headers_map.find(name);
+			if (It == headers_map.end())
 				OONET_THROW_EXCEPTION(ExceptionNotFound, "Header doesn't exist!");
 
 			return It->second;
 		}
 
-		// Get a copy of STL map containing headers
-		const Headers::HeadersMap & Headers::getSTLMap() const
-		{	return map_headers;		}
-
 		// Check if a header exists
-		bool Headers::headerExists(const string & name)
-		{	if(map_headers.find(name) == map_headers.end())
+		bool headers_list::exist(const string & name)
+		{	if(headers_map.find(name) == headers_map.end())
 				return false;
 			return true;
 		}
 
 		// Render headers in HTTP Format
-		string Headers::render(const string & new_line)
-		{	HeadersMapIterator It;
-			string FormatedHeaders;
+		string headers_list::render(const string & new_line)
+		{	headers_map_type::iterator it;
+			string _formated_field;
 			bool isFirst = true;
 
 			// Loop around all headers
-			for(It = map_headers.begin();It != map_headers.end(); It++)
+			for(it = headers_map.begin();it != headers_map.end(); it++)
 			{
 				if (!isFirst)
-					FormatedHeaders += new_line;
+					_formated_field += new_line;
 				else
 					isFirst = false;
 
-				FormatedHeaders += It->first + ": " + It->second;
+				_formated_field += it->first + ": " + it->second;
 			}
 
-			return FormatedHeaders;
+			return _formated_field;
 		}
 
 		// Parse headers
-		void Headers::parse(const string & data)
+		void headers_list::parse(const string & data)
 		{	string Name, Value, StrData, StrLine, nl_str;
 			size_t nl_pos;	// Position of new line
 			size_t sep_pos;	// Value/Name separator
@@ -118,7 +115,7 @@ namespace oonet
 			StrData = data;
 
 			// Delete old values
-			map_headers.clear();
+			headers_map.clear();
 
 			while(!StrData.empty())
 			{
@@ -140,12 +137,12 @@ namespace oonet
 
 				Name = _trim_back(StrLine.substr(0, sep_pos));
 				Value = _trim_front(StrLine.substr(sep_pos+1));
-				map_headers[Name] = Value;
+				headers_map[Name] = Value;
 			}
 		}
 
 		// Trim front
-		string Headers::_trim_front(const string & r)
+		string headers_list::_trim_front(const string & r)
 		{	size_t cpos;
 			for(cpos = 0;cpos != r.size();cpos ++)
 				if (r[cpos] != ' ')
@@ -154,7 +151,7 @@ namespace oonet
 		}
 
 		// Trim front from whitespaces
-		string Headers::_trim_back(const string & r)
+		string headers_list::_trim_back(const string & r)
 		{   size_t len;
 			for(len = r.size();len != 0;len--)
 				if (r[len - 1] != ' ')

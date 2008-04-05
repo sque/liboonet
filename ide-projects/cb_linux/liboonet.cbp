@@ -37,22 +37,6 @@
 		<Compiler>
 			<Add directory="../../liboonet" />
 		</Compiler>
-		<Unit filename="../../liboonet/Http/Client.cpp" />
-		<Unit filename="../../liboonet/Http/Client.h" />
-		<Unit filename="../../liboonet/Http/Headers.cpp" />
-		<Unit filename="../../liboonet/Http/Headers.h" />
-		<Unit filename="../../liboonet/Http/Packet.cpp" />
-		<Unit filename="../../liboonet/Http/Packet.h" />
-		<Unit filename="../../liboonet/Http/Request.cpp" />
-		<Unit filename="../../liboonet/Http/Request.h" />
-		<Unit filename="../../liboonet/Http/Response.cpp" />
-		<Unit filename="../../liboonet/Http/Response.h" />
-		<Unit filename="../../liboonet/Http/Url.cpp" />
-		<Unit filename="../../liboonet/Http/Url.h" />
-		<Unit filename="../../liboonet/Http/server.cpp" />
-		<Unit filename="../../liboonet/Http/server.hpp" />
-		<Unit filename="../../liboonet/Http/server_clienthandler.cpp" />
-		<Unit filename="../../liboonet/Http/server_clienthandler.hpp" />
 		<Unit filename="../../liboonet/base64.cpp" />
 		<Unit filename="../../liboonet/base64.hpp" />
 		<Unit filename="../../liboonet/binary_data.cpp" />
@@ -65,6 +49,22 @@
 		<Unit filename="../../liboonet/host_inet.hpp" />
 		<Unit filename="../../liboonet/host_resolver.cpp" />
 		<Unit filename="../../liboonet/host_resolver.hpp" />
+		<Unit filename="../../liboonet/http/client.cpp" />
+		<Unit filename="../../liboonet/http/client.hpp" />
+		<Unit filename="../../liboonet/http/headers_list.cpp" />
+		<Unit filename="../../liboonet/http/headers_list.hpp" />
+		<Unit filename="../../liboonet/http/packet.cpp" />
+		<Unit filename="../../liboonet/http/packet.hpp" />
+		<Unit filename="../../liboonet/http/request.cpp" />
+		<Unit filename="../../liboonet/http/request.hpp" />
+		<Unit filename="../../liboonet/http/response.cpp" />
+		<Unit filename="../../liboonet/http/response.hpp" />
+		<Unit filename="../../liboonet/http/server.cpp" />
+		<Unit filename="../../liboonet/http/server.hpp" />
+		<Unit filename="../../liboonet/http/server_clienthandler.cpp" />
+		<Unit filename="../../liboonet/http/server_clienthandler.hpp" />
+		<Unit filename="../../liboonet/http/url.cpp" />
+		<Unit filename="../../liboonet/http/url.hpp" />
 		<Unit filename="../../liboonet/mutex.hpp" />
 		<Unit filename="../../liboonet/mutex_impl_posix.cpp" />
 		<Unit filename="../../liboonet/netserver.hpp" />

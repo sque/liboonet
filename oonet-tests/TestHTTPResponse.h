@@ -23,7 +23,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHTTPResponse()
-			:Test(_T("http::Response"))
+			:Test(_T("http::response"))
 		{
 			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestCopyCtor);

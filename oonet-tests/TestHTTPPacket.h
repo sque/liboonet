@@ -27,7 +27,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHTTPPacket()
-			:Test(_T("http::Packet"))
+			:Test(_T("http::packet"))
 		{
 			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestCopyCtor);

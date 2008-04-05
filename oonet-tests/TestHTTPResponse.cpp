@@ -1,5 +1,5 @@
 #include "TestHTTPResponse.h"
-#include "Http/Response.h"
+#include "http/response.hpp"
 
 namespace oonet
 {
@@ -8,11 +8,11 @@ namespace oonet
 	bool TestHTTPResponse::TestCtor::OnExecute()
 	{	http::Response a;
 
-		if (! a.getBody().empty())
+		if (! a.body().empty())
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 0)
+		if (a.headers().size() != 0)
 			return false;
-		if (! a.getTitle().empty())
+		if (! a.title().empty())
 			return false;
 		if (a.ErrorCode != "200")
 			return false;
@@ -24,19 +24,19 @@ namespace oonet
 	bool TestHTTPResponse::TestCopyCtor::OnExecute()
 	{	http::Response a;
 
-		a.setBody(binary_data("koukouroukou"));
-		a.getHeaders().setHeader("a", "123");
-		a.setTitle("200 OK");
+		a.body() = binary_data("koukouroukou");
+		a.headers().set("a", "123");
+		a.title() = "200 OK";
 		a.ErrorCode = "404";
 		a.ErrorMsg = "Not Found";
 
-		if (a.getBody()  != binary_data("koukouroukou"))
+		if (a.body()  != binary_data("koukouroukou"))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 1)
+		if (a.headers().size() != 1)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getTitle() != "200 OK")
+		if (a.title() != "200 OK")
 			return false;
 		if (a.ErrorCode != "404")
 			return false;
@@ -44,13 +44,13 @@ namespace oonet
 			return false;
 
 		http::Response b(a);
-		if (b.getBody()  != binary_data("koukouroukou"))
+		if (b.body()  != binary_data("koukouroukou"))
 			return false;
-		if (b.getHeaders().getSTLMap().size() != 1)
+		if (b.headers().size() != 1)
 			return false;
-		if (b.getHeaders().getSTLMap().find("a")->second != "123")
+		if (b.headers().get("a") != "123")
 			return false;
-		if (b.getTitle() != "200 OK")
+		if (b.title() != "200 OK")
 			return false;
 		if (b.ErrorCode != "404")
 			return false;
@@ -61,19 +61,19 @@ namespace oonet
 	bool TestHTTPResponse::TestCopyOperator::OnExecute()
 	{	http::Response a, b;
 
-		a.setBody(binary_data("koukouroukou"));
-		a.getHeaders().setHeader("a", "123");
-		a.setTitle("200 OK");
+		a.body() = binary_data("koukouroukou");
+		a.headers().set("a", "123");
+		a.title() = "200 OK";
 		a.ErrorCode = "404";
 		a.ErrorMsg = "Not Found";
 
-		if (a.getBody()  != binary_data("koukouroukou"))
+		if (a.body()  != binary_data("koukouroukou"))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 1)
+		if (a.headers().size() != 1)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getTitle() != "200 OK")
+		if (a.title() != "200 OK")
 			return false;
 		if (a.ErrorCode != "404")
 			return false;
@@ -81,13 +81,13 @@ namespace oonet
 			return false;
 
 		b = a;
-		if (b.getBody()  != binary_data("koukouroukou"))
+		if (b.body()  != binary_data("koukouroukou"))
 			return false;
-		if (b.getHeaders().getSTLMap().size() != 1)
+		if (b.headers().size() != 1)
 			return false;
-		if (b.getHeaders().getSTLMap().find("a")->second != "123")
+		if (b.headers().get("a") != "123")
 			return false;
-		if (b.getTitle() != "200 OK")
+		if (b.title() != "200 OK")
 			return false;
 		if (b.ErrorCode != "404")
 			return false;
@@ -102,8 +102,8 @@ namespace oonet
 		string shouldbeCRLF = "HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
 		string out;
 
-		a.setBody(binary_data("koukouroukou"));
-		a.getHeaders().setHeader("a", "123");
+		a.body() = binary_data("koukouroukou");
+		a.headers().set("a", "123");
 		a.ErrorCode = "202";
 		a.ErrorMsg = "Created";
 
@@ -123,8 +123,8 @@ namespace oonet
 		string shouldbeLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
 		string out;
 
-		a.setBody(binary_data("koukouroukou"));
-		a.getHeaders().setHeader("a", "123");
+		a.body() = binary_data("koukouroukou");
+		a.headers().set("a", "123");
 		a.ErrorCode = "202";
 		a.ErrorMsg = "Created";
 
@@ -150,15 +150,15 @@ namespace oonet
 		b_parsed = a.parse(renderedLF, &remaining);
 		if ((!b_parsed) || (remaining != trail))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 2)
+		if (a.headers().size() != 2)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "12")
+		if (a.headers().get("Content-Length") != "12")
 			return false;
-		if (a.getTitle() != "HTTP/1.1 202 Created")
+		if (a.title() != "HTTP/1.1 202 Created")
 			return false;
-		if (a.getBody() != binary_data("koukouroukou"))
+		if (a.body() != binary_data("koukouroukou"))
 			return false;
 		if (a.ErrorCode != "202")
 			return false;
@@ -169,15 +169,15 @@ namespace oonet
 		b_parsed = a.parse(renderedCRLF, &remaining);
 		if ((!b_parsed) || (remaining != trail))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 2)
+		if (a.headers().size() != 2)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "12")
+		if (a.headers().get("Content-Length") != "12")
 			return false;
-		if (a.getTitle() != "HTTP/1.1 202 Created")
+		if (a.title() != "HTTP/1.1 202 Created")
 			return false;
-		if (a.getBody() != binary_data("koukouroukou"))
+		if (a.body() != binary_data("koukouroukou"))
 			return false;
 		if (a.ErrorCode != "202")
 			return false;
@@ -188,15 +188,15 @@ namespace oonet
 		b_parsed = a.parse(renderedNoCodeCRLF, &remaining);
 		if ((!b_parsed) || (remaining != trail))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 2)
+		if (a.headers().size() != 2)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "12")
+		if (a.headers().get("Content-Length") != "12")
 			return false;
-		if (a.getTitle() != "HTTP/1.1 404")
+		if (a.title() != "HTTP/1.1 404")
 			return false;
-		if (a.getBody() != binary_data("koukouroukou"))
+		if (a.body() != binary_data("koukouroukou"))
 			return false;
 		if (a.ErrorCode != "404")
 			return false;
@@ -228,15 +228,15 @@ namespace oonet
 			b_parsed = a.parse(rendered);
 		if (!b_parsed)
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 2)
+		if (a.headers().size() != 2)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "12")
+		if (a.headers().get("Content-Length") != "12")
 			return false;
-		if (a.getTitle() != "HTTP/1.1 202 Created")
+		if (a.title() != "HTTP/1.1 202 Created")
 			return false;
-		if (a.getBody() != binary_data("koukouroukou"))
+		if (a.body() != binary_data("koukouroukou"))
 			return false;
 		if (a.ErrorCode != "202")
 			return false;

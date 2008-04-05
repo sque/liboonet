@@ -3,8 +3,6 @@
 
 #include "../oonet.hpp"
 #include "../netserver.hpp"
-#include "./Response.h"
-#include "./Request.h"
 
 namespace oonet
 {

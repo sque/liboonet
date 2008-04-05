@@ -1,5 +1,5 @@
 #include "TestHTTPClient.h"
-#include "Http/Client.h"
+#include "http/client.hpp"
 
 namespace oonet
 {
@@ -197,13 +197,13 @@ namespace oonet
 		// Format response
 		resp.ErrorCode = "404";
 		resp.ErrorMsg = "Not Found";
-		resp.setBody(binary_data('a', 60000));
+		resp.body() = binary_data('a', 60000);
 		respBinary = resp.render();
 
 		// Format req
 		req.url = "/";
 		req.http_type = http::Request::REQUEST_GET;
-		req.getHeaders().setHeader("Host", "www.google.com");
+		req.headers().set("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer(respBinary);
@@ -242,7 +242,7 @@ namespace oonet
 		// Format req
 		req.url = "/";
 		req.http_type = http::Request::REQUEST_GET;
-		req.getHeaders().setHeader("Host", "www.google.com");
+		req.headers().set("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer(respBinary, 4000);
@@ -277,7 +277,7 @@ namespace oonet
 		// Format req
 		req.url = "/";
 		req.http_type = http::Request::REQUEST_GET;
-		req.getHeaders().setHeader("Host", "www.google.com");
+		req.headers().set("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer(respBinary);
@@ -312,13 +312,13 @@ namespace oonet
 		// Format response
 		resp.ErrorCode = "404";
 		resp.ErrorMsg = "Not Found";
-		resp.setBody(binary_data('a', 60000));
+		resp.body() = binary_data('a', 60000);
 		respBinary2 = resp.render();
 
 		// Format req
 		req.url = "/";
 		req.http_type = http::Request::REQUEST_GET;
-		req.getHeaders().setHeader("Host", "www.google.com");
+		req.headers().set("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer1(respBinary);
@@ -378,7 +378,7 @@ namespace oonet
 		// Format req
 		req.url = "/";
 		req.http_type = http::Request::REQUEST_GET;
-		req.getHeaders().setHeader("Host", "www.google.com");
+		req.headers().set("Host", "www.google.com");
 
 		// Connect with client
 		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));

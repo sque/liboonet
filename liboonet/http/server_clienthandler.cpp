@@ -25,7 +25,7 @@ namespace oonet
 					// Triger server event
 					CustomResponse = get_server_ptr()->on_url_request(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
 					// Add extra header for connection control
-					CustomResponse.getHeaders().setHeader("Connection", "Keep-Alive");
+					CustomResponse.headers().set("Connection", "Keep-Alive");
 					// Send response
 					send(CustomResponse.render());
 				}

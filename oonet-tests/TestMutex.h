@@ -20,7 +20,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestMutex()
-			:Test(_T("Mutex"))
+			:Test(_T("mt::mutex"))
 		{
 			OONET_REGISTERSUBTEST(TestRecursiveMutex);
 			OONET_REGISTERSUBTEST(TestLockTimeOut);

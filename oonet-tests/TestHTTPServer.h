@@ -25,7 +25,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHTTPServer()
-			:Test(_T("http::Server"))
+			:Test(_T("http::server"))
 		{
 			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestStart);

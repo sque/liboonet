@@ -532,6 +532,7 @@ namespace oonet
 		binary_data b2(b1);
 		binary_data b3;
 		b3 = b2;
+		const void * p_old_pos;
 
 		if (b1.get_data_ptr() != b2.get_data_ptr())
 			return false;
@@ -547,12 +548,24 @@ namespace oonet
 		if (b3.get_data_ptr() != b1.get_data_ptr())
 			return false;
 
+		// Change b2 and check if a new allocation has been done
+		p_old_pos = b2.get_data_ptr();
+		b2 += binary_data("1");
+		if (b2.get_data_ptr() != p_old_pos)
+			return false;
+
 		// Assign b3 equal to b2
 		b3 = b2;
 		if (b3.get_data_ptr() != b2.get_data_ptr())
 			return false;
 
 		if (b1.get_data_ptr() == b3.get_data_ptr())
+			return false;
+
+		// Change b2 and check if a new allocation has been done
+		p_old_pos = b2.get_data_ptr();
+		b2 += binary_data("1");
+		if (b2.get_data_ptr() == p_old_pos)
 			return false;
 
 		return true;

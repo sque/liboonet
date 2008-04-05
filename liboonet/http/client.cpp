@@ -2,8 +2,8 @@
 @file Client.cpp
 @brief Implementation of http::Client class
 */
-#include "Http/Client.h"
-#include "scoped_lock.hpp"
+#include "./client.hpp"
+#include "../scoped_lock.hpp"
 
 namespace oonet
 {

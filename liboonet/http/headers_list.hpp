@@ -35,18 +35,14 @@ namespace oonet
 			with all headers, but it can also create a raw string in HTTP format
 			from an std::map<string, string>
 		*/
-		class Headers
+		class headers_list
 		{
-		public:
-			//! The header's map type definition
-			typedef std::map<string, string> HeadersMap;
-
-			//! The header's map iterator
-			typedef HeadersMap::iterator HeadersMapIterator;
-
 		private:
+			//! The header's map type definition
+			typedef std::map<string, string> headers_map_type;
+
 			//! Headers map
-			HeadersMap map_headers;
+			headers_map_type headers_map;
 
 			//! Trim a string from whitespaces at the begining
 			string _trim_front(const string & r);
@@ -59,33 +55,23 @@ namespace oonet
 			/**
 				Creates an empty list of headers
 			*/
-			Headers(void);
+			headers_list(void);
 
 			//! Copy constructor
-			Headers(const Headers &r);
+			headers_list(const headers_list &r);
 
 			//! Destructor
-			~Headers(void);
+			~headers_list(void);
 
 			//! Copy operator
-			Headers & operator=(const Headers & r);
+			headers_list & operator=(const headers_list & r);
 
 			//! Add or set a header
 			/**
 				If there is already a header with this name, then its value
 				is altered with new one, else the header is added.
 			*/
-			void setHeader(const string & name,const string & value);
-
-			//! Remove a header
-			/**
-				It will remove a header from the list.
-			@throw ExceptionNotFound If the header is not in the list
-			*/
-			void removeHeader(const string & name);
-
-			//! Check if a header exists
-			bool headerExists(const string & name);
+			void set(const string & name,const string & value);
 
 			//! Get value of header
 			/**
@@ -93,13 +79,21 @@ namespace oonet
 			@param name The name of the header that we want to get value.
 			@throw ExceptionNotFound If the header does not exist in the list.
 			*/
-			const string & getHeader(const string & name) const;
+			const string & get(const string & name) const throw(ExceptionNotFound);
 
-			//! Get a copy of STL map containing headers.
+			//! Count fields
+			size_t size() const
+			{	return headers_map.size();	}
+
+			//! Remove a header
 			/**
-				Get the std::map<string, string> of headers.
+				It will remove a header from the list.
+			@throw ExceptionNotFound If the header is not in the list
 			*/
-			const HeadersMap & getSTLMap() const;
+			void erase(const string & name);
+
+			//! Check if a header exists
+			bool exist(const string & name);
 
 			//! Render headers in HTTP Format
 			/**

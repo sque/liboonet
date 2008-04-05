@@ -28,7 +28,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestBuffer()
-			:Test(_T("Buffer"))
+			:Test(_T("buffer"))
 		{
 			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestSize);

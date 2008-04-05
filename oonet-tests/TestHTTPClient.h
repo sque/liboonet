@@ -23,7 +23,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHTTPClient()
-			:Test(_T("http::Client"))
+			:Test(_T("http::client"))
 		{
 			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestCtorWrong);

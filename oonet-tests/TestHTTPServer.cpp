@@ -1,5 +1,5 @@
 #include "TestHTTPServer.h"
-#include "Http/server.hpp"
+#include "http/server.hpp"
 
 namespace oonet
 {
@@ -19,8 +19,8 @@ namespace oonet
 		virtual http::Response on_url_request(const http::Url & Uri, const http::Request & full_request, const socket_address_inet & client_addr)
 		{
 			http::Response tmpResponse;
+			tmpResponse.body() = binary_data("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");
 
-			tmpResponse.setBody(binary_data("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>"));
 			return tmpResponse;
 		}
 
@@ -165,7 +165,7 @@ namespace oonet
 		http::Request myRequest;
 
 		// Format my request
-		myRequest.getHeaders().setHeader("Host", "www.google.com");
+		myRequest.headers().set("Host", "www.google.com");
 		if (myServer.listening())
 			return false;
 
@@ -245,7 +245,7 @@ namespace oonet
 
 		http::Request myRequest;
 		// Format my request
-		myRequest.getHeaders().setHeader("Host", "www.google.com");
+		myRequest.headers().set("Host", "www.google.com");
 		binary_data dRequest = myRequest.render();
 
 		for(long i = 0;i < 1000;i++)

@@ -2,7 +2,7 @@
 @file Request.cpp
 @brief Implementation of http::Request class
 */
-#include "Http/Request.h"
+#include "./request.hpp"
 
 namespace oonet
 {
@@ -21,7 +21,7 @@ namespace oonet
 
 		// Copy constructor
 		Request::Request(const Request & r):
-			Packet(r)
+			packet(r)
 		{
 			// Copy data
 			url = r.url;
@@ -32,7 +32,7 @@ namespace oonet
 		Request & Request::operator=(const Request & r)
 		{
 			// Copy parent
-			Packet::operator =(r);
+			packet::operator =(r);
 
 			// Copy custom data
 			url = r.url;
@@ -46,18 +46,18 @@ namespace oonet
 			// Make up title
 			if (http_type == REQUEST_GET)
 			{
-				_Title = "GET ";
-				HasBody = false;
+				m_title = "GET ";
+				b_has_body = false;
 			}
 			else if (http_type == REQUEST_POST)
 			{
-				_Title = "POST ";
-				HasBody = true;
+				m_title = "POST ";
+				b_has_body = true;
 			}
-			_Title += (string)url + " HTTP/1.1";
+			m_title += (string)url + " HTTP/1.1";
 
 			// Render the packet
-			return Packet::render(new_line);
+			return packet::render(new_line);
 		}
 
 		// Parse packet
@@ -66,14 +66,14 @@ namespace oonet
 			string _command_string, _version_string;
 
 			// Parse packet
-			if(!Packet::parse(dt_in, dt_remain))
+			if(!packet::parse(dt_in, dt_remain))
 				return false;
 
 			// Get Command
-			if ((commandend_pos = _Title.find(' '))== string::npos)
+			if ((commandend_pos = m_title.find(' '))== string::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
-			_command_string = _Title.substr(0, commandend_pos);
+			_command_string = m_title.substr(0, commandend_pos);
 			if (_command_string == "GET")
 				http_type = REQUEST_GET;
 			else if (_command_string == "POST")
@@ -87,17 +87,17 @@ namespace oonet
 
 			// Get URL
 			commandend_pos ++;	// Start one position lower
-			if ((urlend_pos =  _Title.find(' ', commandend_pos))== string::npos)
+			if ((urlend_pos =  m_title.find(' ', commandend_pos))== string::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
-			url = getTitle().substr(commandend_pos, urlend_pos - commandend_pos);
+			url = title().substr(commandend_pos, urlend_pos - commandend_pos);
 			if ((string)url == "")
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
 
 			// Get version
 			urlend_pos ++;
-			_version_string = _Title.substr(urlend_pos);
+			_version_string = m_title.substr(urlend_pos);
 			if ((_version_string != "HTTP/1.1") && (_version_string != "HTTP/1.0"))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");

@@ -1,8 +1,8 @@
 #include "test_benchmark.hpp"
 #include "netserver.hpp"
 #include "socket_address_inet.hpp"
-#include "Http/server.hpp"
-#include "Http/Client.h"
+#include "http/server.hpp"
+#include "http/client.hpp"
 
 namespace oonet
 {
@@ -86,7 +86,7 @@ namespace oonet
 			const http::Request & full_request,
 			const socket_address_inet & client_addr)
 		{	saved = full_request;
-			cur_data += full_request.getBody().size();
+			cur_data += full_request.body().size();
 
 			if (cur_data >= total_data)
 				sem_arrived.post();
@@ -119,8 +119,8 @@ namespace oonet
 		netstream client;
 		binary_data test_d('a', 1000);
 		http::Request tmp_req;
-		tmp_req.setBody(test_d);
-		tmp_req.getHeaders().setHeader("Host", "www.google.com");
+		tmp_req.body() = test_d;
+		tmp_req.headers().set("Host", "www.google.com");
 		tmp_req.http_type = http::Request::REQUEST_POST;
 		test_d = tmp_req.render();
 		binary_data blabla;

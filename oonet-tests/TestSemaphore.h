@@ -19,7 +19,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestSemaphore()
-			:Test(_T("Semaphore"))
+			:Test(_T("mt::semaphore"))
 		{
 			OONET_REGISTERSUBTEST(TestLockTimeOut);
 			OONET_REGISTERSUBTEST(TestPostWait);

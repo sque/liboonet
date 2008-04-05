@@ -20,7 +20,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHostResolver()
-			:Test(_T("HostResolver"))
+			:Test(_T("host_resolver"))
 		{
 			OONET_REGISTERSUBTEST(TestErrorResolv);
 			OONET_REGISTERSUBTEST(TestLocalhost);

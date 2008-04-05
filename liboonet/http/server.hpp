@@ -4,8 +4,8 @@
 #include "../oonet.hpp"
 #include "../socket_address_inet.hpp"
 #include "../netserver.hpp"
-#include "./Response.h"
-#include "./Request.h"
+#include "./response.hpp"
+#include "./request.hpp"
 #include "./server_clienthandler.hpp"
 
 

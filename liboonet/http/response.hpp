@@ -2,8 +2,8 @@
 #define OONET_HTTP_RESPONSE_H_DEFINED
 
 #include "../oonet.hpp"
-#include "Headers.h"
-#include "Packet.h"
+#include "./headers_list.hpp"
+#include "./packet.hpp"
 
 namespace oonet
 {
@@ -18,7 +18,7 @@ namespace oonet
 			functionality.
 		*/
 		class Response:
-			public Packet
+			public packet
 		{
 		public:
 			string ErrorCode;		//!< The error code of the response

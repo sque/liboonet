@@ -2,76 +2,75 @@
 @file Packet.cpp
 @brief Implementation of http::Packet class
 */
-#include "./Packet.h"
-#include "../netserver.hpp"
+#include "./packet.hpp"
 
 namespace oonet
 {
 	namespace http
 	{
-		Packet::Packet(void):
-			HasBody(true)
+		packet::packet(void)
+			:b_has_body(true)
 		{
 		}
 
-		Packet::~Packet(void)
+		packet::~packet(void)
 		{
 		}
 
 		// Copy constructor
-		Packet::Packet(const Packet &r)
+		packet::packet(const packet &r)
 		{
 			*this = r;
 		}
 
 		// Update headers
-		void Packet::_UpdateHeaders()
+		void packet::_update_headers()
 		{
-			if (HasBody)
+			if (b_has_body)
 			{
-				char tmpS[30];
-				_snprintf(tmpS, 30, "%d", _Body.size());
-				_Headers.setHeader("Content-Length", tmpS);
+				char cstr_tmp[30];
+				_snprintf(cstr_tmp, 30, "%d", m_body.size());
+				m_headers.set("Content-Length", cstr_tmp);
 			}
 			else
 			{
-				if (_Headers.headerExists("Content-Length"))
-					_Headers.removeHeader("Content-Length");
+				if (m_headers.exist("Content-Length"))
+					m_headers.erase("Content-Length");
 			}
 		}
 
 		// Copy operator
-		Packet & Packet::operator=(const Packet & r)
+		packet & packet::operator=(const packet & r)
 		{
-			_Body = r._Body;
-			_Headers = r._Headers;
-			_Title = r._Title;
+			m_body = r.m_body;
+			m_headers = r.m_headers;
+			m_title = r.m_title;
 			return *this;
 		}
 
 		// Render a packet from data
-		binary_data Packet::render(const string & nl_str)
+		binary_data packet::render(const string & nl_str)
 		{	binary_data TmpPacket;
 
 			// Update Headers
-			_UpdateHeaders();
+			_update_headers();
 
 			// Construct Packet
 			// Title
-			TmpPacket = binary_data(_Title) + binary_data(nl_str);
+			TmpPacket = binary_data(m_title) + binary_data(nl_str);
 
 			// Headers
-			TmpPacket += binary_data(_Headers.render(nl_str)) + binary_data(nl_str + nl_str);
+			TmpPacket += binary_data(m_headers.render(nl_str)) + binary_data(nl_str + nl_str);
 
 			// Body
-			if (HasBody)
-				TmpPacket += _Body;
+			if (b_has_body)
+				TmpPacket += m_body;
 
 			return TmpPacket;
 		}
 
 		// Parse data and save to packet
-		bool Packet::parse(const binary_data & dt_in, binary_data * dt_remain)
+		bool packet::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	string Head, _StrBodySize, nl_str;
 			long _BodySize;
 			size_t HeadEnd_pos;		// Position where head stops
@@ -99,15 +98,15 @@ namespace oonet
 			if ((nl_pos = _find_smart_new_line(Head, nl_str)) == string::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an HTTP packet!");
-			_Title = Head.substr(0, nl_pos);					// Extract Title
+			m_title = Head.substr(0, nl_pos);					// Extract Title
 			Head = Head.substr(nl_pos + nl_str.size());			// Cat rest of head.
 
 			// Get Headers
-			_Headers.parse(Head);
+			m_headers.parse(Head);
 
 			// Get content-length header
-			try
-			{	_StrBodySize = _Headers.getHeader("Content-Length");
+			if (m_headers.exist("Content-Length"))
+			{	_StrBodySize = m_headers.get("Content-Length");
 				// Validate length
 				if ((_BodySize = atol(_StrBodySize.c_str())) < 0)
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat,
@@ -116,18 +115,18 @@ namespace oonet
 				// Validate if we have body
 				if ((dt_in.size() - BodyStart_pos) < (size_t)_BodySize)
 					return false;	// Incomplete data stream
-				HasBody = true;
+				b_has_body = true;
 			}
-			catch(ExceptionNotFound)
+			else
 			{
 				// We dont have a body
-				HasBody = false;
+				b_has_body = false;
 				_BodySize = 0;
-				_Body.clear();
+				m_body.clear();
 			}
 
 			// Get body
-			_Body = dt_in.slice(BodyStart_pos, _BodySize);
+			m_body = dt_in.slice(BodyStart_pos, _BodySize);
 
 			// Calculate remaining data
 			if (dt_remain)

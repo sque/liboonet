@@ -1,112 +1,112 @@
 #include "TestHTTPPacket.h"
-#include "Http/Packet.h"
+#include "http/packet.hpp"
 namespace oonet
 {
 	TestHTTPPacket theTestHTTPPacket;
 
 	bool TestHTTPPacket::TestCtor::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 
-		if (! a.getBody().empty())
+		if (! a.body().empty())
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 0)
+		if (a.headers().size() != 0)
 			return false;
-		if (! a.getTitle().empty())
+		if (! a.title().empty())
 			return false;
 		return true;
 	}
 
 	bool TestHTTPPacket::TestCopyCtor::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 
-		a.setBody(binary_data("koukouroukou"));
-		a.getHeaders().setHeader("a", "123");
-		a.setTitle("GET / HTTP/1.1");
+		a.body() = binary_data("koukouroukou");
+		a.headers().set("a", "123");
+		a.title() = "GET / HTTP/1.1";
 
-		if (a.getBody()  != binary_data("koukouroukou"))
+		if (a.body()  != binary_data("koukouroukou"))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 1)
+		if (a.headers().size() != 1)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getTitle() != "GET / HTTP/1.1")
+		if (a.title() != "GET / HTTP/1.1")
 			return false;
 
-		http::Packet b(a);
-		if (b.getBody()  != binary_data("koukouroukou"))
+		http::packet b(a);
+		if (b.body()  != binary_data("koukouroukou"))
 			return false;
-		if (b.getHeaders().getSTLMap().size() != 1)
+		if (b.headers().size() != 1)
 			return false;
-		if (b.getHeaders().getSTLMap().find("a")->second != "123")
+		if (b.headers().get("a") != "123")
 			return false;
-		if (b.getTitle() != "GET / HTTP/1.1")
+		if (b.title() != "GET / HTTP/1.1")
 			return false;
 		return true;
 	}
 
 	bool TestHTTPPacket::TestCopyOperator::OnExecute()
-	{	http::Packet a, b;
+	{	http::packet a, b;
 
-		a.setBody(binary_data("koukouroukou"));
-		a.getHeaders().setHeader("a", "123");
-		a.setTitle("GET / HTTP/1.1");
+		a.body() = binary_data("koukouroukou");
+		a.headers().set("a", "123");
+		a.title() = "GET / HTTP/1.1";
 
-		if (a.getBody()  != binary_data("koukouroukou"))
+		if (a.body()  != binary_data("koukouroukou"))
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 1)
+		if (a.headers().size() != 1)
 			return false;
-		if (a.getHeaders().getSTLMap().find("a")->second != "123")
+		if (a.headers().get("a") != "123")
 			return false;
-		if (a.getTitle() != "GET / HTTP/1.1")
+		if (a.title() != "GET / HTTP/1.1")
 			return false;
 
 		b = a;
-		if (b.getBody()  != binary_data("koukouroukou"))
+		if (b.body()  != binary_data("koukouroukou"))
 			return false;
-		if (b.getHeaders().getSTLMap().size() != 1)
+		if (b.headers().size() != 1)
 			return false;
-		if (b.getHeaders().getSTLMap().find("a")->second != "123")
+		if (b.headers().get("a") != "123")
 			return false;
-		if (b.getTitle() != "GET / HTTP/1.1")
+		if (b.title() != "GET / HTTP/1.1")
 			return false;
 		return true;
 	}
 
 	bool TestHTTPPacket::TestGetBody::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
 
-		a.setBody(PredefBody);
+		a.body() = PredefBody;
 		for (long i = 0;i < 10000; i++)
 		{
-			if (a.getBody() != PredefBody)
+			if (a.body() != PredefBody)
 				return false;
 		}
 		return true;
 	}
 
 	bool TestHTTPPacket::TestGetTitle::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		string PredefTitle = binary_data((byte)'a', 60000).to_string();
 
-		a.setTitle(PredefTitle);
+		a.title() = PredefTitle;
 		for (long i = 0;i < 10000; i++)
 		{
-			if (a.getTitle() != PredefTitle)
+			if (a.title() != PredefTitle)
 				return false;
 		}
 		return true;
 	}
 
 	bool TestHTTPPacket::TestRender::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data out, PredefBody = binary_data((byte)'a', 60000);
 		binary_data shouldBe = binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 		binary_data shouldBeLF = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
 
 		// Populate a
-		a.setTitle("GET / HTTP/1.1");
-		a.setBody(PredefBody);
+		a.title() = "GET / HTTP/1.1";
+		a.body() = PredefBody;
 
 		// Render with default new line
 		out = a.render();
@@ -122,13 +122,13 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestRenderSpeed::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data out, PredefBody = binary_data((byte)'a', 60000);
 		binary_data shouldBe= binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 
 		// Populate a
-		a.setTitle("GET / HTTP/1.1");
-		a.setBody(PredefBody);
+		a.title() = "GET / HTTP/1.1";
+		a.body() = PredefBody;
 
 		ResetTimer();
 		for (long i = 0;i < 10000;i++)
@@ -140,7 +140,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParseSpeed::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
 		binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + binary_data("1234");
 		binary_data remaining;
@@ -151,11 +151,11 @@ namespace oonet
 		for (long i = 0;i < 10000;i++)
 			b_parsed = a.parse(rendered, &remaining);
 
-		if (a.getBody() != PredefBody)
+		if (a.body() != PredefBody)
 			return false;
-		if (a.getTitle() != "GET / HTTP/1.1")
+		if (a.title() != "GET / HTTP/1.1")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "60000")
+		if (a.headers().get("Content-Length") != "60000")
 			return false;
 
 		// Final quality test
@@ -167,7 +167,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParse::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		bool b_parsed;
 		binary_data trail_data("1234");
 		binary_data remaining;
@@ -179,33 +179,33 @@ namespace oonet
 
 		// Packet With Body CRLF
 		b_parsed = a.parse(PacketWBodyCRLF, &remaining);
-		if (a.getBody() != PredefBody)
+		if (a.body() != PredefBody)
 			return false;
-		if (a.getTitle() != "POST / HTTP/1.1")
+		if (a.title() != "POST / HTTP/1.1")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "60000")
+		if (a.headers().get("Content-Length") != "60000")
 			return false;
 		if ((!b_parsed) || (remaining != trail_data))
 			return false;
 
 		// Packet With Body LF
 		b_parsed = a.parse(PacketWBodyLF, &remaining);
-		if (a.getBody() != PredefBody)
+		if (a.body() != PredefBody)
 			return false;
-		if (a.getTitle() != "POST / HTTP/1.1")
+		if (a.title() != "POST / HTTP/1.1")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "60000")
+		if (a.headers().get("Content-Length") != "60000")
 			return false;
 		if ((!b_parsed) || (remaining != trail_data))
 			return false;
 
 		// Packet With-out Body CRLF
 		b_parsed = a.parse(PacketCRLF, &remaining);
-		if (! a.getBody().empty())
+		if (! a.body().empty())
 			return false;
-		if (a.getTitle() != "GET / HTTP/1.1")
+		if (a.title() != "GET / HTTP/1.1")
 			return false;
-		if (a.getHeaders().getSTLMap().find("Host")->second != "123")
+		if (a.headers().get("Host") != "123")
 			return false;
 		if ((!b_parsed) || (remaining != binary_data::EMPTY))
 			return false;
@@ -214,15 +214,15 @@ namespace oonet
 		// Packet With-out Body Mixed and wierd but valid headers
 		// THIS TEST FOR SOME REASON FAILS!
 		b_parsed = a.parse(PacketWithEmptyHeaderMixed);
-		if (! a.getBody().empty())
+		if (! a.body().empty())
 			return false;
-		if (a.getTitle() != "GET / HTTP/1.1")
+		if (a.title() != "GET / HTTP/1.1")
 			return false;
-		if (a.getHeaders().getSTLMap().size() != 2)
+		if (a.headers().size() != 2)
 			return false;
-		if (a.getHeaders().getSTLMap().find("Host")->second != "123")
+		if (a.headers().get("Host") != "123")
 			return false;
-		if (a.getHeaders().getSTLMap().find("")->second != "::")
+		if (a.headers().get("") != "::")
 			return false;
 		if ((!b_parsed) || (remaining != trail_data))
 			return false;
@@ -230,21 +230,21 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParseWrong1::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data PacketNoHeads = binary_data("POST / HTTP/1.1\r\n\r\n\r\n") ;
 		a.parse(PacketNoHeads);
 		return false;
 	}
 
 	bool TestHTTPPacket::TestParseWrong2::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data PacketWrongContentLength = binary_data("POST / HTTP/1.1\r\nContent-Length: -1000\n\n") ;
 		a.parse(PacketWrongContentLength);
 		return false;
 	}
 
 	bool TestHTTPPacket::TestParseIncomplete1::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent: 1\n") ;
 		if (a.parse(PacketNoDoubleNewLine))
 			return false;
@@ -252,7 +252,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParseIncomplete2::OnExecute()
-	{	http::Packet a;
+	{	http::packet a;
 		binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent-Length: 1\n\n") ;
 		if (a.parse(PacketNoDoubleNewLine))
 			return false;

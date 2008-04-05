@@ -38,7 +38,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestSocket()
-			:Test(_T("Socket"))
+			:Test(_T("socket"))
 		{
 			OONET_REGISTERSUBTEST(TestTCPCtor);
 			OONET_REGISTERSUBTEST(TestUDPCtor);
