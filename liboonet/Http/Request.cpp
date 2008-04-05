@@ -61,13 +61,13 @@ namespace oonet
 		}
 
 		// Parse packet
-		size_t Request::parse(const binary_data & data)
+		bool Request::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	size_t commandend_pos, urlend_pos;
 			string _command_string, _version_string;
-			size_t BlockSize;
 
 			// Parse packet
-			BlockSize = Packet::parse(data);
+			if(!Packet::parse(dt_in, dt_remain))
+				return false;
 
 			// Get Command
 			if ((commandend_pos = _Title.find(' '))== string::npos)
@@ -101,7 +101,7 @@ namespace oonet
 			if ((_version_string != "HTTP/1.1") && (_version_string != "HTTP/1.0"))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request packet");
-			return BlockSize;
+			return true;
 		}
 	};	// !http namespace
 };	// !oonet namespace

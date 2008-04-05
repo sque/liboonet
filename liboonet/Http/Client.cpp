@@ -55,7 +55,8 @@ namespace oonet
 
 			// Gather answer
 			{mt::scoped_lock m(mux_access_data);
-				WaitingToProcessData = WaitingToProcessData.get_from(tmpResponse.parse(WaitingToProcessData));
+				if (!tmpResponse.parse(WaitingToProcessData, &WaitingToProcessData ))
+					OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole packet before connection get closed.");
 			}
 
 			return tmpResponse;
@@ -74,14 +75,13 @@ namespace oonet
 			try
 			{
 				// Parse data
-				ResponsePacket.parse(WaitingToProcessData);
+				if (!ResponsePacket.parse(WaitingToProcessData))
+					return;
 
 				// Raise semaphore
 				b_waiting_anwser = false;
 				sem_anwser_arrived.post();
 			}
-			catch(ExceptionIncomplete)
-			{}
 			catch(ExceptionWrongFormat)
 			{
 				// Wrong response
@@ -95,9 +95,11 @@ namespace oonet
 
 		void Client::connect(const socket_address_inet & dest_addr)
 		{
+			// Clear data
 			{mt::scoped_lock m(mux_access_data);
 				WaitingToProcessData.clear();
 			}
+
 			b_waiting_anwser = false;
 			netstream_threaded::connect(dest_addr);
 		}

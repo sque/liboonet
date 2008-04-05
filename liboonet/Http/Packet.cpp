@@ -27,7 +27,7 @@ namespace oonet
 		// Update headers
 		void Packet::_UpdateHeaders()
 		{
-		if (HasBody)
+			if (HasBody)
 			{
 				char tmpS[30];
 				_snprintf(tmpS, 30, "%d", _Body.size());
@@ -71,7 +71,7 @@ namespace oonet
 		}
 
 		// Parse data and save to packet
-		size_t Packet::parse(const binary_data & data)
+		bool Packet::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	string Head, _StrBodySize, nl_str;
 			long _BodySize;
 			size_t HeadEnd_pos;		// Position where head stops
@@ -79,23 +79,21 @@ namespace oonet
 			size_t nl_pos;			// Position of new line
 
 			// Find two new lines that mention end of heads (CRLF and LF)
-			if ((HeadEnd_pos = data.find(binary_data(CRLF+CRLF))) != binary_data::npos)
+			if ((HeadEnd_pos = dt_in.find(binary_data(CRLF+CRLF))) != binary_data::npos)
 			{	BodyStart_pos = HeadEnd_pos + 4;
 			}
 			else
 			{
-				if ((HeadEnd_pos = data.find(binary_data(LF+LF))) != binary_data::npos)
+				if ((HeadEnd_pos = dt_in.find(binary_data(LF+LF))) != binary_data::npos)
 				{	BodyStart_pos = HeadEnd_pos + 2;
 				}
 				else
-				{	OONET_THROW_EXCEPTION(ExceptionIncomplete,
-						"Incomplete HTTP packet"
-					);
+				{	return false;	// Incomplete data stream
 				}
 			}
 
 			// Get head
-			Head = data.slice(0, HeadEnd_pos).to_string();
+			Head = dt_in.slice(0, HeadEnd_pos).to_string();
 
 			// Get title
 			if ((nl_pos = _find_smart_new_line(Head, nl_str)) == string::npos)
@@ -116,10 +114,8 @@ namespace oonet
 						"HTTP Packet says that contains body with size less than 0!?!"
 					);
 				// Validate if we have body
-				if ((data.size() - BodyStart_pos) < (size_t)_BodySize)
-					OONET_THROW_EXCEPTION(ExceptionIncomplete,
-						"Headers arrived, but not all the body..."
-					);
+				if ((dt_in.size() - BodyStart_pos) < (size_t)_BodySize)
+					return false;	// Incomplete data stream
 				HasBody = true;
 			}
 			catch(ExceptionNotFound)
@@ -131,9 +127,14 @@ namespace oonet
 			}
 
 			// Get body
-			_Body = data.slice(BodyStart_pos, _BodySize);
+			_Body = dt_in.slice(BodyStart_pos, _BodySize);
 
-			return BodyStart_pos + _BodySize;
+			// Calculate remaining data
+			if (dt_remain)
+			{
+				*dt_remain = dt_in.get_from(BodyStart_pos + _BodySize);
+			}
+			return true;
 		}
 	};	// !http namespace
 };	// !oonet namespace

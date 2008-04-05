@@ -47,13 +47,13 @@ namespace oonet
 		}
 
 		// Parse data and save to packet
-		size_t Response::parse(const binary_data & data)
-		{	size_t BlockSize;
-			size_t httpversionend_pos, errorcodeend_pos;
+		bool Response::parse(const binary_data & dt_in, binary_data * dt_remain)
+		{	size_t httpversionend_pos, errorcodeend_pos;
 			string _httpversion_str;
 
 			// Parse basic packet
-			BlockSize = Packet::parse(data);
+			if(!Packet::parse(dt_in, dt_remain))
+				return false;
 
 			// Get version of HTTP
 			if ((httpversionend_pos = _Title.find(' ')) == string::npos)
@@ -84,7 +84,7 @@ namespace oonet
 
 
 			// Return packet
-			return BlockSize;
+			return true;
 		}
 	};	// !http namespace
 };	// !oonet namespace

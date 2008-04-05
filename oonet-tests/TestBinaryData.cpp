@@ -290,8 +290,9 @@ namespace oonet
 	bool TestBinaryData::TestGetFromWrong::OnExecute()
 	{	binary_data b1(Char_M, 30);
 
-		b1.get_from(31);
-		return false;
+		if (b1.get_from(31) != binary_data::EMPTY)
+			return false;
+		return true;
 	}
 
 	bool TestBinaryData::TestGetFromGeneral::OnExecute()
@@ -332,8 +333,9 @@ namespace oonet
 	bool TestBinaryData::TestGetUntilWrong::OnExecute()
 	{	binary_data b1(Char_M, 30);
 
-		b1.get_until(31);
-		return false;
+		if (b1.get_until(31) != b1)
+			return false;
+		return true;
 	}
 
 	bool TestBinaryData::TestGetUntilGeneral::OnExecute()
@@ -376,18 +378,18 @@ namespace oonet
 	{	binary_data b1;
 
 		b1 = binary_data(Char_M, 1000);
-		b1.slice(1001, 0);
-
-		return false;
+		if (b1.slice(1001, 0) != binary_data::EMPTY)
+			return false;
+		return true;
 	}
 
 	bool TestBinaryData::TestSliceWrongBoundries::OnExecute()
 	{	binary_data b1;
 
 		b1 = binary_data(Char_M, 1000);
-		b1.slice(999, 2);
-
-		return false;
+		if (b1.slice(999, 2) != b1.get_from(999))
+			return false;
+		return true;
 	}
 
 	bool TestBinaryData::TestSliceGeneral::OnExecute()

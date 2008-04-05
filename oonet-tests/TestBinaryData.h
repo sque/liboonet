@@ -27,12 +27,12 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestFindByteIn100MBlock, _T("Find() 1B in 100M block"));
 		OONET_DECLARESUBTEST(TestFindBlockIn100MBlock, _T("Find() 10K in 100M fast"));
 		OONET_DECLARESUBTEST(TestFindBlockDifficult, _T("Find() 10K in 100M hard"));
-		OONET_DECLARESUBTESTEXC(TestGetFromWrong, _T("GetFrom() wrong offset"), _T("ExceptionNotFound"));
+		OONET_DECLARESUBTEST(TestGetFromWrong, _T("GetFrom() wrong offset"));
 		OONET_DECLARESUBTEST(TestGetFromGeneral, _T("GetFrom() general quality"));
-		OONET_DECLARESUBTESTEXC(TestGetUntilWrong, _T("GetUntil() wrong offset"), _T("ExceptionNotFound"));
+		OONET_DECLARESUBTEST(TestGetUntilWrong, _T("GetUntil() wrong offset"));
 		OONET_DECLARESUBTEST(TestGetUntilGeneral, _T("GetUntil() general quality"));
-		OONET_DECLARESUBTESTEXC(TestSliceWrongOffset, _T("Slice() wrong offset"), _T("ExceptionNotFound"));
-		OONET_DECLARESUBTESTEXC(TestSliceWrongBoundries, _T("Slice() wrong boundries"), _T("ExceptionNotFound"));
+		OONET_DECLARESUBTEST(TestSliceWrongOffset, _T("Slice() wrong offset"));
+		OONET_DECLARESUBTEST(TestSliceWrongBoundries, _T("Slice() wrong boundries"));
 		OONET_DECLARESUBTEST(TestSliceGeneral, _T("Slice() general quality"));
 		OONET_DECLARESUBTEST(TestManualSlice, _T("Manual slice experiment"));
 		OONET_DECLARESUBTEST(TestRealSlice, _T("Same with Slice()"));

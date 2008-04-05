@@ -67,7 +67,7 @@ namespace oonet
 			@throw ExceptionWrongFormat If the traffic doesn't meet the specification
 				of HTTP.
 			*/
-			virtual size_t parse(const binary_data & data);
+			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
 
 			//! Get title of packet
 			inline const string & getTitle() const

@@ -21,8 +21,8 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestParse, _T("Parse() quality"));
 		OONET_DECLARESUBTESTEXC(TestParseWrong1, _T("Parse() wrong"), _T("ExceptionWrongFormat"));
 		OONET_DECLARESUBTESTEXC(TestParseWrong2, _T("Parse() wrong"), _T("ExceptionWrongFormat"));
-		OONET_DECLARESUBTESTEXC(TestParseIncomplete1, _T("Parse() incomplete"), _T("ExceptionIncomplete"));
-		OONET_DECLARESUBTESTEXC(TestParseIncomplete2, _T("Parse() incomplete"), _T("ExceptionIncomplete"));
+		OONET_DECLARESUBTEST(TestParseIncomplete1, _T("Parse() incomplete"));
+		OONET_DECLARESUBTEST(TestParseIncomplete2, _T("Parse() incomplete"));
 		OONET_DECLARESUBTEST(TestParseSpeed, _T("Parse() speed 10k"));
 	public:
 		// Constructor

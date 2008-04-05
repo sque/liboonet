@@ -139,12 +139,16 @@ namespace oonet
 
 	bool TestHTTPResponse::TestParse::OnExecute()
 	{	http::Response a;
-		string renderedLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
-		string renderedCRLF = "HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
-		string renderedNoCodeCRLF = "HTTP/1.1 404\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
+		bool b_parsed;
+		binary_data trail("1234");
+		binary_data remaining;
+		binary_data renderedLF = binary_data("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou") + trail;
+		binary_data renderedCRLF = binary_data("HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") + trail;
+		binary_data renderedNoCodeCRLF = binary_data("HTTP/1.1 404\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") +trail;
 
 		// Response LF
-		if (a.parse(binary_data(renderedLF)) != renderedLF.size())
+		b_parsed = a.parse(renderedLF, &remaining);
+		if ((!b_parsed) || (remaining != trail))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -162,7 +166,8 @@ namespace oonet
 			return false;
 
 		// Response CRLF
-		if (a.parse(binary_data(renderedCRLF)) != renderedCRLF.size())
+		b_parsed = a.parse(renderedCRLF, &remaining);
+		if ((!b_parsed) || (remaining != trail))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -180,7 +185,8 @@ namespace oonet
 			return false;
 
 		// Response without message CRLF
-		if (a.parse(binary_data(renderedNoCodeCRLF)) != renderedNoCodeCRLF.size())
+		b_parsed = a.parse(renderedNoCodeCRLF, &remaining);
+		if ((!b_parsed) || (remaining != trail))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -214,13 +220,13 @@ namespace oonet
 	bool TestHTTPResponse::TestParseSpeed::OnExecute()
 	{	http::Response a;
 		binary_data rendered("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou");
-		size_t out;
+		bool b_parsed;
 
 		// Response LF
 		ResetTimer();
 		for(long i = 0;i < 10000;i++)
-			out = a.parse(rendered);
-		if (out != rendered.size())
+			b_parsed = a.parse(rendered);
+		if (!b_parsed)
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;

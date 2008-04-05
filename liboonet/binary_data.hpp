@@ -144,14 +144,14 @@ namespace oonet
 			It will return true if the two binary_data objects
 			have the same size and same data.
 		*/
-		bool operator==(const binary_data &r) const;
+		bool operator==(const binary_data &r) const throw();
 
 		//! InEqual comparison operator
 		/**
 			It will return false if the two binary_data objects
 			have the same size and same data.
 		*/
-		bool operator!=(const binary_data &r) const;
+		bool operator!=(const binary_data &r) const throw();
 		//! @}
 
 		//! Get const pointer to data
@@ -159,7 +159,7 @@ namespace oonet
 			It will return the pointer to internal buffer.
 		@see size()
 		*/
-		const byte * get_data_ptr() const;
+		const byte * get_data_ptr() const throw();
 
 		//! Get size of data
 		/**
@@ -168,7 +168,7 @@ namespace oonet
 			this is the size of data. binary_data may have allocated
 			more space for reasons of performance.
 		*/
-		inline size_t size() const
+		inline size_t size() const throw()
 		{   return s_data;   }
 
 		//! Cast these data to a std::string
@@ -195,7 +195,7 @@ namespace oonet
 			of current data.
 		@see get_from
 		*/
-		binary_data get_until(const size_t & offset) const;
+		binary_data get_until(const size_t & offset) const throw();
 
 		//! Get data from a specific offset until the end
 		/**
@@ -207,7 +207,7 @@ namespace oonet
 			of current data.
 		@see get_until
 		*/
-		binary_data get_from(const size_t & offset) const;
+		binary_data get_from(const size_t & offset) const throw();
 
 		//! Find a pattern in the data block and return its offset
 		/**
@@ -227,16 +227,15 @@ namespace oonet
 			and return it.
 		@param offset The starting offset of the subpart.
 		@param sz The size of the subpart
-		@throw ExceptionNotFound If the offset along with size results at a subpart that
 			it is outside boundries of current data.
 		*/
-		binary_data slice(size_t offset, size_t sz) const;
+		binary_data slice(size_t offset, size_t sz) const throw();
 
 		//! Clear data.
 		void clear();
 
 		//! Check if it is an empty object.
-		inline bool empty() const
+		inline bool empty() const throw()
 		{	return (s_data == 0);	}
 
 	};  // !binary_data class

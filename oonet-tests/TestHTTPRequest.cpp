@@ -139,12 +139,16 @@ namespace oonet
 
 	bool TestHTTPRequest::TestParse::OnExecute()
 	{	http::Request a;
-		string renderedLF = "POST /index.html HTTP/1.1\nContent-Length: 12\na: 123\n\nkoukouroukou";
-		string renderedCRLF = "POST /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
-		string renderedGETCRLF = "GET /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
+		bool b_parsed;
+		binary_data trail("1234");
+		binary_data remaining;
+		binary_data renderedLF = binary_data("POST /index.html HTTP/1.1\nContent-Length: 12\na: 123\n\nkoukouroukou") + trail;
+		binary_data renderedCRLF = binary_data("POST /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") + trail;
+		binary_data renderedGETCRLF = binary_data("GET /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") + trail;
 
 		// Post LF
-		if (a.parse(binary_data(renderedLF)) != renderedLF.size())
+		b_parsed = a.parse(renderedLF, &remaining);
+		if ((!b_parsed) || (remaining != trail))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -162,7 +166,8 @@ namespace oonet
 			return false;
 
 		// Post CRLF
-		if (a.parse(binary_data(renderedCRLF)) != renderedCRLF.size())
+		b_parsed = a.parse(renderedCRLF, &remaining);
+		if ((!b_parsed) || (remaining != trail))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;
@@ -180,7 +185,8 @@ namespace oonet
 			return false;
 
 		// GET CRLF
-		if (a.parse(binary_data(renderedGETCRLF)) != renderedGETCRLF.size())
+		b_parsed = a.parse(renderedGETCRLF, &remaining);
+		if ((!b_parsed) || (remaining != trail))
 			return false;
 		if (a.getHeaders().getSTLMap().size() != 2)
 			return false;

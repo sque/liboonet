@@ -141,14 +141,15 @@ namespace oonet
 
 	bool TestHTTPPacket::TestParseSpeed::OnExecute()
 	{	http::Packet a;
-		size_t parsedSize;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
-		binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
+		binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + binary_data("1234");
+		binary_data remaining;
+		bool b_parsed;
 
 		// Parse 10k times
 		ResetTimer();
 		for (long i = 0;i < 10000;i++)
-			parsedSize = a.parse(rendered);
+			b_parsed = a.parse(rendered, &remaining);
 
 		if (a.getBody() != PredefBody)
 			return false;
@@ -156,56 +157,63 @@ namespace oonet
 			return false;
 		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "60000")
 			return false;
-		if (parsedSize != rendered.size())
+
+		// Final quality test
+		if (!b_parsed)
+			return false;
+		if (remaining != binary_data("1234"))
 			return false;
 		return true;
 	}
 
 	bool TestHTTPPacket::TestParse::OnExecute()
 	{	http::Packet a;
-		size_t parsedSize;
+		bool b_parsed;
+		binary_data trail_data("1234");
+		binary_data remaining;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
-		binary_data PacketWBodyCRLF = binary_data("POST / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
-		binary_data PacketWBodyLF = binary_data("POST / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
+		binary_data PacketWBodyCRLF = binary_data("POST / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody + trail_data;
+		binary_data PacketWBodyLF = binary_data("POST / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + trail_data;
 		binary_data PacketCRLF = binary_data("GET / HTTP/1.1\r\nHost: 123\r\n\r\n");
-		binary_data PacketWithEmptyHeaderMixed = binary_data("GET / HTTP/1.1\r\nHost: 123\n::\r\n\r\n");
+		binary_data PacketWithEmptyHeaderMixed = binary_data("GET / HTTP/1.1\r\nHost: 123\n::\r\n\r\n") + trail_data;
 
 		// Packet With Body CRLF
-		parsedSize = a.parse(PacketWBodyCRLF);
+		b_parsed = a.parse(PacketWBodyCRLF, &remaining);
 		if (a.getBody() != PredefBody)
 			return false;
 		if (a.getTitle() != "POST / HTTP/1.1")
 			return false;
 		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "60000")
 			return false;
-		if (parsedSize != PacketWBodyCRLF.size())
+		if ((!b_parsed) || (remaining != trail_data))
 			return false;
 
 		// Packet With Body LF
-		parsedSize = a.parse(PacketWBodyLF);
+		b_parsed = a.parse(PacketWBodyLF, &remaining);
 		if (a.getBody() != PredefBody)
 			return false;
 		if (a.getTitle() != "POST / HTTP/1.1")
 			return false;
 		if (a.getHeaders().getSTLMap().find("Content-Length")->second != "60000")
 			return false;
-		if (parsedSize != PacketWBodyLF.size())
+		if ((!b_parsed) || (remaining != trail_data))
 			return false;
 
 		// Packet With-out Body CRLF
-		parsedSize = a.parse(PacketCRLF);
+		b_parsed = a.parse(PacketCRLF, &remaining);
 		if (! a.getBody().empty())
 			return false;
 		if (a.getTitle() != "GET / HTTP/1.1")
 			return false;
 		if (a.getHeaders().getSTLMap().find("Host")->second != "123")
 			return false;
-		if (parsedSize != PacketCRLF.size())
+		if ((!b_parsed) || (remaining != binary_data::EMPTY))
 			return false;
-		return true;
 
+		return true;
 		// Packet With-out Body Mixed and wierd but valid headers
-		parsedSize = a.parse(PacketWithEmptyHeaderMixed);
+		// THIS TEST FOR SOME REASON FAILS!
+		b_parsed = a.parse(PacketWithEmptyHeaderMixed);
 		if (! a.getBody().empty())
 			return false;
 		if (a.getTitle() != "GET / HTTP/1.1")
@@ -216,7 +224,7 @@ namespace oonet
 			return false;
 		if (a.getHeaders().getSTLMap().find("")->second != "::")
 			return false;
-		if (parsedSize != PacketWithEmptyHeaderMixed.size())
+		if ((!b_parsed) || (remaining != trail_data))
 			return false;
 		return true;
 	}
@@ -238,14 +246,16 @@ namespace oonet
 	bool TestHTTPPacket::TestParseIncomplete1::OnExecute()
 	{	http::Packet a;
 		binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent: 1\n") ;
-		a.parse(PacketNoDoubleNewLine);
-		return false;
+		if (a.parse(PacketNoDoubleNewLine))
+			return false;
+		return true;
 	}
 
 	bool TestHTTPPacket::TestParseIncomplete2::OnExecute()
 	{	http::Packet a;
 		binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent-Length: 1\n\n") ;
-		a.parse(PacketNoDoubleNewLine);
-		return false;
+		if (a.parse(PacketNoDoubleNewLine))
+			return false;
+		return true;
 	}
 };	// !oonet namespace

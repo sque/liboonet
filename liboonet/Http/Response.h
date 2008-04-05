@@ -54,7 +54,7 @@ namespace oonet
 			@throw ExceptionWrongFormat if the title of HTTP packet is not an HTTP reponse's title.
 			@see http::Packet::parse() for further explanation.
 			*/
-			virtual size_t parse(const binary_data & data);
+			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
 		};	// !Response class
 	};	// !http namespace
 };	// !oonet namespace

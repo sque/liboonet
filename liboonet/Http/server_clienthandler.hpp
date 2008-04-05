@@ -20,17 +20,20 @@ namespace oonet
 		{
 		private:
 			// A buffer with the data
-			binary_data streamData;
+			binary_data stream_data;
 
 			// httpserver_clienthandler is NonCopyable
 			server_clienthandler(const server_clienthandler &);
 			server_clienthandler & operator=(server_clienthandler &);
+
 		protected:
 			// When data arrives
 			virtual void on_data_received(const binary_data & data);
 
-			// Get request
-			bool get_request(Request & req);
+			// On new connection reset buffer
+			virtual void on_connected()
+			{	stream_data.clear();	}
+
 		public:
 
 			// Constructor

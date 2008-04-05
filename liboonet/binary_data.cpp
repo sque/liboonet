@@ -190,9 +190,6 @@ namespace oonet
 		return *this;
 	}
 
-	bool binary_data::operator!=(const binary_data &r) const
-	{   return  (! ((*this) == r));    }
-
 	// Access elemnt operation
 	byte binary_data::operator[](size_t offset) const
 	{
@@ -261,12 +258,19 @@ namespace oonet
 		return (*this);
 	}
 
+	// Opposite comparison
+	bool binary_data::operator!=(const binary_data &r) const throw()
+	{   return  (! operator==(r));    }
+
 	// Comparison action
-	bool binary_data::operator==(const binary_data &r) const
+	bool binary_data::operator==(const binary_data &r) const throw()
 	{
 		// Check sizes
 		if (s_data != r.s_data)
 			return false;
+
+		// Skip zero size
+		if (s_data == 0) return true;
 
 		// Compare data
 		if (0 != memcmp(get_data_ptr(), r.get_data_ptr(), s_data))
@@ -293,11 +297,11 @@ namespace oonet
 	}
 
 	// Get starting packet until that size
-	binary_data binary_data::get_until(const size_t & offset) const
+	binary_data binary_data::get_until(const size_t & offset) const throw()
 	{
-		// If requested is more than available, then throw
+		// If requested is more than available, then return all data
 		if (offset > s_data)
-			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+			return *this;
 
 		// Create a shadow copy and parametrize it
 		binary_data shadow_copy(*this);
@@ -306,11 +310,11 @@ namespace oonet
 	}
 
 	// Get the rest of packet from a specific offset
-	binary_data binary_data::get_from(const size_t & offset) const
+	binary_data binary_data::get_from(const size_t & offset) const throw()
 	{
 		// If requested is more than available, then return empty
 		if (offset > s_data)
-			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+			return EMPTY;
 
 		// Create a shadow copy and parametrize it
 		binary_data shadow_copy(*this);
@@ -321,10 +325,12 @@ namespace oonet
 	}
 
 	// Slice data from a point, till some size
-	binary_data binary_data::slice(size_t offset, size_t sz) const
+	binary_data binary_data::slice(size_t offset, size_t sz) const throw()
 	{
+		// If requested size is more than available return until the end from the
+		// desired offset
 		if (offset + sz > s_data)
-			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset and size can't work in the size of this data");
+			return get_from(offset);
 
 		// Create a shadow copy and parametrize it
 		binary_data shadow_copy(*this);
@@ -378,6 +384,6 @@ namespace oonet
 		s_data = 0;
 	}
 
-	const byte * binary_data::get_data_ptr() const
+	const byte * binary_data::get_data_ptr() const throw()
 	{   return p_mem_block->p_mem + off_data;   }
 };	// !oonet namespace
