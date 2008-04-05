@@ -378,7 +378,7 @@ namespace oonet
 	{	binary_data b1;
 
 		b1 = binary_data(Char_M, 1000);
-		if (b1.slice(1001, 0) != binary_data::EMPTY)
+		if (b1.sub_data(1001, 0) != binary_data::EMPTY)
 			return false;
 		return true;
 	}
@@ -387,7 +387,7 @@ namespace oonet
 	{	binary_data b1;
 
 		b1 = binary_data(Char_M, 1000);
-		if (b1.slice(999, 2) != b1.get_from(999))
+		if (b1.sub_data(999, 2) != b1.get_from(999))
 			return false;
 		return true;
 	}
@@ -400,21 +400,21 @@ namespace oonet
 		b1 += binary_data(Char_A, 1000);
 
 		// A general test
-		if (b1.slice(1000,1000) != binary_data(Char_M, 1000))
+		if (b1.sub_data(1000,1000) != binary_data(Char_M, 1000))
 			return false;
 
 		// In limits tests
-		if (b1.slice(0, 1000) != binary_data(Char_A, 1000))
+		if (b1.sub_data(0, 1000) != binary_data(Char_A, 1000))
 			return false;
-		if (b1.slice(2000, 1000) != binary_data(Char_A, 1000))
+		if (b1.sub_data(2000, 1000) != binary_data(Char_A, 1000))
 			return false;
 
 		// zero size results
-		if (b1.slice(3000, 0) != binary_data::EMPTY)
+		if (b1.sub_data(3000, 0) != binary_data::EMPTY)
 			return false;
-		if (b1.slice(0, 0) != binary_data::EMPTY)
+		if (b1.sub_data(0, 0) != binary_data::EMPTY)
 			return false;
-		if (b1.slice(10, 0) != binary_data::EMPTY)
+		if (b1.sub_data(10, 0) != binary_data::EMPTY)
 			return false;
 		return true;
 
@@ -454,7 +454,7 @@ namespace oonet
 		{
 			offset = b1.find(binary_data(_T("START"))) + (sizeof(TCHAR) * 5);
 			sz = b1.find(binary_data(_T("STOP"))) - offset;
-			b2 = b1.slice(offset, sz);
+			b2 = b1.sub_data(offset, sz);
 		}
 
 		if (b2 != body)

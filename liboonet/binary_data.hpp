@@ -229,7 +229,7 @@ namespace oonet
 		@param sz The size of the subpart
 			it is outside boundries of current data.
 		*/
-		binary_data slice(size_t offset, size_t sz) const throw();
+		binary_data sub_data(size_t offset, size_t sz) const throw();
 
 		//! Clear data.
 		void clear();

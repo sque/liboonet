@@ -325,7 +325,7 @@ namespace oonet
 	}
 
 	// Slice data from a point, till some size
-	binary_data binary_data::slice(size_t offset, size_t sz) const throw()
+	binary_data binary_data::sub_data(size_t offset, size_t sz) const throw()
 	{
 		// If requested size is more than available return until the end from the
 		// desired offset

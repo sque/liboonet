@@ -92,7 +92,7 @@ namespace oonet
 			}
 
 			// Get head
-			Head = dt_in.slice(0, HeadEnd_pos).to_string();
+			Head = dt_in.sub_data(0, HeadEnd_pos).to_string();
 
 			// Get title
 			if ((nl_pos = _find_smart_new_line(Head, nl_str)) == string::npos)
@@ -126,7 +126,7 @@ namespace oonet
 			}
 
 			// Get body
-			m_body = dt_in.slice(BodyStart_pos, _BodySize);
+			m_body = dt_in.sub_data(BodyStart_pos, _BodySize);
 
 			// Calculate remaining data
 			if (dt_remain)

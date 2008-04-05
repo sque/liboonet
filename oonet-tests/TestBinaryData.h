@@ -34,7 +34,7 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestSliceWrongOffset, _T("Slice() wrong offset"));
 		OONET_DECLARESUBTEST(TestSliceWrongBoundries, _T("Slice() wrong boundries"));
 		OONET_DECLARESUBTEST(TestSliceGeneral, _T("Slice() general quality"));
-		OONET_DECLARESUBTEST(TestManualSlice, _T("Manual slice experiment"));
+		OONET_DECLARESUBTEST(TestManualSlice, _T("Manual sub_data experiment"));
 		OONET_DECLARESUBTEST(TestRealSlice, _T("Same with Slice()"));
 		OONET_DECLARESUBTESTEXC(TestElementWrongOffeset, _T("operator[] wrong offset"), _T("ExceptionNotFound"));
 		OONET_DECLARESUBTEST(TestElementGeneral, _T("operator[] general quality"));
