@@ -6,7 +6,7 @@
 namespace oonet
 {
 	//! Class representing the port of a host on Inet protocol
-	class PortInet
+	class port_inet
 	{
 	private:
 		//! The port in host-byte-order
@@ -17,33 +17,33 @@ namespace oonet
 		/**
 			It will create an object that corresponds to port 0.
 		*/
-		PortInet();
+		port_inet();
 
 		//! Construct with a specified port
 		/**
 		@param p The desired port, it must be given in host-byte-order
 		*/
-		PortInet(ushort p);
+		port_inet(ushort p);
 
 		//! Copy constructor
-		PortInet(const PortInet &r);
+		port_inet(const port_inet &r);
 
 		//! Copy operator
-		PortInet &operator=(const PortInet &r);
+		port_inet &operator=(const port_inet &r);
 
 		//! Equal comparison operator
-		inline bool operator==(const PortInet &r)
+		inline bool operator==(const port_inet &r)
 		{   return in_port==r.in_port;  }
 
 		//! Not equal operator
-		inline bool operator!=(const PortInet &r)
+		inline bool operator!=(const port_inet &r)
 		{   return in_port!=r.in_port;  }
 
 		//! Convert port to a string
-		string toString() const;
+		string to_string() const;
 
 		//! Get port in network-byte-order
-		ushort getNBOPort() const
+		ushort get_nbo() const
 		{   return htons(in_port);  }
 
 	};  // !PortInet class

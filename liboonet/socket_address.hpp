@@ -7,11 +7,11 @@
 namespace oonet
 {
 	//! A Handler for socket's generic address (protocol independant)
-    class SocketAddress
+    class socket_address
     {
     protected:
 		//! Internal structure of socket address
-        struct sockaddr mSockAddr;
+        struct sockaddr m_sockaddr;
 
     public:
         //! Construct with specified protocol
@@ -19,20 +19,20 @@ namespace oonet
 			It will reset all parameters of address to zero,
 			and set the family field to the specified.
 		*/
-        explicit SocketAddress(int addr_family) throw();
+        explicit socket_address(int addr_family) throw();
 
 		//! Construct from a berkley sockaddr struct
 		/**
 			It will copy parameters of berkley sockaddr structure
 			to its internal data.
 		*/
-        explicit SocketAddress(const struct sockaddr &mAddr) throw();
+        explicit socket_address(const struct sockaddr &_m_sock_addr) throw();
 
         //! Copy constructor
-        SocketAddress(const SocketAddress &r) throw();
+        socket_address(const socket_address &r) throw();
 
         //! Destructor
-        virtual ~SocketAddress(){}
+        virtual ~socket_address(){}
 
 
         //! Enumeration of address family
@@ -42,24 +42,24 @@ namespace oonet
         };
 
         //! Copy operator
-        SocketAddress &operator=(const SocketAddress &r) throw();
+        socket_address &operator=(const socket_address &r) throw();
 
         //! Equal comparison operator
-        bool operator==(const SocketAddress &r) throw();
+        bool operator==(const socket_address &r) throw();
 
         //! Not equal comparison operator
-        bool operator!=(const SocketAddress &r) throw();
+        bool operator!=(const socket_address &r) throw();
 
         //! Get the length of the SocketAddress
         inline size_t size() const
-        {   return sizeof(mSockAddr);   }
+        {   return sizeof(m_sockaddr);   }
 
         //! Get a pointer to berkley sockaddr structure
-        const struct sockaddr * getSockaddrPtr() const throw();
+        const struct sockaddr * sockaddr_ptr() const throw();
 
         //! Get the address family of this socket address
-        inline int getAddressFamily() const throw()
-        {   return mSockAddr.sa_family; }
+        inline int family() const throw()
+        {   return m_sockaddr.sa_family; }
     };  // !SocketAddress class
 };  // !oonet namespace
 

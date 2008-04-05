@@ -10,9 +10,9 @@ namespace oonet
 		throw (exception (__FILE__, __LINE__, desc ))
 
 	#define OONET_DECLARE_EXCEPTION(name) \
-		class name : public Exception { \
+		class name : public exception { \
 		public : name (const string _file, long _line, const string _desc) \
-		: Exception(_file, _line, _desc, #name) {} }
+		: exception(_file, _line, _desc, #name) {} }
 
 	#define OONET_ASSERT(exp) \
 		if ( !(exp) ) OONET_THROW_EXCEPTION(oonet::ExceptionAssertationFailed, "An assertation failed!");
@@ -24,20 +24,20 @@ namespace oonet
 		that exceptions are catchable from generic catchers
 		outside oonet.
 	*/
-	class Exception : public std::exception
+	class exception : public std::exception
 	{
 	private:
 		//! The file where the error was generated.
-		string File;
+		string m_file;
 
 		//! The line at the file where the error was generated.
-		long Line;
+		long m_line;
 
 		//! The description of Exception
-		string Desc;
+		string m_desc;
 
 		//! The exception type
-		string ExceptionType;
+		string m_type;
 	public:
 
 		//! Default constructor
@@ -47,48 +47,48 @@ namespace oonet
 		@param _desc A description of exception.
 		@param _type The type of exception
 		*/
-		inline Exception(const string & _file,
+		inline exception(const string & _file,
 			long _line,
 			const string & _desc,
 			const string & _type = "Exception"
 			)
-			: File(_file),
-			Line(_line),
-			Desc(_desc),
-			ExceptionType(_type)
+			: m_file(_file),
+			m_line(_line),
+			m_desc(_desc),
+			m_type(_type)
 		{}
 
 		//! Destructor
-		inline virtual ~Exception(void) throw(){}
+		inline virtual ~exception(void) throw(){}
 
 		//! Copy constructor
-		inline Exception(const Exception & r)
+		inline exception(const exception & r)
 		{	operator=(r);	}
 
 		//! Copy operator
-		Exception & operator=(const Exception & r);
+		exception & operator=(const exception & r);
 
 		//! Get description of exception
-		inline const string & getDescription() const
-		{	return Desc;	}
+		inline const string & get_description() const
+		{	return m_desc;	}
 
 		//! Get line of source file where exception was raised
-		inline long getLine(void) const
-		{	return Line;	}
+		inline long get_line(void) const
+		{	return m_line;	}
 
 		//! Get name of source file where exception was raised
-		inline const string & getFile(void) const
-		{	return File;	}
+		inline const string & get_file(void) const
+		{	return m_file;	}
 
 		//! Get the type of exception
-		inline const string & getType(void) const
-		{	return ExceptionType;	}
+		inline const string & get_type(void) const
+		{	return m_type;	}
 
 		//! Create a brief report of exception in HTML format
-		string getHTMLReport(void) const;
+		string get_html_report(void) const;
 
 		//! Create a brief report in raw text format
-		string getReport(void) const;
+		string get_report(void) const;
 	};
 
 	//////////////////////////////////////////////////

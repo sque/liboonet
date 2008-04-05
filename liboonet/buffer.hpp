@@ -12,18 +12,18 @@ namespace oonet
 		A buffer object that can be used as a queue or
 		a stack. It is also multi-thread safe.
 	*/
-	class Buffer:
-		private MT::mutex
+	class buffer:
+		private mt::mutex
 	{
 	private:
 		binary_data bd_data;
 
 	public:
 		//! Default constructor
-		inline Buffer(){};
+		inline buffer(){};
 
 		//! Destructor
-		inline ~Buffer(){};
+		inline ~buffer(){};
 
 		//! Push data at the end of buffer
 		void pushBack(const binary_data & r);

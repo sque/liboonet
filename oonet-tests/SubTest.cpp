@@ -47,10 +47,10 @@ namespace oonet
 			if (bMustThrow) bResult = false;
 
 		}
-		catch(Exception & e)
+		catch(exception & e)
 		{	EndTime = get_current_msecs();
 			LastException = e;
-			if ((bMustThrow) && (e.getType() == ExceptionType))
+			if ((bMustThrow) && (e.get_type() == ExceptionType))
 				bResult = true;
 			else
 				bResult = false;

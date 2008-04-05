@@ -8,27 +8,27 @@
 namespace oonet
 {
 	// Constructor
-	Base64::Base64()
+	base64::base64()
 	{
 		// Init translation table
 		strcpy(Table,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=");
 	}
 
 	// Constructor with custom encoding table
-	Base64::Base64(const string & b64table)
+	base64::base64(const string & b64table)
 	{
 		// Init translation table
 		strcpy(Table, b64table.c_str());
 	}
 
 	// Destructor
-	Base64::~Base64()
+	base64::~base64()
 	{
 	}
 
 
 	// Encodes a buffer & returns a pointer to a string with encoded data
-	string Base64::Encode(const binary_data & r)
+	string base64::encode(const binary_data & r)
 	{
 		size_t i, j, iEnc=0;
 		TBase64 base64;
@@ -84,7 +84,7 @@ namespace oonet
 		return b64string;
 	}
 
-	int Base64::base64_decode_value(char value_in)
+	int base64::base64_decode_value(char value_in)
 	{
 		static const char decoding[] = {62,-1,-1,-1,63,52,53,54,55,56,57,58,59,60,61,-1,-1,-1,-2,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,-1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51};
 		static const char decoding_size = sizeof(decoding);
@@ -94,7 +94,7 @@ namespace oonet
 	}
 
 	// Decodes a string
-	binary_data Base64::Decode(const string & b64string)
+	binary_data base64::decode(const string & b64string)
 	{
 		// Enumeration of states
 		enum

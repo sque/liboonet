@@ -5,7 +5,7 @@ namespace oonet
 	TestHTTPPacket theTestHTTPPacket;
 
 	bool TestHTTPPacket::TestCtor::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 
 		if (! a.getBody().empty())
 			return false;
@@ -17,7 +17,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestCopyCtor::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 
 		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
@@ -32,7 +32,7 @@ namespace oonet
 		if (a.getTitle() != "GET / HTTP/1.1")
 			return false;
 
-		HTTP::Packet b(a);
+		http::Packet b(a);
 		if (b.getBody()  != binary_data("koukouroukou"))
 			return false;
 		if (b.getHeaders().getSTLMap().size() != 1)
@@ -45,7 +45,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestCopyOperator::OnExecute()
-	{	HTTP::Packet a, b;
+	{	http::Packet a, b;
 
 		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
@@ -73,7 +73,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestGetBody::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
 
 		a.setBody(PredefBody);
@@ -86,7 +86,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestGetTitle::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		string PredefTitle = binary_data((byte)'a', 60000).to_string();
 
 		a.setTitle(PredefTitle);
@@ -99,7 +99,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestRender::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data out, PredefBody = binary_data((byte)'a', 60000);
 		binary_data shouldBe = binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 		binary_data shouldBeLF = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
@@ -122,7 +122,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestRenderSpeed::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data out, PredefBody = binary_data((byte)'a', 60000);
 		binary_data shouldBe= binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 
@@ -140,7 +140,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParseSpeed::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		size_t parsedSize;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
 		binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
@@ -162,7 +162,7 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParse::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		size_t parsedSize;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
 		binary_data PacketWBodyCRLF = binary_data("POST / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
@@ -222,28 +222,28 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParseWrong1::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data PacketNoHeads = binary_data("POST / HTTP/1.1\r\n\r\n\r\n") ;
 		a.parse(PacketNoHeads);
 		return false;
 	}
 
 	bool TestHTTPPacket::TestParseWrong2::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data PacketWrongContentLength = binary_data("POST / HTTP/1.1\r\nContent-Length: -1000\n\n") ;
 		a.parse(PacketWrongContentLength);
 		return false;
 	}
 
 	bool TestHTTPPacket::TestParseIncomplete1::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent: 1\n") ;
 		a.parse(PacketNoDoubleNewLine);
 		return false;
 	}
 
 	bool TestHTTPPacket::TestParseIncomplete2::OnExecute()
-	{	HTTP::Packet a;
+	{	http::Packet a;
 		binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent-Length: 1\n\n") ;
 		a.parse(PacketNoDoubleNewLine);
 		return false;

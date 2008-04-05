@@ -9,34 +9,34 @@ namespace oonet
 
 	// Mini echo server
 	class MiniEchoServer
-		: public MT::thread
+		: public mt::thread
 	{
 	public:
 		binary_data ReceivedData;
-		MT::semaphore semArrived;
-		Socket lSocket;
+		mt::semaphore semArrived;
+		socket lSocket;
 		bool bRunning;
-		Exception LastExc;
+		exception LastExc;
 		bool bException;
-		Socket clSocket;
+		socket clSocket;
 
 		MiniEchoServer(int _inetType)
-			:lSocket(Socket::FAMILY_INET, _inetType, Socket::PROTO_DEFAULT),
+			:lSocket(socket::FAMILY_INET, _inetType, socket::PROTO_DEFAULT),
 			bRunning(false),
 			LastExc(_T("no fike"), -1, _T("123123"), _T("!unknown")),
-			clSocket(Socket::FAMILY_INET, _inetType, Socket::PROTO_DEFAULT)
+			clSocket(socket::FAMILY_INET, _inetType, socket::PROTO_DEFAULT)
 		{
 			bException = false;
 			int reuse_addr = 1;
 			lSocket.set_option(SOL_SOCKET , SO_REUSEADDR, &reuse_addr, sizeof(int));
-			lSocket.bind(SocketAddressInet(HostResolver("127.0.0.1"), PortInet(55123)));
+			lSocket.bind(socket_address_inet(host_resolver("127.0.0.1"), port_inet(55123)));
 		}
 
 		~MiniEchoServer()
 		{
             lSocket.shutdown();
-            lSocket = Socket();
-            join(MT::Infinity);
+            lSocket = socket();
+            join(mt::Infinity);
 		}
 
 		virtual void thread_routine()
@@ -62,12 +62,12 @@ namespace oonet
 							// Raise semaphore
 							semArrived.post();
 						}
-						catch(Exception & e)
+						catch(exception & e)
 						{	break;	}
 					}
 				}
 			}
-			catch(Exception & e)
+			catch(exception & e)
 			{	LastExc = e;
 				bException = true;
 				semArrived.post();
@@ -78,42 +78,42 @@ namespace oonet
 		// Exit server
 		void StopS()
 		{	lSocket.shutdown();
-			clSocket.shutdown(); clSocket = Socket();
+			clSocket.shutdown(); clSocket = socket();
 		}
 	};
 
 	bool TestSocket::TestTCPCtor::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		return true;
 	}
 
 	bool TestSocket::TestUDPCtor::OnExecute()
-	{	Socket UDPSocket(Socket::FAMILY_INET, Socket::TYPE_DGRAM, Socket::PROTO_DEFAULT);
+	{	socket UDPSocket(socket::FAMILY_INET, socket::TYPE_DGRAM, socket::PROTO_DEFAULT);
 		return true;
 	}
 
 	bool TestSocket::TestRAWCtor::OnExecute()
-	{	Socket RAWSocket(Socket::FAMILY_INET, Socket::TYPE_RAW, Socket::PROTO_DEFAULT);
+	{	socket RAWSocket(socket::FAMILY_INET, socket::TYPE_RAW, socket::PROTO_DEFAULT);
 		return true;
 	}
 
 	bool TestSocket::TestWhateverCtor::OnExecute()
-	{	Socket InvalidSocket(Socket::FAMILY_INET, 342894, Socket::PROTO_DEFAULT);
+	{	socket InvalidSocket(socket::FAMILY_INET, 342894, socket::PROTO_DEFAULT);
 		return true;
 	}
 
 	bool TestSocket::TestTCPCopyConstructor::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		binary_data msg("LOULOU'm!");
 
 		// Start a tcp echo server
-		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		MiniEchoServer EchoServer(socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::thread::sleep(1500);
+		mt::thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 		// Connect to server and send smthing
-		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 
 		// Send some shit
 		TCPSocket.send(msg);
@@ -122,7 +122,7 @@ namespace oonet
 		if (reply != msg)
 			return false;
 
-		Socket DuppedSocket(TCPSocket);
+		socket DuppedSocket(TCPSocket);
 
 		DuppedSocket.send(msg);
 		EchoServer.semArrived.wait(1000);
@@ -137,19 +137,19 @@ namespace oonet
 	}
 
 	bool TestSocket::TestTCPCopyOperator::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		Socket DuppedSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
+		socket DuppedSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		binary_data msg1("Mess 1 -!");
 		binary_data msg2("Mess 2 -   !");
 
 		// Start a tcp echo server
-		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		MiniEchoServer EchoServer(socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::thread::sleep(1500);
+		mt::thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 		// Connect to server and send smthing
-		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 
 		// Send some shit
 		TCPSocket.send(msg1);
@@ -173,18 +173,18 @@ namespace oonet
 	}
 
 	bool TestSocket::TestTCPConnect::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		binary_data msg("LOULOU'm!");
 
 		// Start a tcp echo server
-		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		MiniEchoServer EchoServer(socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::thread::sleep(1500);
+		mt::thread::sleep(1500);
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 
 		// Connect to server and send smthing
-		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+		TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 
 		// Send some shit
 		TCPSocket.send(msg);
@@ -199,39 +199,39 @@ namespace oonet
 	}
 
 	bool TestSocket::TestTCPConnectWrong::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 		// connect on a fake address
-		TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(39456)));
+		TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(39456)));
 		return false;
 	}
 
 	bool TestSocket::TestBindWrong::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
-		TCPSocket.bind(SocketAddressInet(HostResolver("123.1.1.1"), PortInet(1)));
+		TCPSocket.bind(socket_address_inet(host_resolver("123.1.1.1"), port_inet(1)));
 		return false;
 	}
 
 	bool TestSocket::TestBindRebind::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 		// Bind in an address
-		TCPSocket.bind(SocketAddressInet(HostResolver("127.0.0.1"), PortInet(59123)));
+		TCPSocket.bind(socket_address_inet(host_resolver("127.0.0.1"), port_inet(59123)));
 		// Bind in same address
-		TCPSocket.bind(SocketAddressInet(HostResolver("127.0.0.1"), PortInet(59123)));
+		TCPSocket.bind(socket_address_inet(host_resolver("127.0.0.1"), port_inet(59123)));
 		return false;
 	}
 
 	bool TestSocket::TestBind::OnExecute()
-	{	Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
-		SocketAddressInet bind_addr(HostInet::LOCALHOST, PortInet(59123));
+	{	socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
+		socket_address_inet bind_addr(host_inet::LOCALHOST, port_inet(59123));
 
 		// Bind in an address
 		TCPSocket.bind(bind_addr);
 
 		// Get local peer
-		SocketAddressInet realb_addr = TCPSocket.get_local_address();
+		socket_address_inet realb_addr = TCPSocket.get_local_address();
 
 		if (realb_addr != bind_addr)
 			return false;
@@ -240,21 +240,21 @@ namespace oonet
 
 	bool TestSocket::TestStressConnect::OnExecute()
 	{	binary_data msg("LOULOU'm!");
-		Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		// Start a tcp echo server
-		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		MiniEchoServer EchoServer(socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::thread::sleep(1500);
+		mt::thread::sleep(1500);
 
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 
 		for (int i = 0; i < 1000;i++)
 		{	//printf("%d\n", i );
-			TCPSocket = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+			TCPSocket = socket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 			// Connect to server and send smthing
-			TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+			TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 
 
 
@@ -276,28 +276,28 @@ namespace oonet
 
 	bool TestSocket::TestBrutalConnect::OnExecute()
 	{	binary_data msg("LOULOU'm!");
-		Socket TCPSocket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		socket TCPSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		// Start a tcp echo server
-		MiniEchoServer EchoServer(Socket::TYPE_STREAM);
+		MiniEchoServer EchoServer(socket::TYPE_STREAM);
 		EchoServer.start();
-		MT::thread::sleep(1500);
+		mt::thread::sleep(1500);
 
 		if (EchoServer.bException)
 			throw(EchoServer.LastExc);
 
 		for (int i = 0; i < 1000;i++)
 		{
-			TCPSocket = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+			TCPSocket = socket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 			// Connect to server and send smthing
-			TCPSocket.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(55123)));
+			TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 
 			// Send some shit
 			TCPSocket.send(msg);
 			//EchoServer.semArrived.wait(1000);
 
 			TCPSocket.shutdown();
-			TCPSocket = Socket();
+			TCPSocket = socket();
 
 		}
 

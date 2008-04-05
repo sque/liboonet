@@ -7,11 +7,11 @@
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		//! A general class for handling HTTP Request Packets.
 		/**
-			Comes from HTTP::Packet and will give more resolution
+			Comes from http::Packet and will give more resolution
 			on parsing and rendering. Except of 3 major parts, you
 			can now parse the title too. This is done transperantly
 			as render() and parse() are overloaded to implement additional
@@ -47,25 +47,25 @@ namespace oonet
 
 			//! Render packet with specific title componments
 			/**
-				This is overloaded from HTTP::Packet::render() and before renderning
+				This is overloaded from http::Packet::render() and before renderning
 				the packet, it will render the title from variables: Request::http_type, Request::url and Request::http_version.
-			@see HTTP::Packet::render() for further explanation.
+			@see http::Packet::render() for further explanation.
 			*/
 			virtual binary_data render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
 
 			//! Parse an HTTP Request packet
 			/**
-				This is overloaded function from HTTP::Packet::parse() and after
+				This is overloaded function from http::Packet::parse() and after
 				parsing its major componments it will parse the title and
 				populate the variables Request::http_type, Request::url and Request::http_version.
-				Additionally to the exceptions tha may be thrown from HTTP::Packet::parse()
+				Additionally to the exceptions tha may be thrown from http::Packet::parse()
 				this overloaded function will throw too:
 			@throw ExceptionWrongFormat if the title of HTTP packet is not an HTTP request's title.
-			@see HTTP::Packet::parse() for further explanation.
+			@see http::Packet::parse() for further explanation.
 			*/
 			virtual size_t parse(const binary_data & data);
 		};	// !Request class
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace
 
 #endif // !OONET_HTTP_REQUEST_H_DEFINED

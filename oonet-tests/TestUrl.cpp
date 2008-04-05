@@ -6,7 +6,7 @@ namespace oonet
 	TestUrl theTestUrl;
 
 	bool TestUrl::TestUrlParamCtor::OnExecute()
-	{	HTTP::UrlParam a;
+	{	http::UrlParam a;
 
 		if (a.Value != "")
 			return false;
@@ -20,27 +20,27 @@ namespace oonet
 	bool TestUrl::TestUrlParamParseCtor::OnExecute()
 	{
 		// Test some parsing
-		HTTP::UrlParam a("b=124");
+		http::UrlParam a("b=124");
 		if (a.Name != "b")
 			return false;
 		if (a.Value != "124")
 			return false;
 
-		HTTP::UrlParam b("250402kfoe=sdfgklsjdflgkjsdfg90sdfug09sdfugoj");
+		http::UrlParam b("250402kfoe=sdfgklsjdflgkjsdfg90sdfug09sdfugoj");
 		if (b.Name != "250402kfoe")
 			return false;
 		if (b.Value != "sdfgklsjdflgkjsdfg90sdfug09sdfugoj")
 			return false;
 
 		// No value
-		HTTP::UrlParam c("dsfklgjsdkflgjsdf");
+		http::UrlParam c("dsfklgjsdkflgjsdf");
 		if (c.Name != "dsfklgjsdkflgjsdf")
 			return false;
 		if (c.Value != "")
 			return false;
 
 		// Embended =
-		HTTP::UrlParam d("dsfklgjsdkflgjsdf=123=123");
+		http::UrlParam d("dsfklgjsdkflgjsdf=123=123");
 		if (d.Name != "dsfklgjsdkflgjsdf")
 			return false;
 		if (d.Value != "123=123")
@@ -50,8 +50,8 @@ namespace oonet
 	}
 
 	bool TestUrl::TestUrlParamCopyCtor::OnExecute()
-	{	HTTP::UrlParam a("kaka=lola");
-		HTTP::UrlParam b(a);
+	{	http::UrlParam a("kaka=lola");
+		http::UrlParam b(a);
 
 		if (b.Name != "kaka")
 			return false;
@@ -61,8 +61,8 @@ namespace oonet
 	}
 
 	bool TestUrl::TestUrlParamCopyOperator::OnExecute()
-	{	HTTP::UrlParam a("kaka=lola");
-		HTTP::UrlParam b;
+	{	http::UrlParam a("kaka=lola");
+		http::UrlParam b;
 
 		b = a;
 		if (b.Name != "kaka")
@@ -73,7 +73,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestUrlParamParse::OnExecute()
-	{	HTTP::UrlParam a;
+	{	http::UrlParam a;
 
 		// Test 100k parsings
 		for(long i = 0;i < 100000; i++)
@@ -87,7 +87,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestUrlCtor::OnExecute()
-	{	HTTP::Url a;
+	{	http::Url a;
 
 		if ((string)a != "")
 			return false;
@@ -95,7 +95,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestUrlCtorString::OnExecute()
-	{	HTTP::Url a = string("http://www.google.com");
+	{	http::Url a = string("http://www.google.com");
 
 		if ((string)a != "http://www.google.com")
 			return false;
@@ -104,8 +104,8 @@ namespace oonet
 	}
 
 	bool TestUrl::TestCopyCtor::OnExecute()
-	{	HTTP::Url a = string("http://www.gogla.gr");
-		HTTP::Url b(a);
+	{	http::Url a = string("http://www.gogla.gr");
+		http::Url b(a);
 
 		if ((string)b != "http://www.gogla.gr")
 			return false;
@@ -114,8 +114,8 @@ namespace oonet
 	}
 
 	bool TestUrl::TestCopyOperatorUrl::OnExecute()
-	{	HTTP::Url a = string("http://www.gogla.gr");
-		HTTP::Url b;
+	{	http::Url a = string("http://www.gogla.gr");
+		http::Url b;
 		b = a;
 
 		if ((string)b != "http://www.gogla.gr")
@@ -126,7 +126,7 @@ namespace oonet
 
 	bool TestUrl::TestCopyOperatorString::OnExecute()
 	{	string a = string("http://www.gogla.gr");
-		HTTP::Url b;
+		http::Url b;
 		b = a;
 
 		if ((string)b != "http://www.gogla.gr")
@@ -136,21 +136,21 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit3Wrong1::OnExecute()
-	{	HTTP::Url b = string("http:/lolalosadfadsf");
+	{	http::Url b = string("http:/lolalosadfadsf");
 		string scheme, host, resource;
 		b.split(scheme, host, resource);
 		return false;
 	}
 
 	bool TestUrl::TestSplit3Wrong2::OnExecute()
-	{	HTTP::Url b = string("http//lolalosadfadsf");
+	{	http::Url b = string("http//lolalosadfadsf");
 		string scheme, host, resource;
 		b.split(scheme, host, resource);
 		return false;
 	}
 
 	bool TestUrl::TestSplit3Speed::OnExecute()
-	{	HTTP::Url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
+	{	http::Url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
 		string scheme, host, resource;
 
 		for(long i = 0;i < 10000;i++)
@@ -166,7 +166,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit3Quality::OnExecute()
-	{	HTTP::Url b;
+	{	http::Url b;
 		string scheme, host, resource;
 
 		b = "http://www.google.com:43/sadf.sf?asdfasd%";
@@ -208,7 +208,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit4Wrong1::OnExecute()
-	{	HTTP::Url b = string("http:://lolal:/osadfadsf");
+	{	http::Url b = string("http:://lolal:/osadfadsf");
 		string scheme, host, port, resource;
 		b.split(scheme, host, port, resource);
 		printf("scheme %s, host %s, port %s, resource %s\n", scheme.c_str(), host.c_str(), port.c_str(), resource.c_str());
@@ -216,7 +216,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit4Quality::OnExecute()
-	{	HTTP::Url b;
+	{	http::Url b;
 		string scheme, host, port, resource;
 
 		b = "http://asdfasD:12/";
@@ -290,7 +290,7 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit4Speed::OnExecute()
-	{	HTTP::Url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
+	{	http::Url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
 		string scheme, host, port, resource;
 
 		for(long i = 0;i < 10000;i++)
@@ -308,18 +308,18 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit5Wrong1::OnExecute()
-	{	HTTP::Url b = string("http///lolal:/osadfadsf?");
+	{	http::Url b = string("http///lolal:/osadfadsf?");
 		string scheme, host, port, resource;
-		HTTP::Url::ParameterList params;
+		http::Url::ParameterList params;
 
 		b.split(scheme, host, port, resource, params);
 		return false;
 	}
 
 	bool TestUrl::TestSplit5Quality::OnExecute()
-	{	HTTP::Url b;
+	{	http::Url b;
 		string scheme, host, port, resource;
-		HTTP::Url::ParameterList params;
+		http::Url::ParameterList params;
 
 
 		b = "http://?";
@@ -403,9 +403,9 @@ namespace oonet
 	}
 
 	bool TestUrl::TestSplit5Speed::OnExecute()
-	{	HTTP::Url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
+	{	http::Url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
 		string scheme, host, port, resource;
-		HTTP::Url::ParameterList params;
+		http::Url::ParameterList params;
 		for(long i = 0;i < 10000;i++)
 			b.split(scheme, host, port, resource, params);
 

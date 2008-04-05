@@ -12,18 +12,21 @@ namespace oonet
 		It will automatically translate a dns or FQDN to network address or
 		convert a human-readable 4 dotted ip to a HostInet address.
 	*/
-	class HostResolver
+	class host_resolver
 	{
 	public:
 		// Exceptions
 		OONET_DECLARE_EXCEPTION(ExceptionServerNotFound);
+
 	private:
 		//! The official name of the host
-		string sOfficialName;
+		string s_official_name;
+
 		//! The address list saved in host byte-order.
-		HostInet aAddressList[OONET_RESOLVER_MAX_ADDRESSES];
+		host_inet a_address_list[OONET_RESOLVER_MAX_ADDRESSES];
+
 		//! The quantity of addresses
-		int mAddresses;
+		int qu_addresses;
 	public:
 
 		//! Constructor that will try to resolve a specific hostname
@@ -32,27 +35,27 @@ namespace oonet
 		@throw ExceptionServerNotFound Raised if it is unable to do either of those actions.
 		@param hostname The name or ip of the host you want to resolve address.
 		*/
-		explicit HostResolver(const string & hostname) throw(Exception);
+		explicit host_resolver(const string & hostname);
 
 		//! Copy constructor
-		HostResolver(const HostResolver &r) throw();
+		host_resolver(const host_resolver &r) throw();
 
 		//! Destructor
-		virtual ~HostResolver(){}
+		virtual ~host_resolver(){}
 
 		//! Get the official name of resolved host.
 		/**
 			It returns, if exists one, the official name of the host that was
 			resolved at construction time.
 		*/
-		const string & getOfficialName() const throw();
+		const string & get_official_name() const throw();
 
 		//! Direct cast to HostInet address
 		/**
 			It will get the first HostInet in the list that
 			was retrieved at construction time.
 		*/
-		operator const HostInet & () const;
+		operator const host_inet & () const;
 
 		//! Get one of the HostInet addresses of the resolved host.
 		/**
@@ -63,10 +66,10 @@ namespace oonet
 		@throw ExceptionNotFound If requested index of address is outside the maximum of resolved.
 		@see getAddressCount
 		*/
-		const HostInet & getAddress(int a = 0) const throw(Exception);
+		const host_inet & get_host(int a = 0) const;
 
 		//! Get the quantity of addresses of this host.
-		int getAddressCount() const;
+		int count_hosts() const;
 
 	};  // !HostResolver class
 };	// !oonet namespace

@@ -7,7 +7,7 @@
 
 namespace oonet
 {
-    namespace MT
+    namespace mt
     {
         /////////////////////////////////
         // OS-Independant -> OS-Specific
@@ -18,7 +18,7 @@ namespace oonet
         #define NOTHREAD 0
     #endif
 
-        void thread::_soft_join(ulong tm_timeoutms) throw(Exception)
+        void thread::_soft_join(ulong tm_timeoutms)
         {   OONET_DEBUG_L2("Thread::_soft_join()_\n");
             // Local variables
             ulong tm_passed;		// A counter for time passed
@@ -80,7 +80,7 @@ namespace oonet
         }
 
         // Wait a specific amount of time to see if thread was stopped
-        void thread::join(ulong tm_timeoutms) throw(Exception)
+        void thread::join(ulong tm_timeoutms)
         {
             // Skip join if we never started thread
             if (thread_h == NOTHREAD)
@@ -92,7 +92,7 @@ namespace oonet
         }
 
         // Start the thread
-        void thread::start() throw(Exception)
+        void thread::start()
         {
 			scoped_lock tmp_lock(*this);	// Lock object for single use
 
@@ -104,5 +104,5 @@ namespace oonet
 
             return;
         }
-    };  // !MT namespace
+    };  // !mt namespace
 };	// !oonet namespace

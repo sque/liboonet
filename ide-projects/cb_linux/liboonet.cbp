@@ -39,8 +39,6 @@
 		</Compiler>
 		<Unit filename="../../liboonet/Http/Client.cpp" />
 		<Unit filename="../../liboonet/Http/Client.h" />
-		<Unit filename="../../liboonet/Http/ClientHandler.cpp" />
-		<Unit filename="../../liboonet/Http/ClientHandler.h" />
 		<Unit filename="../../liboonet/Http/Headers.cpp" />
 		<Unit filename="../../liboonet/Http/Headers.h" />
 		<Unit filename="../../liboonet/Http/Packet.cpp" />
@@ -49,10 +47,12 @@
 		<Unit filename="../../liboonet/Http/Request.h" />
 		<Unit filename="../../liboonet/Http/Response.cpp" />
 		<Unit filename="../../liboonet/Http/Response.h" />
-		<Unit filename="../../liboonet/Http/Server.cpp" />
-		<Unit filename="../../liboonet/Http/Server.h" />
 		<Unit filename="../../liboonet/Http/Url.cpp" />
 		<Unit filename="../../liboonet/Http/Url.h" />
+		<Unit filename="../../liboonet/Http/server.cpp" />
+		<Unit filename="../../liboonet/Http/server.hpp" />
+		<Unit filename="../../liboonet/Http/server_clienthandler.cpp" />
+		<Unit filename="../../liboonet/Http/server_clienthandler.hpp" />
 		<Unit filename="../../liboonet/base64.cpp" />
 		<Unit filename="../../liboonet/base64.hpp" />
 		<Unit filename="../../liboonet/binary_data.cpp" />

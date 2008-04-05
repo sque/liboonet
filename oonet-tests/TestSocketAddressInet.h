@@ -28,7 +28,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestSocketAddressInet()
-			:Test(_T("SocketAddressInet"))
+			:Test(_T("socket_address_inet"))
 		{
 			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestHostPortCtor);

@@ -34,7 +34,7 @@ namespace oonet
 	public:
 		// Constructor
 		TestHTTPHeaders()
-			:Test(_T("HTTP::Headers"))
+			:Test(_T("http::Headers"))
 		{
 			OONET_REGISTERSUBTEST(TestSmartNewLineQuality);
 			OONET_REGISTERSUBTEST(TestSmartNewLineSpeedCRLF);

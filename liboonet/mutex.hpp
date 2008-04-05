@@ -5,7 +5,7 @@
 
 namespace oonet
 {
-    namespace MT
+    namespace mt
     {
     	//! A C++ mutex class
         /**
@@ -38,7 +38,7 @@ namespace oonet
 				If the object is already locked by another thread, then this function blocks until it can get
 				ownership of the object or the specified time has passed.
 			@param tm_timeoutms The maximum time to wait until we get ownership of mutex in <b>Milliseconds</b>.
-				If MT::Infinity is passed, then it will lock for ever until the other thread unlocks it.
+				If mt::Infinity is passed, then it will lock for ever until the other thread unlocks it.
 			@throw ExceptionTimeOut Raised when maximum time has passed and we couldn't take ownership of mutex.
 			@throw ExceptionSystemError Raised if there was a system error while trying to lock mutex.
 			*/
@@ -51,7 +51,7 @@ namespace oonet
             */
             void unlock();
         };	// !Mutex class
-    };  // !MT namespace
+    };  // !mt namespace
 };	// !oonet namespace
 
 #endif // !OONET_MT_MUTEX_H_DEFINED

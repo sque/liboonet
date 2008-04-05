@@ -9,20 +9,20 @@
 namespace oonet
 {
 	// Default constructor
-	PortInet::PortInet() : in_port(0) {}
+	port_inet::port_inet() : in_port(0) {}
 
 	// Construct with a specified port
-	PortInet::PortInet(ushort p) :	in_port(p) {}
+	port_inet::port_inet(ushort p) :	in_port(p) {}
 
 	// Copy constructor
-	PortInet::PortInet(const PortInet &r) :	in_port(r.in_port) {}
+	port_inet::port_inet(const port_inet &r) :	in_port(r.in_port) {}
 
 	// Copy operator
-	PortInet & PortInet::operator=(const PortInet &r)
+	port_inet & port_inet::operator=(const port_inet &r)
 	{   in_port=r.in_port; return *this;  }
 
 	// Get string representing the port
-	string PortInet::toString() const
+	string port_inet::to_string() const
 	{   char cTmp[100];
 		_snprintf(cTmp, 100, "%u", in_port);
 		return cTmp;

@@ -10,7 +10,7 @@ namespace oonet
 {
 
 	class netstream_threaded
-		: public netstream,	private MT::thread
+		: public netstream,	private mt::thread
 	{
 	private:
 		// NonCopyable
@@ -22,15 +22,15 @@ namespace oonet
 
 		// Implement events
 		void thread_routine();
-		void pre_newsocket_impl(Socket &);
+		void pre_newsocket_impl(socket &);
 		void post_newsocket_impl();
 
 		// Private Data
 		bool b_zombie;					// A flag if we are getting destroyed
 		bool b_connected;				// A flag if we are connected
-		MT::semaphore sem_connect;		// Semaphore used when new assigned socket is ready
-		MT::semaphore sem_newsocket;	// Semaphore when new socket is assigned to stream
-		MT::semaphore sem_disconnect;	// Semaphore when current assigned socket gets disconnected
+		mt::semaphore sem_connect;		// Semaphore used when new assigned socket is ready
+		mt::semaphore sem_newsocket;	// Semaphore when new socket is assigned to stream
+		mt::semaphore sem_disconnect;	// Semaphore when current assigned socket gets disconnected
 
 	protected:
 

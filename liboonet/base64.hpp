@@ -12,7 +12,7 @@ namespace oonet
 		the default base64 table, but it is possible to provide a custom
 		base64 table.
 	*/
-	class Base64
+	class base64
 	{
 	private:
 		//! Translation Table (ASCII NEEDED!)
@@ -30,7 +30,7 @@ namespace oonet
 		/**
 			For all encodings/decodings the default string table will be used.
 		*/
-		Base64();
+		base64();
 
 		//! Constructor with custom encoding table
 		/**
@@ -39,24 +39,24 @@ namespace oonet
 		@param b64table A string that must have 64 letters, that will be used as
 			encoding/decoding table.
 		*/
-		explicit Base64(const string & b64table);
+		explicit base64(const string & b64table);
 
 		//! Destructor
-		virtual ~Base64();
+		virtual ~base64();
 
 		//! Encodes a binary block and returns it encoded in base64 format.
 		/**
 		@param in The input data block which will be encoded in base64.
 		@return A string containing the data block encoded in base64 format.
 		*/
-		string Encode(const binary_data & in);
+		string encode(const binary_data & in);
 
 		//! Decodes a base64 string and returns binary data
 		/**
 		@param b64_encoded A string that contains the base64 encoded data block
 		@return The data block decoded.
 		*/
-		binary_data Decode(const string & b64_encoded);
+		binary_data decode(const string & b64_encoded);
 
 	};	// !Base64 class
 

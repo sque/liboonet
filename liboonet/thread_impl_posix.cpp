@@ -6,9 +6,9 @@
 
 namespace oonet
 {
-	namespace MT
+	namespace mt
 	{
-        void thread::_system_start(void) throw(Exception)
+        void thread::_system_start(void)
         {
             // Check if an instance already exists
             if (b_running == true)
@@ -50,7 +50,7 @@ namespace oonet
             return;		// Thread started succesfully
         }
 
-        void thread::_system_join(ulong tm_timeoutms) throw(Exception)
+        void thread::_system_join(ulong tm_timeoutms)
         {   OONET_DEBUG_L2("Thread::_linux_join()_\n");
 
             // Skip if thread is already joine
@@ -84,7 +84,7 @@ namespace oonet
         }
 
         // Stops the calling thread for a period of time
-        void thread::sleep(ulong tm_sleepms) throw(Exception)
+        void thread::sleep(ulong tm_sleepms)
         {	int err;
 			err = usleep( tm_sleepms * 1000);		// Unix usleep gets microseconds
 			if (err == EINTR)
@@ -92,5 +92,5 @@ namespace oonet
 					"Thread::Sleep() Action interrupted by a singal!");
         }
 
-	};	// !MT namespace
+	};	// !mt namespace
 };	// !oonet namespace

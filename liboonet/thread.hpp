@@ -7,7 +7,7 @@
 
 namespace oonet
 {
-    namespace MT
+    namespace mt
     {
 		//! A thread abstract class.
         /**
@@ -41,7 +41,7 @@ namespace oonet
                 bool bJoined;
 
 				//! An event to wait for thread to start
-				MT::semaphore semStartThread;
+				mt::semaphore semStartThread;
 
 				//! The dispatcher for calling the appropriate ThreadRoutine
                 /**
@@ -55,10 +55,10 @@ namespace oonet
                 static THREADPROC_RETURN THREADTYPE _thread_func(void * _caller);
 
 				//! System-specific implementation of Thread::start
-                void _system_start(void) throw(Exception);
+                void _system_start(void);
 
 				//! System-specific implemetation of Thread::join
-                void _system_join(ulong tm_timeoutms) throw(Exception);
+                void _system_join(ulong tm_timeoutms);
 
 				//! A software join implementation.
                 /**
@@ -69,7 +69,7 @@ namespace oonet
 					is the more pool per seconds are required and thus more cpu usage.
                  @param tm_timeoutms The maximum time to wait for caller to join.
                  */
-                void _soft_join(ulong tm_timeoutms) throw(Exception);
+                void _soft_join(ulong tm_timeoutms);
 
             protected:
 
@@ -110,7 +110,7 @@ namespace oonet
 				@throw ExceptionNotSupported If this systems implementation doesn't support joinable threads.
 				@throw ExceptionTimeOut If maximum time has been reached and the thread hasn't stopped yet.
                 */
-                void join(ulong tm_timeoutms = Infinity) throw(Exception);
+                void join(ulong tm_timeoutms = Infinity);
 
 				//! Start the thread
                 /**
@@ -119,7 +119,7 @@ namespace oonet
 				@throw ExceptionThreadAlreadyStarted If the thread is already started.
 				@throw ExceptionSystemError If there was an internal system error while starting thread.
                 */
-                void start() throw(Exception);
+                void start();
 
                 //! It sleeps the <b>CALLING</b> thread for a period of time.
                 /**
@@ -129,7 +129,7 @@ namespace oonet
                 @param tm_sleepms The amount of time in milliseconds that the thread will be suspended.
                 @throw ExceptionInterrupted If the suspension of thread was interrupt by another thread.
                 */
-                static void sleep(ulong tm_sleepms) throw(Exception);
+                static void sleep(ulong tm_sleepms);
 
 				//! Returns the system thread handle of this thread.
                 /**
@@ -140,7 +140,7 @@ namespace oonet
                 {   return thread_h; }
 
         };  // Thread class
-    };  // MT namespace
+    };  // mt namespace
 };	// !oonet namespace
 
 #endif // !OONET_MT_THREAD_H_INCLUDED

@@ -2,14 +2,14 @@
 
 namespace oonet
 {
-	netstream::netstream(SocketAddress & dest_addr)
+	netstream::netstream(socket_address & dest_addr)
 		:m_socket()
 	{
 		m_socket.connect(dest_addr);
 	}
 
 	// Create a netstream and use a connected socket
-	netstream::netstream(Socket & new_sock)
+	netstream::netstream(socket & new_sock)
 		:m_socket(new_sock)
 	{}
 
@@ -18,9 +18,9 @@ namespace oonet
 	{}
 
 	// Connect at an address
-	void netstream::connect(const SocketAddress & dest_addr)
+	void netstream::connect(const socket_address & dest_addr)
 	{	// Create a new socket
-		Socket tmp_socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		socket tmp_socket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 		// Connect
 		tmp_socket.connect(dest_addr);
@@ -36,10 +36,10 @@ namespace oonet
 		m_socket.shutdown();
 
 		// Abandon socket
-		m_socket = Socket();
+		m_socket = socket();
 	}
 
-	void netstream::assign_socket(Socket & new_socket)
+	void netstream::assign_socket(socket & new_socket)
 	{
 		pre_newsocket_impl(new_socket);
 		m_socket = new_socket;

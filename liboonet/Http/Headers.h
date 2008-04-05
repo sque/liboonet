@@ -8,7 +8,7 @@
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		//! Exception raised when the parsed item is not in proper format.
 		OONET_DECLARE_EXCEPTION(ExceptionWrongFormat);
@@ -122,7 +122,7 @@ namespace oonet
 			*/
 			void parse(const string & data);
 		}; // !Headers class
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace
 
 #endif // !OONET_HTTP_HEADERS_H_DEFINED

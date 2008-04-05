@@ -11,12 +11,12 @@ namespace oonet
 	int threadCount;
 
 	// Throw a thread
-	class SimpleThread : public MT::thread
+	class SimpleThread : public mt::thread
 	{
 	public:
 		~SimpleThread()
 		{
-		    join(MT::Infinity);
+		    join(mt::Infinity);
             threadCount --;
 		}
 		protected:
@@ -30,11 +30,11 @@ namespace oonet
 	};
 
 	// A thread for blocking infinitly
-	class BlockThread : public MT::thread
+	class BlockThread : public mt::thread
 	{
     protected:
         bool bPlay, bUsed;
-		MT::semaphore sema;
+		mt::semaphore sema;
 	public:
         BlockThread()
         {
@@ -46,7 +46,7 @@ namespace oonet
 			sema.wait();
 			bPlay = false;
 			threadCount --;
-            join(MT::Infinity);
+            join(mt::Infinity);
 		}
 		protected:
 			// Implement run
@@ -62,7 +62,7 @@ namespace oonet
 	};
 
 	// A thread for blocking infinitly
-	class KillThread : public MT::thread
+	class KillThread : public mt::thread
 	{
 	public:
 		~KillThread()
@@ -85,7 +85,7 @@ namespace oonet
 		ThreadRunned = false;
 
 		myThread.start();
-		MT::thread::sleep(1000);	// Wait for 3 seconds
+		mt::thread::sleep(1000);	// Wait for 3 seconds
 
 		return ThreadRunned;
 	}
@@ -113,7 +113,7 @@ namespace oonet
 		for(int i = 0;i < spawnedthreads;i++)
 		{
 
-			myThread[i]->join(MT::Infinity);
+			myThread[i]->join(mt::Infinity);
 		}
 
 		if (threadCount != spawnedthreads)
@@ -134,7 +134,7 @@ namespace oonet
 		long timediff, testtime = 5;
 
 		time(&startT);
-		MT::thread::sleep(testtime * 1000);
+		mt::thread::sleep(testtime * 1000);
 		time(&endT);
 
 		timediff = (long)(endT - startT);
@@ -160,10 +160,10 @@ namespace oonet
 		bThread.start();
 
 		// Try twice to join
-		bThread.join(MT::Infinity);
+		bThread.join(mt::Infinity);
         if (bThread.running())
 			return false;
-		bThread.join(MT::Infinity);
+		bThread.join(mt::Infinity);
 		if (bThread.running())
             return false;
 

@@ -1,24 +1,24 @@
 /**
 @file Server.cpp
-@brief Implementation of HTTP::Server class
+@brief Implementation of http::Server class
 */
-#include "Http/Server.h"
+#include "./server.hpp"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
-		Server::Server(void)
+		server::server(void)
 		{
 		}
 
-		Server::~Server(void)
+		server::~server(void)
 		{}
 
 
-		ClientHandler * Server::impl_new_handler(Socket & cl_socket)
+		server_clienthandler * server::impl_new_handler(socket & cl_socket)
 		{	client_iterator it;
-			ClientHandler * p_handler;
+			server_clienthandler * p_handler;
 
 			// Try to recycle a disconnected one
 			for(it = v_pclients.begin();it != v_pclients.end();it++)
@@ -30,11 +30,11 @@ namespace oonet
 			}
 
 			// Create new one
-			p_handler = new ClientHandler(this);
+			p_handler = new server_clienthandler(this);
 			v_pclients.push_back(p_handler);
 
 			return p_handler;
 		}
 
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace

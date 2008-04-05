@@ -10,14 +10,14 @@
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		//! HTTP client implemantation over tcp/ip protocol
 		/**
 			It will create a full working http client, that
-			can send HTTP::Request packets and receive HTTP::Response
+			can send http::Request packets and receive http::Response
 			packets. Client has the ability to connect to any tcp listening
-			server and send any type of HTTP::Requests. It can detect
+			server and send any type of http::Requests. It can detect
 			errors from receiving packets and report them.
 		*/
 		class Client:
@@ -29,9 +29,9 @@ namespace oonet
 			Client & operator=(const Client &);
 
 			// Private data
-			MT::semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
+			mt::semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
 			binary_data WaitingToProcessData;	//!< Unprocessed received data
-			MT::mutex mux_access_data;			//!< Mutex for synchronization on stack
+			mt::mutex mux_access_data;			//!< Mutex for synchronization on stack
 			bool b_waiting_anwser;				//!< If someone is waiting for a server answer
 		public:
 			//! Default constructor
@@ -40,7 +40,7 @@ namespace oonet
 			*/
 			Client();
 
-			Client(const SocketAddress & dst_addr);
+			Client(const socket_address & dst_addr);
 
 			//! Destructor
 			virtual ~Client();
@@ -50,11 +50,11 @@ namespace oonet
 				It will sent the specified request to a server
 				and wait for the answer to arrive in a specied
 				maximum time.
-			@param req The HTTP::Request to sent at the server
+			@param req The http::Request to sent at the server
 			@param tm_timeoutms The maximum time to wait for answer in milliseconds
-			@return An HTTP::Response object holding the answer from the server.
+			@return An http::Response object holding the answer from the server.
 			@throw ExceptionTimeOut If maximum time reached without receiving any answer
-			@throw ExceptionNotConnected If HTTP::Client is not connected in any server yet, or connection was closed
+			@throw ExceptionNotConnected If http::Client is not connected in any server yet, or connection was closed
 			@remarks In case that a wrong formated packet
 				arrives, then the client is automatically disconnected
 				from server.
@@ -62,7 +62,7 @@ namespace oonet
 			Response send(Request & req, long tm_timeoutms);
 
 			//! Connect at a host
-			void connect(const SocketAddressInet & dest_addr);
+			void connect(const socket_address_inet & dest_addr);
 
 			//! Disconnect from host
 			inline void disconnect()
@@ -80,6 +80,6 @@ namespace oonet
 		    virtual void on_disconnected();
 
 		};	// !Client class
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace
 #endif // !OONET_HTTP_CLIENT_H_INCLUDED

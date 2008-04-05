@@ -6,7 +6,7 @@
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		//! Exception raised when http traffic is incomplete
 		OONET_DECLARE_EXCEPTION(ExceptionIncomplete);
@@ -98,7 +98,7 @@ namespace oonet
 			{	return _Body = r;	}
 
 		};	// !Packet Class
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace
 
 #endif // !OONET_HTTP_PACKET_H

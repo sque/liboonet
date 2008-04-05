@@ -28,6 +28,7 @@ namespace oonet
 
 		// Create real copy if needed
 		void _assure_local_copy();
+
 	public:
 		//! A constant empty binary_data. Usefull for comparisons.
 		static const binary_data EMPTY;
@@ -59,7 +60,7 @@ namespace oonet
 			are copied <b>WITHOUT</b> a null character at the end.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		explicit binary_data(const string & str) throw(Exception);
+		explicit binary_data(const string & str);
 
 		//! Constructor from std::wstring
 		/**
@@ -71,7 +72,7 @@ namespace oonet
 			will have
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		explicit binary_data(const wstring & str) throw(Exception);
+		explicit binary_data(const wstring & str);
 
 		//! Constructor from a single byte
 		explicit binary_data(const byte b);
@@ -84,7 +85,7 @@ namespace oonet
 		@param sz_data Size of array in bytes.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data(const void * _p_data, size_t _sz_data) throw(Exception);
+		binary_data(const void * _p_data, size_t _sz_data);
 
 		//! Constructor that fills buffer with a repeated byte
 		/**
@@ -95,7 +96,7 @@ namespace oonet
 			be the size of new buffer too.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data(const byte bt_repeated, size_t s_times) throw(Exception);
+		binary_data(const byte bt_repeated, size_t s_times);
 
 		//! Add operator
 		/**
@@ -103,7 +104,7 @@ namespace oonet
 			data of this object and then the data of the right object.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data operator+(const binary_data &r) const throw(Exception);
+		binary_data operator+(const binary_data &r) const;
 
 		//! Add operator (one byte)
 		/**
@@ -111,7 +112,7 @@ namespace oonet
 			data and the end the byte that we added.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data operator+(const byte &r)const throw(Exception);
+		binary_data operator+(const byte &r)const;
 
 		//! Self-add operator (push action)
 		/**
@@ -120,14 +121,14 @@ namespace oonet
 			data block.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data &operator+=(const binary_data &r) throw(Exception);
+		binary_data &operator+=(const binary_data &r);
 
 		//! Self-add operator for one byte (push action)
 		/**
 			The byte will be copied at the end of this data block.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data &operator+=(const byte &r) throw(Exception);
+		binary_data &operator+=(const byte &r);
 
 		//! Access element
 		/**
@@ -136,7 +137,7 @@ namespace oonet
 		@throw ExceptionNotFound When requested element is not in the boundries of
 			current data block's size.
 		*/
-		byte operator[](size_t offset) const throw(Exception);
+		byte operator[](size_t offset) const;
 
 		//! Equal comparison operator
 		/**
@@ -194,7 +195,7 @@ namespace oonet
 			of current data.
 		@see get_from
 		*/
-		binary_data get_until(const size_t & offset) const throw(ExceptionNotFound);
+		binary_data get_until(const size_t & offset) const;
 
 		//! Get data from a specific offset until the end
 		/**
@@ -206,7 +207,7 @@ namespace oonet
 			of current data.
 		@see get_until
 		*/
-		binary_data get_from(const size_t & offset) const throw(ExceptionNotFound);
+		binary_data get_from(const size_t & offset) const;
 
 		//! Find a pattern in the data block and return its offset
 		/**

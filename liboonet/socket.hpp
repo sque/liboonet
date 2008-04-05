@@ -19,7 +19,7 @@ namespace oonet
 		and SocketAddress for defining address of sockets.
 
 	 */
-	class Socket
+	class socket
 	{
 	private:
 
@@ -94,7 +94,7 @@ namespace oonet
 		@param s_type The type of socket to create.
 		@param s_proto The protocol that socket will follow
 		*/
-		Socket(int s_family, int s_type, int s_proto) throw(Exception);
+		socket(int s_family, int s_type, int s_proto) throw(exception);
 
 		//! Constructor to create an invalid socket
 		/**
@@ -102,14 +102,14 @@ namespace oonet
 			handle any socket. This is very usefull for creating
 			variables of Socket that may be assigned later.
 		*/
-		Socket() throw();
+		socket() throw();
 
         //! Constructor to use an existing handle on a socket
         /**
 			This constructor will not create a new socket
 			but will use the provided socket handle.
 		*/
-        explicit Socket(SOCKET h_socket) throw();
+        explicit socket(SOCKET h_socket) throw();
 
 
 		//! Receive data from socket
@@ -120,7 +120,7 @@ namespace oonet
 			the maximum that we requested will be popped from buffer.
 		@param max The maximum number of bytes that we want to receive
 		*/
-		binary_data receive(size_t max) throw(Exception);
+		binary_data receive(size_t max) throw(exception);
 
         //! Send data through socket
         /**
@@ -129,7 +129,7 @@ namespace oonet
 		@param trans_data The data to transmit through socket
 		@return The number of data that was actually transmitted.
 		*/
-        size_t send(const binary_data &trans_data) throw (Exception);
+        size_t send(const binary_data &trans_data) throw (exception);
 
         //! Ask the socket to connect to another socket
         /**
@@ -141,7 +141,7 @@ namespace oonet
 			describing the problem.
 		@param serv_addr The address of the other-end socket.
 		*/
-        void connect(const SocketAddress & serv_addr) throw(Exception);
+        void connect(const socket_address & serv_addr) throw(exception);
 
         //! Bind socket at a local address
         /**
@@ -154,7 +154,7 @@ namespace oonet
 			The address must be valid in the scope of the host that
 			its binding.
 		*/
-        void bind(const SocketAddress & local_addr) throw(Exception);
+        void bind(const socket_address & local_addr) throw(exception);
 
         //! Switch socket in listen mode
         /**
@@ -165,16 +165,16 @@ namespace oonet
 			at connection state. This is not the maximum established
 			connections.
 		*/
-        void listen(int max_connections) throw(Exception);
+        void listen(int max_connections) throw(exception);
 
         //! Get the local address of the socket
         /**
 			It will return the local address that socket is binded, either automatically or
 			manual.	If socket is a TCP/IP socket then you can cast safely returned address
-			to SocketAddressInet.
+			to socket_address_inet.
 		@see get_peer_address
 		*/
-        SocketAddress get_local_address() const throw(Exception);
+        socket_address get_local_address() const throw(exception);
 
         //! Get the address of the peer socket
         /**
@@ -182,7 +182,7 @@ namespace oonet
 			at the other end of connection.
 		@see get_local_address
 		*/
-        SocketAddress get_peer_address() const throw(Exception);
+        socket_address get_peer_address() const throw(exception);
 
         //! Wait for incoming connection and return socket of client
         /**
@@ -191,7 +191,7 @@ namespace oonet
 			connection. In case that listen socket is closed, it
 			will unblock and raise exception.
 		*/
-        Socket accept() throw(Exception);
+        socket accept() throw(exception);
 
         //! Shutdown socket
         /**
@@ -199,7 +199,7 @@ namespace oonet
 			shutdown, socket will inform the other end for shutdowning.
 			After succesfull shutdown, socket is useless and must be closed.
 		*/
-        void shutdown() throw(Exception);
+        void shutdown() throw();
 
         //! Change an option of socket
         /**
@@ -208,7 +208,7 @@ namespace oonet
 			See manual of setsockopt() at your systems developping
 			library for extended explanation.
 		*/
-        void set_option(int level, int opt_name, const void * opt_val, int opt_size);
+        void set_option(int level, int opt_name, const void * opt_val, int opt_size) throw(exception);
 	};  // !Socket class
 };  // !oonet namespace
 

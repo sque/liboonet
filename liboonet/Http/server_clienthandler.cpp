@@ -1,16 +1,16 @@
 /**
 @file ClientHandler.cpp
-@brief Implementation of HTTP::ClientHandler class
+@brief Implementation of http::ClientHandler class
 */
-#include "Http/ClientHandler.h"
-#include "Http/Server.h"
+#include "./server_clienthandler.hpp"
+#include "./server.hpp"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		// Get request
-		bool ClientHandler::get_request(Request & req)
+		bool server_clienthandler::get_request(Request & req)
 		{	size_t ActualData;
 
 			// Parse request
@@ -28,7 +28,7 @@ namespace oonet
 		}
 
 		// When data arrives
-		void ClientHandler::on_data_received(const binary_data & data)
+		void server_clienthandler::on_data_received(const binary_data & data)
 		{	Request TmpRequest;
 			Response CustomResponse;
 
@@ -48,7 +48,7 @@ namespace oonet
 					send(CustomResponse.render());
 				}
 			}
-			catch(Exception)
+			catch(exception)
 			{
 				// This mean the end of connection
 				disconnect();

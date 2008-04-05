@@ -30,7 +30,7 @@ namespace oonet
 		string SubTestName;		// Subtest name
 		bool bMustThrow;		// When this test forces to throw exception
 		string ExceptionType;	// The exception type that must throw
-		Exception LastException;
+		exception LastException;
 		double CpuTimeSpent;		// How many cpu time was spent
 	protected:
 		double StartTime, EndTime;

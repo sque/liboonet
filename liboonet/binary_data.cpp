@@ -130,7 +130,7 @@ namespace oonet
 	}
 
 	//Construtor from binary pointer
-	binary_data::binary_data(const void * _p_data, size_t _s_data) throw(Exception)
+	binary_data::binary_data(const void * _p_data, size_t _s_data)
 		:p_mem_block(new _mem_block(_p_data, _s_data)),
 		off_data(0),
 		s_data(_s_data)
@@ -153,7 +153,7 @@ namespace oonet
 	}
 
 	// Constructor from a byte replication
-	binary_data::binary_data(const byte bt_repeated, size_t s_times) throw(Exception)
+	binary_data::binary_data(const byte bt_repeated, size_t s_times)
 		:p_mem_block(new _mem_block(bt_repeated, s_times)),
 		off_data(0),
 		s_data(s_times)
@@ -161,7 +161,7 @@ namespace oonet
 	}
 
 	// Constructor from Ansi String
-	binary_data::binary_data(const string & str) throw(Exception)
+	binary_data::binary_data(const string & str)
 		:p_mem_block(new _mem_block(str.c_str(), str.size() * sizeof(string::value_type))),
 		off_data(0),
 		s_data(str.size() * sizeof(string::value_type))
@@ -169,7 +169,7 @@ namespace oonet
 	}
 
 	// Constructor from Unicode String
-	binary_data::binary_data(const wstring & str) throw(Exception)
+	binary_data::binary_data(const wstring & str)
 		:p_mem_block(new _mem_block(str.c_str(), str.size() * sizeof(wstring::value_type))),
 		off_data(0),
 		s_data(str.size() * sizeof(wstring::value_type))
@@ -194,7 +194,7 @@ namespace oonet
 	{   return  (! ((*this) == r));    }
 
 	// Access elemnt operation
-	byte binary_data::operator[](size_t offset) const throw(Exception)
+	byte binary_data::operator[](size_t offset) const
 	{
 		if (offset > s_data)
 			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
@@ -202,7 +202,7 @@ namespace oonet
 	}
 
 	// Add action
-	binary_data binary_data::operator+(const binary_data &r) const throw(Exception)
+	binary_data binary_data::operator+(const binary_data &r) const
 	{
 		// Create a temp
 		binary_data temp = *this;
@@ -215,7 +215,7 @@ namespace oonet
 	}
 
 	// Add action (one byte)
-	binary_data binary_data::operator+(const byte &r)const throw(Exception)
+	binary_data binary_data::operator+(const byte &r)const
 	{
 		// Create a temp
 		binary_data temp = *this;
@@ -228,7 +228,7 @@ namespace oonet
 	}
 
 	// Push action
-	binary_data & binary_data::operator+=(const binary_data &r) throw(Exception)
+	binary_data & binary_data::operator+=(const binary_data &r)
 	{
 		_assure_local_copy();
 
@@ -245,7 +245,7 @@ namespace oonet
 	}
 
 	// Push action (one byte)
-	binary_data & binary_data::operator+=(const byte &r) throw(Exception)
+	binary_data & binary_data::operator+=(const byte &r)
 	{
 		_assure_local_copy();
 
@@ -293,7 +293,7 @@ namespace oonet
 	}
 
 	// Get starting packet until that size
-	binary_data binary_data::get_until(const size_t & offset) const throw(ExceptionNotFound)
+	binary_data binary_data::get_until(const size_t & offset) const
 	{
 		// If requested is more than available, then throw
 		if (offset > s_data)
@@ -306,7 +306,7 @@ namespace oonet
 	}
 
 	// Get the rest of packet from a specific offset
-	binary_data binary_data::get_from(const size_t & offset) const throw(ExceptionNotFound)
+	binary_data binary_data::get_from(const size_t & offset) const
 	{
 		// If requested is more than available, then return empty
 		if (offset > s_data)

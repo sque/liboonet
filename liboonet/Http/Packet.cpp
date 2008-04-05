@@ -1,13 +1,13 @@
 /**
 @file Packet.cpp
-@brief Implementation of HTTP::Packet class
+@brief Implementation of http::Packet class
 */
 #include "./Packet.h"
 #include "../netserver.hpp"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		Packet::Packet(void):
 			HasBody(true)
@@ -135,5 +135,5 @@ namespace oonet
 
 			return BodyStart_pos + _BodySize;
 		}
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace

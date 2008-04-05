@@ -1,12 +1,12 @@
 /**
 @file Response.cpp
-@brief Implementation of HTTP::Response class
+@brief Implementation of http::Response class
 */
 #include "Http/Response.h"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		Response::Response(void):
 			Packet(),
@@ -86,5 +86,5 @@ namespace oonet
 			// Return packet
 			return BlockSize;
 		}
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace

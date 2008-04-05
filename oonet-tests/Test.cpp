@@ -27,13 +27,13 @@ namespace oonet
 
 			// Test
 			if (pSubTest->Execute())
-				_tprintf(_T("| ok   |%4.1F |%-20s\n"), pSubTest->CpuTimeSpent,pSubTest->LastException.getType().c_str());
+				_tprintf(_T("| ok   |%4.1F |%-20s\n"), pSubTest->CpuTimeSpent,pSubTest->LastException.get_type().c_str());
 			else
 			{
-				_tprintf(_T("| FAIL |%4.1F |%-20s\n"), pSubTest->CpuTimeSpent, pSubTest->LastException.getType().c_str());
-				_tprintf(_T("    >> %s - %s(%ld)\n       %s\n"), pSubTest->LastException.getType().c_str(),
-                    pSubTest->LastException.getFile().c_str(), pSubTest->LastException.getLine(),
-                    pSubTest->LastException.getDescription().c_str());
+				_tprintf(_T("| FAIL |%4.1F |%-20s\n"), pSubTest->CpuTimeSpent, pSubTest->LastException.get_type().c_str());
+				_tprintf(_T("    >> %s - %s(%ld)\n       %s\n"), pSubTest->LastException.get_type().c_str(),
+                    pSubTest->LastException.get_file().c_str(), pSubTest->LastException.get_line(),
+                    pSubTest->LastException.get_description().c_str());
 				bAllSuccess = false;
 			}
 		}

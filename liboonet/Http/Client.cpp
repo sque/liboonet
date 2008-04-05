@@ -1,20 +1,20 @@
 /**
 @file Client.cpp
-@brief Implementation of HTTP::Client class
+@brief Implementation of http::Client class
 */
 #include "Http/Client.h"
 #include "scoped_lock.hpp"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		// Default constructor
 		Client::Client()
 			:b_waiting_anwser(false)
 		{}
 
-		Client::Client(const SocketAddress & dst_addr)
+		Client::Client(const socket_address & dst_addr)
 			:b_waiting_anwser(false)
 		{	connect(dst_addr);		}
 
@@ -54,7 +54,7 @@ namespace oonet
 			}
 
 			// Gather answer
-			{scoped_lock m(mux_access_data);
+			{mt::scoped_lock m(mux_access_data);
 				WaitingToProcessData = WaitingToProcessData.get_from(tmpResponse.parse(WaitingToProcessData));
 			}
 
@@ -66,7 +66,7 @@ namespace oonet
 		{	Response ResponsePacket;
 
 			// Add data in queue
-			{scoped_lock m(mux_access_data);
+			{mt::scoped_lock m(mux_access_data);
 				WaitingToProcessData += data;
 			}
 
@@ -93,9 +93,9 @@ namespace oonet
 			}
 		}
 
-		void Client::connect(const SocketAddressInet & dest_addr)
+		void Client::connect(const socket_address_inet & dest_addr)
 		{
-			{scoped_lock m(mux_access_data);
+			{mt::scoped_lock m(mux_access_data);
 				WaitingToProcessData.clear();
 			}
 			b_waiting_anwser = false;

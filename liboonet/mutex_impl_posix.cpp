@@ -6,7 +6,7 @@
 
 namespace oonet
 {
-	namespace MT
+	namespace mt
 	{
 		// Constructor
 		mutex::mutex()
@@ -67,5 +67,5 @@ namespace oonet
 					"Unable to lock mutex!");
             }
 		}
-	}; // !MT namespace
+	}; // !mt namespace
 };	// !oonet namespace

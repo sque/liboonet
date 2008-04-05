@@ -1,12 +1,12 @@
 /**
 @file Headers.cpp
-@brief Implementation of HTTP::Headers class
+@brief Implementation of http::Headers class
 */
 #include "Http/Headers.h"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		// Static constants
 		const string LF = "\n";
@@ -136,7 +136,7 @@ namespace oonet
 
 				// Parse line
 				if ((sep_pos = StrLine.find(":")) == string::npos)
-					OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated HTTP::Headers!");
+					OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated http::Headers!");
 
 				Name = _trim_back(StrLine.substr(0, sep_pos));
 				Value = _trim_front(StrLine.substr(sep_pos+1));
@@ -162,5 +162,5 @@ namespace oonet
 
 			return string(r, 0, len);
 		}
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace

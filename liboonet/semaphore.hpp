@@ -5,7 +5,7 @@
 
 namespace oonet
 {
-    namespace MT
+    namespace mt
     {
     	//! A C++ semaphore class
     	/**
@@ -58,7 +58,7 @@ namespace oonet
 			*/
             void post();
         };	// !semaphore class
-    }   // !MT namespace
+    }   // !mt namespace
 } // !oonet namespace
 
 #endif // OONET_MT_SEMAPHORE_H_INCLUDED

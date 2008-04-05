@@ -29,7 +29,7 @@ namespace oonet
 	{
 	protected:
 
-		virtual void parametrize_listen_socket(Socket & listen_socket)
+		virtual void parametrize_listen_socket(socket & listen_socket)
 		{
 			int reuse = 1;
 		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
@@ -53,7 +53,7 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44230)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44230)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
@@ -67,12 +67,12 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44231)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44231)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44232)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44232)), 10);
 
 		return true;
 	}
@@ -83,13 +83,13 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44233)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44233)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		try
-		{mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44234)), 10);}
+		{mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44234)), 10);}
 		catch(ExceptionAlreadyConnected & e){ e = e; }
 
 		if (!mEchoServer.listening())
@@ -107,13 +107,13 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44235)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44235)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		try
-		{mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44236)), 10);}
+		{mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44236)), 10);}
 		catch(ExceptionAlreadyConnected & e){ e = e; }
 
 		if (!mEchoServer.listening())
@@ -129,7 +129,7 @@ namespace oonet
 		return false;
 
 		// Start again
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44237)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44237)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
@@ -143,7 +143,7 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44238)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44238)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
@@ -183,18 +183,18 @@ namespace oonet
 
 	bool test_netserver::TestStopCleanup::OnExecute()
 	{	EchoServer mEchoServer;
-		Socket mClient(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+		socket mClient(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		binary_data toBeSent("axaxaxaxxolxa");
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44239)), 10);
+		mEchoServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44239)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		// Connect client
-		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44239)));
+		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(44239)));
 
 		// Send some data
 		mClient.send(toBeSent);
@@ -232,13 +232,13 @@ namespace oonet
 			return false;
 
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44240)), 10);
+		mEchoServer.start_listen(socket_address_inet(HostInet::LOCALHOST, PortInet(44240)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		// Connect client
-		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44240)));
+		mClient.connect(socket_address_inet(HostInet::LOCALHOST, PortInet(44240)));
 
 		// Send some data
 		mClient.send(toBeSent);
@@ -252,7 +252,7 @@ namespace oonet
 			return false;
 
 		// Debug shit
-		//SocketAddressInet l, r;
+		//socket_address_inet l, r;
 		//l = mEchoServer.GetClients()[0]->GetRemotePeerAddress();
 		//r = mClient.GetLocalAddress();
 		//printf("%s:%s -> %s:%s", l.GetHostInet().toString().c_str(), l.GetPortInet().toString().c_str(), r.GetHostInet().toString().c_str(),r.GetPortInet().toString().c_str());
@@ -297,13 +297,13 @@ namespace oonet
 			return false;
 
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44241)), 10);
+		mEchoServer.start_listen(socket_address_inet(HostInet::LOCALHOST, PortInet(44241)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		// Connect client
-		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44241)));
+		mClient.connect(socket_address_inet(HostInet::LOCALHOST, PortInet(44241)));
 
 		// Send some data
 		mClient.send(toBeSent);
@@ -343,13 +343,13 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44242)), 10);
+		mEchoServer.start_listen(socket_address_inet(HostInet::LOCALHOST, PortInet(44242)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		// Connect client
-		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44242)));
+		mClient.connect(socket_address_inet(HostInet::LOCALHOST, PortInet(44242)));
 
 		// Send some data
 		mClient.send(toBeSent);
@@ -382,13 +382,13 @@ namespace oonet
 		if (mEchoServer.listening())
 			return false;
 
-		mEchoServer.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44243)), 10);
+		mEchoServer.start_listen(socket_address_inet(HostInet::LOCALHOST, PortInet(44243)), 10);
 
 		if (!mEchoServer.listening())
 			return false;
 
 		// Connect client
-		mClient.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(44243)));
+		mClient.connect(socket_address_inet(HostInet::LOCALHOST, PortInet(44243)));
 
 		// Send some data
 		mClient.send(toBeSent);
@@ -427,7 +427,7 @@ namespace oonet
 		mEchoServer.stop_listen();
 		// Start a server with none connected
 		EchoServer mEchoServer2;
-		mEchoServer2.start_listen(SocketAddressInet(HostInet::LOCALHOST, PortInet(44244)), 10);
+		mEchoServer2.start_listen(socket_address_inet(HostInet::LOCALHOST, PortInet(44244)), 10);
 
 		// Try to free all
 		mEchoServer2.freeAllDisconnectedHandlers();

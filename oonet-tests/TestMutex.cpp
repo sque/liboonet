@@ -23,7 +23,7 @@ namespace oonet
 		{
 			int a;
 			a = total;
-			MT::thread::sleep(100);
+			mt::thread::sleep(100);
 			a += val;
 			total = a;
 		}
@@ -33,7 +33,7 @@ namespace oonet
 		{
 			int a;
 			a = total;
-			MT::thread::sleep(100);
+			mt::thread::sleep(100);
 			a -= val;
 			total = a;
 		}
@@ -47,7 +47,7 @@ namespace oonet
 	} nonSafe;
 
 	// A protected object
-	class SafeObj : public Obj , protected MT::mutex
+	class SafeObj : public Obj , protected mt::mutex
 	{
 	public:
 		virtual void add(int val)
@@ -66,7 +66,7 @@ namespace oonet
 	}   Safe;
 
 	// A thread playing with unprotected
-	class NonSafeThread : public MT::thread
+	class NonSafeThread : public mt::thread
 	{
 	public:
 		~NonSafeThread()
@@ -82,7 +82,7 @@ namespace oonet
 
 
 	// A thread playing with protected objects
-	class SafeThread : public MT::thread
+	class SafeThread : public mt::thread
 	{
 	public:
 		~SafeThread()
@@ -98,10 +98,10 @@ namespace oonet
 
 
 	// Dead lock detector
-	class TestDoubleLockThread : public MT::thread
+	class TestDoubleLockThread : public mt::thread
 	{
 	protected:
-		MT::mutex mut;
+		mt::mutex mut;
 
 		virtual void thread_routine(void)
 		{
@@ -111,20 +111,20 @@ namespace oonet
 		}
 	};
 
-	class LockAMutexAndWait : public MT::thread
+	class LockAMutexAndWait : public mt::thread
 	{
 	public:
-		MT::mutex * pMutex;
+		mt::mutex * pMutex;
 		long waitfor_ms;
 		virtual void thread_routine(void)
 		{
 			// Try to lock twice from same thread
 			pMutex->lock();
-			MT::thread::sleep(waitfor_ms);
+			mt::thread::sleep(waitfor_ms);
 		}
 
 		~LockAMutexAndWait()
-		{   join(MT::Infinity); }
+		{   join(mt::Infinity); }
 	};
 
 	bool TestMutex::TestNonSafe::OnExecute()
@@ -136,7 +136,7 @@ namespace oonet
 
 		// Wait to finish
 		for(int i = 0;i < 100;i++)
-			nonSafeThreads[i].join(MT::Infinity);
+			nonSafeThreads[i].join(mt::Infinity);
 
 		if (nonSafe.getVal() == 1000)
 			return false;
@@ -151,7 +151,7 @@ namespace oonet
 
 		// Wait to finish
 		for(int i = 0;i < 100;i++)
-			SafeThreads[i].join(MT::Infinity);
+			SafeThreads[i].join(mt::Infinity);
 
 		// Check results
 		if (Safe.getVal() != 1000)
@@ -173,13 +173,13 @@ namespace oonet
 	}
 
 	bool TestMutex::TestLockTimeOut::OnExecute()
-	{	MT::mutex mymut;
+	{	mt::mutex mymut;
 		LockAMutexAndWait LockThread;
 
 		LockThread.pMutex = &mymut;
 		LockThread.waitfor_ms = 8000;
 		LockThread.start();
-		MT::thread::sleep(2000);
+		mt::thread::sleep(2000);
 
 		// Try to lock
 		mymut.lock(1500);

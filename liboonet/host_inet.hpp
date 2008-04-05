@@ -6,7 +6,7 @@
 namespace oonet
 {
 	//! Class representing the address of host on Inet protocol
-	class HostInet
+	class host_inet
 	{
 	private:
 		//! The ip of the host in host-byte-order
@@ -14,39 +14,40 @@ namespace oonet
 
 	public:
 		//! Constant address of localhost (127.0.0.1)
-		static const HostInet LOCALHOST;
+		static const host_inet LOCALHOST;
+
 		//! Constant address of any host (0.0.0.0)
-		static const HostInet ANY;
+		static const host_inet ANY;
 
 		//! Default constructor
 		/**
 			Creates a HostInet object with address 0.0.0.0
 		*/
-		HostInet();
+		host_inet();
 
 		//! Construct from a specified ip
 		/**
 		@param ip Ip is given in host-byte-order.
 		*/
-		explicit HostInet(ulong ip);
+		explicit host_inet(ulong ip);
 
 		//! Copy constructor
-		HostInet(const HostInet &r);
+		host_inet(const host_inet &r);
 
 		//! Copy operator
-		HostInet & operator=(const HostInet &r);
+		host_inet & operator=(const host_inet &r);
 
 		//! Equal comparison operator
-		bool operator==(const HostInet &r) const;
+		bool operator==(const host_inet &r) const;
 
 		//! Not equal comparison operator
-		bool operator!=(const HostInet &r) const;
+		bool operator!=(const host_inet &r) const;
 
 		//! Get a std::string with the address in dotted humman format
-		string toString() const;
+		string to_string() const;
 
 		//! Get the ip in Network-byte-Order
-		ulong getNBOAddress() const;
+		ulong get_nbo() const;
 	};  // ! HostInet class
 
 };	// !oonet namespace

@@ -6,7 +6,7 @@ namespace oonet
 	TestHTTPResponse theTestHTTPResponse;
 
 	bool TestHTTPResponse::TestCtor::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 
 		if (! a.getBody().empty())
 			return false;
@@ -22,7 +22,7 @@ namespace oonet
 	}
 
 	bool TestHTTPResponse::TestCopyCtor::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 
 		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
@@ -43,7 +43,7 @@ namespace oonet
 		if (a.ErrorMsg != "Not Found")
 			return false;
 
-		HTTP::Response b(a);
+		http::Response b(a);
 		if (b.getBody()  != binary_data("koukouroukou"))
 			return false;
 		if (b.getHeaders().getSTLMap().size() != 1)
@@ -59,7 +59,7 @@ namespace oonet
 		return true;
 	}
 	bool TestHTTPResponse::TestCopyOperator::OnExecute()
-	{	HTTP::Response a, b;
+	{	http::Response a, b;
 
 		a.setBody(binary_data("koukouroukou"));
 		a.getHeaders().setHeader("a", "123");
@@ -97,7 +97,7 @@ namespace oonet
 	}
 
 	bool TestHTTPResponse::TestRender::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 		string shouldbeLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
 		string shouldbeCRLF = "HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
 		string out;
@@ -107,11 +107,11 @@ namespace oonet
 		a.ErrorCode = "202";
 		a.ErrorMsg = "Created";
 
-		out = a.render(HTTP::LF).to_string();
+		out = a.render(http::LF).to_string();
 		if (out != shouldbeLF)
 			return false;
 
-		out = a.render(HTTP::CRLF).to_string();
+		out = a.render(http::CRLF).to_string();
 		if (out != shouldbeCRLF)
 			return false;
 
@@ -119,7 +119,7 @@ namespace oonet
 	}
 
 	bool TestHTTPResponse::TestRenderSpeed::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 		string shouldbeLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
 		string out;
 
@@ -130,7 +130,7 @@ namespace oonet
 
 		ResetTimer();
 		for(long i = 0;i < 10000;i++)
-			out = a.render(HTTP::LF).to_string();
+			out = a.render(http::LF).to_string();
 		if (out != shouldbeLF)
 			return false;
 
@@ -138,7 +138,7 @@ namespace oonet
 	}
 
 	bool TestHTTPResponse::TestParse::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 		string renderedLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
 		string renderedCRLF = "HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
 		string renderedNoCodeCRLF = "HTTP/1.1 404\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
@@ -200,19 +200,19 @@ namespace oonet
 	}
 
 	bool TestHTTPResponse::TestParseWrong1::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 		a.parse(binary_data("HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou"));
 		return false;
 	}
 
 	bool TestHTTPResponse::TestParseWrong2::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 		a.parse(binary_data("HTTP/1.1  \r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou"));
 		return false;
 	}
 
 	bool TestHTTPResponse::TestParseSpeed::OnExecute()
-	{	HTTP::Response a;
+	{	http::Response a;
 		binary_data rendered("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou");
 		size_t out;
 

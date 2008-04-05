@@ -14,20 +14,20 @@ namespace oonet
 		netstream & operator=(const netstream &);
 
 		// Socket of stream
-		Socket m_socket;
+		socket m_socket;
 	protected:
 		// Event raised when a new socket is assigned
-		virtual void pre_newsocket_impl(Socket & n_sock){}
+		virtual void pre_newsocket_impl(socket & n_sock){}
 
 		// Event raised after a new socket is assigned
 		virtual void post_newsocket_impl(){}
 
 	public:
 		// Create a netstream and connect at specific address
-		netstream(SocketAddress &);
+		netstream(socket_address &);
 
 		// Create a netstream and use a connected socket
-		netstream(Socket &);
+		netstream(socket &);
 
 		// Create netstream without a binded address
 		netstream();
@@ -36,10 +36,10 @@ namespace oonet
 		virtual ~netstream(){};
 
 		// Connect at an address
-		void connect(const SocketAddress &);
+		void connect(const socket_address &);
 
 		// Bind on existing socket
-		void assign_socket(Socket &);
+		void assign_socket(socket &);
 
 		// Disconnect stream and abandon socket
 		void disconnect();
@@ -53,7 +53,7 @@ namespace oonet
 		{	return m_socket.receive(max_data);	}
 
 		// Get connection socket
-		inline const Socket & get_connection_socket() const
+		inline const socket & get_connection_socket() const
 		{	return m_socket;	}
 	};	//	!netstream
 };	// !OONet

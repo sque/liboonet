@@ -45,7 +45,7 @@ namespace oonet
 	*/
 	template <class C>
 	class netserver
-		: private MT::thread
+		: private mt::thread
 	{
 	private:
 		// NonCopyable
@@ -53,12 +53,12 @@ namespace oonet
 		netserver & operator=(const netserver &);
 
 		// Private data
-		Socket l_socket;			// Listen socket
+		socket l_socket;			// Listen socket
 		bool b_zombie;				// Flag if we are in zombie mode
 
 		// Thread routine
 		void thread_routine()
-		{	Socket cl_socket;
+		{	socket cl_socket;
 
 			try
 			{
@@ -74,28 +74,28 @@ namespace oonet
 					p_netstream_client->assign_socket(cl_socket);
 
 					// Abandon client socket
-					cl_socket = Socket();
+					cl_socket = socket();
 				}
 			}
-			catch(Exception & e)
+			catch(exception)
 			{
 				//printf("Error %s\n", e.getReport().c_str());
 				// Abandon sockets
-				l_socket = Socket();
-				cl_socket = Socket();
+				l_socket = socket();
+				cl_socket = socket();
 			}
 		}
 
 
 	protected:
 		// Parametrize listen socket at creation time
-		virtual void parametrize_listen_socket(Socket & l_sock)	{}
+		virtual void parametrize_listen_socket(socket & l_sock)	{}
 
 		/*	Implementation of new client allocation, this may be overloaded
 			and populated with code that recycles disconnected handlers.
 			By default it creates a new one and adds it to the list.
 		*/
-		virtual C * impl_new_handler(Socket & cl_socket)
+		virtual C * impl_new_handler(socket & cl_socket)
 		{
 			// Create a new handler
 			C * p_tmp_server_streamhandler = new C(this);
@@ -144,14 +144,14 @@ namespace oonet
 		}
 
 		// start listen
-		void start_listen(const SocketAddress & l_addr, ulong back_log)
+		void start_listen(const socket_address & l_addr, ulong back_log)
 		{
 			if(listening())
 				OONET_THROW_EXCEPTION(ExceptionAlreadyConnected,
 					"Server is already started!!!");
 
 			// Create socket
-			l_socket = Socket(Socket::FAMILY_INET, Socket::TYPE_STREAM, Socket::PROTO_DEFAULT);
+			l_socket = socket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 			// Pass user defined parameters
 			parametrize_listen_socket(l_socket);
@@ -168,7 +168,7 @@ namespace oonet
 		void stop_listen()
 		{
 			// Close socket and join
-			l_socket = Socket();
+			l_socket = socket();
 			join();
 		}
 

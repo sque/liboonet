@@ -65,7 +65,7 @@ namespace oonet
 		}
 	}
 
-	void netstream_threaded::pre_newsocket_impl(Socket & n_sock)
+	void netstream_threaded::pre_newsocket_impl(socket & n_sock)
 	{
 		// Disconnect if needed
 		disconnect();

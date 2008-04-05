@@ -7,7 +7,7 @@
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		//! Class for managing a url parameter
 		/**
@@ -173,6 +173,6 @@ namespace oonet
 			void _split_params(const string & par_string, ParameterList & param_list) const;
 
 		}; // !Url class
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace
 #endif // OONET_HTTP_URL_H_DEFINED

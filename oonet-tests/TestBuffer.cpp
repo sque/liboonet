@@ -10,7 +10,7 @@ namespace oonet
 	const byte Char_NULL = (byte) NULL;
 
 	bool TestBuffer::TestCtor::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 
 		if (myBuff.size() != 0 )
 			return false;
@@ -18,7 +18,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestSize::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 
 		if (myBuff.size() != 0 )
 			return false;
@@ -46,7 +46,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestSizeSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		size_t outSize;
 
 		myBuff.pushBack(binary_data(Char_M, 10000));
@@ -62,7 +62,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestFlush::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 
 		if (myBuff.size() != 0)
 			return false;
@@ -98,7 +98,7 @@ namespace oonet
 
 	bool TestBuffer::TestFlushSpeed::OnExecute()
 	{
-		Buffer myBuff;
+		buffer myBuff;
 
 		if (myBuff.size() != 0)
 			return false;
@@ -119,7 +119,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestByteOrder::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data smallPattern("1234");
 		binary_data bigPattern("12341234");
 		binary_data orderedPattern("12345678");
@@ -205,7 +205,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPeekPopCompability::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data peekD, popD;
 
 		myBuff.flush();
@@ -227,7 +227,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPushFrontSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data data = binary_data('a', 10000);
 
 		ResetTimer();
@@ -240,7 +240,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPopFrontSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data data = binary_data('a', 100000000);
 
 		ResetTimer();
@@ -253,7 +253,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPeekFrontSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data data = binary_data('a', 10000000);
 
 		ResetTimer();
@@ -266,7 +266,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPushBackSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data data = binary_data('a', 10000);
 
 		ResetTimer();
@@ -279,7 +279,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPopBackSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data data = binary_data('a', 100000000);
 
 		ResetTimer();
@@ -292,7 +292,7 @@ namespace oonet
 	}
 
 	bool TestBuffer::TestPeekBackSpeed::OnExecute()
-	{	Buffer myBuff;
+	{	buffer myBuff;
 		binary_data data = binary_data('a', 10000000);
 
 		ResetTimer();

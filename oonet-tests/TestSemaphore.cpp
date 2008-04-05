@@ -6,20 +6,20 @@ namespace oonet
 {
 	TestSemaphore theTestSemaphore;
 
-	class TestThreadSemaphore : MT::thread
+	class TestThreadSemaphore : mt::thread
 	{
 
 	};
 
 	bool TestSemaphore::TestLockTimeOut::OnExecute()
-	{	MT::semaphore mySema;
+	{	mt::semaphore mySema;
 
 		mySema.wait(3000);
 		return false;
 	}
 
 	bool TestSemaphore::TestInitialState::OnExecute()
-	{	MT::semaphore mySema(3);
+	{	mt::semaphore mySema(3);
 
 		// We can wait 3 times
 		mySema.wait(3000);
@@ -35,7 +35,7 @@ namespace oonet
 	}
 
 	bool TestSemaphore::TestPostWait::OnExecute()
-	{	MT::semaphore mySema;
+	{	mt::semaphore mySema;
 
 		// Post 5 times
 		mySema.post();
@@ -60,7 +60,7 @@ namespace oonet
 	}
 
 	bool TestSemaphore::TestDestructorSignaled::OnExecute()
-	{	MT::semaphore mySema;
+	{	mt::semaphore mySema;
 
 		mySema.post();	// Signale it and wait to destruct on exit of function
 		return true;

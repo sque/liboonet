@@ -6,7 +6,7 @@
 
 namespace oonet
 {
-	namespace MT
+	namespace mt
 	{
         // Constructor
         semaphore::semaphore()

@@ -1,30 +1,33 @@
-#ifndef SCOPED_LOCK_HPP_INCLUDED
-#define SCOPED_LOCK_HPP_INCLUDED
+#ifndef MT_SCOPED_LOCK_HPP_INCLUDED
+#define MT_SCOPED_LOCK_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./mutex.hpp"
 
 namespace oonet
 {
-	class scoped_lock
+	namespace mt
 	{
-	private:
-		// NonCopyable
-		scoped_lock(const scoped_lock&);
-		scoped_lock & operator=(const scoped_lock&);
+		class scoped_lock
+		{
+		private:
+			// NonCopyable
+			scoped_lock(const scoped_lock&);
+			scoped_lock & operator=(const scoped_lock&);
 
-		MT::mutex & m;
-	public:
-		// Constructor
-		scoped_lock(MT::mutex & _m)
-			:m(_m)
-		{	m.lock();	}
+			mutex & m;
+		public:
+			// Constructor
+			scoped_lock(mutex & _m)
+				:m(_m)
+			{	m.lock();	}
 
-		// Destructor
-		~scoped_lock()
-		{	m.unlock();	}
+			// Destructor
+			~scoped_lock()
+			{	m.unlock();	}
 
-	};
+		};	// !scoped_lock class
+	};	// !mt namespace
 };
 
-#endif // SCOPED_LOCK_HPP_INCLUDED
+#endif // MT_SCOPED_LOCK_HPP_INCLUDED

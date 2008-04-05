@@ -236,14 +236,14 @@ namespace oonet
 	typedef unsigned char uchar;
 
 	//! OONet's sub namespace to organize all multi-thread related classes
-	namespace MT
+	namespace mt
 	{
 		//! A Constant representing infinity.
 		const static ulong Infinity = -1;
 	};
 
 	//! OONet's sub namespace to organize all http internal implentation
-	namespace HTTP{};
+	namespace http{};
 };
 
 // Standrad include classes

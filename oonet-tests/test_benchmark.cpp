@@ -1,7 +1,7 @@
 #include "test_benchmark.hpp"
 #include "netserver.hpp"
 #include "socket_address_inet.hpp"
-#include "Http/Server.h"
+#include "Http/server.hpp"
 #include "Http/Client.h"
 
 namespace oonet
@@ -24,7 +24,7 @@ namespace oonet
 		{}
 
 		binary_data saved;
-		MT::semaphore sem_arrived;
+		mt::semaphore sem_arrived;
 		ulong cur_data;
 	protected:
 
@@ -43,7 +43,7 @@ namespace oonet
 	{
 	protected:
 
-		virtual void parametrize_listen_socket(Socket & listen_socket)
+		virtual void parametrize_listen_socket(socket & listen_socket)
 		{
 			int reuse = 1;
 		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
@@ -58,21 +58,21 @@ namespace oonet
 
 
 	class bench_http_server:
-		public HTTP::Server
+		public http::server
 	{
 	private:
-		HTTP::Request saved;
-		HTTP::Response test;
+		http::Request saved;
+		http::Response test;
 		ulong cur_data;
 
-		virtual void parametrize_listen_socket(Socket & l_sock)
+		virtual void parametrize_listen_socket(socket & l_sock)
 		{
 			int reuse = 1;
 		    l_sock.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 		};
 
 	public:
-		MT::semaphore sem_arrived;
+		mt::semaphore sem_arrived;
 		bench_http_server(ulong total)
 		{
 			total_data = total;
@@ -82,9 +82,9 @@ namespace oonet
 		~bench_http_server()
 		{	initialize_destruction();	}
 
-		virtual HTTP::Response on_url_request(const HTTP::Url & Uri,
-			const HTTP::Request & full_request,
-			const SocketAddressInet & client_addr)
+		virtual http::Response on_url_request(const http::Url & Uri,
+			const http::Request & full_request,
+			const socket_address_inet & client_addr)
 		{	saved = full_request;
 			cur_data += full_request.getBody().size();
 
@@ -101,10 +101,10 @@ namespace oonet
 		binary_data test_d('a', 1000);
 
 		// Start server
-		server.start_listen(SocketAddressInet(HostInet::ANY, PortInet(40421)), 10);
+		server.start_listen(socket_address_inet(host_inet::ANY, port_inet(40421)), 10);
 
 		// Connect
-		client.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(40421)));
+		client.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(40421)));
 		for(long int i=0;i <= (4000*1000);i++)
 		{
 			client.send(test_d);
@@ -118,17 +118,17 @@ namespace oonet
 	{	bench_http_server server(500000000);
 		netstream client;
 		binary_data test_d('a', 1000);
-		HTTP::Request tmp_req;
+		http::Request tmp_req;
 		tmp_req.setBody(test_d);
 		tmp_req.getHeaders().setHeader("Host", "www.google.com");
-		tmp_req.http_type = HTTP::Request::REQUEST_POST;
+		tmp_req.http_type = http::Request::REQUEST_POST;
 		test_d = tmp_req.render();
 		binary_data blabla;
 		// Start server
-		server.start_listen(SocketAddressInet(HostInet::ANY, PortInet(40422)), 10);
+		server.start_listen(socket_address_inet(host_inet::ANY, port_inet(40422)), 10);
 
 		// Connect
-		client.connect(SocketAddressInet(HostInet::LOCALHOST, PortInet(40422)));
+		client.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(40422)));
 		for(long int i=0;i <= (500*1000);i++)
 		{
 			client.send(test_d);

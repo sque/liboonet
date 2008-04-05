@@ -7,41 +7,41 @@
 namespace oonet
 {
 	// Copy Operator
-	Exception & Exception::operator=(const Exception & r)
+	exception & exception::operator=(const exception & r)
 	{
-		File = r.File;
-		Line = r.Line;
-		Desc = r.Desc;
-		ExceptionType = r.ExceptionType;
+		m_file = r.m_file;
+		m_line = r.m_line;
+		m_desc = r.m_desc;
+		m_type = r.m_type;
 		return *this;
 	}
 
 	// Get a brief report
-	string Exception::getHTMLReport(void) const
-	{	char sLine[10] = "";
+	string exception::get_html_report(void) const
+	{	char _s_line[10] = "";
 		string report;
-		_snprintf(sLine, 10, "%lu", Line);
+		_snprintf(_s_line, 10, "%lu", m_line);
 
 		report = "<font color=\"#330000\" size=\"5\" style=\"font-weight: bold\">Exception!</font><br>";
-		report += File + " (";
-		report += sLine;
+		report += m_file + " (";
+		report += _s_line;
 		report += ")<br><b>";
-		report += Desc + "</b>";
+		report += m_desc + "</b>";
 
 		return report;
 	}
 
 	// Get Small report
-	string Exception::getReport(void) const
-	{	char sLine[10] = "";
+	string exception::get_report(void) const
+	{	char _s_line[10] = "";
 		string report;
-		_snprintf(sLine, 10, "%lu", Line);
+		_snprintf(_s_line, 10, "%lu", m_line);
 
-		report = ExceptionType + "!\n";
-		report += File + " (";
-		report += sLine;
+		report = m_type + "!\n";
+		report += m_file + " (";
+		report += _s_line;
 		report += ")\n";
-		report += Desc + "\n";
+		report += m_desc + "\n";
 
 		return report;
 	}

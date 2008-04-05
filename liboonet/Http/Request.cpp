@@ -1,12 +1,12 @@
 /**
 @file Request.cpp
-@brief Implementation of HTTP::Request class
+@brief Implementation of http::Request class
 */
 #include "Http/Request.h"
 
 namespace oonet
 {
-	namespace HTTP
+	namespace http
 	{
 		Request::Request(void)
 		{
@@ -103,5 +103,5 @@ namespace oonet
 					"This is not an http request packet");
 			return BlockSize;
 		}
-	};	// !HTTP namespace
+	};	// !http namespace
 };	// !oonet namespace
