@@ -29,7 +29,7 @@ namespace oonet
 			return false;
 		if (a.headers().get("a") != "123")
 			return false;
-		if (a.title() != "GET / HTTP/1.1")
+		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 
 		http::packet b(a);
@@ -39,7 +39,7 @@ namespace oonet
 			return false;
 		if (b.headers().get("a") != "123")
 			return false;
-		if (b.title() != "GET / HTTP/1.1")
+		if (b.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 		return true;
 	}
@@ -57,7 +57,7 @@ namespace oonet
 			return false;
 		if (a.headers().get("a") != "123")
 			return false;
-		if (a.title() != "GET / HTTP/1.1")
+		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 
 		b = a;
@@ -67,7 +67,7 @@ namespace oonet
 			return false;
 		if (b.headers().get("a") != "123")
 			return false;
-		if (b.title() != "GET / HTTP/1.1")
+		if (b.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 		return true;
 	}
@@ -114,7 +114,7 @@ namespace oonet
 			return false;
 
 		/// Render with LF
-		out = a.render("\n");
+		out = a.render(binary_data("\n"));
 		if (out != shouldBeLF)
 			return false;
 
@@ -153,7 +153,7 @@ namespace oonet
 
 		if (a.body() != PredefBody)
 			return false;
-		if (a.title() != "GET / HTTP/1.1")
+		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 		if (a.headers().get("Content-Length") != "60000")
 			return false;
@@ -181,7 +181,7 @@ namespace oonet
 		b_parsed = a.parse(PacketWBodyCRLF, &remaining);
 		if (a.body() != PredefBody)
 			return false;
-		if (a.title() != "POST / HTTP/1.1")
+		if (a.title() != binary_data("POST / HTTP/1.1"))
 			return false;
 		if (a.headers().get("Content-Length") != "60000")
 			return false;
@@ -192,7 +192,7 @@ namespace oonet
 		b_parsed = a.parse(PacketWBodyLF, &remaining);
 		if (a.body() != PredefBody)
 			return false;
-		if (a.title() != "POST / HTTP/1.1")
+		if (a.title() != binary_data("POST / HTTP/1.1"))
 			return false;
 		if (a.headers().get("Content-Length") != "60000")
 			return false;
@@ -203,7 +203,7 @@ namespace oonet
 		b_parsed = a.parse(PacketCRLF, &remaining);
 		if (! a.body().empty())
 			return false;
-		if (a.title() != "GET / HTTP/1.1")
+		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 		if (a.headers().get("Host") != "123")
 			return false;
@@ -216,7 +216,7 @@ namespace oonet
 		b_parsed = a.parse(PacketWithEmptyHeaderMixed);
 		if (! a.body().empty())
 			return false;
-		if (a.title() != "GET / HTTP/1.1")
+		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
 		if (a.headers().size() != 2)
 			return false;

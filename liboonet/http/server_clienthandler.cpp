@@ -11,8 +11,8 @@ namespace oonet
 	{
 		// When data arrives
 		void server_clienthandler::on_data_received(const binary_data & data)
-		{	Request TmpRequest;
-			Response CustomResponse;
+		{	request TmpRequest;
+			response CustomResponse;
 
 			// Push data in buffer
 			stream_data += data;
@@ -25,7 +25,7 @@ namespace oonet
 					// Triger server event
 					CustomResponse = get_server_ptr()->on_url_request(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
 					// Add extra header for connection control
-					CustomResponse.headers().set("Connection", "Keep-Alive");
+					//CustomResponse.headers().set(binary_data("Connection"), binary_data("Keep-Alive"));
 					// Send response
 					send(CustomResponse.render());
 				}

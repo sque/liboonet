@@ -61,8 +61,8 @@ namespace oonet
 		public http::server
 	{
 	private:
-		http::Request saved;
-		http::Response test;
+		http::request saved;
+		http::response test;
 		ulong cur_data;
 
 		virtual void parametrize_listen_socket(socket & l_sock)
@@ -82,8 +82,8 @@ namespace oonet
 		~bench_http_server()
 		{	initialize_destruction();	}
 
-		virtual http::Response on_url_request(const http::Url & Uri,
-			const http::Request & full_request,
+		virtual http::response on_url_request(const http::Url & Uri,
+			const http::request & full_request,
 			const socket_address_inet & client_addr)
 		{	saved = full_request;
 			cur_data += full_request.body().size();
@@ -118,10 +118,10 @@ namespace oonet
 	{	bench_http_server server(500000000);
 		netstream client;
 		binary_data test_d('a', 1000);
-		http::Request tmp_req;
+		http::request tmp_req;
 		tmp_req.body() = test_d;
 		tmp_req.headers().set("Host", "www.google.com");
-		tmp_req.http_type = http::Request::REQUEST_POST;
+		tmp_req.http_type = http::request::REQUEST_POST;
 		test_d = tmp_req.render();
 		binary_data blabla;
 		// Start server

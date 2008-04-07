@@ -40,14 +40,14 @@ namespace oonet
 			/**
 				In HTTP protocol each request must have a respones. This class is the
 				way to controll all the HTTP traffic. Requests are made and based on the
-				request type the derived class is responsible to return appropriate http::Response to
+				request type the derived class is responsible to return appropriate http::response to
 				client.
 			@param Uri The uri of the request
 			@param full_request Is the full packet of the request done by client
 			@param client_addr Is the address of client that does the request.
-			@return The http::Response that will be sent back to client.
+			@return The http::response that will be sent back to client.
 			*/
-			virtual Response on_url_request(const Url & Uri, const Request & full_request, const socket_address_inet & client_addr) = 0;
+			virtual response on_url_request(const Url & Uri, const request & full_request, const socket_address_inet & client_addr) = 0;
 			//! @}
 
 		public:

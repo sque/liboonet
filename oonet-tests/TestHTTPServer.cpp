@@ -16,9 +16,9 @@ namespace oonet
 
 
 	protected:
-		virtual http::Response on_url_request(const http::Url & Uri, const http::Request & full_request, const socket_address_inet & client_addr)
+		virtual http::response on_url_request(const http::Url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
 		{
-			http::Response tmpResponse;
+			http::response tmpResponse;
 			tmpResponse.body() = binary_data("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");
 
 			return tmpResponse;
@@ -162,7 +162,7 @@ namespace oonet
 	{	MyHTTPServer myServer;
 		socket mHttpClient(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nConnection: Keep-Alive\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
-		http::Request myRequest;
+		http::request myRequest;
 
 		// Format my request
 		myRequest.headers().set("Host", "www.google.com");
@@ -243,7 +243,7 @@ namespace oonet
 		socket mHttpClient(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
 
-		http::Request myRequest;
+		http::request myRequest;
 		// Format my request
 		myRequest.headers().set("Host", "www.google.com");
 		binary_data dRequest = myRequest.render();

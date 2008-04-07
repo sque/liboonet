@@ -1,6 +1,6 @@
 /**
-@file Response.cpp
-@brief Implementation of http::Response class
+@file response.cpp
+@brief Implementation of http::response class
 */
 #include "./response.hpp"
 
@@ -8,78 +8,81 @@ namespace oonet
 {
 	namespace http
 	{
-		Response::Response(void):
+		response::response(void):
 			packet(),
-			ErrorCode("200"),
-			ErrorMsg("OK")
+			m_error_code("200"),
+			m_error_msg("OK")
 		{
 		}
 
-		Response::~Response(void)
+		response::~response(void)
 		{
 		}
 
 		// Copy constructor
-		Response::Response(const Response &r):
+		response::response(const response &r):
 			packet(r),
-			ErrorCode(r.ErrorCode),
-			ErrorMsg(r.ErrorMsg)
+			m_error_code(r.m_error_code),
+			m_error_msg(r.m_error_msg)
 		{
 		}
 
 		// Copy operator
-		Response & Response::operator=(const Response & r)
+		response & response::operator=(const response & r)
 		{	packet::operator =(r);
-			ErrorCode = r.ErrorCode;
-			ErrorMsg = r.ErrorMsg;
+			m_error_code = r.m_error_code;
+			m_error_msg = r.m_error_msg;
 			return *this;
 		}
 
 		// Render a packet from data
-		binary_data Response::render(const string & new_line)
+		binary_data response::render(const string & new_line)
 		{
 			// Prepare Title
-			m_title = "HTTP/1.1 ";
-			m_title += ErrorCode + " " + ErrorMsg;
+			m_title = const_http_ver1_1;
+			m_title += const_space;
+			m_title += m_error_code;
+			m_title += const_space;
+			m_title += m_error_msg;
 
 			// Return rendered packet
 			return packet::render(new_line);
 		}
 
 		// Parse data and save to packet
-		bool Response::parse(const binary_data & dt_in, binary_data * dt_remain)
+		bool response::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	size_t httpversionend_pos, errorcodeend_pos;
-			string _httpversion_str;
+			binary_data _httpversion;
 
 			// Parse basic packet
 			if(!packet::parse(dt_in, dt_remain))
 				return false;
 
 			// Get version of HTTP
-			if ((httpversionend_pos = m_title.find(' ')) == string::npos)
+			if ((httpversionend_pos = m_title.find(const_space)) == binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"Wrong formated header!");
-			_httpversion_str = m_title.substr(0, httpversionend_pos);
-			if ((_httpversion_str != "HTTP/1.0") && (_httpversion_str != "HTTP/1.1"))
+			_httpversion = m_title.sub_data(0, httpversionend_pos);
+			if ((_httpversion != const_http_ver1_0) && (_httpversion != const_http_ver1_1))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"Unknown version of HTTP packet!");
 
 			// Get error code
 			httpversionend_pos++;
-			errorcodeend_pos = m_title.find(' ', httpversionend_pos);
-			if ((ErrorCode = m_title.substr(httpversionend_pos, errorcodeend_pos - httpversionend_pos)) == "")
+			errorcodeend_pos = m_title.find(const_space, httpversionend_pos);
+			if ((m_error_code = m_title.sub_data(httpversionend_pos, errorcodeend_pos - httpversionend_pos)) == binary_data::EMPTY)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
-					"HTTP Response without error code!");
+					"HTTP response without error code!");
 
 			// Get error message
 			if (errorcodeend_pos == string::npos)
 			{
-				ErrorMsg = "";
+				m_error_msg = "";
 			}
 			else
 			{
 				errorcodeend_pos ++;
-				ErrorMsg = m_title.substr(errorcodeend_pos);
+				m_error_msg = m_title.get_from(errorcodeend_pos);
 			}
 
 

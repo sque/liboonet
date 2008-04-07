@@ -21,11 +21,14 @@ namespace oonet
 			// Update headers
 			void _update_headers();
 
-			string			m_title;	//!< The title of the packet
+			binary_data		m_title;	//!< The title of the packet
 			headers_list	m_headers;	//!< The headers of the packet
 			binary_data		m_body;		//!< The Body of the document
 			bool			b_has_body;	//!< A flag if packet includes body
 
+			const static binary_data const_http_ver1_1;
+			const static binary_data const_http_ver1_0;
+			const static binary_data const_content_length;
 		public:
 
 			//! Default Constructor
@@ -53,7 +56,7 @@ namespace oonet
 			@param nl_str The string to use for new lines.
 			@return The rendered packet, ready for transmition
 			*/
-			virtual binary_data render(const string & nl_str = OONET_DEFAULT_HTTP_NEWLINE);
+			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
 
 			//! Parse HTTP traffic and extract the leading HTTP packet
 			/**
@@ -70,11 +73,11 @@ namespace oonet
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
 
 			//! Reference at title (const)
-			inline const string & title() const
+			inline const binary_data & title() const
 			{	return m_title;		}
 
 			//! Reference at title
-			inline string & title()
+			inline binary_data & title()
 			{	return m_title;	}
 
 			//! Reference at headers (const)

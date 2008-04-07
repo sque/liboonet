@@ -485,6 +485,69 @@ namespace oonet
 		return true;
 	}
 
+	bool TestBinaryData::TestLessGeneral::OnExecute()
+	{	binary_data a("A");
+		binary_data b("B");
+		binary_data ab("AB");
+		binary_data ac("AC");
+		binary_data bb("BB");
+
+		// Empty must return false
+		if (binary_data::EMPTY < binary_data::EMPTY)
+			return false;
+
+		// 1 character comparison
+		if (b < a)
+			return false;
+		if (!(a < b))
+			return false;
+
+		// Check multibyte
+		if (ac < ab)
+			return false;
+		if (!(ab < ac))
+			return false;
+
+		// Check equality test
+		if (!(a<b||b<a))
+			return false;
+
+		// Check not equal test
+		if (a<a||a<a)
+			return false;
+
+		// Check different size
+		if (!(a < ab))
+			return false;
+		if (ab < a)
+			return false;
+
+		// Check smaller size that must be bigger as character
+		if (b < ac)
+			return false;
+		if (!(ac < b))
+			return false;
+
+		return true;
+	}
+
+	bool TestBinaryData::TestLessSpeed::OnExecute()
+	{	binary_data a((byte)'a', 50000);
+		binary_data b((byte)'a', 50000);
+		a += binary_data("1");
+		b += binary_data("2");
+
+		// 1 character comparison
+		if (b < a)
+			return false;
+
+		bool res;
+		for(int i = 0;i < 5000; i++)
+			res = b < a;
+
+		return true;
+	}
+
 	bool TestBinaryData::TestAStringExporter::OnExecute()
 	{	binary_data b1 = binary_data(string("koukouroukou1"));
 

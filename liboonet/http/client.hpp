@@ -15,7 +15,7 @@ namespace oonet
 		//! HTTP client implemantation over tcp/ip protocol
 		/**
 			It will create a full working http client, that
-			can send http::Request packets and receive http::Response
+			can send http::request packets and receive http::response
 			packets. Client has the ability to connect to any tcp listening
 			server and send any type of http::Requests. It can detect
 			errors from receiving packets and report them.
@@ -50,16 +50,16 @@ namespace oonet
 				It will sent the specified request to a server
 				and wait for the answer to arrive in a specied
 				maximum time.
-			@param req The http::Request to sent at the server
+			@param req The http::request to sent at the server
 			@param tm_timeoutms The maximum time to wait for answer in milliseconds
-			@return An http::Response object holding the answer from the server.
+			@return An http::response object holding the answer from the server.
 			@throw ExceptionTimeOut If maximum time reached without receiving any answer
 			@throw ExceptionNotConnected If http::Client is not connected in any server yet, or connection was closed
 			@remarks In case that a wrong formated packet
 				arrives, then the client is automatically disconnected
 				from server.
 			*/
-			Response send(Request & req, long tm_timeoutms);
+			response send(request & req, long tm_timeoutms);
 
 			//! Connect at a host
 			void connect(const socket_address_inet & dest_addr);

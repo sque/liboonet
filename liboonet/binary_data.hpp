@@ -26,7 +26,7 @@ namespace oonet
 		size_t off_data;	//!< Offset of memory block
 		size_t s_data;		//!< Size of data
 
-		// Create real copy if needed
+		//! Create real copy if needed
 		void _assure_local_copy();
 
 	public:
@@ -54,13 +54,17 @@ namespace oonet
 		//! Copy operator
 		binary_data & operator=(const binary_data & r);
 
+		// String assignment operator
+		inline binary_data & operator=(const string & str)
+		{	return (*this = binary_data(str));	}
+
 		//! Constructor from std::string
 		/**
 			A new object is created and all the characters of std::string
 			are copied <b>WITHOUT</b> a null character at the end.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		explicit binary_data(const string & str);
+		binary_data(const string & str);
 
 		//! Constructor from std::wstring
 		/**
@@ -75,7 +79,7 @@ namespace oonet
 		explicit binary_data(const wstring & str);
 
 		//! Constructor from a single byte
-		explicit binary_data(const byte b);
+		explicit binary_data(const byte & b);
 
 		//! Constructor from a byte array
 		/**
@@ -137,7 +141,10 @@ namespace oonet
 		@throw ExceptionNotFound When requested element is not in the boundries of
 			current data block's size.
 		*/
-		byte operator[](size_t offset) const;
+		const byte & operator[](size_t offset) const;
+
+		//! Access elemt
+		byte & operator[](size_t offset);
 
 		//! Equal comparison operator
 		/**
@@ -152,6 +159,9 @@ namespace oonet
 			have the same size and same data.
 		*/
 		bool operator!=(const binary_data &r) const throw();
+
+		//! Less comparison
+		bool operator<(const binary_data & r) const throw();
 		//! @}
 
 		//! Get const pointer to data
@@ -219,7 +229,7 @@ namespace oonet
 			be found.
 		@throw ExceptionWrongArgument If the pattern is an empty binary_data object.
 		*/
-		size_t find(const binary_data & pattern) const;
+		size_t find(const binary_data & pattern, size_t offset = 0) const;
 
 		//! Slice data from a specific offset, with specific size
 		/**

@@ -12,22 +12,47 @@ namespace oonet
 		const string LF = "\n";
 		const string CRLF = "\r\n";
 
-		// Smart find of new line, can work with LF and CRLF
-		size_t _find_smart_new_line(const string & str, string & nl_str)
-		{	size_t lf_pos;
+		const binary_data const_lf = binary_data("\n");
+		const binary_data const_crlf = binary_data("\r\n");
+		const binary_data const_lflf = const_lf + const_lf;
+		const binary_data const_crlfcrlf = const_crlf + const_crlf;
+		const binary_data const_space = binary_data(" ");
+		const binary_data const_colon = binary_data(":");
+
+		size_t _find_smart_new_line(const binary_data & dt_in, binary_data & nl_delimiter)
+		{	size_t nl_pos;
 
 			// Find LF
-			if ((lf_pos = str.find(LF)) == string::npos)
+			if ((nl_pos = dt_in.find(const_lf)) == binary_data::npos)
 				return string::npos;	// Nothing found
 
 			// Check if previous letter was CR
-			if ((lf_pos > 0) && (str[lf_pos -1] == '\r'))
+			if ((nl_pos > 0) && (dt_in[nl_pos -1] == '\r'))
 			{	// Found CRLF
-				nl_str = CRLF;
-				return lf_pos -1;
+				nl_delimiter = const_crlf;
+				return nl_pos -1;
 			}
-			nl_str = LF;
-			return lf_pos;
+			nl_delimiter = const_lf;
+			return nl_pos;
+		}
+
+		// Trim front
+		binary_data headers_list::_trim_front(const binary_data & r)
+		{	size_t cpos;
+			for(cpos = 0;cpos != r.size();cpos ++)
+				if (r[cpos] != ' ')
+					break;
+			return r.get_from(cpos);
+		}
+
+		// Trim front from whitespaces
+		binary_data headers_list::_trim_back(const binary_data & r)
+		{   size_t len;
+			for(len = r.size();len != 0;len--)
+				if (r[len - 1] != ' ')
+					break;
+
+			return r.get_until(len);
 		}
 
 		// Constructor
@@ -50,16 +75,16 @@ namespace oonet
 		}
 
 		// Add a new header
-		void headers_list::set(const string & name, const string &value)
-		{	OONET_ASSERT(name != "");
-			headers_map[name] = value;
+		void headers_list::set(const binary_data & field_name, const binary_data &field_value)
+		{	OONET_ASSERT(field_name != binary_data::EMPTY);
+			headers_map[field_name] = field_value;
 		}
 
 		// Remove a header
-		void headers_list::erase(const string & name)
+		void headers_list::erase(const binary_data & field_name)
 		{	headers_map_type::iterator It;
 
-			It = headers_map.find(name);
+			It = headers_map.find(field_name);
 			if (It == headers_map.end())
 				OONET_THROW_EXCEPTION(ExceptionNotFound, "Cannot remove a header that doesnot exist!");
 
@@ -68,10 +93,10 @@ namespace oonet
 		}
 
 		// Get value of header
-		const string & headers_list::get(const string & name) const throw(ExceptionNotFound)
+		const binary_data & headers_list::get(const binary_data & field_name) const throw(ExceptionNotFound)
 		{	headers_map_type::const_iterator It;
 
-			It = headers_map.find(name);
+			It = headers_map.find(field_name);
 			if (It == headers_map.end())
 				OONET_THROW_EXCEPTION(ExceptionNotFound, "Header doesn't exist!");
 
@@ -79,16 +104,16 @@ namespace oonet
 		}
 
 		// Check if a header exists
-		bool headers_list::exist(const string & name)
+		bool headers_list::exist(const binary_data & name)
 		{	if(headers_map.find(name) == headers_map.end())
 				return false;
 			return true;
 		}
 
 		// Render headers in HTTP Format
-		string headers_list::render(const string & new_line)
+		binary_data headers_list::render(const binary_data & new_line)
 		{	headers_map_type::iterator it;
-			string _formated_field;
+			binary_data _formated_field;
 			bool isFirst = true;
 
 			// Loop around all headers
@@ -99,65 +124,50 @@ namespace oonet
 				else
 					isFirst = false;
 
-				_formated_field += it->first + ": " + it->second;
+				_formated_field += it->first;
+				_formated_field += const_colon;
+				_formated_field += const_space;
+				_formated_field += it->second;
 			}
 
 			return _formated_field;
 		}
 
 		// Parse headers
-		void headers_list::parse(const string & data)
-		{	string Name, Value, StrData, StrLine, nl_str;
+		void headers_list::parse(const binary_data & dt_in)
+		{	binary_data dt_remain, nl_delimiter, field_name, field_value, dt_line;
 			size_t nl_pos;	// Position of new line
 			size_t sep_pos;	// Value/Name separator
 
 			// Initialize data
-			StrData = data;
+			dt_remain = dt_in;
 
 			// Delete old values
 			headers_map.clear();
 
-			while(!StrData.empty())
+			while(!dt_remain.empty())
 			{
 				// Get a line from headers
-				if ((nl_pos = _find_smart_new_line(StrData, nl_str)) != string::npos)
+				if ((nl_pos = _find_smart_new_line(dt_remain, nl_delimiter)) != binary_data::npos)
 				{
-					StrLine = StrData.substr(0, nl_pos);
-					StrData = StrData.substr(nl_pos + nl_str.size());
+					dt_line = dt_remain.get_until(nl_pos);
+					dt_remain = dt_remain.get_from(nl_pos + nl_delimiter.size());
 				}
 				else
 				{
-					StrLine = StrData;
-					StrData.clear();
+					dt_line = dt_remain;
+					dt_remain.clear();
 				}
 
 				// Parse line
-				if ((sep_pos = StrLine.find(":")) == string::npos)
+				if ((sep_pos = dt_line.find(binary_data(":"))) == binary_data::npos)
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated http::Headers!");
 
-				Name = _trim_back(StrLine.substr(0, sep_pos));
-				Value = _trim_front(StrLine.substr(sep_pos+1));
-				headers_map[Name] = Value;
+				field_name = _trim_back(dt_line.get_until(sep_pos));
+				field_value = _trim_front(dt_line.get_from(sep_pos+1));
+				headers_map[field_name] = field_value;
 			}
 		}
 
-		// Trim front
-		string headers_list::_trim_front(const string & r)
-		{	size_t cpos;
-			for(cpos = 0;cpos != r.size();cpos ++)
-				if (r[cpos] != ' ')
-					break;
-			return string(r, cpos);
-		}
-
-		// Trim front from whitespaces
-		string headers_list::_trim_back(const string & r)
-		{   size_t len;
-			for(len = r.size();len != 0;len--)
-				if (r[len - 1] != ' ')
-					break;
-
-			return string(r, 0, len);
-		}
 	};	// !http namespace
 };	// !oonet namespace

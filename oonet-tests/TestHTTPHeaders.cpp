@@ -159,28 +159,28 @@ namespace oonet
 
 	bool TestHTTPHeaders::TestRender::OnExecute()
 	{	http::headers_list a;
-		string rendered, shouldbe;
+		binary_data rendered, shouldbe;
 
 		a.set("a", "1");
 		a.set("b", "2");
 		a.set("b", "3");
 		rendered = a.render();
 
-		if (rendered != "a: 1\r\nb: 3")
+		if (rendered != binary_data("a: 1\r\nb: 3"))
 			return false;
 
 		a.set("a", "1");
 		a.set("b", "2");
 		a.set("b", "3");
-		rendered = a.render("\n");
+		rendered = a.render(http::const_lf);
 
-		if (rendered != "a: 1\nb: 3")
+		if (rendered != binary_data("a: 1\nb: 3"))
 			return false;
 
 		a = http::headers_list();
-		rendered = a.render("\n");
+		rendered = a.render(http::const_lf);
 
-		if (rendered != "")
+		if (rendered != binary_data::EMPTY)
 			return false;
 
 		return true;
@@ -188,15 +188,15 @@ namespace oonet
 
 	bool TestHTTPHeaders::TestRenderSpeed100k_2::OnExecute()
 	{	http::headers_list a;
-		string rendered;
+		binary_data rendered;
 
 		a.set("a", "1");
 		a.set("b", "3");
 
 		for(long i = 0;i < 100000;i++)
-			rendered = a.render("\n");
+			rendered = a.render(http::const_lf);
 
-		if (rendered != "a: 1\nb: 3")
+		if (rendered != binary_data("a: 1\nb: 3"))
 			return false;
 
 		return true;
@@ -204,7 +204,7 @@ namespace oonet
 
 	bool TestHTTPHeaders::TestRenderSpeed100k_100::OnExecute()
 	{	http::headers_list a;
-		string rendered;
+		binary_data rendered;
 		char cTmp[100];
 		for(int i = 0; i < 100;i++)
 		{	sprintf(cTmp, "header name - %d", i);
@@ -213,7 +213,7 @@ namespace oonet
 
 		ResetTimer();
 		for(long i = 0;i < 100000;i++)
-			rendered = a.render("\n");
+			rendered = a.render(http::const_lf);
 
 		return true;
 	}
@@ -294,7 +294,7 @@ namespace oonet
 			return false;
 
 		// Parse an empty string
-		a.parse("");
+		a.parse(binary_data::EMPTY);
 		if (a.size() != 0)
 			return false;
 
@@ -313,7 +313,7 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Parse an empty new line (LF)
-		a.parse("\n");
+		a.parse(http::const_lf);
 		if (a.size() != 0)
 			return false;
 		return false;
@@ -333,7 +333,7 @@ namespace oonet
 	}
 
 	bool TestHTTPHeaders::TestSmartNewLineQuality::OnExecute()
-	{	string text_splitted_1 = "lalala\r\nadfad\nasdfadsf\r";
+	{	/*string text_splitted_1 = "lalala\r\nadfad\nasdfadsf\r";
 		string text_splitted_2 = "koukouroukou\r\r\nadfs\ntest";
 		string text_splitted_3 = "\r\ntest\r\n";
 		string text_splitted_4 = "\ntest\r\n";
@@ -380,13 +380,13 @@ namespace oonet
 
 		offset = http::_find_smart_new_line(text_splitted_9, nl);
 		if (offset != string::npos)
-			return false;
+			return false;*/
 
 		return true;
 	}
 
 	bool TestHTTPHeaders::TestSmartNewLineSpeedCRLF::OnExecute()
-	{	string text_splitted;
+	{	/*string text_splitted;
 		string nl;
 		size_t offset;
 
@@ -403,13 +403,13 @@ namespace oonet
 		}
 
 		if ((offset != 9200) || (nl != "\r\n"))
-			return false;
+			return false;*/
 
 		return true;
 	}
 
 	bool TestHTTPHeaders::TestSmartNewLineSpeedLF::OnExecute()
-	{	string text_splitted;
+	{	/*string text_splitted;
 		string nl;
 		size_t offset;
 
@@ -426,7 +426,7 @@ namespace oonet
 		}
 
 		if ((offset != 9200) || (nl != "\n"))
-			return false;
+			return false;*/
 
 		return true;
 	}
