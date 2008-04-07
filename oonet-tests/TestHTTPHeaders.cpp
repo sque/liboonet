@@ -180,7 +180,7 @@ namespace oonet
 		a = http::headers_list();
 		rendered = a.render(http::const_lf);
 
-		if (rendered != binary_data::EMPTY)
+		if (rendered != binary_data::nothing)
 			return false;
 
 		return true;
@@ -294,7 +294,7 @@ namespace oonet
 			return false;
 
 		// Parse an empty string
-		a.parse(binary_data::EMPTY);
+		a.parse(binary_data::nothing);
 		if (a.size() != 0)
 			return false;
 

@@ -36,7 +36,7 @@ namespace oonet
 		}
 
 		// Render a packet from data
-		binary_data response::render(const string & new_line)
+		binary_data response::render(const binary_data & nl_delimiter)
 		{
 			// Prepare Title
 			m_title = const_http_ver1_1;
@@ -46,7 +46,7 @@ namespace oonet
 			m_title += m_error_msg;
 
 			// Return rendered packet
-			return packet::render(new_line);
+			return packet::render(nl_delimiter);
 		}
 
 		// Parse data and save to packet
@@ -70,7 +70,7 @@ namespace oonet
 			// Get error code
 			httpversionend_pos++;
 			errorcodeend_pos = m_title.find(const_space, httpversionend_pos);
-			if ((m_error_code = m_title.sub_data(httpversionend_pos, errorcodeend_pos - httpversionend_pos)) == binary_data::EMPTY)
+			if ((m_error_code = m_title.sub_data(httpversionend_pos, errorcodeend_pos - httpversionend_pos)) == binary_data::nothing)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"HTTP response without error code!");
 

@@ -42,7 +42,7 @@ namespace oonet
 				the packet, it will render the title from variables: response::ErrorCode and response::ErrorMsg.
 			@see http::Packet::render() for further explanation.
 			*/
-			virtual binary_data render(const string & new_line = OONET_DEFAULT_HTTP_NEWLINE);
+			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
 
 			//! Parse an HTTP response packet
 			/**

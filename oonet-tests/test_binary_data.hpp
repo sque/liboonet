@@ -27,10 +27,10 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestFindByteIn100MBlock, _T("find() 1B in 100M block"));
 		OONET_DECLARESUBTEST(TestFindBlockIn100MBlock, _T("find() 10K in 100M fast"));
 		OONET_DECLARESUBTEST(TestFindBlockDifficult, _T("find() 10K in 100M hard"));
-		OONET_DECLARESUBTEST(TestGetFromWrong, _T("GetFrom() wrong offset"));
-		OONET_DECLARESUBTEST(TestGetFromGeneral, _T("GetFrom() general quality"));
-		OONET_DECLARESUBTEST(TestGetUntilWrong, _T("GetUntil() wrong offset"));
-		OONET_DECLARESUBTEST(TestGetUntilGeneral, _T("GetUntil() general quality"));
+		OONET_DECLARESUBTEST(TestGetFromWrong, _T("get_from() wrong offset"));
+		OONET_DECLARESUBTEST(TestGetFromGeneral, _T("get_from() general quality"));
+		OONET_DECLARESUBTEST(TestGetUntilWrong, _T("get_until() wrong offset"));
+		OONET_DECLARESUBTEST(TestGetUntilGeneral, _T("get_until() general quality"));
 		OONET_DECLARESUBTEST(TestSliceWrongOffset, _T("sub_data() wrong offset"));
 		OONET_DECLARESUBTEST(TestSliceWrongBoundries, _T("sub_data() wrong boundries"));
 		OONET_DECLARESUBTEST(TestSliceGeneral, _T("sub_data() general quality"));

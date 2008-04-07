@@ -12,7 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="http::headers_list http::packet http::response http::request binary_data benchmark" />
+				<Option parameters="http::packet" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -48,8 +48,6 @@
 		<Unit filename="../../oonet-tests/SubTest.h" />
 		<Unit filename="../../oonet-tests/Test.cpp" />
 		<Unit filename="../../oonet-tests/Test.h" />
-		<Unit filename="../../oonet-tests/TestBinaryData.cpp" />
-		<Unit filename="../../oonet-tests/TestBinaryData.h" />
 		<Unit filename="../../oonet-tests/TestBuffer.cpp" />
 		<Unit filename="../../oonet-tests/TestBuffer.h" />
 		<Unit filename="../../oonet-tests/TestEssentials.h" />
@@ -88,6 +86,8 @@
 		<Unit filename="../../oonet-tests/main.cpp" />
 		<Unit filename="../../oonet-tests/test_benchmark.cpp" />
 		<Unit filename="../../oonet-tests/test_benchmark.hpp" />
+		<Unit filename="../../oonet-tests/test_binary_data.cpp" />
+		<Unit filename="../../oonet-tests/test_binary_data.hpp" />
 		<Unit filename="../../oonet-tests/test_netserver.cpp" />
 		<Unit filename="../../oonet-tests/test_netserver.hpp" />
 		<Unit filename="../../oonet-tests/test_netstream_threaded.cpp" />

@@ -76,7 +76,7 @@ namespace oonet
 
 		// Add a new header
 		void headers_list::set(const binary_data & field_name, const binary_data &field_value)
-		{	OONET_ASSERT(field_name != binary_data::EMPTY);
+		{	OONET_ASSERT(field_name != binary_data::nothing);
 			headers_map[field_name] = field_value;
 		}
 

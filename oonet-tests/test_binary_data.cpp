@@ -1,4 +1,4 @@
-#include "TestBinaryData.h"
+#include "test_binary_data.hpp"
 
 namespace oonet
 {
@@ -116,7 +116,7 @@ namespace oonet
 
 		// byte operator+=
 		b2 = binary_data(Char_M, 30) + binary_data(Char_A, 30);
-	    b1 = binary_data::EMPTY;
+	    b1 = binary_data::nothing;
 		for(i = 0;i < 30;i++)
 			b1 += Char_M;
 
@@ -127,7 +127,7 @@ namespace oonet
 			return false;
 
 		// byte operator +
-        b1 = binary_data::EMPTY;
+        b1 = binary_data::nothing;
 		for(i = 0;i < 30;i++)
 			b1 = b1 + Char_M;
 		for(i = 0;i < 30;i++)
@@ -191,6 +191,7 @@ namespace oonet
 
 		b1 = binary_data(Char_A, 30) + binary_data(Char_M, 30);
 
+		// Simple test
 		pos = b1.find(binary_data(Char_M, 1));
 		if (pos != 30)
 			return false;
@@ -201,10 +202,30 @@ namespace oonet
 		if (pos != 30)
 			return false;
 
+		// Simple test with offset
+		pos = b1.find(binary_data(Char_M, 1), 0);
+		if (pos != 30)
+			return false;
+		pos = b1.find(binary_data(Char_A, 1), 0);
+		if (pos != 0)
+			return false;
+		pos = b1.find(binary_data(Char_M, 1), 31);
+		if (pos != 31)
+			return false;
+		pos = b1.find(binary_data(Char_M, 10), 32);
+		if (pos != 32)
+			return false;
+
         // We will create a string in memory kikikokoko but the size will be 4!
         b1 = binary_data(string("kokokokoko"));
         b1 = binary_data(string("kiki"));
         if (binary_data::npos != b1.find(binary_data(string("ko"))))
+            return false;
+		if (binary_data::npos != b1.find(binary_data(string("ko")), 3))
+            return false;
+		if (binary_data::npos != b1.find(binary_data(string("ko")), 4))
+            return false;
+		if (binary_data::npos != b1.find(binary_data(string("ko")), 5))
             return false;
 
         // We will try to find for last character of a string
@@ -290,7 +311,7 @@ namespace oonet
 	bool TestBinaryData::TestGetFromWrong::OnExecute()
 	{	binary_data b1(Char_M, 30);
 
-		if (b1.get_from(31) != binary_data::EMPTY)
+		if (b1.get_from(31) != binary_data::nothing)
 			return false;
 		return true;
 	}
@@ -364,7 +385,7 @@ namespace oonet
 			return false;
 
 		// We must be able to get from start and get empty string without exception
-		if (b1.get_until(0) != binary_data::EMPTY)
+		if (b1.get_until(0) != binary_data::nothing)
 			return false;
 
 		// We must be able to get 1 byte
@@ -378,7 +399,7 @@ namespace oonet
 	{	binary_data b1;
 
 		b1 = binary_data(Char_M, 1000);
-		if (b1.sub_data(1001, 0) != binary_data::EMPTY)
+		if (b1.sub_data(1001, 0) != binary_data::nothing)
 			return false;
 		return true;
 	}
@@ -408,13 +429,17 @@ namespace oonet
 			return false;
 		if (b1.sub_data(2000, 1000) != binary_data(Char_A, 1000))
 			return false;
+		if (b1.sub_data(0, binary_data::npos) != b1)
+			return false;
+		if (b1.sub_data(2000, binary_data::npos) != binary_data(Char_A, 1000))
+			return false;
 
 		// zero size results
-		if (b1.sub_data(3000, 0) != binary_data::EMPTY)
+		if (b1.sub_data(3000, 0) != binary_data::nothing)
 			return false;
-		if (b1.sub_data(0, 0) != binary_data::EMPTY)
+		if (b1.sub_data(0, 0) != binary_data::nothing)
 			return false;
-		if (b1.sub_data(10, 0) != binary_data::EMPTY)
+		if (b1.sub_data(10, 0) != binary_data::nothing)
 			return false;
 		return true;
 
@@ -493,7 +518,7 @@ namespace oonet
 		binary_data bb("BB");
 
 		// Empty must return false
-		if (binary_data::EMPTY < binary_data::EMPTY)
+		if (binary_data::nothing < binary_data::nothing)
 			return false;
 
 		// 1 character comparison

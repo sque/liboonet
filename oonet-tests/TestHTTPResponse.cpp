@@ -107,11 +107,11 @@ namespace oonet
 		a.error_code() = binary_data("202");
 		a.error_message() = binary_data("Created");
 
-		out = a.render(http::LF).to_string();
+		out = a.render(http::const_lf).to_string();
 		if (out != shouldbeLF)
 			return false;
 
-		out = a.render(http::CRLF).to_string();
+		out = a.render(http::const_crlf).to_string();
 		if (out != shouldbeCRLF)
 			return false;
 
@@ -120,8 +120,8 @@ namespace oonet
 
 	bool TestHTTPResponse::TestRenderSpeed::OnExecute()
 	{	http::response a;
-		string shouldbeLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
-		string out;
+		binary_data shouldbeLF = binary_data("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou");
+		binary_data out;
 
 		a.body() = binary_data("koukouroukou");
 		a.headers().set("a", "123");
@@ -130,7 +130,7 @@ namespace oonet
 
 		ResetTimer();
 		for(long i = 0;i < 10000;i++)
-			out = a.render(http::LF).to_string();
+			out = a.render(http::const_lf);
 		if (out != shouldbeLF)
 			return false;
 

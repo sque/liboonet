@@ -20,22 +20,24 @@ namespace oonet
 		class request :
 			public packet
 		{
-		protected:
-			const static binary_data const_get;
-			const static binary_data const_post;
-
 		public:
 			//! Enumerate the request type
-			enum EN_REQUEST_TYPE
+			enum EN_REQUEST_METHOD
 			{
 				REQUEST_GET,		//! GET request
 				REQUEST_POST,		//! POST request
 				REQUEST_UNKNOWN		//! The rest here..
 			};
 
-			EN_REQUEST_TYPE http_type;	//!< HTTP command (GET/POST)
-			string http_version;		//!< HTTP version
-			Url url;					//!< Requested url
+		protected:
+			const static binary_data const_get;
+			const static binary_data const_post;
+
+			EN_REQUEST_METHOD m_req_method;	//!< HTTP request method
+			binary_data m_http_version;		//!< HTTP version
+			Url m_uri;						//!< Requested url
+
+		public:
 
 			//! Constructor
 			request(void);
@@ -68,6 +70,30 @@ namespace oonet
 			@see http::Packet::parse() for further explanation.
 			*/
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
+
+			//! Reference at HTTP version (const)
+			inline const binary_data & http_version() const
+			{	return m_http_version;	}
+
+			//! Reference at HTTP version
+			inline binary_data & http_version()
+			{	return m_http_version;	}
+
+			//! Reference at uri (const)
+			inline const Url & uri() const
+			{	return m_uri;	}
+
+			//! Reference at uri
+			inline Url & uri()
+			{	return m_uri;	}
+
+			//! Reference at request method
+			inline EN_REQUEST_METHOD & request_method()
+			{	return m_req_method;	}
+
+			//! Reference at request method (const)
+			inline const EN_REQUEST_METHOD & request_method() const
+			{	return m_req_method;	}
 		};	// !request class
 	};	// !http namespace
 };	// !oonet namespace

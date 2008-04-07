@@ -121,6 +121,7 @@ namespace oonet
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 						"HTTP Packet says that contains body with size less than 0!?!"
 					);
+
 				// Validate if we have body
 				if ((dt_in.size() - body_start_pos) < (size_t)body_size)
 					return false;	// Incomplete data stream

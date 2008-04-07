@@ -23,7 +23,7 @@ namespace oonet
 				while(TmpRequest.parse(stream_data, &stream_data))
 				{
 					// Triger server event
-					CustomResponse = get_server_ptr()->on_url_request(TmpRequest.url, TmpRequest, get_connection_socket().get_peer_address());
+					CustomResponse = get_server_ptr()->on_url_request(TmpRequest.uri(), TmpRequest, get_connection_socket().get_peer_address());
 					// Add extra header for connection control
 					//CustomResponse.headers().set(binary_data("Connection"), binary_data("Keep-Alive"));
 					// Send response

@@ -207,7 +207,7 @@ namespace oonet
 			return false;
 		if (a.headers().get("Host") != "123")
 			return false;
-		if ((!b_parsed) || (remaining != binary_data::EMPTY))
+		if ((!b_parsed) || (remaining != binary_data::nothing))
 			return false;
 
 		return true;

@@ -32,7 +32,7 @@ namespace oonet
 		size_t _finalSize = MaxSize;
 
 		if (MaxSize == 0)
-			return binary_data::EMPTY;
+			return binary_data::nothing;
 
 		mt::scoped_lock fun_lock(*this);
 
@@ -54,7 +54,7 @@ namespace oonet
 		size_t _finalSize = MaxSize;
 
 		if (MaxSize == 0)
-			return binary_data::EMPTY;
+			return binary_data::nothing;
 
 		mt::scoped_lock fun_lock(*this);
 

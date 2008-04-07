@@ -201,8 +201,8 @@ namespace oonet
 		respBinary = resp.render();
 
 		// Format req
-		req.url = "/";
-		req.http_type = http::request::REQUEST_GET;
+		req.uri() = "/";
+		req.request_method() = http::request::REQUEST_GET;
 		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
 
 		// Create http server
@@ -240,8 +240,8 @@ namespace oonet
 		binary_data respBinary = binary_data("Asdadsasdasdasdasdasd");
 
 		// Format req
-		req.url = "/";
-		req.http_type = http::request::REQUEST_GET;
+		req.uri() = "/";
+		req.request_method() = http::request::REQUEST_GET;
 		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
 
 		// Create http server
@@ -275,8 +275,8 @@ namespace oonet
 		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n");
 
 		// Format req
-		req.url = "/";
-		req.http_type = http::request::REQUEST_GET;
+		req.uri() = "/";
+		req.request_method() = http::request::REQUEST_GET;
 		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
 
 		// Create http server
@@ -316,8 +316,8 @@ namespace oonet
 		respBinary2 = resp.render();
 
 		// Format req
-		req.url = "/";
-		req.http_type = http::request::REQUEST_GET;
+		req.uri() = "/";
+		req.request_method() = http::request::REQUEST_GET;
 		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
 
 		// Create http server
@@ -376,8 +376,8 @@ namespace oonet
 		mt::thread::sleep(1500);    //Wait to star
 
 		// Format req
-		req.url = "/";
-		req.http_type = http::request::REQUEST_GET;
+		req.uri() = "/";
+		req.request_method() = http::request::REQUEST_GET;
 		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
 
 		// Connect with client

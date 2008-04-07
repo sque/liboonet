@@ -10,7 +10,7 @@ namespace oonet
 {
 	///////////////////////////////////////////////
 	// Constants
-	const binary_data binary_data::EMPTY = binary_data();
+	const binary_data binary_data::nothing = binary_data();
 	const size_t binary_data::npos = 0xFFFFFFFF;
 
 	class binary_data::_mem_block
@@ -330,7 +330,7 @@ namespace oonet
 	{
 		// If requested is more than available, then return empty
 		if (offset > s_data)
-			return EMPTY;
+			return nothing;
 
 		// Create a shallow copy and parametrize it
 		binary_data shallow_copy(*this);
@@ -345,7 +345,7 @@ namespace oonet
 	{
 		// If requested size is more than available return until the end from the
 		// desired offset
-		if (offset + sz > s_data)
+		if ((sz == binary_data::npos) || (offset + sz > s_data))
 			return get_from(offset);
 
 		// Create a shallow copy and parametrize it
@@ -372,7 +372,7 @@ namespace oonet
             return npos;
 
 		// Check if offset is outside isze
-		if (offset > s_data)
+		if (offset >= s_data)
 			return npos;
 
 		// Initialize values
@@ -394,13 +394,7 @@ namespace oonet
 
 	// Clear
 	void binary_data::clear()
-	{	_assure_local_copy();
-
-		// Scale the memory to zero size
-		p_mem_block->_scale_mem(0);
-
-		// Empty data
-		off_data = 0;
+	{
 		s_data = 0;
 	}
 

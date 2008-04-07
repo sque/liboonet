@@ -121,7 +121,7 @@ namespace oonet
 		http::request tmp_req;
 		tmp_req.body() = test_d;
 		tmp_req.headers().set("Host", "www.google.com");
-		tmp_req.http_type = http::request::REQUEST_POST;
+		tmp_req.request_method() = http::request::REQUEST_POST;
 		test_d = tmp_req.render();
 		binary_data blabla;
 		// Start server

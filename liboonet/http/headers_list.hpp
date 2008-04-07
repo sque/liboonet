@@ -14,8 +14,6 @@ namespace oonet
 		OONET_DECLARE_EXCEPTION(ExceptionWrongFormat);
 
 		// Constant values
-		const extern string LF;		//!< Constant string of LineFeed
-		const extern string CRLF;	//!< Constant string CariageReturn-LineFeed
 		const extern binary_data const_crlfcrlf;	//!< Constant CRLF CRLF
 		const extern binary_data const_crlf;		//!< Constant CRLF
 		const extern binary_data const_lflf;		//!< Constant LF LF

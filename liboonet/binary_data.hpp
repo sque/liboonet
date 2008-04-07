@@ -31,7 +31,7 @@ namespace oonet
 
 	public:
 		//! A constant empty binary_data. Usefull for comparisons.
-		static const binary_data EMPTY;
+		static const binary_data nothing;
 
 		//! A constant which means <b>no position</b>
 		/**
@@ -54,7 +54,7 @@ namespace oonet
 		//! Copy operator
 		binary_data & operator=(const binary_data & r);
 
-		// String assignment operator
+		//! String assignment operator
 		inline binary_data & operator=(const string & str)
 		{	return (*this = binary_data(str));	}
 
@@ -162,6 +162,7 @@ namespace oonet
 
 		//! Less comparison
 		bool operator<(const binary_data & r) const throw();
+
 		//! @}
 
 		//! Get const pointer to data
@@ -170,6 +171,7 @@ namespace oonet
 		@see size()
 		*/
 		const byte * get_data_ptr() const throw();
+
 
 		//! Get size of data
 		/**
@@ -239,7 +241,7 @@ namespace oonet
 		@param sz The size of the subpart
 			it is outside boundries of current data.
 		*/
-		binary_data sub_data(size_t offset, size_t sz) const throw();
+		binary_data sub_data(size_t offset, size_t sz = npos) const throw();
 
 		//! Clear data.
 		void clear();
@@ -247,7 +249,6 @@ namespace oonet
 		//! Check if it is an empty object.
 		inline bool empty() const throw()
 		{	return (s_data == 0);	}
-
 	};  // !binary_data class
 };  // !oonet namespace
 
