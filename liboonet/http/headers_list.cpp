@@ -134,10 +134,15 @@ namespace oonet
 		}
 
 		// Parse headers
-		void headers_list::parse(const binary_data & dt_in)
+		size_t headers_list::parse(const binary_data & dt_in)
 		{	binary_data dt_remain, nl_delimiter, field_name, field_value, dt_line;
-			size_t nl_pos;	// Position of new line
-			size_t sep_pos;	// Value/Name separator
+			size_t start_dst = 0;	// Current distance from the start of block
+			size_t nl_pos;			// Position of new line
+			size_t sep_pos;			// Value/Name separator
+
+			// In case of empty we return not found
+			if (dt_in.empty())
+				return binary_data::npos;
 
 			// Initialize data
 			dt_remain = dt_in;
@@ -149,24 +154,29 @@ namespace oonet
 			{
 				// Get a line from headers
 				if ((nl_pos = _find_smart_new_line(dt_remain, nl_delimiter)) != binary_data::npos)
-				{
+				{	start_dst += nl_pos + nl_delimiter.size();
 					dt_line = dt_remain.get_until(nl_pos);
+
+					// Check for empty line
+					if (dt_line.empty())
+						return start_dst;
+
+					// Remaining data for parsing
 					dt_remain = dt_remain.get_from(nl_pos + nl_delimiter.size());
 				}
 				else
-				{
-					dt_line = dt_remain;
-					dt_remain.clear();
-				}
+					return binary_data::npos;	//Incomplete data
 
 				// Parse line
-				if ((sep_pos = dt_line.find(binary_data(":"))) == binary_data::npos)
+				if ((sep_pos = dt_line.find(const_colon)) == binary_data::npos)
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated http::Headers!");
 
 				field_name = _trim_back(dt_line.get_until(sep_pos));
 				field_value = _trim_front(dt_line.get_from(sep_pos+1));
 				headers_map[field_name] = field_value;
 			}
+
+			return binary_data::npos;	//Incomplete data
 		}
 
 	};	// !http namespace

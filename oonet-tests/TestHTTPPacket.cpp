@@ -139,10 +139,37 @@ namespace oonet
 		return true;
 	}
 
-	bool TestHTTPPacket::TestParseSpeed::OnExecute()
+	bool TestHTTPPacket::TestParseSpeedLF::OnExecute()
 	{	http::packet a;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
 		binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + binary_data("1234");
+		binary_data remaining;
+		bool b_parsed;
+
+		// Parse 10k times
+		ResetTimer();
+		for (long i = 0;i < 10000;i++)
+			b_parsed = a.parse(rendered, &remaining);
+
+		if (a.body() != PredefBody)
+			return false;
+		if (a.title() != binary_data("GET / HTTP/1.1"))
+			return false;
+		if (a.headers().get("Content-Length") != "60000")
+			return false;
+
+		// Final quality test
+		if (!b_parsed)
+			return false;
+		if (remaining != binary_data("1234"))
+			return false;
+		return true;
+	}
+
+	bool TestHTTPPacket::TestParseSpeedCRLF::OnExecute()
+	{	http::packet a;
+		binary_data PredefBody = binary_data((byte)'a', 60000);
+		binary_data rendered = binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody + binary_data("1234");
 		binary_data remaining;
 		bool b_parsed;
 
@@ -210,6 +237,11 @@ namespace oonet
 		if ((!b_parsed) || (remaining != binary_data::nothing))
 			return false;
 
+		// Read rfc 2616 headers may be zero so this is valid!
+		binary_data PacketNoHeads = binary_data("POST / HTTP/1.1\r\n\r\n\r\n") ;
+		if (!a.parse(PacketNoHeads))
+			return false;
+
 		return true;
 		// Packet With-out Body Mixed and wierd but valid headers
 		// THIS TEST FOR SOME REASON FAILS!
@@ -230,13 +262,6 @@ namespace oonet
 	}
 
 	bool TestHTTPPacket::TestParseWrong1::OnExecute()
-	{	http::packet a;
-		binary_data PacketNoHeads = binary_data("POST / HTTP/1.1\r\n\r\n\r\n") ;
-		a.parse(PacketNoHeads);
-		return false;
-	}
-
-	bool TestHTTPPacket::TestParseWrong2::OnExecute()
 	{	http::packet a;
 		binary_data PacketWrongContentLength = binary_data("POST / HTTP/1.1\r\nContent-Length: -1000\n\n") ;
 		a.parse(PacketWrongContentLength);

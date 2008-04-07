@@ -79,39 +79,22 @@ namespace oonet
 		// Parse data and save to packet
 		bool packet::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	binary_data str_body_size;
-			binary_data start_line, head, nl_delimiter;
+			binary_data dt_headers_and_below, nl_delimiter;
 			long body_size;
-			size_t head_end_pos;	// Position where head stops
+			size_t title_end_pos;	// Position where title ends
 			size_t body_start_pos;	// Position where body starts
 			size_t nl_pos;			// Position of new line
 
-			// Find two new lines that mention end of heads (CRLF and LF)
-			if ((head_end_pos = dt_in.find(const_crlfcrlf)) != binary_data::npos)
-			{	body_start_pos = head_end_pos + 4;
-			}
-			else
-			{
-				if ((head_end_pos = dt_in.find(const_lflf)) != binary_data::npos)
-				{	body_start_pos = head_end_pos + 2;
-				}
-				else
-				{	return false;	// Incomplete data stream
-				}
-			}
-
-			// Get all the message head
-			head = dt_in.get_until(head_end_pos);
-
 			// Get title
-			if ((nl_pos = _find_smart_new_line(head, nl_delimiter)) == binary_data::npos)
-				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
-					"This is not an HTTP packet!");
-			m_title = head.sub_data(0, nl_pos);					// Extract Title
+			if ((title_end_pos = _find_smart_new_line(dt_in, nl_delimiter)) == binary_data::npos)
+				return false;	// Not even title is here
+			m_title =  dt_in.get_until(title_end_pos);
+			dt_headers_and_below = dt_in.get_from(title_end_pos + nl_delimiter.size());
 
-
-			// Get Headers
-			head = head.get_from(nl_pos + nl_delimiter.size());	// Cat rest of head.
-			m_headers.parse(head);
+			// Get headers
+			if ((body_start_pos = m_headers.parse(dt_headers_and_below)) == binary_data::npos)
+				return false;	// Incomplete Head!
+			body_start_pos += title_end_pos + nl_delimiter.size();
 
 			// Get content-length header
 			if (m_headers.exist(const_content_length))
@@ -140,9 +123,8 @@ namespace oonet
 
 			// Calculate remaining data
 			if (dt_remain)
-			{
 				*dt_remain = dt_in.get_from(body_start_pos + body_size);
-			}
+
 			return true;
 		}
 	};	// !http namespace

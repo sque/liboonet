@@ -219,16 +219,18 @@ namespace oonet
 	}
 
 	bool TestHTTPHeaders::TestParse::OnExecute()
-	{	string rendered = "a: 1\r\nbabalokos: 123123\r\nkoko: asd";
-		string rendered2 = "mimikos: d\r\nvagelis: qwe\r\nolalola:123";
-		string rendered3 = "mimikos : d\r\nvagelis   : qwe\r\nolalola :123";
-		string renderedLF = "mimikos: d\nvagelis: qwe\nolalola: 123";
-		string renderedMixed1 = "mimikos: d\r\nvagelis: qwe\nolalola: 123";
-		string renderedMixed2 = "mimikos: d\nvagelis: qwe\r\nolalola: 123";
+	{	string rendered = "a: 1\r\nbabalokos: 123123\r\nkoko: asd\r\n";
+		string rendered2 = "mimikos: d\r\nvagelis: qwe\r\nolalola:123\r\n";
+		string rendered3 = "mimikos : d\r\nvagelis   : qwe\r\nolalola :123\r\n";
+		string renderedLF = "mimikos: d\nvagelis: qwe\nolalola: 123\r\n";
+		string renderedMixed1 = "mimikos: d\r\nvagelis: qwe\nolalola: 123\r\n";
+		string renderedMixed2 = "mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n";
+		string renderedMixedComplete = "mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n\n";
 		http::headers_list a;
+		size_t ret_value;
 
 		// Test with CRLF
-		a.parse(rendered);
+		ret_value =a.parse(rendered);
 		if (a.size() != 3)
 			return false;
 		if (a.get("a") != "1")
@@ -237,9 +239,11 @@ namespace oonet
 			return false;
 		if (a.get("koko") != "asd")
 			return false;
+		if (ret_value != binary_data::npos)
+			return false;
 
 		// Test with CRLF in same object
-		a.parse(rendered2);
+		ret_value = a.parse(rendered2);
 		if (a.size() != 3)
 			return false;
 		if (a.get("mimikos") != "d")
@@ -248,9 +252,11 @@ namespace oonet
 			return false;
 		if (a.get("olalola") != "123")
 			return false;
+		if (ret_value != binary_data::npos)
+			return false;
 
 		// Test with CRLF in same object
-		a.parse(rendered3);
+		ret_value = a.parse(rendered3);
 		if (a.size() != 3)
 			return false;
 		if (a.get("mimikos") != "d")
@@ -258,10 +264,12 @@ namespace oonet
 		if (a.get("vagelis") != "qwe")
 			return false;
 		if (a.get("olalola") != "123")
+			return false;
+		if (ret_value != binary_data::npos)
 			return false;
 
 		// Test with LF in same object
-		a.parse(renderedLF);
+		ret_value = a.parse(renderedLF);
 		if (a.size() != 3)
 			return false;
 		if (a.get("mimikos") != "d")
@@ -269,10 +277,12 @@ namespace oonet
 		if (a.get("vagelis") != "qwe")
 			return false;
 		if (a.get("olalola") != "123")
+			return false;
+		if (ret_value != binary_data::npos)
 			return false;
 
 		// Test with mixed in same object
-		a.parse(renderedMixed1);
+		ret_value = a.parse(renderedMixed1);
 		if (a.size() != 3)
 			return false;
 		if (a.get("mimikos") != "d")
@@ -280,10 +290,12 @@ namespace oonet
 		if (a.get("vagelis") != "qwe")
 			return false;
 		if (a.get("olalola") != "123")
+			return false;
+		if (ret_value != binary_data::npos)
 			return false;
 
 		// Test with mixed in same object
-		a.parse(renderedMixed2);
+		ret_value = a.parse(renderedMixed2);
 		if (a.size() != 3)
 			return false;
 		if (a.get("mimikos") != "d")
@@ -291,10 +303,36 @@ namespace oonet
 		if (a.get("vagelis") != "qwe")
 			return false;
 		if (a.get("olalola") != "123")
+			return false;
+		if (ret_value != binary_data::npos)
+			return false;
+
+		// Test with mixed and complete
+		ret_value = a.parse(renderedMixedComplete);
+		if (a.size() != 3)
+			return false;
+		if (a.get("mimikos") != "d")
+			return false;
+		if (a.get("vagelis") != "qwe")
+			return false;
+		if (a.get("olalola") != "123")
+			return false;
+		if (ret_value != renderedMixedComplete.size())
 			return false;
 
 		// Parse an empty string
-		a.parse(binary_data::nothing);
+		a.clear();
+		ret_value = a.parse(binary_data::nothing);
+		if (a.size() != 0)
+			return false;
+		if (ret_value != binary_data::npos)
+			return false;
+
+		// As per rfc 2616 http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
+		// Headers may be zero!
+		a.clear();
+		if (a.parse(http::const_crlf) != 2)
+			return false;
 		if (a.size() != 0)
 			return false;
 
@@ -306,16 +344,6 @@ namespace oonet
 		http::headers_list a;
 
 		a.parse(rendered);
-		return false;
-	}
-
-	bool TestHTTPHeaders::TestParseWrong2::OnExecute()
-	{	http::headers_list a;
-
-		// Parse an empty new line (LF)
-		a.parse(http::const_lf);
-		if (a.size() != 0)
-			return false;
 		return false;
 	}
 

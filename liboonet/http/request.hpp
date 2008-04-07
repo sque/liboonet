@@ -22,7 +22,7 @@ namespace oonet
 		{
 		public:
 			//! Enumerate the request type
-			enum EN_REQUEST_METHOD
+			enum E_REQUEST_METHOD
 			{
 				REQUEST_GET,		//! GET request
 				REQUEST_POST,		//! POST request
@@ -33,7 +33,7 @@ namespace oonet
 			const static binary_data const_get;
 			const static binary_data const_post;
 
-			EN_REQUEST_METHOD m_req_method;	//!< HTTP request method
+			E_REQUEST_METHOD m_req_method;	//!< HTTP request method
 			binary_data m_http_version;		//!< HTTP version
 			Url m_uri;						//!< Requested url
 
@@ -88,11 +88,11 @@ namespace oonet
 			{	return m_uri;	}
 
 			//! Reference at request method
-			inline EN_REQUEST_METHOD & request_method()
+			inline E_REQUEST_METHOD & request_method()
 			{	return m_req_method;	}
 
 			//! Reference at request method (const)
-			inline const EN_REQUEST_METHOD & request_method() const
+			inline const E_REQUEST_METHOD & request_method() const
 			{	return m_req_method;	}
 		};	// !request class
 	};	// !http namespace

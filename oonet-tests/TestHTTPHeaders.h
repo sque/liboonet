@@ -14,23 +14,22 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestSmartNewLineQuality, _T("_smart_nl() Quality"));
 		OONET_DECLARESUBTEST(TestSmartNewLineSpeedCRLF, _T("_smart_nl() \\r\\n 10k Speed"));
 		OONET_DECLARESUBTEST(TestSmartNewLineSpeedLF, _T("_smart_nl() \\n 10k Speed"));
-		OONET_DECLARESUBTEST(TestCtor, _T("Ctor() default"));
-		OONET_DECLARESUBTEST(TestCopyCtor, _T("Ctor() copy constructor"));
+		OONET_DECLARESUBTEST(TestCtor, _T("ctor() default"));
+		OONET_DECLARESUBTEST(TestCopyCtor, _T("ctor() copy constructor"));
 		OONET_DECLARESUBTEST(TestCopyOperator, _T("operator= quality"));
-		OONET_DECLARESUBTESTEXC(TestSetHeaderWrong1, _T("SetHeader() wrong"), _T("ExceptionAssertationFailed"));
-		OONET_DECLARESUBTEST(TestSetHeader, _T("SetHeader() quality"));
-		OONET_DECLARESUBTEST(TestSetHeaderSpeed, _T("SetHeader() 100k speed"));
-		OONET_DECLARESUBTEST(TestRemoveHeader, _T("RemoveHeader() quality"));
-		OONET_DECLARESUBTESTEXC(TestRemoveHeaderWrong1, _T("RemoveHeader() wrong"), _T("ExceptionNotFound"));
-		OONET_DECLARESUBTESTEXC(TestRemoveHeaderWrong2, _T("RemoveHeader() wrong"), _T("ExceptionNotFound"));
-		OONET_DECLARESUBTEST(TestRemoveHeaderSpeed, _T("RemoveHeader() 100k Speed"));
-		OONET_DECLARESUBTEST(TestRender, _T("Render() quality"));
-		OONET_DECLARESUBTEST(TestRenderSpeed100k_2, _T("Render() 100k/2H speed"));
-		OONET_DECLARESUBTEST(TestRenderSpeed100k_100, _T("Render() 100k/100h speed"));
-		OONET_DECLARESUBTEST(TestParse, _T("Parse() quality"));
-		OONET_DECLARESUBTESTEXC(TestParseWrong1, _T("Parse() wrong"), _T("ExceptionWrongFormat"));
-		OONET_DECLARESUBTESTEXC(TestParseWrong2, _T("Parse() wrong"), _T("ExceptionWrongFormat"));
-		OONET_DECLARESUBTEST(TestParseSpeed100k, _T("Parse() 100k speed"));
+		OONET_DECLARESUBTESTEXC(TestSetHeaderWrong1, _T("set() wrong"), _T("ExceptionAssertationFailed"));
+		OONET_DECLARESUBTEST(TestSetHeader, _T("set() quality"));
+		OONET_DECLARESUBTEST(TestSetHeaderSpeed, _T("set() 100k speed"));
+		OONET_DECLARESUBTEST(TestRemoveHeader, _T("erase() quality"));
+		OONET_DECLARESUBTESTEXC(TestRemoveHeaderWrong1, _T("erase() wrong"), _T("ExceptionNotFound"));
+		OONET_DECLARESUBTESTEXC(TestRemoveHeaderWrong2, _T("erase() wrong"), _T("ExceptionNotFound"));
+		OONET_DECLARESUBTEST(TestRemoveHeaderSpeed, _T("erase() 100k Speed"));
+		OONET_DECLARESUBTEST(TestRender, _T("render() quality"));
+		OONET_DECLARESUBTEST(TestRenderSpeed100k_2, _T("render() 100k/2H speed"));
+		OONET_DECLARESUBTEST(TestRenderSpeed100k_100, _T("render() 100k/100h speed"));
+		OONET_DECLARESUBTEST(TestParse, _T("parse() quality"));
+		OONET_DECLARESUBTESTEXC(TestParseWrong1, _T("parse() wrong"), _T("ExceptionWrongFormat"));
+		OONET_DECLARESUBTEST(TestParseSpeed100k, _T("parse() 100k speed"));
 	public:
 		// Constructor
 		TestHTTPHeaders()
@@ -54,7 +53,6 @@ namespace oonet
 			OONET_REGISTERSUBTEST(TestRenderSpeed100k_100);
 			OONET_REGISTERSUBTEST(TestParse);
 			OONET_REGISTERSUBTEST(TestParseWrong1);
-			OONET_REGISTERSUBTEST(TestParseWrong2);
 			OONET_REGISTERSUBTEST(TestParseSpeed100k);
 		}
 

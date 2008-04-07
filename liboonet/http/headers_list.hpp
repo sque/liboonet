@@ -108,6 +108,10 @@ namespace oonet
 			//! Check if a header exists
 			bool exist(const binary_data & name);
 
+			//! Clear list
+			void clear()
+			{	headers_map.clear();	}
+
 			//! Render headers in HTTP Format
 			/**
 				It will create a string with headers as they must
@@ -124,10 +128,11 @@ namespace oonet
 				headers' names and values.
 			@param data The string with headers, which must not have any leading or
 				trailing new line.
+			@return The position that headers ended
 			@throw ExceptionWrongFormat If the supplied string is not a valid HTTP
 				formatted headers.
 			*/
-			void parse(const binary_data & dt_in);
+			size_t parse(const binary_data & dt_in);
 		}; // !Headers class
 	};	// !http namespace
 };	// !oonet namespace
