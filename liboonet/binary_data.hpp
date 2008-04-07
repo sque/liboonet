@@ -30,13 +30,10 @@ namespace oonet
 		void _assure_local_copy();
 
 	public:
-		//! A constant empty binary_data. Usefull for comparisons.
+		//! A constant of empty binary_data. Usefull for comparisons.
 		static const binary_data nothing;
 
 		//! A constant which means <b>no position</b>
-		/**
-			It is used by functions that return size_t when operation didn't complete correctly
-		*/
 		static const size_t npos;
 
 		//! Default constructor

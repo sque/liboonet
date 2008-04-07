@@ -31,7 +31,7 @@ namespace oonet
 			nothing is found then the value of nl_str is undefined.
 		@return The offset where new line character was found
 		*/
-		size_t _find_smart_new_line(const binary_data & dt_in, binary_data & nl_delimiter);
+		size_t _find_smart_new_line(const binary_data & dt_in, binary_data & nl_delimiter, size_t offset = 0);
 
 		//! Class for managing HTTP headers.
 		/**

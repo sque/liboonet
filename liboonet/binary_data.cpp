@@ -8,11 +8,12 @@
 
 namespace oonet
 {
-	///////////////////////////////////////////////
 	// Constants
 	const binary_data binary_data::nothing = binary_data();
 	const size_t binary_data::npos = 0xFFFFFFFF;
 
+	// Mem-block is internal implementation of the real memory holder,
+	// binary_data is a shared_ptr around an object of mem-block
 	class binary_data::_mem_block
 	{
 	public:
