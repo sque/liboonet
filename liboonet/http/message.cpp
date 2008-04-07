@@ -2,33 +2,33 @@
 @file Packet.cpp
 @brief Implementation of http::Packet class
 */
-#include "./packet.hpp"
+#include "./message.hpp"
 
 namespace oonet
 {
 	namespace http
 	{
-		const binary_data packet::const_http_ver1_1 = binary_data("HTTP/1.1");
-		const binary_data packet::const_http_ver1_0 = binary_data("HTTP/1.0");
-		const binary_data packet::const_content_length = binary_data("Content-Length");
+		const binary_data message::const_http_ver1_1 = binary_data("HTTP/1.1");
+		const binary_data message::const_http_ver1_0 = binary_data("HTTP/1.0");
+		const binary_data message::const_content_length = binary_data("Content-Length");
 
-		packet::packet(void)
+		message::message(void)
 			:b_has_body(true)
 		{
 		}
 
-		packet::~packet(void)
+		message::~message(void)
 		{
 		}
 
 		// Copy constructor
-		packet::packet(const packet &r)
+		message::message(const message &r)
 		{
 			*this = r;
 		}
 
 		// Update headers
-		void packet::_update_headers()
+		void message::_update_headers()
 		{
 			if (b_has_body)
 			{
@@ -44,7 +44,7 @@ namespace oonet
 		}
 
 		// Copy operator
-		packet & packet::operator=(const packet & r)
+		message & message::operator=(const message & r)
 		{
 			m_body = r.m_body;
 			m_headers = r.m_headers;
@@ -52,8 +52,8 @@ namespace oonet
 			return *this;
 		}
 
-		// Render a packet from data
-		binary_data packet::render(const binary_data & nl_delimiter)
+		// Render a message from data
+		binary_data message::render(const binary_data & nl_delimiter)
 		{	binary_data tmp_packet;
 
 			// Update Headers
@@ -76,14 +76,13 @@ namespace oonet
 			return tmp_packet;
 		}
 
-		// Parse data and save to packet
-		bool packet::parse(const binary_data & dt_in, binary_data * dt_remain)
+		// Parse data and save to message
+		bool message::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	binary_data str_body_size;
 			binary_data dt_headers_and_below, nl_delimiter;
 			long body_size;
 			size_t title_end_pos;	// Position where title ends
 			size_t body_start_pos;	// Position where body starts
-			size_t nl_pos;			// Position of new line
 
 			// Get title
 			if ((title_end_pos = _find_smart_new_line(dt_in, nl_delimiter)) == binary_data::npos)

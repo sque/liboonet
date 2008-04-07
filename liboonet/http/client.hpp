@@ -55,7 +55,7 @@ namespace oonet
 			@return An http::response object holding the answer from the server.
 			@throw ExceptionTimeOut If maximum time reached without receiving any answer
 			@throw ExceptionNotConnected If http::Client is not connected in any server yet, or connection was closed
-			@remarks In case that a wrong formated packet
+			@remarks In case that a wrong formated message
 				arrives, then the client is automatically disconnected
 				from server.
 			*/

@@ -1,4 +1,4 @@
-#include "TestPortInet.h"
+#include "test_port_inet.hpp"
 #include "port_inet.hpp"
 
 namespace oonet

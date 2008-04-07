@@ -56,7 +56,7 @@ namespace oonet
 			// Gather answer
 			{mt::scoped_lock m(mux_access_data);
 				if (!tmpResponse.parse(WaitingToProcessData, &WaitingToProcessData ))
-					OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole packet before connection get closed.");
+					OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole message before connection get closed.");
 			}
 
 			return tmpResponse;

@@ -1,4 +1,4 @@
-#include "TestThread.h"
+#include "test_thread.hpp"
 #include "thread.hpp"
 #include <time.h>
 

@@ -1,4 +1,4 @@
-#include "TestHTTPResponse.h"
+#include "test_http_response.hpp"
 #include "http/response.hpp"
 
 namespace oonet

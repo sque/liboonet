@@ -1,4 +1,4 @@
-#include "TestHTTPRequest.h"
+#include "test_http_request.hpp"
 #include "http/request.hpp"
 
 namespace oonet
@@ -230,7 +230,7 @@ namespace oonet
 
 		ResetTimer();
 		// Post LF
-		for(long i = 0;i < 1000000;i++)
+		for(long i = 0;i < 10000;i++)
 			a.parse(rendered);
 		if (a.headers().size() != 2)
 			return false;

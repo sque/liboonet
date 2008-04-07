@@ -25,7 +25,7 @@ namespace oonet
 
 		// Copy constructor
 		request::request(const request & r):
-			packet(r)
+			message(r)
 		{
 			// Copy data
 			m_uri = r.m_uri;
@@ -37,7 +37,7 @@ namespace oonet
 		request & request::operator=(const request & r)
 		{
 			// Copy parent
-			packet::operator =(r);
+			message::operator =(r);
 
 			// Copy data
 			m_uri = r.m_uri;
@@ -46,7 +46,7 @@ namespace oonet
 			return *this;
 		}
 
-		// Render packet
+		// Render message
 		binary_data request::render(const binary_data & nl_delimiter)
 		{
 			// Make up title
@@ -66,23 +66,23 @@ namespace oonet
 			m_title += const_space;
 			m_title += m_http_version;
 
-			// Render the packet
-			return packet::render(nl_delimiter);
+			// Render the message
+			return message::render(nl_delimiter);
 		}
 
-		// Parse packet
+		// Parse message
 		bool request::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	size_t commandend_pos, urlend_pos;
 			binary_data _command_string;
 
-			// Parse packet
-			if(!packet::parse(dt_in, dt_remain))
+			// Parse message
+			if(!message::parse(dt_in, dt_remain))
 				return false;
 
 			// Get Command
 			if ((commandend_pos = m_title.find(const_space))== binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
-					"This is not an http request packet");
+					"This is not an http request message");
 			_command_string = m_title.sub_data(0, commandend_pos);
 			if (_command_string == const_get)
 				m_req_method = REQUEST_GET;
@@ -99,18 +99,18 @@ namespace oonet
 			commandend_pos ++;	// Start one position lower
 			if ((urlend_pos =  m_title.find(const_space, commandend_pos)) == binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
-					"This is not an http request packet");
+					"This is not an http request message");
 			m_uri = title().sub_data(commandend_pos, urlend_pos - commandend_pos).to_string();
 			if ((string)m_uri == "")
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
-					"This is not an http request packet");
+					"This is not an http request message");
 
 			// Get version
 			urlend_pos ++;
 			m_http_version = m_title.get_from(urlend_pos);
 			if ((m_http_version != const_http_ver1_1) && (m_http_version != const_http_ver1_0))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
-					"This is not an http request packet");
+					"This is not an http request message");
 			return true;
 		}
 	};	// !http namespace

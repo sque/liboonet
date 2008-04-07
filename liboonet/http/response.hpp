@@ -3,7 +3,7 @@
 
 #include "../oonet.hpp"
 #include "./headers_list.hpp"
-#include "./packet.hpp"
+#include "./message.hpp"
 
 namespace oonet
 {
@@ -18,7 +18,7 @@ namespace oonet
 			functionality.
 		*/
 		class response:
-			public packet
+			public message
 		{
 		protected:
 			binary_data m_error_code;
@@ -36,22 +36,22 @@ namespace oonet
 			//! Default destructor
 			virtual ~response(void);
 
-			//! Render packet with specific HTTP response parameters
+			//! Render message with specific HTTP response parameters
 			/**
 				This is overloaded from http::Packet::render() and before renderning
-				the packet, it will render the title from variables: response::ErrorCode and response::ErrorMsg.
+				the message, it will render the title from variables: response::ErrorCode and response::ErrorMsg.
 			@see http::Packet::render() for further explanation.
 			*/
 			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
 
-			//! Parse an HTTP response packet
+			//! Parse an HTTP response message
 			/**
 				This is overloaded function from http::Packet::parse() and after
 				parsing its major componments it will parse the title and
 				populate the variables response::ErrorCode and response::ErrorMsg.
 				Additionally to the exceptions tha may be thrown from http::Packet::parse()
 				this overloaded function will throw too:
-			@throw ExceptionWrongFormat if the title of HTTP packet is not an HTTP reponse's title.
+			@throw ExceptionWrongFormat if the title of HTTP message is not an HTTP reponse's title.
 			@see http::Packet::parse() for further explanation.
 			*/
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);

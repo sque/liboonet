@@ -312,7 +312,7 @@ namespace oonet
 		return wstring((wchar_t *)get_data_ptr(), (wstring::size_type)wstring_size);
 	}
 
-	// Get starting packet until that size
+	// Get starting message until that size
 	binary_data binary_data::get_until(const size_t & offset) const throw()
 	{
 		// If requested is more than available, then return all data
@@ -325,7 +325,7 @@ namespace oonet
 		return shallow_copy;
 	}
 
-	// Get the rest of packet from a specific offset
+	// Get the rest of message from a specific offset
 	binary_data binary_data::get_from(const size_t & offset) const throw()
 	{
 		// If requested is more than available, then return empty

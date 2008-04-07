@@ -1,4 +1,4 @@
-#include "TestMutex.h"
+#include "test_mutex.hpp"
 #include "thread.hpp"
 #include <time.h>
 

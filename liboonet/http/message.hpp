@@ -15,16 +15,16 @@ namespace oonet
 		/**
 			It can render or parse HTTP packets from/to its major parts (Title, Headers, Body)
 		*/
-		class packet
+		class message
 		{
 		protected:
 			// Update headers
 			void _update_headers();
 
-			binary_data		m_title;	//!< The title of the packet
-			headers_list	m_headers;	//!< The headers of the packet
+			binary_data		m_title;	//!< The title of the message
+			headers_list	m_headers;	//!< The headers of the message
 			binary_data		m_body;		//!< The Body of the document
-			bool			b_has_body;	//!< A flag if packet includes body
+			bool			b_has_body;	//!< A flag if message includes body
 
 			const static binary_data const_http_ver1_1;
 			const static binary_data const_http_ver1_0;
@@ -32,41 +32,41 @@ namespace oonet
 		public:
 
 			//! Default Constructor
-			packet(void);
+			message(void);
 
 			//! Copy constructor. Creates an object based on another instance.
 			/**
 				@param r The source object to copy data.
 			*/
-			packet(const packet &r);
+			message(const message &r);
 
 			//! Destructor
-			virtual ~packet(void);
+			virtual ~message(void);
 
 			//! Copy operator
 			/**
 				@param r The right part of the assignment.
 			*/
-			packet & operator=(const packet & r);
+			message & operator=(const message & r);
 
-			//! Render a packet in HTTP format
+			//! Render a message in HTTP format
 			/**
 				It will use all the internal data (title, headers, body) and create
-				a right formated HTTP/1.1 packet.
+				a right formated HTTP/1.1 message.
 			@param nl_str The string to use for new lines.
-			@return The rendered packet, ready for transmition
+			@return The rendered message, ready for transmition
 			*/
 			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
 
-			//! Parse HTTP traffic and extract the leading HTTP packet
+			//! Parse HTTP traffic and extract the leading HTTP message
 			/**
-				If a packet is found it will be splitted it in major parts
+				If a message is found it will be splitted it in major parts
 				and internal variables will be populated with its parts.
-				HTTP packet must start from the begining of data.
-			@param data The data block to find an HTTP packet
-			@return The size of datablock that the packet was found.
+				HTTP message must start from the begining of data.
+			@param data The data block to find an HTTP message
+			@return The size of datablock that the message was found.
 			@throw ExceptionIncomplete If the traffic seems to be valid HTTP traffic
-				but there is no complete packet inside, data are missing.
+				but there is no complete message inside, data are missing.
 			@throw ExceptionWrongFormat If the traffic doesn't meet the specification
 				of HTTP.
 			*/

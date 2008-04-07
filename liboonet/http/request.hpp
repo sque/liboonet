@@ -2,7 +2,7 @@
 #define OONET_HTTP_REQUEST_H_DEFINED
 
 #include "../oonet.hpp"
-#include "./packet.hpp"
+#include "./message.hpp"
 #include "./url.hpp"
 
 namespace oonet
@@ -18,7 +18,7 @@ namespace oonet
 			functionality.
 		*/
 		class request :
-			public packet
+			public message
 		{
 		public:
 			//! Enumerate the request type
@@ -51,22 +51,22 @@ namespace oonet
 			//! Copy Operator
 			request & operator=(const request & r);
 
-			//! Render packet with specific title componments
+			//! Render message with specific title componments
 			/**
 				This is overloaded from http::Packet::render() and before renderning
-				the packet, it will render the title from variables: request::http_type, request::url and request::http_version.
+				the message, it will render the title from variables: request::http_type, request::url and request::http_version.
 			@see http::Packet::render() for further explanation.
 			*/
 			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
 
-			//! Parse an HTTP request packet
+			//! Parse an HTTP request message
 			/**
 				This is overloaded function from http::Packet::parse() and after
 				parsing its major componments it will parse the title and
 				populate the variables request::http_type, request::url and request::http_version.
 				Additionally to the exceptions tha may be thrown from http::Packet::parse()
 				this overloaded function will throw too:
-			@throw ExceptionWrongFormat if the title of HTTP packet is not an HTTP request's title.
+			@throw ExceptionWrongFormat if the title of HTTP message is not an HTTP request's title.
 			@see http::Packet::parse() for further explanation.
 			*/
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);

@@ -66,7 +66,7 @@ namespace oonet
             FAMILY_AX25 = PF_AX25,          //!<   Amateur radio AX.25 protocol
             FAMILY_ATMPVC = PF_ATMPVC,      //!<   Access to raw ATM PVCs
             FAMILY_APPLETALK = PF_APPLETALK,//!<   Appletalk                        ddp(7)
-            FAMILY_PACKET = PF_PACKET       //!<   Low level packet interface       packet(7)
+            FAMILY_PACKET = PF_PACKET       //!<   Low level message interface       message(7)
 #elif (OONET_OS == OONET_OS_WIN32)
 			FAMILY_INET = AF_INET			//!<   IPv4 Internet protocols
 #endif
@@ -77,7 +77,7 @@ namespace oonet
         {
             TYPE_STREAM = SOCK_STREAM,      //!< Streamed socket for connection-oriented
             TYPE_DGRAM = SOCK_DGRAM,        //!< Connectionless, unreliable of fixed length
-            TYPE_RAW = SOCK_RAW,            //!< Raw packet format
+            TYPE_RAW = SOCK_RAW,            //!< Raw message format
         };
 
         //! Enumeration of socket protocol

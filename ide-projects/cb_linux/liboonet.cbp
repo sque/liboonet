@@ -53,8 +53,8 @@
 		<Unit filename="../../liboonet/http/client.hpp" />
 		<Unit filename="../../liboonet/http/headers_list.cpp" />
 		<Unit filename="../../liboonet/http/headers_list.hpp" />
-		<Unit filename="../../liboonet/http/packet.cpp" />
-		<Unit filename="../../liboonet/http/packet.hpp" />
+		<Unit filename="../../liboonet/http/message.cpp" />
+		<Unit filename="../../liboonet/http/message.hpp" />
 		<Unit filename="../../liboonet/http/request.cpp" />
 		<Unit filename="../../liboonet/http/request.hpp" />
 		<Unit filename="../../liboonet/http/response.cpp" />

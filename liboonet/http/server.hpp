@@ -43,7 +43,7 @@ namespace oonet
 				request type the derived class is responsible to return appropriate http::response to
 				client.
 			@param Uri The uri of the request
-			@param full_request Is the full packet of the request done by client
+			@param full_request Is the full message of the request done by client
 			@param client_addr Is the address of client that does the request.
 			@return The http::response that will be sent back to client.
 			*/
