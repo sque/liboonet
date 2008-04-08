@@ -21,8 +21,8 @@ namespace oonet
 			public message
 		{
 		protected:
-			binary_data m_error_code;
-			binary_data m_error_msg;
+			ushort m_status_code;
+			binary_data m_reason_phrase;
 		public:
 			//! Default constructor
 			response(void);
@@ -57,20 +57,20 @@ namespace oonet
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
 
 			//! Reference at error code (const)
-			inline const binary_data & error_code() const
-			{	return m_error_code;	}
+			inline const ushort & status_code() const
+			{	return m_status_code;	}
 
 			//! Reference at error code
-			inline binary_data & error_code()
-			{	return m_error_code;	}
+			inline ushort & status_code()
+			{	return m_status_code;	}
 
 			//! Reference at error message (const)
-			inline const binary_data & error_message() const
-			{	return m_error_msg;	}
+			inline const binary_data & reason_phrase() const
+			{	return m_reason_phrase;	}
 
 			//! Reference at error message
-			inline binary_data & error_message()
-			{	return m_error_msg;	}
+			inline binary_data & reason_phrase()
+			{	return m_reason_phrase;	}
 		};	// !response class
 	};	// !http namespace
 };	// !oonet namespace

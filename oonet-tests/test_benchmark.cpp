@@ -120,7 +120,7 @@ namespace oonet
 		binary_data test_d('a', 1000);
 		http::request tmp_req;
 		tmp_req.body() = test_d;
-		tmp_req.headers().set("Host", "www.google.com");
+		tmp_req.headers().add("Host", "www.google.com");
 		tmp_req.request_method() = http::request::REQUEST_POST;
 		test_d = tmp_req.render();
 		binary_data blabla;

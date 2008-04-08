@@ -23,10 +23,11 @@ namespace oonet
 
 	bool TestHTTPRequest::TestCopyCtor::OnExecute()
 	{	http::request a;
+		string header_value;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.title() = "GET / HTTP/1.1";
+		a.headers().add("a", "123");
+		a.title() = binary_data("GET / HTTP/1.1");
 		a.request_method() = http::request::REQUEST_POST;
 		a.uri() = "/index.html";
 
@@ -34,7 +35,7 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 1)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -48,7 +49,7 @@ namespace oonet
 			return false;
 		if (b.headers().size() != 1)
 			return false;
-		if (b.headers().get("a") != "123")
+		if (!(b.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (b.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -60,10 +61,11 @@ namespace oonet
 	}
 	bool TestHTTPRequest::TestCopyOperator::OnExecute()
 	{	http::request a, b;
+		string header_value;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.title() = "GET / HTTP/1.1";
+		a.headers().add("a", "123");
+		a.title() = binary_data("GET / HTTP/1.1");
 		a.request_method() = http::request::REQUEST_POST;
 		a.uri() = "/index.html";
 
@@ -71,7 +73,7 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 1)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -85,7 +87,7 @@ namespace oonet
 			return false;
 		if (b.headers().size() != 1)
 			return false;
-		if (b.headers().get("a") != "123")
+		if (!(b.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (b.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -98,12 +100,12 @@ namespace oonet
 
 	bool TestHTTPRequest::TestRender::OnExecute()
 	{	http::request a;
-		string shouldbeLF = "POST /index.html HTTP/1.1\nContent-Length: 12\na: 123\n\nkoukouroukou";
-		string shouldbeCRLF = "POST /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
+		string shouldbeLF = "POST /index.html HTTP/1.1\na: 123\nContent-Length: 12\n\nkoukouroukou";
+		string shouldbeCRLF = "POST /index.html HTTP/1.1\r\na: 123\r\nContent-Length: 12\r\n\r\nkoukouroukou";
 		string out;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
+		a.headers().add("a", "123");
 		a.request_method() = http::request::REQUEST_POST;
 		a.uri() = "/index.html";
 
@@ -120,11 +122,11 @@ namespace oonet
 
 	bool TestHTTPRequest::TestRenderSpeed::OnExecute()
 	{	http::request a;
-		binary_data shouldbeLF = binary_data("POST /index.html HTTP/1.1\nContent-Length: 12\na: 123\n\nkoukouroukou");
+		binary_data shouldbeLF = binary_data("POST /index.html HTTP/1.1\na: 123\nContent-Length: 12\n\nkoukouroukou");
 		binary_data out;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
+		a.headers().add("a", "123");
 		a.request_method() = http::request::REQUEST_POST;
 		a.uri() = "/index.html";
 
@@ -145,6 +147,7 @@ namespace oonet
 		binary_data renderedLF = binary_data("POST /index.html HTTP/1.1\nContent-Length: 12\na: 123\n\nkoukouroukou") + trail;
 		binary_data renderedCRLF = binary_data("POST /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") + trail;
 		binary_data renderedGETCRLF = binary_data("GET /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") + trail;
+		string header_value;
 
 		// Post LF
 		b_parsed = a.parse(renderedLF, &remaining);
@@ -152,9 +155,9 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("POST /index.html HTTP/1.1"))
 			return false;
@@ -171,9 +174,9 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("POST /index.html HTTP/1.1"))
 			return false;
@@ -190,9 +193,9 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("GET /index.html HTTP/1.1"))
 			return false;
@@ -227,6 +230,7 @@ namespace oonet
 	{	http::request a;
 		string renderedGETCRLF = "GET /index.html HTTP/1.1\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
 		binary_data rendered(renderedGETCRLF);
+		string header_value;
 
 		ResetTimer();
 		// Post LF
@@ -234,9 +238,9 @@ namespace oonet
 			a.parse(rendered);
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("GET /index.html HTTP/1.1"))
 			return false;

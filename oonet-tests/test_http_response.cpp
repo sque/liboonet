@@ -14,33 +14,34 @@ namespace oonet
 			return false;
 		if (! a.title().empty())
 			return false;
-		if (a.error_code() != binary_data("200"))
+		if (a.status_code() != 200)
 			return false;
-		if (a.error_message() != binary_data("OK"))
+		if (a.reason_phrase() != binary_data("OK"))
 			return false;
 		return true;
 	}
 
 	bool TestHTTPResponse::TestCopyCtor::OnExecute()
 	{	http::response a;
+		string header_value;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.title() = "200 OK";
-		a.error_code() = "404";
-		a.error_message() = "Not Found";
+		a.headers().add("a", "123");
+		a.title() = binary_data("200 OK");
+		a.status_code() = 404;
+		a.reason_phrase() = binary_data("Not Found");
 
 		if (a.body()  != binary_data("koukouroukou"))
 			return false;
 		if (a.headers().size() != 1)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (a.title() != binary_data("200 OK"))
 			return false;
-		if (a.error_code() != binary_data("404"))
+		if (a.status_code() != 404)
 			return false;
-		if (a.error_message() != binary_data("Not Found"))
+		if (a.reason_phrase() != binary_data("Not Found"))
 			return false;
 
 		http::response b(a);
@@ -48,36 +49,37 @@ namespace oonet
 			return false;
 		if (b.headers().size() != 1)
 			return false;
-		if (b.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (b.title() != binary_data("200 OK"))
 			return false;
-		if (b.error_code() != binary_data("404"))
+		if (b.status_code() != 404)
 			return false;
-		if (b.error_message() != binary_data("Not Found"))
+		if (b.reason_phrase() != binary_data("Not Found"))
 			return false;
 		return true;
 	}
 	bool TestHTTPResponse::TestCopyOperator::OnExecute()
 	{	http::response a, b;
+		string header_value;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.title() = "200 OK";
-		a.error_code() = "404";
-		a.error_message() = "Not Found";
+		a.headers().add("a", "123");
+		a.title() = binary_data("200 OK");
+		a.status_code() = 404;
+		a.reason_phrase() = binary_data("Not Found");
 
 		if (a.body()  != binary_data("koukouroukou"))
 			return false;
 		if (a.headers().size() != 1)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (a.title() != binary_data("200 OK"))
 			return false;
-		if (a.error_code() != binary_data("404"))
+		if (a.status_code() != 404)
 			return false;
-		if (a.error_message() != binary_data("Not Found"))
+		if (a.reason_phrase() != binary_data("Not Found"))
 			return false;
 
 		b = a;
@@ -85,27 +87,27 @@ namespace oonet
 			return false;
 		if (b.headers().size() != 1)
 			return false;
-		if (b.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (b.title() != binary_data("200 OK"))
 			return false;
-		if (b.error_code() != binary_data("404"))
+		if (b.status_code() != 404)
 			return false;
-		if (b.error_message() != binary_data("Not Found"))
+		if (b.reason_phrase() != binary_data("Not Found"))
 			return false;
 		return true;
 	}
 
 	bool TestHTTPResponse::TestRender::OnExecute()
 	{	http::response a;
-		string shouldbeLF = "HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou";
-		string shouldbeCRLF = "HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou";
+		string shouldbeLF = "HTTP/1.1 202 Created\na: 123\nContent-Length: 12\n\nkoukouroukou";
+		string shouldbeCRLF = "HTTP/1.1 202 Created\r\na: 123\r\nContent-Length: 12\r\n\r\nkoukouroukou";
 		string out;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.error_code() = binary_data("202");
-		a.error_message() = binary_data("Created");
+		a.headers().add("a", "123");
+		a.status_code() = 202;
+		a.reason_phrase() = binary_data("Created");
 
 		out = a.render(http::const_lf).to_string();
 		if (out != shouldbeLF)
@@ -120,13 +122,13 @@ namespace oonet
 
 	bool TestHTTPResponse::TestRenderSpeed::OnExecute()
 	{	http::response a;
-		binary_data shouldbeLF = binary_data("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou");
+		binary_data shouldbeLF = binary_data("HTTP/1.1 202 Created\na: 123\nContent-Length: 12\n\nkoukouroukou");
 		binary_data out;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.error_code() = binary_data("202");
-		a.error_message() = binary_data("Created");
+		a.headers().add("a", "123");
+		a.status_code() = 202;
+		a.reason_phrase() = binary_data("Created");
 
 		ResetTimer();
 		for(long i = 0;i < 10000;i++)
@@ -145,6 +147,7 @@ namespace oonet
 		binary_data renderedLF = binary_data("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou") + trail;
 		binary_data renderedCRLF = binary_data("HTTP/1.1 202 Created\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") + trail;
 		binary_data renderedNoCodeCRLF = binary_data("HTTP/1.1 404\r\nContent-Length: 12\r\na: 123\r\n\r\nkoukouroukou") +trail;
+		string header_value;
 
 		// response LF
 		b_parsed = a.parse(renderedLF, &remaining);
@@ -152,17 +155,17 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("HTTP/1.1 202 Created"))
 			return false;
 		if (a.body() != binary_data("koukouroukou"))
 			return false;
-		if (a.error_code() != binary_data("202"))
+		if (a.status_code() != 202)
 			return false;
-		if (a.error_message() != binary_data("Created"))
+		if (a.reason_phrase() != binary_data("Created"))
 			return false;
 
 		// response CRLF
@@ -171,17 +174,17 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("HTTP/1.1 202 Created"))
 			return false;
 		if (a.body() != binary_data("koukouroukou"))
 			return false;
-		if (a.error_code() != binary_data("202"))
+		if (a.status_code() != 202)
 			return false;
-		if (a.error_message() != binary_data("Created"))
+		if (a.reason_phrase() != binary_data("Created"))
 			return false;
 
 		// response without message CRLF
@@ -190,17 +193,17 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("HTTP/1.1 404"))
 			return false;
 		if (a.body() != binary_data("koukouroukou"))
 			return false;
-		if (a.error_code() != binary_data("404"))
+		if (a.status_code() != 404)
 			return false;
-		if (a.error_message() != binary_data(""))
+		if (a.reason_phrase() != binary_data(""))
 			return false;
 		return true;
 	}
@@ -221,6 +224,7 @@ namespace oonet
 	{	http::response a;
 		binary_data rendered("HTTP/1.1 202 Created\nContent-Length: 12\na: 123\n\nkoukouroukou");
 		bool b_parsed;
+		string header_value;
 
 		// response LF
 		ResetTimer();
@@ -230,17 +234,17 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("Content-Length") != "12")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "12")))
 			return false;
 		if (a.title() != binary_data("HTTP/1.1 202 Created"))
 			return false;
 		if (a.body() != binary_data("koukouroukou"))
 			return false;
-		if (a.error_code() != binary_data("202"))
+		if (a.status_code() != 202)
 			return false;
-		if (a.error_message() != binary_data("Created"))
+		if (a.reason_phrase() != binary_data("Created"))
 			return false;
 		return true;
 	}

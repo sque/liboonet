@@ -18,9 +18,9 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Populate headers
-		a.set("a", "1");
-		a.set("b", "2");
-		a.set("c", "3");
+		a.add("a", "1");
+		a.add("b", "2");
+		a.add("c", "3");
 
 		http::headers_list b(a);
 
@@ -34,9 +34,9 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Populate headers
-		a.set("a", "1");
-		a.set("b", "2");
-		a.set("c", "3");
+		a.add("a", "1");
+		a.add("b", "2");
+		a.add("c", "3");
 
 		http::headers_list b;
 		b = a;
@@ -51,7 +51,7 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Add empty header
-		a.set("", "1");
+		a.add("", "1");
 
 		return false;
 	}
@@ -60,14 +60,14 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Add some headers
-		a.set("a", "1");
-		a.set("b", "2");
-		a.set("c", "3");
+		a.add("a", "1");
+		a.add("b", "2");
+		a.add("c", "3");
 
 		if (a.size() != 3)
 
 		// Redefine a headers
-		a.set("a", "123");
+		a.add("a", "123");
 
 		if (a.size() != 3)
 			return false;
@@ -79,10 +79,10 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Add some headers
-		for(long i = 0;i < 100000;i++)
-			a.set("a", "1");
+		for(long i = 0;i < 10000;i++)
+			a.add("a", "1");
 
-		if (a.size() != 1)
+		if (a.size() != 10000)
 			return false;
 
 		return true;
@@ -92,22 +92,22 @@ namespace oonet
 	{	http::headers_list a;
 
 		// Set some headers
-		a.set("a", "1");
-		a.set("b", "2");
-		a.set("c", "3");
+		a.add("a", "1");
+		a.add("b", "2");
+		a.add("c", "3");
 
 		if (a.size() != 3)
 			return false;
 
 		// Remove a header
-		a.erase("a");
+		a.erase(a.find("a"));
 
 		// Check what headers are
 		if (a.size() != 2)
 			return false;
 
 		// Remove a header
-		a.erase("c");
+		a.erase(a.find("c"));
 
 		// Check what headers are
 		if (a.size() != 1)
@@ -115,7 +115,7 @@ namespace oonet
 
 
 		// Remove a header
-		a.erase("b");
+		a.erase(a.find("b"));
 
 		// Check what headers are
 		if (a.size() != 0)
@@ -124,34 +124,19 @@ namespace oonet
 		return true;
 	}
 
-	bool TestHTTPHeaders::TestRemoveHeaderWrong1::OnExecute()
-	{	http::headers_list a;
-
-		a.erase("a");
-		return false;
-	}
-
-	bool TestHTTPHeaders::TestRemoveHeaderWrong2::OnExecute()
-	{	http::headers_list a;
-		a.set("a", "1");
-		a.erase("a");
-		a.erase("a");
-		return false;
-	}
-
 	bool TestHTTPHeaders::TestRemoveHeaderSpeed::OnExecute()
 	{	http::headers_list a;
 		string rendered;
 		char cTmp[1024];
 		for(long int i = 0; i < 100000;i++)
 		{	sprintf(cTmp, "Longgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg   header name - %ld", i);
-			a.set(cTmp, "empty asdfad a");
+			a.add(cTmp, "empty asdfad a");
 		}
 
 		ResetTimer();
 		for(long i = 0;i < 100000;i++)
 		{	sprintf(cTmp, "Longgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg   header name - %ld", i);
-			a.erase(cTmp);
+			a.erase(a.find(cTmp));
 		}
 
 		return true;
@@ -161,20 +146,21 @@ namespace oonet
 	{	http::headers_list a;
 		binary_data rendered, shouldbe;
 
-		a.set("a", "1");
-		a.set("b", "2");
-		a.set("b", "3");
+		a.add("a", "1");
+		a.add("b", "2");
+		a.add("b", "3");
 		rendered = a.render();
 
-		if (rendered != binary_data("a: 1\r\nb: 3"))
+		if (rendered != binary_data("a: 1\r\nb: 2\r\nb: 3"))
 			return false;
 
-		a.set("a", "1");
-		a.set("b", "2");
-		a.set("b", "3");
+		a.add("a", "1");
+		a.add("b", "2");
+		a.add("b", "3");
 		rendered = a.render(http::const_lf);
 
-		if (rendered != binary_data("a: 1\nb: 3"))
+		//printf("-%s-", rendered.to_string().c_str());
+		if (rendered != binary_data("a: 1\nb: 2\nb: 3\na: 1\nb: 2\nb: 3"))
 			return false;
 
 		a = http::headers_list();
@@ -190,8 +176,8 @@ namespace oonet
 	{	http::headers_list a;
 		binary_data rendered;
 
-		a.set("a", "1");
-		a.set("b", "3");
+		a.add("a", "1");
+		a.add("b", "3");
 
 		for(long i = 0;i < 100000;i++)
 			rendered = a.render(http::const_lf);
@@ -208,7 +194,7 @@ namespace oonet
 		char cTmp[100];
 		for(int i = 0; i < 100;i++)
 		{	sprintf(cTmp, "header name - %d", i);
-			a.set(cTmp, "empty asdfad a");
+			a.add(cTmp, "empty asdfad a");
 		}
 
 		ResetTimer();
@@ -219,13 +205,14 @@ namespace oonet
 	}
 
 	bool TestHTTPHeaders::TestParse::OnExecute()
-	{	string rendered = "a: 1\r\nbabalokos: 123123\r\nkoko: asd\r\n";
-		string rendered2 = "mimikos: d\r\nvagelis: qwe\r\nolalola:123\r\n";
-		string rendered3 = "mimikos : d\r\nvagelis   : qwe\r\nolalola :123\r\n";
-		string renderedLF = "mimikos: d\nvagelis: qwe\nolalola: 123\r\n";
-		string renderedMixed1 = "mimikos: d\r\nvagelis: qwe\nolalola: 123\r\n";
-		string renderedMixed2 = "mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n";
-		string renderedMixedComplete = "mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n\n";
+	{	binary_data rendered = binary_data("a: 1\r\nbabalokos: 123123\r\nkoko: asd\r\n");
+		binary_data rendered2 = binary_data("mimikos: d\r\nvagelis: qwe\r\nolalola:123\r\n");
+		binary_data rendered3 = binary_data("mimikos : d\r\nvagelis   : qwe\r\nolalola :123\r\n");
+		binary_data renderedLF = binary_data("mimikos: d\nvagelis: qwe\nolalola: 123\r\n");
+		binary_data renderedMixed1 = binary_data("mimikos: d\r\nvagelis: qwe\nolalola: 123\r\n");
+		binary_data renderedMixed2 = binary_data("mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n");
+		binary_data renderedMixedComplete = binary_data("mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n\n");
+		string header_value;
 		http::headers_list a;
 		size_t ret_value;
 
@@ -233,11 +220,11 @@ namespace oonet
 		ret_value =a.parse(rendered);
 		if (a.size() != 3)
 			return false;
-		if (a.get("a") != "1")
+		if (!(a.find_first("a", header_value) && (header_value == "1")))
 			return false;
-		if (a.get("babalokos") != "123123")
+		if (!(a.find_first("babalokos", header_value) && (header_value == "123123")))
 			return false;
-		if (a.get("koko") != "asd")
+		if (!(a.find_first("koko", header_value) && (header_value == "asd")))
 			return false;
 		if (ret_value != binary_data::npos)
 			return false;
@@ -246,11 +233,11 @@ namespace oonet
 		ret_value = a.parse(rendered2);
 		if (a.size() != 3)
 			return false;
-		if (a.get("mimikos") != "d")
+		if (!(a.find_first("mimikos", header_value) && (header_value == "d")))
 			return false;
-		if (a.get("vagelis") != "qwe")
+		if (!(a.find_first("vagelis", header_value) && (header_value == "qwe")))
 			return false;
-		if (a.get("olalola") != "123")
+		if (!(a.find_first("olalola", header_value) && (header_value == "123")))
 			return false;
 		if (ret_value != binary_data::npos)
 			return false;
@@ -259,11 +246,11 @@ namespace oonet
 		ret_value = a.parse(rendered3);
 		if (a.size() != 3)
 			return false;
-		if (a.get("mimikos") != "d")
+		if (!(a.find_first("mimikos ", header_value) && (header_value == "d")))
 			return false;
-		if (a.get("vagelis") != "qwe")
+		if (!(a.find_first("vagelis   ", header_value) && (header_value == "qwe")))
 			return false;
-		if (a.get("olalola") != "123")
+		if (!(a.find_first("olalola ", header_value) && (header_value == "123")))
 			return false;
 		if (ret_value != binary_data::npos)
 			return false;
@@ -271,12 +258,11 @@ namespace oonet
 		// Test with LF in same object
 		ret_value = a.parse(renderedLF);
 		if (a.size() != 3)
+		if (!(a.find_first("mimikos", header_value) && (header_value == "d")))
 			return false;
-		if (a.get("mimikos") != "d")
+		if (!(a.find_first("vagelis", header_value) && (header_value == "qwe")))
 			return false;
-		if (a.get("vagelis") != "qwe")
-			return false;
-		if (a.get("olalola") != "123")
+		if (!(a.find_first("olalola", header_value) && (header_value == "123")))
 			return false;
 		if (ret_value != binary_data::npos)
 			return false;
@@ -285,11 +271,11 @@ namespace oonet
 		ret_value = a.parse(renderedMixed1);
 		if (a.size() != 3)
 			return false;
-		if (a.get("mimikos") != "d")
+		if (!(a.find_first("mimikos", header_value) && (header_value == "d")))
 			return false;
-		if (a.get("vagelis") != "qwe")
+		if (!(a.find_first("vagelis", header_value) && (header_value == "qwe")))
 			return false;
-		if (a.get("olalola") != "123")
+		if (!(a.find_first("olalola", header_value) && (header_value == "123")))
 			return false;
 		if (ret_value != binary_data::npos)
 			return false;
@@ -298,11 +284,11 @@ namespace oonet
 		ret_value = a.parse(renderedMixed2);
 		if (a.size() != 3)
 			return false;
-		if (a.get("mimikos") != "d")
+		if (!(a.find_first("mimikos", header_value) && (header_value == "d")))
 			return false;
-		if (a.get("vagelis") != "qwe")
+		if (!(a.find_first("vagelis", header_value) && (header_value == "qwe")))
 			return false;
-		if (a.get("olalola") != "123")
+		if (!(a.find_first("olalola", header_value) && (header_value == "123")))
 			return false;
 		if (ret_value != binary_data::npos)
 			return false;
@@ -311,11 +297,11 @@ namespace oonet
 		ret_value = a.parse(renderedMixedComplete);
 		if (a.size() != 3)
 			return false;
-		if (a.get("mimikos") != "d")
+		if (!(a.find_first("mimikos", header_value) && (header_value == "d")))
 			return false;
-		if (a.get("vagelis") != "qwe")
+		if (!(a.find_first("vagelis", header_value) && (header_value == "qwe")))
 			return false;
-		if (a.get("olalola") != "123")
+		if (!(a.find_first("olalola", header_value) && (header_value == "123")))
 			return false;
 		if (ret_value != renderedMixedComplete.size())
 			return false;
@@ -340,7 +326,7 @@ namespace oonet
 	}
 
 	bool TestHTTPHeaders::TestParseWrong1::OnExecute()
-	{	string rendered = "asdkfalsdkfasdf\nsadf";
+	{	binary_data rendered = binary_data("asdkfalsdkfasdf\nsadf");
 		http::headers_list a;
 
 		a.parse(rendered);
@@ -349,9 +335,7 @@ namespace oonet
 
 	bool TestHTTPHeaders::TestParseSpeed100k::OnExecute()
 	{	http::headers_list a;
-		string rendered;
-
-		rendered = "a: 1\r\nbabalokos:    123123\r\nkoko: asd";
+		binary_data rendered = binary_data("a: 1\r\nbabalokos:    123123\r\nkoko: asd");
 
 		ResetTimer();
 		for(long i = 0;i < 100000; i++)
@@ -361,100 +345,100 @@ namespace oonet
 	}
 
 	bool TestHTTPHeaders::TestSmartNewLineQuality::OnExecute()
-	{	/*string text_splitted_1 = "lalala\r\nadfad\nasdfadsf\r";
-		string text_splitted_2 = "koukouroukou\r\r\nadfs\ntest";
-		string text_splitted_3 = "\r\ntest\r\n";
-		string text_splitted_4 = "\ntest\r\n";
-		string text_splitted_5 = "\n\n";
-		string text_splitted_6 = "\r\n";
-		string text_splitted_7 = "test\r\n";
-		string text_splitted_8 = "test\n";
-		string text_splitted_9 = "test\r";
-		string nl;
+	{	binary_data text_splitted_1 = binary_data("lalala\r\nadfad\nasdfadsf\r");
+		binary_data text_splitted_2 = binary_data("koukouroukou\r\r\nadfs\ntest");
+		binary_data text_splitted_3 = binary_data("\r\ntest\r\n");
+		binary_data text_splitted_4 = binary_data("\ntest\r\n");
+		binary_data text_splitted_5 = binary_data("\n\n");
+		binary_data text_splitted_6 = binary_data("\r\n");
+		binary_data text_splitted_7 = binary_data("test\r\n");
+		binary_data text_splitted_8 = binary_data("test\n");
+		binary_data text_splitted_9 = binary_data("test\r");
+		binary_data nl;
 		size_t offset;
 
-		offset = http::_find_smart_new_line(text_splitted_1, nl);
-		if ((offset != 6) || (nl != "\r\n"))
+		offset = http::_smart_find_new_line(text_splitted_1, nl);
+		if ((offset != 6) || (nl != http::const_crlf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_2, nl);
-		if ((offset != 13) || (nl != "\r\n"))
+		offset = http::_smart_find_new_line(text_splitted_2, nl);
+		if ((offset != 13) || (nl != http::const_crlf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_3, nl);
-		if ((offset != 0) || (nl != "\r\n"))
+		offset = http::_smart_find_new_line(text_splitted_3, nl);
+		if ((offset != 0) || (nl != http::const_crlf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_4, nl);
-		if ((offset != 0) || (nl != "\n"))
+		offset = http::_smart_find_new_line(text_splitted_4, nl);
+		if ((offset != 0) || (nl != http::const_lf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_5, nl);
-		if ((offset != 0) || (nl != "\n"))
+		offset = http::_smart_find_new_line(text_splitted_5, nl);
+		if ((offset != 0) || (nl != http::const_lf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_6, nl);
-		if ((offset != 0) || (nl != "\r\n"))
+		offset = http::_smart_find_new_line(text_splitted_6, nl);
+		if ((offset != 0) || (nl != http::const_crlf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_7, nl);
-		if ((offset != 4) || (nl != "\r\n"))
+		offset = http::_smart_find_new_line(text_splitted_7, nl);
+		if ((offset != 4) || (nl != http::const_crlf))
 
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_8, nl);
-		if ((offset != 4) || (nl != "\n"))
+		offset = http::_smart_find_new_line(text_splitted_8, nl);
+		if ((offset != 4) || (nl != http::const_lf))
 			return false;
 
-		offset = http::_find_smart_new_line(text_splitted_9, nl);
+		offset = http::_smart_find_new_line(text_splitted_9, nl);
 		if (offset != string::npos)
-			return false;*/
+			return false;
 
 		return true;
 	}
 
 	bool TestHTTPHeaders::TestSmartNewLineSpeedCRLF::OnExecute()
-	{	/*string text_splitted;
-		string nl;
+	{	binary_data text_splitted;
+		binary_data nl;
 		size_t offset;
 
 		// Create text
 		for (long i = 0; i < 100; i++)
-			text_splitted += "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
-		text_splitted += "\r\n";
+			text_splitted += binary_data("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
+		text_splitted += binary_data("\r\n");
 
 		// Measure
 		ResetTimer();
-		for(long i = 0; i < 10000; i ++)
+		for(long i = 0; i < 100000; i ++)
 		{
-			offset = http::_find_smart_new_line(text_splitted, nl);
+			offset = http::_smart_find_new_line(text_splitted, nl);
 		}
 
-		if ((offset != 9200) || (nl != "\r\n"))
-			return false;*/
+		if ((offset != 9200) || (nl != http::const_crlf))
+			return false;
 
 		return true;
 	}
 
 	bool TestHTTPHeaders::TestSmartNewLineSpeedLF::OnExecute()
-	{	/*string text_splitted;
-		string nl;
+	{	binary_data text_splitted;
+		binary_data nl;
 		size_t offset;
 
 		// Create text
 		for (long i = 0; i < 100; i++)
-			text_splitted += "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
-		text_splitted += "\n";
+			text_splitted += binary_data("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
+		text_splitted += binary_data("\n");
 
 		// Measure
 		ResetTimer();
-		for(long i = 0; i < 10000; i ++)
+		for(long i = 0; i < 100000; i ++)
 		{
-			offset = http::_find_smart_new_line(text_splitted, nl);
+			offset = http::_smart_find_new_line(text_splitted, nl);
 		}
 
-		if ((offset != 9200) || (nl != "\n"))
-			return false;*/
+		if ((offset != 9200) || (nl != http::const_lf))
+			return false;
 
 		return true;
 	}

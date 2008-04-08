@@ -1,4 +1,4 @@
-#include "TestHostResolver.h"
+#include "test_host_resolver.hpp"
 #include "host_resolver.hpp"
 
 namespace oonet

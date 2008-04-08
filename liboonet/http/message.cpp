@@ -34,13 +34,11 @@ namespace oonet
 			{
 				char cstr_tmp[30];
 				_snprintf(cstr_tmp, 30, "%d", m_body.size());
-				m_headers.set(const_content_length, binary_data(cstr_tmp));
+				m_headers.erase_all_by_name(const_content_length.to_string());
+				m_headers.add(const_content_length.to_string(), cstr_tmp);
 			}
 			else
-			{
-				if (m_headers.exist(const_content_length))
-					m_headers.erase(const_content_length);
-			}
+				m_headers.erase(m_headers.find(const_content_length.to_string()));
 		}
 
 		// Copy operator
@@ -78,14 +76,13 @@ namespace oonet
 
 		// Parse data and save to message
 		bool message::parse(const binary_data & dt_in, binary_data * dt_remain)
-		{	binary_data str_body_size;
-			binary_data dt_headers_and_below, nl_delimiter;
+		{	binary_data dt_headers_and_below, nl_delimiter;
 			long body_size;
 			size_t title_end_pos;	// Position where title ends
 			size_t body_start_pos;	// Position where body starts
 
 			// Get title
-			if ((title_end_pos = _find_smart_new_line(dt_in, nl_delimiter)) == binary_data::npos)
+			if ((title_end_pos = _smart_find_new_line(dt_in, nl_delimiter)) == binary_data::npos)
 				return false;	// Not even title is here
 			m_title =  dt_in.get_until(title_end_pos);
 			dt_headers_and_below = dt_in.get_from(title_end_pos + nl_delimiter.size());
@@ -96,10 +93,8 @@ namespace oonet
 			body_start_pos += title_end_pos + nl_delimiter.size();
 
 			// Get content-length header
-			if (m_headers.exist(const_content_length))
-			{	str_body_size = m_headers.get(const_content_length);
-				// Validate length
-				if ((body_size = atol(str_body_size.to_string().c_str())) < 0)
+			if (m_headers.find_first_integer(const_content_length.to_string(), body_size))
+			{	if (body_size  < 0)
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 						"HTTP Packet says that contains body with size less than 0!?!"
 					);

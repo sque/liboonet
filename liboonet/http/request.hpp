@@ -24,8 +24,14 @@ namespace oonet
 			//! Enumerate the request type
 			enum E_REQUEST_METHOD
 			{
+				REQUEST_OPTIONS,	//! OPTIONS request
 				REQUEST_GET,		//! GET request
 				REQUEST_POST,		//! POST request
+				REQUEST_HEAD,		//! HEAD request
+				REQUEST_PUT,		//! PUT request
+				REQUEST_DELETE,		//! DELETE request
+				REQUEST_TRACE,		//! TRACE request
+				REQUEST_CONNECT,	//! CONNECT request
 				REQUEST_UNKNOWN		//! The rest here..
 			};
 

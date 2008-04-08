@@ -1,4 +1,4 @@
-#include "TestHTTPServer.h"
+#include "test_http_server.hpp"
 #include "http/server.hpp"
 
 namespace oonet
@@ -165,7 +165,7 @@ namespace oonet
 		http::request myRequest;
 
 		// Format my request
-		myRequest.headers().set("Host", "www.google.com");
+		myRequest.headers().add("Host", "www.google.com");
 		if (myServer.listening())
 			return false;
 
@@ -245,7 +245,7 @@ namespace oonet
 
 		http::request myRequest;
 		// Format my request
-		myRequest.headers().set("Host", "www.google.com");
+		myRequest.headers().add("Host", "www.google.com");
 		binary_data dRequest = myRequest.render();
 
 		for(long i = 0;i < 1000;i++)

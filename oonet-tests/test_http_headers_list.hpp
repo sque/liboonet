@@ -21,8 +21,6 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestSetHeader, _T("set() quality"));
 		OONET_DECLARESUBTEST(TestSetHeaderSpeed, _T("set() 100k speed"));
 		OONET_DECLARESUBTEST(TestRemoveHeader, _T("erase() quality"));
-		OONET_DECLARESUBTESTEXC(TestRemoveHeaderWrong1, _T("erase() wrong"), _T("ExceptionNotFound"));
-		OONET_DECLARESUBTESTEXC(TestRemoveHeaderWrong2, _T("erase() wrong"), _T("ExceptionNotFound"));
 		OONET_DECLARESUBTEST(TestRemoveHeaderSpeed, _T("erase() 100k Speed"));
 		OONET_DECLARESUBTEST(TestRender, _T("render() quality"));
 		OONET_DECLARESUBTEST(TestRenderSpeed100k_2, _T("render() 100k/2H speed"));
@@ -45,8 +43,6 @@ namespace oonet
 			OONET_REGISTERSUBTEST(TestSetHeader);
 			OONET_REGISTERSUBTEST(TestSetHeaderSpeed);
 			OONET_REGISTERSUBTEST(TestRemoveHeader);
-			OONET_REGISTERSUBTEST(TestRemoveHeaderWrong1);
-			OONET_REGISTERSUBTEST(TestRemoveHeaderWrong2);
 			OONET_REGISTERSUBTEST(TestRemoveHeaderSpeed);
 			OONET_REGISTERSUBTEST(TestRender);
 			OONET_REGISTERSUBTEST(TestRenderSpeed100k_2);

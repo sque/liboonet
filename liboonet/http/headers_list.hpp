@@ -4,7 +4,8 @@
 #include "../oonet.hpp"
 #include "../binary_data.hpp"
 
-#include <map>
+#include <utility>
+#include <list>
 
 namespace oonet
 {
@@ -31,7 +32,7 @@ namespace oonet
 			nothing is found then the value of nl_str is undefined.
 		@return The offset where new line character was found
 		*/
-		size_t _find_smart_new_line(const binary_data & dt_in, binary_data & nl_delimiter, size_t offset = 0);
+		size_t _smart_find_new_line(const binary_data & dt_in, binary_data & nl_delimiter, size_t offset = 0);
 
 		//! Class for managing HTTP headers.
 		/**
@@ -41,18 +42,29 @@ namespace oonet
 		*/
 		class headers_list
 		{
-		private:
-			//! The header's map type definition
-			typedef std::map<binary_data, binary_data> headers_map_type;
+		public:
+			//! Field type
+			typedef std::pair<string, string> field_type;
 
+			//! The header's map type definition
+			typedef std::list<field_type> fields_set_type;
+
+			// Iterators
+			typedef fields_set_type::iterator iterator;
+			typedef fields_set_type::const_iterator const_iterator;
+
+			// References
+			typedef field_type & reference;
+			typedef const field_type & const_reference;
+		private:
 			//! Headers map
-			headers_map_type headers_map;
+			fields_set_type fields_set;
 
 			//! Trim a string from whitespaces at the begining
-			binary_data _trim_front(const binary_data & r);
+			string _trim_front(const string & r);
 
 			//! Trim  a string from whitespaces at the end
-			binary_data _trim_back(const binary_data & r);
+			string _trim_back(const string & r);
 
 		public:
 			//! Default constructor
@@ -70,47 +82,47 @@ namespace oonet
 			//! Copy operator
 			headers_list & operator=(const headers_list & r);
 
-			//! Add or set a header
-			/**
-				If there is already a header with this name, then its value
-				is altered with new one, else the header is added.
-			*/
-			void set(const binary_data & field_name,const binary_data & field_value);
 
-			inline void set(const string & field_name,const string & field_value)
-			{	set(binary_data(field_name), binary_data(field_value));	}
+			/* STL COMPATIBLE INTERAFACE */
+			inline void add(const field_type & _field)
+			{	OONET_ASSERT(!_field.first.empty());
+				fields_set.push_back(_field);
+			}
 
-			//! Get value of header
-			/**
-				It will try to retrieve headers value.
-			@param name The name of the header that we want to get value.
-			@throw ExceptionNotFound If the header does not exist in the list.
-			*/
-			const binary_data & get(const binary_data & field_name) const throw(ExceptionNotFound);
+			inline void add(const string & _field_name, const string & _field_value)
+			{	add(field_type(_field_name, _field_value));	}
 
-			inline const string get(const string & field_name) const throw(ExceptionNotFound)
-			{	return get(binary_data(field_name)).to_string();	}
 
-			//! Count fields
+			iterator find(const string & _field_name);
+
+			const_iterator find(const string & _field_name) const;
+
+			bool find_first(const string & _field_name, string & _field_value) const;
+
+			bool find_first_integer(const string & _field_name, long & _field_value_int) const;
+
+			inline void erase(iterator _it)
+			{	if (_it != end()) fields_set.erase(_it);	}
+
+			size_t erase_all_by_name(const string & _field_name);
+
 			size_t size() const
-			{	return headers_map.size();	}
+			{	return fields_set.size();	}
 
-			//! Remove a header
-			/**
-				It will remove a header from the list.
-			@throw ExceptionNotFound If the header is not in the list
-			*/
-			void erase(const binary_data & field_name);
-
-			inline void erase(const string & field_name)
-			{	erase(binary_data(field_name));	}
-
-			//! Check if a header exists
-			bool exist(const binary_data & name);
-
-			//! Clear list
 			void clear()
-			{	headers_map.clear();	}
+			{	fields_set.clear();	}
+
+			inline iterator begin()
+			{	return fields_set.begin();	}
+
+			inline const_iterator begin() const
+			{	return fields_set.begin();	}
+
+			inline iterator end()
+			{	return fields_set.end();	}
+
+			inline const_iterator end() const
+			{	return fields_set.end();	}
 
 			//! Render headers in HTTP Format
 			/**

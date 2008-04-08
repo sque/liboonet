@@ -18,16 +18,17 @@ namespace oonet
 
 	bool TestHTTPPacket::TestCopyCtor::OnExecute()
 	{	http::message a;
+		string header_value;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.title() = "GET / HTTP/1.1";
+		a.headers().add("a", "123");
+		a.title() = binary_data("GET / HTTP/1.1");
 
 		if (a.body()  != binary_data("koukouroukou"))
 			return false;
 		if (a.headers().size() != 1)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -37,7 +38,7 @@ namespace oonet
 			return false;
 		if (b.headers().size() != 1)
 			return false;
-		if (b.headers().get("a") != "123")
+		if (!(b.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (b.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -46,16 +47,17 @@ namespace oonet
 
 	bool TestHTTPPacket::TestCopyOperator::OnExecute()
 	{	http::message a, b;
+		string header_value;
 
 		a.body() = binary_data("koukouroukou");
-		a.headers().set("a", "123");
-		a.title() = "GET / HTTP/1.1";
+		a.headers().add("a", "123");
+		a.title() = binary_data("GET / HTTP/1.1");
 
 		if (a.body()  != binary_data("koukouroukou"))
 			return false;
 		if (a.headers().size() != 1)
 			return false;
-		if (a.headers().get("a") != "123")
+		if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -65,7 +67,7 @@ namespace oonet
 			return false;
 		if (b.headers().size() != 1)
 			return false;
-		if (b.headers().get("a") != "123")
+		if (!(b.headers().find_first("a", header_value) && (header_value == "123")))
 			return false;
 		if (b.title() != binary_data("GET / HTTP/1.1"))
 			return false;
@@ -87,7 +89,7 @@ namespace oonet
 
 	bool TestHTTPPacket::TestGetTitle::OnExecute()
 	{	http::message a;
-		string PredefTitle = binary_data((byte)'a', 60000).to_string();
+		binary_data PredefTitle = binary_data((byte)'a', 60000);
 
 		a.title() = PredefTitle;
 		for (long i = 0;i < 10000; i++)
@@ -105,7 +107,7 @@ namespace oonet
 		binary_data shouldBeLF = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
 
 		// Populate a
-		a.title() = "GET / HTTP/1.1";
+		a.title() = binary_data("GET / HTTP/1.1");
 		a.body() = PredefBody;
 
 		// Render with default new line
@@ -127,7 +129,7 @@ namespace oonet
 		binary_data shouldBe= binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 
 		// Populate a
-		a.title() = "GET / HTTP/1.1";
+		a.title() = binary_data("GET / HTTP/1.1");
 		a.body() = PredefBody;
 
 		ResetTimer();
@@ -145,6 +147,7 @@ namespace oonet
 		binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + binary_data("1234");
 		binary_data remaining;
 		bool b_parsed;
+		string header_value;
 
 		// Parse 10k times
 		ResetTimer();
@@ -155,7 +158,7 @@ namespace oonet
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
-		if (a.headers().get("Content-Length") != "60000")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 			return false;
 
 		// Final quality test
@@ -172,6 +175,7 @@ namespace oonet
 		binary_data rendered = binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody + binary_data("1234");
 		binary_data remaining;
 		bool b_parsed;
+		string header_value;
 
 		// Parse 10k times
 		ResetTimer();
@@ -182,7 +186,7 @@ namespace oonet
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
-		if (a.headers().get("Content-Length") != "60000")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 			return false;
 
 		// Final quality test
@@ -196,6 +200,7 @@ namespace oonet
 	bool TestHTTPPacket::TestParse::OnExecute()
 	{	http::message a;
 		bool b_parsed;
+		string header_value;
 		binary_data trail_data("1234");
 		binary_data remaining;
 		binary_data PredefBody = binary_data((byte)'a', 60000);
@@ -210,7 +215,7 @@ namespace oonet
 			return false;
 		if (a.title() != binary_data("POST / HTTP/1.1"))
 			return false;
-		if (a.headers().get("Content-Length") != "60000")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 			return false;
 		if ((!b_parsed) || (remaining != trail_data))
 			return false;
@@ -221,7 +226,7 @@ namespace oonet
 			return false;
 		if (a.title() != binary_data("POST / HTTP/1.1"))
 			return false;
-		if (a.headers().get("Content-Length") != "60000")
+		if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 			return false;
 		if ((!b_parsed) || (remaining != trail_data))
 			return false;
@@ -232,7 +237,7 @@ namespace oonet
 			return false;
 		if (a.title() != binary_data("GET / HTTP/1.1"))
 			return false;
-		if (a.headers().get("Host") != "123")
+		if (!(a.headers().find_first("Host", header_value) && (header_value == "123")))
 			return false;
 		if ((!b_parsed) || (remaining != binary_data::nothing))
 			return false;
@@ -252,9 +257,9 @@ namespace oonet
 			return false;
 		if (a.headers().size() != 2)
 			return false;
-		if (a.headers().get("Host") != "123")
+		if (!(a.headers().find_first("Host", header_value) && (header_value == "123")))
 			return false;
-		if (a.headers().get("") != "::")
+		if (!(a.headers().find_first(":", header_value) && (header_value == ":")))
 			return false;
 		if ((!b_parsed) || (remaining != trail_data))
 			return false;

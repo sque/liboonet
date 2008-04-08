@@ -1,4 +1,4 @@
-#include "TestHTTPClient.h"
+#include "test_http_client.hpp"
 #include "http/client.hpp"
 
 namespace oonet
@@ -195,15 +195,15 @@ namespace oonet
 		binary_data respBinary;
 
 		// Format response
-		resp.error_code() = "404";
-		resp.error_message() = "Not Found";
+		resp.status_code() = 404;
+		resp.reason_phrase() = binary_data("Not Found");
 		resp.body() = binary_data('a', 60000);
 		respBinary = resp.render();
 
 		// Format req
 		req.uri() = "/";
 		req.request_method() = http::request::REQUEST_GET;
-		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
+		req.headers().add("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer(respBinary);
@@ -242,7 +242,7 @@ namespace oonet
 		// Format req
 		req.uri() = "/";
 		req.request_method() = http::request::REQUEST_GET;
-		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
+		req.headers().add("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer(respBinary, 4000);
@@ -277,7 +277,7 @@ namespace oonet
 		// Format req
 		req.uri() = "/";
 		req.request_method() = http::request::REQUEST_GET;
-		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
+		req.headers().add("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer(respBinary);
@@ -310,15 +310,15 @@ namespace oonet
 		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n"), respBinary2;
 
 		// Format response
-		resp.error_code() = "404";
-		resp.error_message() = "Not Found";
+		resp.status_code() = 404;
+		resp.reason_phrase() = binary_data("Not Found");
 		resp.body() = binary_data('a', 60000);
 		respBinary2 = resp.render();
 
 		// Format req
 		req.uri() = "/";
 		req.request_method() = http::request::REQUEST_GET;
-		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
+		req.headers().add("Host", "www.google.com");
 
 		// Create http server
 		MiniHTTPServer myServer1(respBinary);
@@ -378,7 +378,7 @@ namespace oonet
 		// Format req
 		req.uri() = "/";
 		req.request_method() = http::request::REQUEST_GET;
-		req.headers().set(binary_data("Host"), binary_data("www.google.com"));
+		req.headers().add("Host", "www.google.com");
 
 		// Connect with client
 		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
