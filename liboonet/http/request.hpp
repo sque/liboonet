@@ -41,7 +41,7 @@ namespace oonet
 
 			E_REQUEST_METHOD m_req_method;	//!< HTTP request method
 			binary_data m_http_version;		//!< HTTP version
-			Url m_uri;						//!< Requested url
+			url m_uri;						//!< Requested url
 
 		public:
 
@@ -86,11 +86,11 @@ namespace oonet
 			{	return m_http_version;	}
 
 			//! Reference at uri (const)
-			inline const Url & uri() const
+			inline const url & uri() const
 			{	return m_uri;	}
 
 			//! Reference at uri
-			inline Url & uri()
+			inline url & uri()
 			{	return m_uri;	}
 
 			//! Reference at request method

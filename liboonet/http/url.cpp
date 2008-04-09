@@ -1,6 +1,6 @@
 /**
 @file Url.cpp
-@brief Implementation of http::UrlParam and http::Url class
+@brief Implementation of http::UrlParam and http::url class
 */
 #include "./url.hpp"
 
@@ -9,15 +9,15 @@ namespace oonet
 	namespace http
 	{
 		// Constructor
-		UrlParam::UrlParam()
+		url_param::url_param()
 		{}
 
 		// Constructor from string
-		UrlParam::UrlParam(const string & parse_str)
+		url_param::url_param(const string & parse_str)
 		{	parse(parse_str);	}
 
 		// Parse string
-		void UrlParam::parse(const string & parse_str)
+		void url_param::parse(const string & parse_str)
 		{	size_t off_equal;
 
 			// Initialize data
@@ -34,13 +34,13 @@ namespace oonet
 		}
 
 		// Copy constuctor
-		UrlParam::UrlParam(const UrlParam & r)
+		url_param::url_param(const url_param & r)
 			:Name(r.Name),
 			Value(r.Value)
 		{}
 
 		// Copy operator
-		UrlParam & UrlParam::operator=(const UrlParam & r)
+		url_param & url_param::operator=(const url_param & r)
 		{
 			Name = r.Name;
 			Value = r.Value;
@@ -48,19 +48,21 @@ namespace oonet
 		}
 
 		// Destructor
-		UrlParam::~UrlParam()
+		url_param::~url_param()
 		{}
 
-		Url::Url(void)
+
+		// URL Implementation
+		url::url(void)
 		{
 		}
 
-		Url::~Url(void)
+		url::~url(void)
 		{
 		}
 
 		// Split url in major pieces
-		void Url::split(string & scheme, string & hostport, string & resource) const
+		void url::split(string & scheme, string & hostport, string & resource) const
 		{	string tmp_host, full_host;
 			size_t Offset1;
 
@@ -97,7 +99,7 @@ namespace oonet
 		}
 
 		// Split url in major pieces but split port too
-		void Url::split(string & scheme, string & host, string & port, string & resource) const
+		void url::split(string & scheme, string & host, string & port, string & resource) const
 		{	string hostport;
 			size_t Offset1;
 
@@ -121,7 +123,7 @@ namespace oonet
 		}
 
 		// Split url
-		void Url::split(string & scheme, string & host, string & port, string & path, ParameterList & params) const
+		void url::split(string & scheme, string & host, string & port, string & path, ParameterList & params) const
 		{	string full_params, resource;
 			size_t Offset1;
 
@@ -149,7 +151,7 @@ namespace oonet
 		}
 
 		// Tool to split params of the url
-		void Url::_split_params(const string &par_string, ParameterList & param_list) const
+		void url::_split_params(const string &par_string, ParameterList & param_list) const
 		{	size_t off_start, off_end;
 			string ParamLiteral;
 
@@ -162,7 +164,7 @@ namespace oonet
 				// Omit empty parameters
 				if ((ParamLiteral = par_string.substr(off_start, off_end)) == "")
 					continue;
-				param_list.push_back(UrlParam(ParamLiteral));
+				param_list.push_back(url_param(ParamLiteral));
 			}
 			while((off_start = par_string.find('&', off_end)) != string::npos);
 		}

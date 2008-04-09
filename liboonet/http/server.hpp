@@ -47,7 +47,7 @@ namespace oonet
 			@param client_addr Is the address of client that does the request.
 			@return The http::response that will be sent back to client.
 			*/
-			virtual response on_url_request(const Url & Uri, const request & full_request, const socket_address_inet & client_addr) = 0;
+			virtual response on_url_request(const url & Uri, const request & full_request, const socket_address_inet & client_addr) = 0;
 			//! @}
 
 		public:

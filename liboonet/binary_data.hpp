@@ -118,14 +118,14 @@ namespace oonet
 			data block.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data &operator+=(const binary_data &r);
+		binary_data & operator+=(const binary_data &r);
 
 		//! Self-add operator for one byte (push action)
 		/**
 			The byte will be copied at the end of this data block.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data &operator+=(const byte &r);
+		binary_data & operator+=(const byte &r);
 
 		//! Access element
 		/**
@@ -144,14 +144,14 @@ namespace oonet
 			It will return true if the two binary_data objects
 			have the same size and same data.
 		*/
-		bool operator==(const binary_data &r) const throw();
+		bool operator==(const binary_data & r) const throw();
 
 		//! InEqual comparison operator
 		/**
 			It will return false if the two binary_data objects
 			have the same size and same data.
 		*/
-		bool operator!=(const binary_data &r) const throw();
+		bool operator!=(const binary_data & r) const throw();
 
 		//! Less comparison
 		bool operator<(const binary_data & r) const throw();

@@ -58,13 +58,7 @@ namespace oonet
 			return;
 		}
 
-		// Shift data left "off" bytes
-		void shift_data_left(size_t off)
-		{
-			memmove(p_mem, p_mem+1, sz_mem - off);
-		}
-
-		// Default constructor
+		// Default constructor (empty)
 		_mem_block():
 			sz_mem(0),
 			p_mem(&bt_dummy)
@@ -84,6 +78,7 @@ namespace oonet
 			memcpy(p_mem, _p_data, _s_data);
 		}
 
+		// Construct by repeat pattern
 		_mem_block(const byte bt_repeated, size_t s_times)
 			:sz_mem(0),
 			p_mem(&bt_dummy)

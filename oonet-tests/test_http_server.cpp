@@ -16,7 +16,7 @@ namespace oonet
 
 
 	protected:
-		virtual http::response on_url_request(const http::Url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
+		virtual http::response on_url_request(const http::url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
 		{
 			http::response tmpResponse;
 			tmpResponse.body() = binary_data("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");
@@ -88,8 +88,11 @@ namespace oonet
 			return false;
 
 		try
-		{myServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44135)), 10);}
-		catch(ExceptionAlreadyConnected & e){ e = e; }
+		{
+			myServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44135)), 10);
+		}
+		catch(ExceptionAlreadyConnected & e)
+		{ e = e; }
 
 		if (!myServer.listening())
 			return false;
@@ -101,7 +104,7 @@ namespace oonet
 		myServer.stop_listen();
 
 		if (myServer.listening())
-		return false;
+			return false;
 
 		// Start again
 		myServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(44136)), 10);
@@ -161,7 +164,7 @@ namespace oonet
 	bool TestHTTPServer::TestStopCleanup::OnExecute()
 	{	MyHTTPServer myServer;
 		socket mHttpClient(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
-		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nConnection: Keep-Alive\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
+		binary_data RespShouldBe = binary_data("HTTP/1.1 200 OK\r\nContent-Length: 59\r\n\r\n<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");;
 		http::request myRequest;
 
 		// Format my request

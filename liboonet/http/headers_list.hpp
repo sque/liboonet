@@ -128,7 +128,7 @@ namespace oonet
 			/**
 				It will create a string with headers as they must
 				appear in HTTP traffic.
-			@param new_line The string to use for indicating new line
+			@param nl_delimiter The new line sequence to use for indicating new line
 			@remarks The output string will not have a leading or trailing new line.
 			*/
 			binary_data render(const binary_data & nl_delimiter = const_crlf);

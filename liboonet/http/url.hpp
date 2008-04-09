@@ -15,11 +15,11 @@ namespace oonet
 			provides the ability to parse a string and split it
 			to name-param
 		*/
-		class UrlParam
+		class url_param
 		{
 		public:
 			//! Constructor
-			UrlParam();
+			url_param();
 
 			//! Construct and parse a string
 			/**
@@ -28,16 +28,16 @@ namespace oonet
 			@param parse_str [IN] The string that will be parsed at construction time
 			@see parse()
 			*/
-			explicit UrlParam(const string & parse_str);
+			explicit url_param(const string & parse_str);
 
 			//! Copy constuctor
-			UrlParam(const UrlParam & r);
+			url_param(const url_param & r);
 
 			//! Copy operator
-			UrlParam & operator=(const UrlParam & r);
+			url_param & operator=(const url_param & r);
 
 			//! Destructor
-			~UrlParam();
+			~url_param();
 
 			//! Parse a string of url format e.g myname=myvalue
 			/**
@@ -50,6 +50,7 @@ namespace oonet
 
 			//! The name of url parameter
 			string Name;
+
 			//! The value of url parameter
 			string Value;
 		};	// UrlParam class
@@ -78,38 +79,38 @@ namespace oonet
 				<b>Path:</b> <i>/search.php</i>\n
 				<b>Parameters List:</b> <i>file=a&lan=en</i>\n
 		*/
-		class Url
+		class url
 		{
 		public:
 			//! Exception raised when the url was not properly formated.
 			OONET_DECLARE_EXCEPTION(ExceptionWrongUrl);
 
 			//! Parameter List definition
-			typedef std::vector<UrlParam> ParameterList;
+			typedef std::vector<url_param> ParameterList;
 
 			//! Default constructor
 			/**
 				Url will be empty
 			*/
-			Url(void);
+			url(void);
 
 			//! Construct from string
 			/**
 				Url will be copied internally and used
 				in future operations.
 			*/
-			inline Url(const string & url_str)
+			inline url(const string & url_str)
 			{	full_url = url_str;	}
 
 			//! Copy constructor
-			inline Url(const Url &r)
+			inline url(const url &r)
 			{	full_url = r.full_url;	}
 
 			//! Destructor
-			virtual ~Url(void);
+			virtual ~url(void);
 
 			//! Copy operator
-			inline Url & operator=(const Url &r)
+			inline url & operator=(const url &r)
 			{	full_url = r.full_url;
 				return *this;
 			}
@@ -119,7 +120,7 @@ namespace oonet
 				A new url will be stored to be used
 				at future operations.
 			*/
-			inline Url & operator=(const string & url_str)
+			inline url & operator=(const string & url_str)
 			{	full_url = url_str;
 				return *this;
 			}
