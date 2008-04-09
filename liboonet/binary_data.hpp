@@ -89,11 +89,10 @@ namespace oonet
 			It will fill the new object with the same byte as many
 			times as the user defines.
 		@param mByte byte that will be repeated.
-		@param bTimes How many times the byte will be repeat. This will
-			be the size of new buffer too.
+		@param bTimes How many times the byte will be repeat. This will be the size of new buffer too.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
-		binary_data(const byte bt_repeated, size_t s_times);
+		binary_data(const byte & bt_repeated, size_t s_times);
 
 		//! Add operator
 		/**

@@ -38,7 +38,7 @@ namespace oonet
                 bool b_running;
 
                 //! A flag if thread has been joined. (Only for linux)
-                bool bJoined;
+                bool b_joined;
 
 				//! An event to wait for thread to start
 				mt::semaphore semStartThread;

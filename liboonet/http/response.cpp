@@ -77,7 +77,7 @@ namespace oonet
 				|| (bt_status_code.size() != 3))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"HTTP response without error code!");
-			m_status_code = atol(bt_status_code.to_string().c_str());
+			m_status_code = (ushort)atol(bt_status_code.to_string().c_str());
 
 			// Get reason phrase
 			if (status_code_end_pos == string::npos)

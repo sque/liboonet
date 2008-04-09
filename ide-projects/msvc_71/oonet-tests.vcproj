@@ -32,6 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Winmm.lib"
 				OutputFile="$(OutDir)/oonet-testsD.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="TRUE"
@@ -78,6 +79,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Winmm.lib"
 				OutputFile="$(OutDir)/oonet-tests.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="TRUE"
@@ -124,64 +126,67 @@
 				RelativePath="..\..\oonet-tests\Test.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestBinaryData.cpp">
+				RelativePath="..\..\oonet-tests\test_benchmark.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestBuffer.cpp">
+				RelativePath="..\..\oonet-tests\test_binary_data.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHostInet.cpp">
+				RelativePath="..\..\oonet-tests\test_buffer.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHostResolver.cpp">
+				RelativePath="..\..\oonet-tests\test_host_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHTTPClient.cpp">
+				RelativePath="..\..\oonet-tests\test_host_resolver.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHTTPHeaders.cpp">
+				RelativePath="..\..\oonet-tests\test_http_client.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHTTPPacket.cpp">
+				RelativePath="..\..\oonet-tests\test_http_headers_list.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHTTPRequest.cpp">
+				RelativePath="..\..\oonet-tests\test_http_message.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHTTPResponse.cpp">
+				RelativePath="..\..\oonet-tests\test_http_request.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHTTPServer.cpp">
+				RelativePath="..\..\oonet-tests\test_http_response.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestInetClient.cpp">
+				RelativePath="..\..\oonet-tests\test_http_server.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestInetServer.cpp">
+				RelativePath="..\..\oonet-tests\test_mutex.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestMutex.cpp">
+				RelativePath="..\..\oonet-tests\test_netserver.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestPortInet.cpp">
+				RelativePath="..\..\oonet-tests\test_netstream_threaded.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestSemaphore.cpp">
+				RelativePath="..\..\oonet-tests\test_port_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestSocket.cpp">
+				RelativePath="..\..\oonet-tests\test_semaphore.cpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestSocketAddressInet.cpp">
+				RelativePath="..\..\oonet-tests\test_socket.cpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_socket_address_inet.cpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_thread.cpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_url.cpp">
 			</File>
 			<File
 				RelativePath="..\..\oonet-tests\TestStringConverter.cpp">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestThread.cpp">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestUrl.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -195,67 +200,70 @@
 				RelativePath="..\..\oonet-tests\Test.h">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestBinaryData.h">
+				RelativePath="..\..\oonet-tests\test_benchmark.hpp">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestBuffer.h">
+				RelativePath="..\..\oonet-tests\test_binary_data.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_buffer.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_host_inet.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_host_resolver.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_http_client.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_http_headers_list.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_http_message.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_http_request.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_http_response.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_http_server.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_mutex.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_netserver.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_netstream_threaded.h">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_port_inet.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_semaphore.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_socket.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_socket_address_inet.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_thread.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet-tests\test_url.hpp">
 			</File>
 			<File
 				RelativePath="..\..\oonet-tests\TestEssentials.h">
 			</File>
 			<File
-				RelativePath="..\..\oonet-tests\TestHostInet.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHostResolver.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHTTPClient.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHTTPHeaders.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHTTPPacket.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHTTPRequest.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHTTPResponse.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestHTTPServer.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestInetClient.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestInetServer.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestMutex.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestPortInet.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestSemaphore.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestSocket.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestSocketAddressInet.h">
-			</File>
-			<File
 				RelativePath="..\..\oonet-tests\TestStringConverter.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestThread.h">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestUrl.h">
 			</File>
 		</Filter>
 		<Filter

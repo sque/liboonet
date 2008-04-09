@@ -144,7 +144,7 @@ namespace oonet
 	}
 
 	// Constructor from a byte replication
-	binary_data::binary_data(const byte bt_repeated, size_t s_times)
+	binary_data::binary_data(const byte &bt_repeated, size_t s_times)
 		:p_mem_block(new _mem_block(bt_repeated, s_times)),
 		off_data(0),
 		s_data(s_times)

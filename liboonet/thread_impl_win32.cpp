@@ -2,15 +2,15 @@
 @file ThreadPosix.cpp
 @brief Implementation of Thread class on Win32 Platform
 */
-#include "Thread.h"
+#include "./thread.hpp"
 
-namespace OONet
+namespace oonet
 {
-	namespace MT
+	namespace mt
 	{
-        void Thread::_system_start(void) throw(Exception)
+        void thread::_system_start(void)
         {
-			if (bRunning == true)
+			if (b_running == true)
             {
                 OONET_THROW_EXCEPTION(ExceptionThreadAlreadyStarted,
 					"Thread alreay running!"
@@ -19,22 +19,22 @@ namespace OONet
             }
 
             // Clear previous handles if exist
-            if (hThread != 0)
+            if (thread_h != 0)
             {
-                CloseHandle(hThread);	// Close handle
-                hThread = 0;			// Mark it unused
+                CloseHandle(thread_h);	// Close handle
+                thread_h = 0;			// Mark it unused
             }
 
             /////////////////
             // Start Thread
-            hThread = CreateThread(NULL,	// No security attributes
+            thread_h = CreateThread(NULL,	// No security attributes
                 0,							// Default stack size
                 this->_thread_func,			// The address of the thread procedure
                 this,						// A pointer to this object
                 0,							// No creation flag
-                &ThreadId);					// The thread id
+				&thread_id);					// The thread id
 
-            if (hThread == NULL)
+            if (thread_h == NULL)
             {
                 OONET_THROW_EXCEPTION(ExceptionSystemError,
 					"Cannot start thread.."
@@ -43,16 +43,16 @@ namespace OONet
             }
 
             // Thread started...
-            bRunning = true;
+            b_running = true;
             return;		// Thread started succesfully
         }
 
-        void Thread::_system_join(ulong tm_timeoutms) throw(Exception)
+        void thread::_system_join(ulong tm_timeoutms)
         {   OONET_DEBUG_L2("Thread::_win32_join()_\n");
 
             DWORD dwResult;
 			// Wait for joining
-			dwResult = WaitForSingleObject(hThread, tm_timeoutms);
+			dwResult = WaitForSingleObject(thread_h, tm_timeoutms);
 
 			switch(dwResult)
 			{
@@ -72,10 +72,10 @@ namespace OONet
         }
 
         // Stops the calling thread for a period of time
-        void Thread::sleep(ulong tm_sleepms) throw(Exception)
+        void thread::sleep(ulong tm_sleepms)
         {	
 			::Sleep( tm_sleepms); 	//Windows sleep gets mseconds
         }
 
-	};	// !MT namespace
-};	// !OONet namespace
+	};	// !mt namespace
+};	// !oonet namespace

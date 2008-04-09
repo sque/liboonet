@@ -1,11 +1,13 @@
 #include "SubTest.h"
 #include "Test.h"
-#include <sys/time.h>
-#include <time.h>
-
+#if OONET_OS == OONET_OS_LINUX
+	#include <sys/time.h>
+	#include <time.h>
+#else
+#endif
 namespace oonet
 {
-
+#if OONET_OS == OONET_OS_LINUX
 	double get_current_msecs()
 	{	struct timeval t;
 		double tmp_out;
@@ -16,6 +18,13 @@ namespace oonet
 
 		return tmp_out;
 	}
+#elif OONET_OS == OONET_OS_WIN32
+	double get_current_msecs()
+	{	
+		double tm = timeGetTime();
+		return tm;
+	}
+#endif
 
 	// Constructor
 	SubTest::SubTest(string Name)

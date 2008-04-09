@@ -4,41 +4,41 @@
 */
 #include "./mutex.hpp"
 
-namespace OONet
+namespace oonet
 {
-	namespace MT
+	namespace mt
 	{
 		// Constructor
-		Mutex::Mutex()
+		mutex::mutex()
 		{
-			hMutex = CreateMutex(NULL,	// No special Access Rights
+			mutex_h = CreateMutex(NULL,	// No special Access Rights
 				FALSE,					// Don't lock it at the initialization
 				NULL					// Unamed mutex
 			);
 			// Check if mutex created succesfully
-			if (hMutex == NULL)
+			if (mutex_h == NULL)
 				OONET_THROW_EXCEPTION(ExceptionSystemError,
 					"Unknown error trying to create mutex!");
 		}
 
 
-		Mutex::~Mutex()
+		mutex::~mutex()
 		{
 			// Abandon mutex
-			CloseHandle(hMutex);
+			CloseHandle(mutex_h);
 		}
 
-		void Mutex::unlock() throw(Exception)
+		void mutex::unlock()
 		{	// Release mutex
-			if (0 == ReleaseMutex(hMutex))
+			if (0 == ReleaseMutex(mutex_h))
 				OONET_THROW_EXCEPTION(ExceptionSystemError, "Unable to unlock mutex!");
 		}
 
-		void Mutex::lock(ulong tm_timeoutms) throw(Exception)
+		void mutex::lock(ulong tm_timeoutms)
 		{	DWORD dwResult;
 
 			// Wait for locking
-			dwResult = WaitForSingleObject(hMutex, tm_timeoutms);
+			dwResult = WaitForSingleObject(mutex_h, tm_timeoutms);
 
 			// Check error
 			if (dwResult == WAIT_TIMEOUT)
@@ -48,5 +48,5 @@ namespace OONet
 				OONET_THROW_EXCEPTION(ExceptionSystemError,
 					"Unable to lock mutex!");
 		}
-	}; // !MT namespace
-};	// !OONet namespace
+	}; // !mt namespace
+};	// !oonet namespace

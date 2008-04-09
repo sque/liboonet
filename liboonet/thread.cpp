@@ -66,9 +66,9 @@ namespace oonet
         thread::thread()
         {
             // Initiliaze variables
-            thread_h = NOTHREAD;					// No handle at startup
-            b_running = false;					// Thread hasn't start yet
-            bJoined = false;                    // Thread hasn't joined yet
+            thread_h = NOTHREAD;		// No handle at startup
+            b_running = false;			// Thread hasn't start yet
+            b_joined = false;			// Thread hasn't joined yet
         }
 
 

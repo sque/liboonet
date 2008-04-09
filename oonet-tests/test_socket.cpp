@@ -62,7 +62,7 @@ namespace oonet
 							// Raise semaphore
 							semArrived.post();
 						}
-						catch(exception & e)
+						catch(exception)
 						{	break;	}
 					}
 				}

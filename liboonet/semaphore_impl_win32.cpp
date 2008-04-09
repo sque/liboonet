@@ -2,16 +2,16 @@
 @file SemaphorePosix.cpp
 @brief Implementation of Semaphore class on Win32 Platform
 */
-#include "Semaphore.h"
+#include "./semaphore.hpp"
 
-namespace OONet
+namespace oonet
 {
-	namespace MT
+	namespace mt
 	{
         // Constructor
-        Semaphore::Semaphore()
+        semaphore::semaphore()
         {
-            semHandle = CreateSemaphore(
+            sem_h = CreateSemaphore(
                 NULL,
                 0,      // Initial value to 0
                 255,    // Max count
@@ -19,9 +19,9 @@ namespace OONet
         }
 
 
-        Semaphore::Semaphore(int initial)
+        semaphore::semaphore(int initial)
         {
-            semHandle = CreateSemaphore(
+            sem_h = CreateSemaphore(
                 NULL,
                 initial,// Initial value to custom
                 255,    // Max count
@@ -29,29 +29,29 @@ namespace OONet
         }
 
         // Destructor
-        Semaphore::~Semaphore()
+        semaphore::~semaphore()
         {
   			// Close Semaphore object
-			CloseHandle(semHandle);
+			CloseHandle(sem_h);
         }
 
 		// Post (increase counter)
-        void Semaphore::post()
+        void semaphore::post()
         {
             // Increase by one
             ReleaseSemaphore(
-                semHandle,
+                sem_h,
                 1,      // Increase only by One
                 NULL	// We dont need last value
                 );
         }
 
         // Wait for a semaphore for predefined time
-		void Semaphore::wait(ulong tm_timeoutms)
+		void semaphore::wait(ulong tm_timeoutms)
 		{	DWORD dwResult;
 			
 			// Wait for locking
-			dwResult = WaitForSingleObject(semHandle, tm_timeoutms);
+			dwResult = WaitForSingleObject(sem_h, tm_timeoutms);
 
 			// Check error
 			if (dwResult == WAIT_TIMEOUT)
@@ -62,5 +62,5 @@ namespace OONet
 					"Unable to wait for semaphore!");
 
 		}
-	}; // !MT namepsace
-};	// !OONet namespace
+	}; // !mt namepsace
+};	// !oonet namespace

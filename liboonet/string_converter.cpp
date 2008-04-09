@@ -16,7 +16,7 @@ namespace oonet
 		if (sAr <= 0)
 		{
 			delete pAr;
-			OONET_THROW_EXCEPTION(OONet::ExceptionConvertionUnsupported, "Cannot convert ANSI string to unicode");
+			OONET_THROW_EXCEPTION(ExceptionConvertionUnsupported, "Cannot convert ANSI string to unicode");
 		}
 
 		// Create object
@@ -57,7 +57,7 @@ namespace oonet
 		if (sAr <= 0)
 		{
 			delete pAr;
-			OONET_THROW_EXCEPTION(OONet::ExceptionConvertionUnsupported, "Cannot convert unicode back to ANSI");
+			OONET_THROW_EXCEPTION(ExceptionConvertionUnsupported, "Cannot convert unicode back to ANSI");
 		}
 
 		// Create object

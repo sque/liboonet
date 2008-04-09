@@ -9,9 +9,9 @@
 using namespace oonet;
 
 // Constant bytes
-const byte c_m = (byte) 'm';
-const byte c_a = (byte) 'a';
-const byte c_null = (byte) NULL;
+const oonet::byte c_m = (oonet::byte) 'm';
+const oonet::byte c_a = (oonet::byte) 'a';
+const oonet::byte c_null = (oonet::byte) '\0';
 
 extern void RegisterTest(Test * pTest);
 #endif // TESTS_ESSENTIALS_H_INCLUDED
