@@ -74,7 +74,7 @@ namespace oonet
 			join();
 		}
 
-		virtual void thread_routine(void)
+		virtual void operator()()
 		{
 			nonSafe.add(10);
 		}
@@ -90,7 +90,7 @@ namespace oonet
 			join();
 		}
 
-		virtual void thread_routine(void)
+		virtual void operator()()
 		{
 			Safe.add(10);
 		}
@@ -103,7 +103,7 @@ namespace oonet
 	protected:
 		mt::mutex mut;
 
-		virtual void thread_routine(void)
+		virtual void operator()()
 		{
 			// Try to lock twice from same thread
 			mut.lock();
@@ -116,7 +116,7 @@ namespace oonet
 	public:
 		mt::mutex * pMutex;
 		long waitfor_ms;
-		virtual void thread_routine(void)
+		virtual void operator()()
 		{
 			// Try to lock twice from same thread
 			pMutex->lock();

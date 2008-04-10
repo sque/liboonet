@@ -23,13 +23,15 @@ namespace oonet
         	public:
 				OONET_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
 
+				typedef THREAD_HANDLE thread_handle_type;
+
             private:
 				// Thread is NonCopiable
 				thread(const thread &r);
 				thread & operator=(const thread & r);
 
                 //! The handle of the thread
-                THREAD_HANDLE thread_h;
+                thread_handle_type thread_h;
 
                 //! The thread's Id
                 unsigned long thread_id;
@@ -41,7 +43,7 @@ namespace oonet
                 bool b_joined;
 
 				//! An event to wait for thread to start
-				mt::semaphore semStartThread;
+				mt::semaphore sem_start_thread;
 
 				//! The dispatcher for calling the appropriate ThreadRoutine
                 /**
@@ -79,7 +81,7 @@ namespace oonet
 					This is the core of the thread, everything works, to run this
 					function at new thread ;)
                 */
-                virtual void thread_routine() = 0;
+                virtual void operator()() = 0;
 
             public:
 
@@ -136,7 +138,7 @@ namespace oonet
 					The return value type, varies from platform to platform, so take care
 					for cross-platform probs.
                 */
-                THREAD_HANDLE get_thread_handle()
+                thread_handle_type get_thread_handle()
                 {   return thread_h; }
 
         };  // Thread class

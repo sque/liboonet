@@ -21,7 +21,7 @@ namespace oonet
 		binary_data receive(size_t);
 
 		// Implement events
-		void thread_routine();
+		void operator()();
 		void pre_newsocket_impl(socket &);
 		void post_newsocket_impl();
 

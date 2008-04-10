@@ -21,7 +21,7 @@ namespace oonet
 		}
 		protected:
 			// Implement run
-			virtual void thread_routine(void)
+			virtual void operator()()
 			{
 				ThreadRunned = true;
 				threadCount ++;
@@ -50,7 +50,7 @@ namespace oonet
 		}
 		protected:
 			// Implement run
-			virtual void thread_routine(void)
+			virtual void operator()()
 			{
 			    bPlay = true;
 				ThreadRunned = true;
@@ -71,7 +71,7 @@ namespace oonet
 		}
 		protected:
 			// Implement run
-			virtual void thread_routine(void)
+			virtual void operator()()
 			{
 				ThreadRunned = true;
 				join();	// kill from the same thread

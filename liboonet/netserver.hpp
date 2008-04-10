@@ -57,7 +57,7 @@ namespace oonet
 		bool b_zombie;				// Flag if we are in zombie mode
 
 		// Thread routine
-		void thread_routine()
+		void operator()()
 		{	socket cl_socket;
 
 			try

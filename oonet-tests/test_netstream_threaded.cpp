@@ -42,7 +42,7 @@ namespace oonet
 			}
 		}
 
-		virtual void thread_routine()
+		virtual void operator()()
 		{	i = 0;
 			try
 			{

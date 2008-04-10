@@ -46,10 +46,10 @@ namespace oonet
             thread * pthis = (thread *)_caller;
 
 			// Ok we started
-			pthis->semStartThread.post();
+			pthis->sem_start_thread.post();
 			try
 			{
-                pthis->thread_routine();
+                (*pthis)();
 			}
             catch(std::exception)
             {   OONET_DEBUG_L1(_T("Thread::_thread_func() exception was thrown from thread!\n"));    }
@@ -100,7 +100,7 @@ namespace oonet
 			_system_start();
 
 			// Wait for thread to start
-			semStartThread.wait();
+			sem_start_thread.wait();
 
             return;
         }

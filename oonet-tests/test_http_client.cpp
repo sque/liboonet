@@ -40,7 +40,7 @@ namespace oonet
 
 		}
 
-		virtual void thread_routine()
+		virtual void operator()()
 		{	binary_data data;
 			http::request myReq;
 
@@ -117,7 +117,7 @@ namespace oonet
 
 		}
 
-		virtual void thread_routine()
+		virtual void operator()()
 		{
 			try
 			{
@@ -129,7 +129,7 @@ namespace oonet
 				clSocket.shutdown();
 				clSocket = socket();
 			}
-			catch(exception &)
+			catch(exception)
 			{}
 		}
 

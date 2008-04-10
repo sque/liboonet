@@ -39,7 +39,7 @@ namespace oonet
             join(mt::Infinity);
 		}
 
-		virtual void thread_routine()
+		virtual void operator()()
 		{	lSocket.listen(1000);
 			bRunning = true;
 

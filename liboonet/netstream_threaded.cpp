@@ -25,7 +25,7 @@ namespace oonet
 	}
 
 
-	void netstream_threaded::thread_routine()
+	void netstream_threaded::operator()()
 	{	binary_data tmp_data;
 
 		// Post disconnect once the disconnect
