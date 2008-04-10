@@ -2,7 +2,7 @@
 lib_LIBRARIES = liboonet.a
 
 liboonet_a_includedir=$(includedir)/oonet
-liboonet_a_http_includedir=$(includedir)/oonet/Http
+liboonet_a_http_includedir=$(includedir)/oonet/http
 
 # Source files
 liboonet_a_SOURCES = \
