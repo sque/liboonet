@@ -9,6 +9,11 @@ namespace oonet
 {
 	namespace http
 	{
+		server_clienthandler::~server_clienthandler()
+		{
+			initialize_destruction();
+		}
+
 		// When data arrives
 		void server_clienthandler::on_data_received(const binary_data & data)
 		{	request TmpRequest;

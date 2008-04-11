@@ -13,7 +13,7 @@ namespace oonet
 		}
 
 		server::~server(void)
-		{}
+		{	initialize_destruction();	}
 
 
 		server_clienthandler * server::impl_new_handler(socket & cl_socket)

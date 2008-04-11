@@ -40,7 +40,7 @@ namespace oonet
 			{}
 
 			// Destructor
-			virtual ~server_clienthandler(void){}
+			virtual ~server_clienthandler(void);
 
 
 		};

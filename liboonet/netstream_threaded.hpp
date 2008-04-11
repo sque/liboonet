@@ -39,6 +39,9 @@ namespace oonet
 		virtual void on_connected(){};
 		virtual void on_disconnected(){};
 
+		// Called at the destructor of the last derived class
+		void initialize_destruction();
+
 	public:
 		// Constructor
 		netstream_threaded();

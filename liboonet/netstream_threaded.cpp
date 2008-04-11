@@ -12,7 +12,8 @@ namespace oonet
 	}
 
 
-	netstream_threaded::~netstream_threaded()
+	// Called at the destructor of the last derived class
+	void netstream_threaded::initialize_destruction()
 	{
 		b_zombie = true;
 
@@ -22,6 +23,11 @@ namespace oonet
 		// post new socket event
 		sem_newsocket.post();
 		join();
+	}
+
+	netstream_threaded::~netstream_threaded()
+	{
+		initialize_destruction();
 	}
 
 
