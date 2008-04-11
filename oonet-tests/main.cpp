@@ -1,9 +1,9 @@
-#include "OONet.h"
+#include "oonet.hpp"
 #include <map>
 #include "TestEssentials.h"
 
 using namespace std;
-using namespace OONet;
+using namespace oonet;
 
 typedef map<string, Test *> TestMap_t;
 typedef map<string, Test *>::iterator TestMapIterator;

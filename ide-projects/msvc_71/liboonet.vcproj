@@ -107,85 +107,82 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\..\liboonet\Base64.cpp">
+				RelativePath="..\..\liboonet\base64.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\BinaryData.cpp">
+				RelativePath="..\..\liboonet\binary_data.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Buffer.cpp">
+				RelativePath="..\..\liboonet\buffer.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Exception.cpp">
+				RelativePath="..\..\liboonet\exception.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\HostInet.cpp">
+				RelativePath="..\..\liboonet\host_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\HostResolver.cpp">
+				RelativePath="..\..\liboonet\host_resolver.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\InetClient.cpp">
+				RelativePath="..\..\liboonet\mutex_impl_win32.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\InetPeer.cpp">
+				RelativePath="..\..\liboonet\netstream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\InetServer.cpp">
+				RelativePath="..\..\liboonet\netstream_threaded.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\MutexWin32.cpp">
+				RelativePath="..\..\liboonet\port_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\PortInet.cpp">
+				RelativePath="..\..\liboonet\semaphore_impl_win32.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\SemaphoreWin32.cpp">
+				RelativePath="..\..\liboonet\socket.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Socket.cpp">
+				RelativePath="..\..\liboonet\socket_address.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\SocketAddress.cpp">
+				RelativePath="..\..\liboonet\socket_address_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\SocketAddressInet.cpp">
+				RelativePath="..\..\liboonet\string_converter.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\StringConverter.cpp">
+				RelativePath="..\..\liboonet\thread.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Thread.cpp">
-			</File>
-			<File
-				RelativePath="..\..\liboonet\ThreadWin32.cpp">
+				RelativePath="..\..\liboonet\thread_impl_win32.cpp">
 			</File>
 			<Filter
 				Name="http"
 				Filter="">
 				<File
-					RelativePath="..\..\liboonet\Http\Client.cpp">
+					RelativePath="..\..\liboonet\http\client.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\ClientHandler.cpp">
+					RelativePath="..\..\liboonet\http\headers_list.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Headers.cpp">
+					RelativePath="..\..\liboonet\http\message.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Packet.cpp">
+					RelativePath="..\..\liboonet\http\request.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Request.cpp">
+					RelativePath="..\..\liboonet\http\response.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Response.cpp">
+					RelativePath="..\..\liboonet\http\server.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Server.cpp">
+					RelativePath="..\..\liboonet\http\server_clienthandler.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Url.cpp">
+					RelativePath="..\..\liboonet\http\url.cpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -194,85 +191,88 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\liboonet\Base64.h">
+				RelativePath="..\..\liboonet\base64.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\BinaryData.h">
+				RelativePath="..\..\liboonet\binary_data.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Buffer.h">
+				RelativePath="..\..\liboonet\buffer.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Exception.h">
+				RelativePath="..\..\liboonet\exception.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\HostInet.h">
+				RelativePath="..\..\liboonet\host_inet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\HostResolver.h">
+				RelativePath="..\..\liboonet\host_resolver.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\InetClient.h">
+				RelativePath="..\..\liboonet\mutex.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\InetPeer.h">
+				RelativePath="..\..\liboonet\netserver.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\InetServer.h">
+				RelativePath="..\..\liboonet\netstream.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Mutex.h">
+				RelativePath="..\..\liboonet\netstream_threaded.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\OONet.h">
+				RelativePath="..\..\liboonet\oonet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\PortInet.h">
+				RelativePath="..\..\liboonet\port_inet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Semaphore.h">
+				RelativePath="..\..\liboonet\scoped_lock.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Socket.h">
+				RelativePath="..\..\liboonet\semaphore.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\SocketAddress.h">
+				RelativePath="..\..\liboonet\socket.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\SocketAddressInet.h">
+				RelativePath="..\..\liboonet\socket_address.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\StringConverter.h">
+				RelativePath="..\..\liboonet\socket_address_inet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\Thread.h">
+				RelativePath="..\..\liboonet\string_converter.h">
+			</File>
+			<File
+				RelativePath="..\..\liboonet\thread.hpp">
 			</File>
 			<Filter
 				Name="http"
 				Filter="">
 				<File
-					RelativePath="..\..\liboonet\Http\Client.h">
+					RelativePath="..\..\liboonet\http\client.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\ClientHandler.h">
+					RelativePath="..\..\liboonet\http\headers_list.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Headers.h">
+					RelativePath="..\..\liboonet\http\message.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Packet.h">
+					RelativePath="..\..\liboonet\http\request.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Request.h">
+					RelativePath="..\..\liboonet\http\response.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Response.h">
+					RelativePath="..\..\liboonet\http\server.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Server.h">
+					RelativePath="..\..\liboonet\http\server_clienthandler.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\Http\Url.h">
+					RelativePath="..\..\liboonet\http\url.hpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -281,6 +281,9 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
+		<File
+			RelativePath="..\..\liboonet\Makefile.am">
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

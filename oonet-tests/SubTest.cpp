@@ -1,15 +1,36 @@
 #include "SubTest.h"
 #include "Test.h"
-#include <time.h>
-
-
-namespace OONet
+#if OONET_OS == OONET_OS_LINUX
+	#include <sys/time.h>
+	#include <time.h>
+#else
+#endif
+namespace oonet
 {
+#if OONET_OS == OONET_OS_LINUX
+	double get_current_msecs()
+	{	struct timeval t;
+		double tmp_out;
+
+		gettimeofday(&t, NULL);
+		tmp_out = t.tv_sec * 1000.0;
+		tmp_out += ((double)t.tv_usec /1000.0);
+
+		return tmp_out;
+	}
+#elif OONET_OS == OONET_OS_WIN32
+	double get_current_msecs()
+	{	
+		double tm = timeGetTime();
+		return tm;
+	}
+#endif
+
 	// Constructor
 	SubTest::SubTest(string Name)
 		:bMustThrow(false),
 		LastException("", 0, "", ""),
-		CpuTimeSpent(0)
+		CpuTimeSpent(0.0)
 	{
 		SubTestName = Name;
 	}
@@ -18,7 +39,7 @@ namespace OONet
 	SubTest::SubTest(string Name, string ExcType)
 		:bMustThrow(true),
 		LastException("", 0, "", ""),
-		CpuTimeSpent(0)
+		CpuTimeSpent(0.0)
 	{
 		SubTestName = Name;
 		ExceptionType = ExcType;
@@ -29,31 +50,30 @@ namespace OONet
 
 		try
 		{
-			StartTime = clock();
+			StartTime = get_current_msecs();
 			bResult = OnExecute();
-			EndTime = clock();
+			EndTime = get_current_msecs();
 			if (bMustThrow) bResult = false;
 
 		}
-		catch(Exception & e)
-		{	EndTime = clock();
+		catch(exception & e)
+		{	EndTime = get_current_msecs();
 			LastException = e;
-			if ((bMustThrow) && (e.getType() == ExceptionType))
+			if ((bMustThrow) && (e.get_type() == ExceptionType))
 				bResult = true;
 			else
 				bResult = false;
 		}
 
 		// Save time
-		CpuTimeSpent = (EndTime - StartTime) * 1000;
-        CpuTimeSpent = CpuTimeSpent / CLOCKS_PER_SEC;
+		CpuTimeSpent = (EndTime - StartTime);
 		return bResult;
 	}
 
 	// Reset timer
 	void SubTest::ResetTimer()
 	{
-		StartTime = clock();
+		StartTime = get_current_msecs();
 	}
 
 	// Get last system error description
@@ -88,4 +108,4 @@ namespace OONet
         return "unsupported";
 #endif
 	}
-};	// !OONet namespace
+};	// !oonet namespace
