@@ -3,6 +3,7 @@
 
 #include "./oonet.hpp"
 #include "./socket.hpp"
+#include "./scoped_lock.hpp"
 
 namespace oonet
 {
@@ -15,6 +16,9 @@ namespace oonet
 
 		// Socket of stream
 		socket m_socket;
+
+		// Change socket
+		mt::mutex mut_change_socket;
 	protected:
 		// Event raised when a new socket is assigned
 		virtual void pre_newsocket_impl(socket & n_sock){}

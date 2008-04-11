@@ -36,13 +36,18 @@ namespace oonet
 		m_socket.shutdown();
 
 		// Abandon socket
-		m_socket = socket();
+		{mt::scoped_lock l(mut_change_socket);
+			m_socket = socket();
+		}
 	}
 
 	void netstream::assign_socket(socket & new_socket)
 	{
 		pre_newsocket_impl(new_socket);
-		m_socket = new_socket;
+		
+		{mt::scoped_lock l(mut_change_socket);
+			m_socket = new_socket;
+		}
 		post_newsocket_impl();
 	}
 };	// !OONet

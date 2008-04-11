@@ -80,7 +80,7 @@ namespace oonet
 
 	~MyClient()
     {   OONET_DEBUG_L2(_T("~MyClient()_\n"));
-
+		initialize_destruction();
         OONET_DEBUG_L2(_T("~MyClient()^\n"));
     }
 

@@ -23,6 +23,7 @@ namespace oonet
         	public:
 				OONET_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
 
+				//! Thread platform specific handle-type
 				typedef THREAD_HANDLE thread_handle_type;
 
             private:

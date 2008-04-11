@@ -19,7 +19,7 @@ namespace oonet
 		test_benchmark()
 			:Test(_T("benchmark"))
 		{
-			//OONET_REGISTERSUBTEST(TestTCPSpeed4G);
+			OONET_REGISTERSUBTEST(TestTCPSpeed4G);
 			OONET_REGISTERSUBTEST(TestHTTPSpeed500Mb);
 
 		}
