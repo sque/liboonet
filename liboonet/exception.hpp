@@ -1,17 +1,17 @@
 #ifndef OONET_EXCEPTION_H_DEFINED
 #define OONET_EXCEPTION_H_DEFINED
 
-#include "oonet.hpp"
+#include "./oonet.hpp"
 
 namespace oonet
 {
 	// Exception Definitions
-	#define OONET_THROW_EXCEPTION(exception, desc) \
-		throw (exception (__FILE__, __LINE__, desc ))
+	#define OONET_THROW_EXCEPTION(exc, desc) \
+	throw (exc (__FILE__, __LINE__, desc ))
 
 	#define OONET_DECLARE_EXCEPTION(name) \
-		class name : public exception { \
-		public : name (const string _file, long _line, const string _desc) \
+		class name : public oonet::exception { \
+		public : name (const string & _file, long _line, const string & _desc) \
 		: exception(_file, _line, _desc, #name) {} }
 
 	#define OONET_ASSERT(exp) \

@@ -1,4 +1,4 @@
-#include "netstream_threaded.hpp"
+#include "./netstream_threaded.hpp"
 
 namespace oonet
 {

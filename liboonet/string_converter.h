@@ -51,7 +51,7 @@ namespace oonet
 
 		// Cast to current selected character type
 #if (OONET_CHAR == OONET_CHAR_WIDE)
-		inline c wstring & toCurrent()
+		inline wstring & toCurrent()
 		{	return wide_string;	}
 #else
 		inline string toCurrent()

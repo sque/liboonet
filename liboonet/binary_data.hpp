@@ -1,7 +1,7 @@
 #ifndef OONET_BINARYDATA_H_INCLUDED
 #define OONET_BINARYDATA_H_INCLUDED
 
-#include "oonet.hpp"
+#include "./oonet.hpp"
 
 #include <vector>
 #include <boost/shared_ptr.hpp>
