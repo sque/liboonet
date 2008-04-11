@@ -20,7 +20,7 @@ namespace oonet
             }
 
             // Check if previous wasn't joined, else join with it
-            if (!bJoined)
+            if (!b_joined)
                 join(Infinity);
 
             // Start Thread
@@ -45,7 +45,7 @@ namespace oonet
             }
 
             // Thread started...
-            bJoined = false;
+            b_joined = false;
             b_running = true;
             return;		// Thread started succesfully
         }
@@ -54,7 +54,7 @@ namespace oonet
         {   OONET_DEBUG_L2("Thread::_linux_join()_\n");
 
             // Skip if thread is already joine
-            if (bJoined)
+            if (b_joined)
                 return;
 
             // For join
@@ -75,7 +75,7 @@ namespace oonet
                     }
                 }
                 // Ok thread joined
-                bJoined = true;
+                b_joined = true;
                 return;
             }
             else
