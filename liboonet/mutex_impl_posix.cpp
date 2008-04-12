@@ -1,6 +1,6 @@
 /**
-@file MutexPosix.cpp
-@brief Implementation of Mutex class on Posix Platform
+@file mutex_impl_posix.cpp
+@brief Implementation of mutex class on Posix Platform
 */
 #include "./mutex.hpp"
 

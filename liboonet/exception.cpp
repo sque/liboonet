@@ -1,6 +1,6 @@
 /**
-@file Exception.cpp
-@brief Implementation of the Exception class.
+@file exception.cpp
+@brief Implementation of the exception class.
  */
 #include "./exception.hpp"
 

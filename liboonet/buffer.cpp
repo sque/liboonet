@@ -1,6 +1,6 @@
 /**
-@file Buffer.cpp
-@brief Implementation of the Buffer class.
+@file buffer.cpp
+@brief Implementation of the buffer class.
 */
 
 #include "./buffer.hpp"

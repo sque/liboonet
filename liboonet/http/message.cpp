@@ -1,6 +1,6 @@
 /**
-@file Packet.cpp
-@brief Implementation of http::Packet class
+@file message.cpp
+@brief Implementation of http::message class
 */
 #include "./message.hpp"
 

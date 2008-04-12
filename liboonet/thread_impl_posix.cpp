@@ -1,6 +1,6 @@
 /**
-@file ThreadPosix.cpp
-@brief Implementation of Thread class on Posix Platform
+@file thread_impl_posix.cpp
+@brief Implementation of thread class on Posix Platform
 */
 #include "./thread.hpp"
 

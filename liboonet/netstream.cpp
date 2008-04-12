@@ -1,3 +1,7 @@
+/**
+@file netstream.cpp
+@brief Implementation of the netstream class.
+*/
 #include "./netstream.hpp"
 
 namespace oonet

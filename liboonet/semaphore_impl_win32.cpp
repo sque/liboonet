@@ -1,6 +1,6 @@
 /**
-@file SemaphorePosix.cpp
-@brief Implementation of Semaphore class on Win32 Platform
+@file semaphore_impl_win32.cpp
+@brief Implementation of semaphore class on Win32 Platform
 */
 #include "./semaphore.hpp"
 

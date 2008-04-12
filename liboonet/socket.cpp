@@ -1,6 +1,6 @@
 /**
-@file Socket.cpp
-@brief Implementation of Socket class
+@file socket.cpp
+@brief Implementation of socket class
 */
 #include "./socket.hpp"
 

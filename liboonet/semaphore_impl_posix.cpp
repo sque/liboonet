@@ -1,6 +1,6 @@
 /**
-@file SemaphorePosix.cpp
-@brief Implementation of Semaphore class on Posix Platform
+@file semaphore_impl_posix.cpp
+@brief Implementation of semaphore class on Posix Platform
 */
 #include "./semaphore.hpp"
 

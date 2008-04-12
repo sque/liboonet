@@ -1,6 +1,6 @@
 /**
-@file PortInet.cpp
-@brief Implementation of PortInet class
+@file port_inet.cpp
+@brief Implementation of port_inet class
 */
 #include "./port_inet.hpp"
 

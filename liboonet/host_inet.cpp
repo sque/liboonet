@@ -1,6 +1,6 @@
 /**
-@file HostInet.cpp
-@brief Implementation of the HostInet class.
+@file host_inet.cpp
+@brief Implementation of the host_inet class.
 */
 #include "./host_inet.hpp"
 

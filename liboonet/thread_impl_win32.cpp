@@ -1,6 +1,6 @@
 /**
-@file ThreadPosix.cpp
-@brief Implementation of Thread class on Win32 Platform
+@file thread_impl_win32.cpp
+@brief Implementation of thread class on Win32 Platform
 */
 #include "./thread.hpp"
 

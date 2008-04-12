@@ -1,6 +1,6 @@
 /**
-@file SocketAddress.cpp
-@brief Implementation of SocketAddress class
+@file socket_address.cpp
+@brief Implementation of socket_address class
 */
 #include "./socket_address.hpp"
 

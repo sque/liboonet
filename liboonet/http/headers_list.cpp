@@ -1,6 +1,6 @@
 /**
-@file Headers.cpp
-@brief Implementation of http::Headers class
+@file headers_list.cpp
+@brief Implementation of http::headers_list class
 */
 #include "./headers_list.hpp"
 

@@ -1,3 +1,8 @@
+/**
+@file sring_converter.cpp
+@brief Implementation of StringConverter class
+*/
+
 #include "./string_converter.h"
 
 namespace oonet

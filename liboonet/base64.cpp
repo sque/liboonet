@@ -1,6 +1,6 @@
 /**
-@file Base64.cpp
-@brief Implementation of the Base64 class.
+@file base64.cpp
+@brief Implementation of the base64 class.
 */
 
 #include "./base64.hpp"

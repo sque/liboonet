@@ -1,6 +1,6 @@
 /**
-@file Server.cpp
-@brief Implementation of http::Server class
+@file server.cpp
+@brief Implementation of http::server class
 */
 #include "./server.hpp"
 

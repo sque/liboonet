@@ -1,6 +1,6 @@
 /**
-@file Url.cpp
-@brief Implementation of http::UrlParam and http::url class
+@file url.cpp
+@brief Implementation of http::url_param and http::url class
 */
 #include "./url.hpp"
 

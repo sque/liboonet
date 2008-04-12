@@ -1,6 +1,6 @@
 /**
-@file ClientHandler.cpp
-@brief Implementation of http::ClientHandler class
+@file server_clienthandler.cpp
+@brief Implementation of http::server_clienthandler class
 */
 #include "./server_clienthandler.hpp"
 #include "./server.hpp"

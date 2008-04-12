@@ -1,6 +1,6 @@
 /**
- @file Thread.cpp
- @brief Implementation of general functions of Thread class.
+ @file thread.cpp
+ @brief Implementation of general functions of thread class.
  */
 
 #include "./thread.hpp"

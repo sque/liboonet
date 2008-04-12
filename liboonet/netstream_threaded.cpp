@@ -1,3 +1,8 @@
+/**
+@file netstream_threaded.cpp
+@brief Implementation of the netstream_threaded class.
+*/
+
 #include "./netstream_threaded.hpp"
 
 namespace oonet

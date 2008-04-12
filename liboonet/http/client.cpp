@@ -1,6 +1,6 @@
 /**
-@file Client.cpp
-@brief Implementation of http::Client class
+@file client.cpp
+@brief Implementation of http::client class
 */
 #include "./client.hpp"
 #include "../scoped_lock.hpp"

@@ -1,6 +1,6 @@
 /**
-@file MutexPosix.cpp
-@brief Implementation of Mutex class on Win32 Platform
+@file mutex_impl_win32.cpp
+@brief Implementation of mutex class on Win32 Platform
 */
 #include "./mutex.hpp"
 

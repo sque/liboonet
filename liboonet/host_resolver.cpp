@@ -1,6 +1,6 @@
 /**
- @file HostResolver.cpp
- @brief Implementation of the HostResolver class.
+ @file host_resolver.cpp
+ @brief Implementation of the host_resolver class.
  */
 #include "./host_resolver.hpp"
 

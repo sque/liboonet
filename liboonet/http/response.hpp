@@ -2,8 +2,9 @@
 #define OONET_HTTP_RESPONSE_H_DEFINED
 
 #include "../oonet.hpp"
-#include "./headers_list.hpp"
 #include "./message.hpp"
+#include "./headers_list.hpp"
+
 
 namespace oonet
 {
