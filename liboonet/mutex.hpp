@@ -14,9 +14,13 @@ namespace oonet
         */
         class mutex
         {
+		public:
+			//! Native handle type of mutex
+			typedef MUTEX_HANDLE native_handle_type;
+
         private:
             //! A handle to mutex object that will be used
-            MUTEX_HANDLE mutex_h;
+            native_handle_type mutex_h;
 
             // Mutex is uncopiable
             mutex(const mutex &r);

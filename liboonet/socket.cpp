@@ -17,7 +17,7 @@ namespace oonet
 		impl & operator=(const impl &);
 
 		// Handle to socket
-		SOCKET _handle;
+		native_handle_type _handle;
 	public:
 
 		// Construct a new socket
@@ -28,7 +28,7 @@ namespace oonet
 		}
 
 		// Assign an existing socket handle
-		explicit impl(SOCKET _assigned_handle)
+		explicit impl(native_handle_type _assigned_handle)
 			:_handle(_assigned_handle)
 		{}
 
@@ -54,7 +54,7 @@ namespace oonet
 		}
 
 		// Get socket that we are refereeing to
-		SOCKET get_socket()
+		native_handle_type get_socket()
 		{	return _handle;	}
 
 	};	// !impl class
@@ -76,7 +76,7 @@ namespace oonet
 	{}
 
 	// Constructor to create new socket
-    socket::socket(SOCKET _handle) throw()
+    socket::socket(native_handle_type _handle) throw()
 		:pimpl_(new impl(_handle))
     {}
 
@@ -269,7 +269,7 @@ namespace oonet
 
     // Wait for incoming connection and return socket of client
     socket socket::accept() throw(exception)
-    {	SOCKET temp_sock_handler;
+    {	native_handle_type temp_sock_handler;
 
         // Try to accept
         temp_sock_handler = ::accept(pimpl_->get_socket(), NULL, 0);

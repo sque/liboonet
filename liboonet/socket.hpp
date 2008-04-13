@@ -40,6 +40,9 @@ namespace oonet
 		void _throw_last_error(const string & ErrorMessage) const;
 	public:
 
+		//! Native type of socket handle
+		typedef SOCKET_HANDLE native_handle_type;
+
 		//! Exception raised when actions was performed on invalid socket
 		OONET_DECLARE_EXCEPTION(ExceptionInvalidSocket);
 		//! Exception raised when requested address is used by another socket.
@@ -109,7 +112,7 @@ namespace oonet
 			This constructor will not create a new socket
 			but will use the provided socket handle.
 		*/
-        explicit socket(SOCKET h_socket) throw();
+        explicit socket(native_handle_type h_socket) throw();
 
 
 		//! Receive data from socket

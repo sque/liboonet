@@ -250,13 +250,12 @@ namespace oonet
 			throw(EchoServer.LastExc);
 
 		for (int i = 0; i < 1000;i++)
-		{	//printf("%d\n", i );
+		{
+			//printf("%d\n", i );
 			TCPSocket = socket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT);
 
 			// Connect to server and send smthing
 			TCPSocket.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-
-
 
 			// Send some shit
 			TCPSocket.send(msg);

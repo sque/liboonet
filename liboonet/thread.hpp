@@ -23,8 +23,8 @@ namespace oonet
         	public:
 				OONET_DECLARE_EXCEPTION(ExceptionThreadAlreadyStarted);
 
-				//! Thread platform specific handle-type
-				typedef THREAD_HANDLE thread_handle_type;
+				//! Native handle type of thread
+				typedef THREAD_HANDLE native_handle_type;
 
             private:
 				// Thread is NonCopiable
@@ -32,7 +32,7 @@ namespace oonet
 				thread & operator=(const thread & r);
 
                 //! The handle of the thread
-                thread_handle_type thread_h;
+                native_handle_type thread_h;
 
                 //! The thread's Id
                 unsigned long thread_id;
@@ -139,7 +139,7 @@ namespace oonet
 					The return value type, varies from platform to platform, so take care
 					for cross-platform probs.
                 */
-                thread_handle_type get_thread_handle()
+                native_handle_type get_thread_handle()
                 {   return thread_h; }
 
         };  // Thread class

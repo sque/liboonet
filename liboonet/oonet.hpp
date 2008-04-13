@@ -127,9 +127,10 @@
 	#define THREADPROC_RETURN DWORD				// Thread routin return type
 	#define CLOSESOCKET ::closesocket			// Function to close a socket
 	#define SOCKLEN int                         // The socklen used by getsockname
+	#define SOCKET_HANDLE SOCKET				// The socket handle
 #elif (OONET_OS == OONET_OS_LINUX)
 	#define MUTEX_HANDLE pthread_mutex_t		// Mutex handle
-	#define SOCKET int							// Socket handle
+	#define SOCKET_HANDLE int					// Socket handle
 	#define DWORD unsigned long					// realy needed?
 	#define SOCKADDR_IN sockaddr_in				// Sockaddress inet
 	#define INVALID_SOCKET -1					// Invalid socket
