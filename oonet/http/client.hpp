@@ -20,13 +20,13 @@ namespace oonet
 			server and send any type of http::Requests. It can detect
 			errors from receiving packets and report them.
 		*/
-		class Client:
+		class client:
 			private netstream_threaded
 		{
 		private:
 			// NonCopyable
-			Client(const Client &);
-			Client & operator=(const Client &);
+			client(const client &);
+			client & operator=(const client &);
 
 			// Private data
 			mt::semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
@@ -38,12 +38,12 @@ namespace oonet
 			/**
 				Creates a client ready to perform a connection
 			*/
-			Client();
+			client();
 
-			Client(const socket_address & dst_addr);
+			client(const socket_address & dst_addr);
 
 			//! Destructor
-			virtual ~Client();
+			virtual ~client();
 
 			//! Make an http request and wait for response
 			/**

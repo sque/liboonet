@@ -50,23 +50,7 @@ namespace oonet
 	class netserver
 		: private mt::thread
 	{
-	public:
-		typedef typename boost::shared_ptr<W> handler_shared_ptr;
-		template<class S>friend class netserver_clienthandler;
-
 	private:
-		void _remove_handler(void * _byebye_handler)
-		{	client_iterator it;
-			for(it = v_pclients.begin();it != v_pclients.end();it++)
-			{
-				if (it->get() == _byebye_handler)
-				{
-					v_pclients.erase(it);
-					return;
-				}
-			}
-		};
-
 		// NonCopyable
 		netserver(const netserver &);
 		netserver & operator=(const netserver &);
@@ -74,6 +58,34 @@ namespace oonet
 		// Private data
 		socket l_socket;			// Listen socket
 		bool b_zombie;				// Flag if we are in zombie mode
+
+	public:
+		// Friend-ship
+		template<class S>friend class netserver_clienthandler;
+
+		// Public type definitions
+		typedef typename boost::shared_ptr<W> handler_shared_ptr;
+		typedef typename std::list<handler_shared_ptr> handlers_pool_type;
+		typedef typename handlers_pool_type::iterator handlers_pool_iterator;
+
+	protected:
+
+		// The pool of stream handlers
+		handlers_pool_type m_handlers_pool;
+
+	private:
+
+		void _remove_handler(void * _byebye_handler)
+		{	handlers_pool_iterator it;
+			for(it = m_handlers_pool.begin();it != m_handlers_pool.end();it++)
+			{
+				if (it->get() == _byebye_handler)
+				{
+					m_handlers_pool.erase(it);
+					return;
+				}
+			}
+		};
 
 		// Thread routine
 		void operator()()
@@ -106,6 +118,7 @@ namespace oonet
 
 
 	protected:
+
 		// Parametrize listen socket at creation time
 		virtual void parametrize_listen_socket(socket & l_sock)	{}
 
@@ -117,19 +130,14 @@ namespace oonet
 		{
 			// Create a new handler
 			handler_shared_ptr p_streamhandler(new W(this));
-			v_pclients.push_back(p_streamhandler);
+			m_handlers_pool.push_back(p_streamhandler);
 
 			return p_streamhandler;
 		}
 
-		// Clients list
-		typedef typename std::list<handler_shared_ptr>::iterator client_iterator;
-		std::list<handler_shared_ptr> v_pclients;
-
 		// Must be called to enter zombie mode
 		void initialize_destruction()
-		{	client_iterator it;
-
+		{
 			// Enter zombie
 			b_zombie = true;
 
@@ -138,7 +146,7 @@ namespace oonet
 				stop_listen();
 
 			// Delete all clients
-			v_pclients.clear();
+			m_handlers_pool.clear();
 		}
 
 	public:
@@ -193,7 +201,7 @@ namespace oonet
 
 		// Get the list of all clients
 		const std::list<handler_shared_ptr> & get_clients() const
-		{	return v_pclients;	}
+		{	return m_handlers_pool;	}
 	};
 };
 

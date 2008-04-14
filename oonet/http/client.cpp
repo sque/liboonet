@@ -10,22 +10,22 @@ namespace oonet
 	namespace http
 	{
 		// Default constructor
-		Client::Client()
+		client::client()
 			:b_waiting_anwser(false)
 		{}
 
-		Client::Client(const socket_address & dst_addr)
+		client::client(const socket_address & dst_addr)
 			:b_waiting_anwser(false)
 		{	connect(dst_addr);		}
 
 		// Destructor
-		Client::~Client()
+		client::~client()
 		{}
 
 
 
 		// Make an http request
-		response Client::send(request & req, long TimeOutMS)
+		response client::send(request & req, long TimeOutMS)
 		{	response tmpResponse;
 			binary_data BinaryRequest, BinaryReply;
 
@@ -63,7 +63,7 @@ namespace oonet
 		}
 
 		// When data arrives from net
-		void Client::on_data_received(const binary_data & data)
+		void client::on_data_received(const binary_data & data)
 		{	response ResponsePacket;
 
 			// Add data in queue
@@ -93,7 +93,7 @@ namespace oonet
 			}
 		}
 
-		void Client::connect(const socket_address_inet & dest_addr)
+		void client::connect(const socket_address_inet & dest_addr)
 		{
 			// Clear data
 			{mt::scoped_lock m(mux_access_data);
@@ -104,7 +104,7 @@ namespace oonet
 			netstream_threaded::connect(dest_addr);
 		}
 
-		void Client::on_disconnected()
+		void client::on_disconnected()
 		{	if (b_waiting_anwser)
 				sem_anwser_arrived.post();
 		}

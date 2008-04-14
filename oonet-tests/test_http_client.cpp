@@ -142,7 +142,7 @@ namespace oonet
 	};
 
 	bool TestHTTPClient::TestCtor::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 
 		if (mClient.connected())
 			return false;
@@ -151,7 +151,7 @@ namespace oonet
 	}
 
 	bool TestHTTPClient::TestCtorWrong::OnExecute()
-	{	http::Client mClient(socket_address_inet(host_inet::LOCALHOST, port_inet(44243)));
+	{	http::client mClient(socket_address_inet(host_inet::LOCALHOST, port_inet(44243)));
 
 		if (mClient.connected())
 			return false;
@@ -159,7 +159,7 @@ namespace oonet
 	}
 
 	bool TestHTTPClient::TestConnect::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 
 		mClient.connect(socket_address_inet(host_resolver("www.google.com"), port_inet(80)));
 
@@ -169,7 +169,7 @@ namespace oonet
 	}
 
 	bool TestHTTPClient::TestConnectConnected::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 
 		// Connect to server
 		mClient.connect(socket_address_inet(host_resolver("www.google.com"), port_inet(80)));
@@ -189,7 +189,7 @@ namespace oonet
 	}
 
 	bool TestHTTPClient::TestSend::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 		http::response resp, theResp;
 		http::request req;
 		binary_data respBinary;
@@ -234,7 +234,7 @@ namespace oonet
 
 
 	bool TestHTTPClient::TestSendTimeOut::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 		http::response theResp;
 		http::request req;
 		binary_data respBinary = binary_data("Asdadsasdasdasdasdasd");
@@ -269,7 +269,7 @@ namespace oonet
 	}
 
 	bool TestHTTPClient::TestSendWrongResponse::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 		http::response theResp;
 		http::request req;
 		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n");
@@ -304,7 +304,7 @@ namespace oonet
 	}
 
 	bool TestHTTPClient::TestReuseDisconnected::OnExecute()
-	{	http::Client mClient;
+	{	http::client mClient;
 		http::response resp, theResp;
 		http::request req;
 		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n"), respBinary2;
@@ -370,7 +370,7 @@ namespace oonet
 	bool TestHTTPClient::TestSendServerReset::OnExecute()
 	{	MiniDCServer myserver;
 		http::request req;
-		http::Client mClient;
+		http::client mClient;
 
 		myserver.start();
 		mt::thread::sleep(1500);    //Wait to star
