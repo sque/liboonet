@@ -37,21 +37,36 @@ namespace oonet
 
 		// Just a default virtual destructor
 		virtual ~netserver_clienthandler()
-		{	disconnect();		}
+		{	disconnect();
+			get_server_ptr()->_remove_handler(this);
+		}
 	};
 
 
 	/**
 		Server templarized class
 	*/
-	template <class C>
+	template <class W>
 	class netserver
 		: private mt::thread
 	{
 	public:
-		typedef typename boost::shared_ptr<C> handler_shared_ptr;
+		typedef typename boost::shared_ptr<W> handler_shared_ptr;
+		template<class S>friend class netserver_clienthandler;
 
 	private:
+		void _remove_handler(void * _byebye_handler)
+		{	client_iterator it;
+			for(it = v_pclients.begin();it != v_pclients.end();it++)
+			{
+				if (it->get() == _byebye_handler)
+				{
+					v_pclients.erase(it);
+					return;
+				}
+			}
+		};
+
 		// NonCopyable
 		netserver(const netserver &);
 		netserver & operator=(const netserver &);
@@ -101,7 +116,7 @@ namespace oonet
 		virtual handler_shared_ptr impl_new_handler(socket & cl_socket)
 		{
 			// Create a new handler
-			handler_shared_ptr p_streamhandler(new C(this));
+			handler_shared_ptr p_streamhandler(new W(this));
 			v_pclients.push_back(p_streamhandler);
 
 			return p_streamhandler;
@@ -123,10 +138,7 @@ namespace oonet
 				stop_listen();
 
 			// Delete all clients
-			while((it = v_pclients.begin()) != v_pclients.end())
-			{	it->reset();
-				v_pclients.erase(it);
-			}
+			v_pclients.clear();
 		}
 
 	public:
