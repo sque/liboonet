@@ -1,7 +1,7 @@
 #ifndef BINARYDATA_TEST_H_INCLUDED
 #define BINARYDATA_TEST_H_INCLUDED
 
-#include "binary_data.hpp"
+#include <oonet/binary_data.hpp>
 #include "Test.h"
 
 namespace oonet

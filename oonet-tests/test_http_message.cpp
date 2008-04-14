@@ -1,5 +1,5 @@
 #include "test_http_message.hpp"
-#include "http/message.hpp"
+#include <oonet/http/message.hpp>
 namespace oonet
 {
 	TestHTTPPacket theTestHTTPPacket;

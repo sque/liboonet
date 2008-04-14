@@ -1,5 +1,5 @@
 #include "test_http_client.hpp"
-#include "http/client.hpp"
+#include <oonet/http/client.hpp>
 
 namespace oonet
 {

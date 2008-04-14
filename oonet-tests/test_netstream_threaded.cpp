@@ -1,7 +1,7 @@
 #include "./test_netstream_threaded.h"
-#include "netstream_threaded.hpp"
-#include "host_resolver.hpp"
-#include "socket_address_inet.hpp"
+#include <oonet/netstream_threaded.hpp>
+#include <oonet/host_resolver.hpp>
+#include <oonet/socket_address_inet.hpp>
 
 namespace oonet
 {

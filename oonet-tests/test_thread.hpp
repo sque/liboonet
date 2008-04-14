@@ -1,7 +1,6 @@
 #ifndef THREAD_TEST_H_DEFINED
 #define THREAD_TEST_H_DEFINED
 
-#include "binary_data.hpp"
 #include "Test.h"
 
 namespace oonet

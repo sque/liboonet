@@ -1,5 +1,5 @@
 #include "test_thread.hpp"
-#include "thread.hpp"
+#include <oonet/thread.hpp>
 #include <time.h>
 
 namespace oonet

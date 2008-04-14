@@ -1,6 +1,6 @@
 #include "test_netserver.hpp"
-#include "netserver.hpp"
-#include "socket_address_inet.hpp"
+#include <oonet/netserver.hpp>
+#include <oonet/socket_address_inet.hpp>
 
 namespace oonet
 {

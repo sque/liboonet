@@ -1,5 +1,5 @@
 #include "test_host_resolver.hpp"
-#include "host_resolver.hpp"
+#include <oonet/host_resolver.hpp>
 
 namespace oonet
 {

@@ -1,7 +1,7 @@
 #include "test_socket.hpp"
-#include "socket.hpp"
-#include "socket_address_inet.hpp"
-#include "thread.hpp"
+#include <oonet/socket.hpp>
+#include <oonet/socket_address_inet.hpp>
+#include <oonet/thread.hpp>
 
 namespace oonet
 {

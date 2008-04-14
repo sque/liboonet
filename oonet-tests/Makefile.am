@@ -1,6 +1,6 @@
 # Compile options
-LDADD = ../liboonet/liboonet.a -lpthread
-AM_CPPFLAGS = -I$(srcdir)/../liboonet
+LDADD = ../oonet/liboonet.a -lpthread
+AM_CPPFLAGS = -I$(srcdir)/..
 
 # OONet Test suite
 check_PROGRAMS = oonet-tests

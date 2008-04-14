@@ -1,5 +1,5 @@
 #include "TestStringConverter.h"
-#include "string_converter.h"
+#include <oonet/string_converter.h>
 
 namespace oonet
 {

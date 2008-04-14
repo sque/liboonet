@@ -1,6 +1,6 @@
 #include "test_semaphore.hpp"
-#include "semaphore.hpp"
-#include "thread.hpp"
+#include <oonet/semaphore.hpp>
+#include <oonet/thread.hpp>
 
 namespace oonet
 {

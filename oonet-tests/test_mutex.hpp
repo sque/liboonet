@@ -1,7 +1,7 @@
 #ifndef MUTEX_TEST_H_DEFINED
 #define MUTEX_TEST_H_DEFINED
 
-#include "binary_data.hpp"
+#include <oonet/binary_data.hpp>
 #include "Test.h"
 
 namespace oonet

@@ -1,2 +1,2 @@
-SUBDIRS = liboonet oonet-tests
+SUBDIRS = oonet oonet-tests
 

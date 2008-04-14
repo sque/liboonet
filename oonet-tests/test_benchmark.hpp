@@ -1,7 +1,7 @@
 #ifndef TEST_BENCHMARK_HPP_INCLUDED
 #define TEST_BENCHMARK_HPP_INCLUDED
 
-#include "binary_data.hpp"
+#include <oonet/binary_data.hpp>
 #include "Test.h"
 
 namespace oonet

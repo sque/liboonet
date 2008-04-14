@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <memory.h>
-#include "oonet.hpp"
+#include <oonet/oonet.hpp>
 #include "Test.h"
 
 using namespace oonet;

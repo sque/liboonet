@@ -1,5 +1,5 @@
 #include "test_buffer.hpp"
-#include "buffer.hpp"
+#include <oonet/buffer.hpp>
 
 namespace oonet
 {

@@ -1,5 +1,5 @@
 #include "test_host_inet.hpp"
-#include "host_inet.hpp"
+#include <oonet/host_inet.hpp>
 
 namespace oonet
 {

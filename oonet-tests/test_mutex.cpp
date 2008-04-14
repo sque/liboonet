@@ -1,5 +1,5 @@
 #include "test_mutex.hpp"
-#include "thread.hpp"
+#include <oonet/thread.hpp>
 #include <time.h>
 
 namespace oonet

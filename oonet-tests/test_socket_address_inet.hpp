@@ -1,7 +1,6 @@
 #ifndef HOSTRESOLVER_TEST_H_DEFINED
 #define HOSTRESOLVER_TEST_H_DEFINED
 
-#include "binary_data.hpp"
 #include "Test.h"
 
 namespace oonet
