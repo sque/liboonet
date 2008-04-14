@@ -1,5 +1,5 @@
-#ifndef OONET_SOCKET_H_DEFINED
-#define OONET_SOCKET_H_DEFINED
+#ifndef OONET_SOCKET_HPP_INCLUDED
+#define OONET_SOCKET_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./binary_data.hpp"
@@ -215,4 +215,4 @@ namespace oonet
 	};  // !Socket class
 };  // !oonet namespace
 
-#endif // !OONET_SOCKET_H_DEFINED
+#endif // !OONET_SOCKET_HPP_INCLUDED

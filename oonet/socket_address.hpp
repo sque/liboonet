@@ -1,5 +1,5 @@
-#ifndef OONET_SOCKETADDRESS_H_INCLUDED
-#define OONET_SOCKETADDRESS_H_INCLUDED
+#ifndef OONET_SOCKET_ADDRESS_HPP_INCLUDED
+#define OONET_SOCKET_ADDRESS_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./exception.hpp"
@@ -63,4 +63,4 @@ namespace oonet
     };  // !SocketAddress class
 };  // !oonet namespace
 
-#endif // !OONET_SOCKETADDRESS_H_INCLUDED
+#endif // !OONET_SOCKET_ADDRESS_HPP_INCLUDED

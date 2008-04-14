@@ -1,5 +1,5 @@
-#ifndef OONET_HTTP_HTTPSERVER_CLIENTHANDLER_H
-#define OONET_HTTP_HTTPSERVER_CLIENTHANDLER_H
+#ifndef OONET_HTTP_SERVER_CLIENTHANDLER_HPP_INCLUDED
+#define OONET_HTTP_SERVER_CLIENTHANDLER_HPP_INCLUDED
 
 #include "../oonet.hpp"
 #include "../netserver.hpp"
@@ -47,4 +47,4 @@ namespace oonet
 	};	// !http namespace
 };	// !oonet namespace
 
-#endif // !OONET_HTTP_HTTPSERVER_CLIENTHANDLER_H
+#endif // !OONET_HTTP_SERVER_CLIENTHANDLER_HPP_INCLUDED

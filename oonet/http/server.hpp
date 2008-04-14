@@ -1,5 +1,5 @@
-#ifndef OONET_HTTP_SERVER_H_DEFINED
-#define OONET_HTTP_SERVER_H_DEFINED
+#ifndef OONET_HTTP_SERVER_HPP_INCLUDED
+#define OONET_HTTP_SERVER_HPP_INCLUDED
 
 #include "../oonet.hpp"
 #include "../socket_address_inet.hpp"
@@ -61,4 +61,4 @@ namespace oonet
 	};	// !http namespace
 };	// !oonet namespace
 
-#endif // !OONET_HTTP_SERVER_H_DEFINED
+#endif // !OONET_HTTP_SERVER_HPP_INCLUDED

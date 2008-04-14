@@ -1,5 +1,5 @@
-#ifndef OONET_BUFFER_H_DEFINED
-#define OONET_BUFFER_H_DEFINED
+#ifndef OONET_BUFFER_HPP_INCLUDED
+#define OONET_BUFFER_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./mutex.hpp"
@@ -72,7 +72,7 @@ namespace oonet
 		inline size_t size()
 		{	return bd_data.size();	}
 
-	};	// Buffer class
+	};	// buffer class
 };	// !oonet namespace
 
-#endif // !OONET_BUFFER_H_DEFINED
+#endif // !OONET_BUFFER_HPP_INCLUDED

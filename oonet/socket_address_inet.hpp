@@ -1,5 +1,5 @@
-#ifndef OONET_SOCKETADDRESSINET_H_INCLUDED
-#define OONET_SOCKETADDRESSINET_H_INCLUDED
+#ifndef OONET_SOCKET_ADDRESS_INET_HPP_INCLUDED
+#define OONET_SOCKET_ADDRESS_INET_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./socket_address.hpp"
@@ -71,4 +71,4 @@ namespace oonet
     };  // !socket_address_inet
 };  // !oonet namespace
 
-#endif // !OONET_SOCKETADDRESSINET_H_INCLUDED
+#endif // !OONET_SOCKET_ADDRESS_INET_HPP_INCLUDED

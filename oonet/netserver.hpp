@@ -1,5 +1,5 @@
-#ifndef NETSERVER_HPP_INCLUDED
-#define NETSERVER_HPP_INCLUDED
+#ifndef OONET_NETSERVER_HPP_INCLUDED
+#define OONET_NETSERVER_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./netstream_threaded.hpp"
@@ -182,4 +182,4 @@ namespace oonet
 };
 
 
-#endif // NETSERVER_HPP_INCLUDED
+#endif // !OONET_NETSERVER_HPP_INCLUDED

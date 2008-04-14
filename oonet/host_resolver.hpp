@@ -1,5 +1,5 @@
-#ifndef OONET_HOSTRESOLVER_H_INCLUDED
-#define OONET_HOSTRESOLVER_H_INCLUDED
+#ifndef OONET_HOST_RESOLVER_HPP_INCLUDED
+#define OONET_HOST_RESOLVER_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./host_inet.hpp"
@@ -74,4 +74,4 @@ namespace oonet
 	};  // !HostResolver class
 };	// !oonet namespace
 
-#endif // OONET_HOSTRESOLVER_H_INCLUDED
+#endif // !OONET_HOST_RESOLVER_HPP_INCLUDED

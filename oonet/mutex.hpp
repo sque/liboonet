@@ -1,5 +1,5 @@
-#ifndef OONET_MT_MUTEX_H_DEFINED
-#define OONET_MT_MUTEX_H_DEFINED
+#ifndef OONET_MT_MUTEX_HPP_INCLUDED
+#define OONET_MT_MUTEX_HPP_INCLUDED
 
 #include "./oonet.hpp"
 
@@ -58,4 +58,4 @@ namespace oonet
     };  // !mt namespace
 };	// !oonet namespace
 
-#endif // !OONET_MT_MUTEX_H_DEFINED
+#endif // !OONET_MT_MUTEX_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef OONET_HTTP_URL_H_DEFINED
-#define OONET_HTTP_URL_H_DEFINED
+#ifndef OONET_HTTP_URL_HPP_INCLUDED
+#define OONET_HTTP_URL_HPP_INCLUDED
 
 #include "../oonet.hpp"
 
@@ -173,7 +173,7 @@ namespace oonet
 			*/
 			void _split_params(const string & par_string, ParameterList & param_list) const;
 
-		}; // !Url class
+		}; // !url class
 	};	// !http namespace
 };	// !oonet namespace
-#endif // OONET_HTTP_URL_H_DEFINED
+#endif // !OONET_HTTP_URL_HPP_INCLUDED

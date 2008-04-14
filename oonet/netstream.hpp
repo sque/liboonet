@@ -1,5 +1,5 @@
-#ifndef NETSTREAM_HPP_INCLUDED
-#define NETSTREAM_HPP_INCLUDED
+#ifndef OONET_NETSTREAM_HPP_INCLUDED
+#define OONET_NETSTREAM_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./socket.hpp"
@@ -62,4 +62,4 @@ namespace oonet
 	};	//	!netstream
 };	// !OONet
 
-#endif // NETSTREAM_HPP_INCLUDED
+#endif // OONET_NETSTREAM_HPP_INCLUDED

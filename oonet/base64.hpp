@@ -1,5 +1,5 @@
-#ifndef OONET_BASE64_H_DEFINED
-#define OONET_BASE64_H_DEFINED
+#ifndef OONET_BASE64_HPP_INCLUDED
+#define OONET_BASE64_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./binary_data.hpp"
@@ -61,4 +61,4 @@ namespace oonet
 	};	// !Base64 class
 
 };	// !oonet namespace
-#endif // !OONET_BASE64_H_DEFINED
+#endif // !OONET_BASE64_HPP_INCLUDED

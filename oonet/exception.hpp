@@ -1,5 +1,5 @@
-#ifndef OONET_EXCEPTION_H_DEFINED
-#define OONET_EXCEPTION_H_DEFINED
+#ifndef OONET_EXCEPTION_HPP_INCLUDED
+#define OONET_EXCEPTION_HPP_INCLUDED
 
 #include "./oonet.hpp"
 
@@ -129,4 +129,4 @@ namespace oonet
 	OONET_DECLARE_EXCEPTION(ExceptionNotConnected);
 };	// oonet namespace
 
-#endif // !OONET_EXCEPTION_H_DEFINED
+#endif // !OONET_EXCEPTION_HPP_INCLUDED

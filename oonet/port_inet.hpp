@@ -1,5 +1,5 @@
-#ifndef OONET_PORTINET_H_INCLUDED
-#define OONET_PORTINET_H_INCLUDED
+#ifndef OONET_PORT_INET_HPP_INCLUDED
+#define OONET_PORT_INET_HPP_INCLUDED
 
 #include "./oonet.hpp"
 
@@ -46,7 +46,7 @@ namespace oonet
 		ushort get_nbo() const
 		{   return htons(in_port);  }
 
-	};  // !PortInet class
+	};  // !port_inet class
 };	// !oonet namespace
 
-#endif // !OONET_PORTINET_H_INCLUDED
+#endif // !OONET_PORT_INET_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef OONET_HTTP_CLIENT_H_INCLUDED
-#define OONET_HTTP_CLIENT_H_INCLUDED
+#ifndef OONET_HTTP_CLIENT_HPP_INCLUDED
+#define OONET_HTTP_CLIENT_HPP_INCLUDED
 
 #include "../oonet.hpp"
 #include "../binary_data.hpp"
@@ -82,4 +82,4 @@ namespace oonet
 		};	// !Client class
 	};	// !http namespace
 };	// !oonet namespace
-#endif // !OONET_HTTP_CLIENT_H_INCLUDED
+#endif // !OONET_HTTP_CLIENT_HPP_INCLUDED

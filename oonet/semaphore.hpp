@@ -1,5 +1,5 @@
-#ifndef OONET_MT_SEMAPHORE_H_INCLUDED
-#define OONET_MT_SEMAPHORE_H_INCLUDED
+#ifndef OONET_MT_SEMAPHORE_HPP_INCLUDED
+#define OONET_MT_SEMAPHORE_HPP_INCLUDED
 
 #include "./oonet.hpp"
 
@@ -66,4 +66,4 @@ namespace oonet
     }   // !mt namespace
 } // !oonet namespace
 
-#endif // OONET_MT_SEMAPHORE_H_INCLUDED
+#endif // OONET_MT_SEMAPHORE_HPP_INCLUDED

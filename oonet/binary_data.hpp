@@ -1,5 +1,5 @@
-#ifndef OONET_BINARYDATA_H_INCLUDED
-#define OONET_BINARYDATA_H_INCLUDED
+#ifndef OONET_BINARY_DATA_HPP_INCLUDED
+#define OONET_BINARY_DATA_HPP_INCLUDED
 
 #include "./oonet.hpp"
 
@@ -244,4 +244,4 @@ namespace oonet
 	};  // !binary_data class
 };  // !oonet namespace
 
-#endif // OONET_BINARYDATA_H_INCLUDED
+#endif // OONET_BINARY_DATA_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef MT_SCOPED_LOCK_HPP_INCLUDED
-#define MT_SCOPED_LOCK_HPP_INCLUDED
+#ifndef OONET_MT_SCOPED_LOCK_HPP_INCLUDED
+#define OONET_MT_SCOPED_LOCK_HPP_INCLUDED
 
 #include "./oonet.hpp"
 #include "./mutex.hpp"
@@ -30,4 +30,4 @@ namespace oonet
 	};	// !mt namespace
 };
 
-#endif // MT_SCOPED_LOCK_HPP_INCLUDED
+#endif // !OONET_MT_SCOPED_LOCK_HPP_INCLUDED

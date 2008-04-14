@@ -1,5 +1,5 @@
-#ifndef OONET_HOSTINET_H_INCLUDED
-#define OONET_HOSTINET_H_INCLUDED
+#ifndef OONET_HOST_INET_HPP_INCLUDED
+#define OONET_HOST_INET_HPP_INCLUDED
 
 #include "./oonet.hpp"
 
@@ -51,4 +51,4 @@ namespace oonet
 	};  // ! HostInet class
 
 };	// !oonet namespace
-#endif // !OONET_HOSTINET_H_INCLUDED
+#endif // !OONET_HOST_INET_HPP_INCLUDED

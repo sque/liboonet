@@ -109,82 +109,82 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\..\liboonet\base64.cpp">
+				RelativePath="..\..\oonet\base64.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\binary_data.cpp">
+				RelativePath="..\..\oonet\binary_data.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\buffer.cpp">
+				RelativePath="..\..\oonet\buffer.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\exception.cpp">
+				RelativePath="..\..\oonet\exception.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\host_inet.cpp">
+				RelativePath="..\..\oonet\host_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\host_resolver.cpp">
+				RelativePath="..\..\oonet\host_resolver.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\mutex_impl_win32.cpp">
+				RelativePath="..\..\oonet\mutex_impl_win32.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\netstream.cpp">
+				RelativePath="..\..\oonet\netstream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\netstream_threaded.cpp">
+				RelativePath="..\..\oonet\netstream_threaded.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\port_inet.cpp">
+				RelativePath="..\..\oonet\port_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\semaphore_impl_win32.cpp">
+				RelativePath="..\..\oonet\semaphore_impl_win32.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\socket.cpp">
+				RelativePath="..\..\oonet\socket.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\socket_address.cpp">
+				RelativePath="..\..\oonet\socket_address.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\socket_address_inet.cpp">
+				RelativePath="..\..\oonet\socket_address_inet.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\string_converter.cpp">
+				RelativePath="..\..\oonet\string_converter.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\thread.cpp">
+				RelativePath="..\..\oonet\thread.cpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\thread_impl_win32.cpp">
+				RelativePath="..\..\oonet\thread_impl_win32.cpp">
 			</File>
 			<Filter
 				Name="http"
 				Filter="">
 				<File
-					RelativePath="..\..\liboonet\http\client.cpp">
+					RelativePath="..\..\oonet\http\client.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\headers_list.cpp">
+					RelativePath="..\..\oonet\http\headers_list.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\message.cpp">
+					RelativePath="..\..\oonet\http\message.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\request.cpp">
+					RelativePath="..\..\oonet\http\request.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\response.cpp">
+					RelativePath="..\..\oonet\http\response.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\server.cpp">
+					RelativePath="..\..\oonet\http\server.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\server_clienthandler.cpp">
+					RelativePath="..\..\oonet\http\server_clienthandler.cpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\url.cpp">
+					RelativePath="..\..\oonet\http\url.cpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -193,88 +193,88 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\liboonet\base64.hpp">
+				RelativePath="..\..\oonet\base64.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\binary_data.hpp">
+				RelativePath="..\..\oonet\binary_data.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\buffer.hpp">
+				RelativePath="..\..\oonet\buffer.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\exception.hpp">
+				RelativePath="..\..\oonet\exception.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\host_inet.hpp">
+				RelativePath="..\..\oonet\host_inet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\host_resolver.hpp">
+				RelativePath="..\..\oonet\host_resolver.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\mutex.hpp">
+				RelativePath="..\..\oonet\mutex.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\netserver.hpp">
+				RelativePath="..\..\oonet\netserver.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\netstream.hpp">
+				RelativePath="..\..\oonet\netstream.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\netstream_threaded.hpp">
+				RelativePath="..\..\oonet\netstream_threaded.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\oonet.hpp">
+				RelativePath="..\..\oonet\oonet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\port_inet.hpp">
+				RelativePath="..\..\oonet\port_inet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\scoped_lock.hpp">
+				RelativePath="..\..\oonet\scoped_lock.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\semaphore.hpp">
+				RelativePath="..\..\oonet\semaphore.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\socket.hpp">
+				RelativePath="..\..\oonet\socket.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\socket_address.hpp">
+				RelativePath="..\..\oonet\socket_address.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\socket_address_inet.hpp">
+				RelativePath="..\..\oonet\socket_address_inet.hpp">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\string_converter.h">
+				RelativePath="..\..\oonet\string_converter.h">
 			</File>
 			<File
-				RelativePath="..\..\liboonet\thread.hpp">
+				RelativePath="..\..\oonet\thread.hpp">
 			</File>
 			<Filter
 				Name="http"
 				Filter="">
 				<File
-					RelativePath="..\..\liboonet\http\client.hpp">
+					RelativePath="..\..\oonet\http\client.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\headers_list.hpp">
+					RelativePath="..\..\oonet\http\headers_list.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\message.hpp">
+					RelativePath="..\..\oonet\http\message.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\request.hpp">
+					RelativePath="..\..\oonet\http\request.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\response.hpp">
+					RelativePath="..\..\oonet\http\response.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\server.hpp">
+					RelativePath="..\..\oonet\http\server.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\server_clienthandler.hpp">
+					RelativePath="..\..\oonet\http\server_clienthandler.hpp">
 				</File>
 				<File
-					RelativePath="..\..\liboonet\http\url.hpp">
+					RelativePath="..\..\oonet\http\url.hpp">
 				</File>
 			</Filter>
 		</Filter>

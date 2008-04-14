@@ -1,5 +1,5 @@
-#ifndef OONET_HTTP_PACKET_H
-#define OONET_HTTP_PACKET_H
+#ifndef OONET_HTTP_PACKET_HPP_INCLUDED
+#define OONET_HTTP_PACKET_HPP_INCLUDED
 
 #include "../oonet.hpp"
 #include "./headers_list.hpp"
@@ -100,4 +100,4 @@ namespace oonet
 	};	// !http namespace
 };	// !oonet namespace
 
-#endif // !OONET_HTTP_PACKET_H
+#endif // !OONET_HTTP_PACKET_HPP_INCLUDED

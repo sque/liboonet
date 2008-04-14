@@ -1,5 +1,5 @@
-#ifndef OONET_HTTP_RESPONSE_H_DEFINED
-#define OONET_HTTP_RESPONSE_H_DEFINED
+#ifndef OONET_HTTP_RESPONSE_HPP_INCLUDED
+#define OONET_HTTP_RESPONSE_HPP_INCLUDED
 
 #include "../oonet.hpp"
 #include "./message.hpp"
@@ -75,4 +75,4 @@ namespace oonet
 		};	// !response class
 	};	// !http namespace
 };	// !oonet namespace
-#endif // OONET_HTTP_RESPONSE_H_DEFINED
+#endif // OONET_HTTP_RESPONSE_HPP_INCLUDED
