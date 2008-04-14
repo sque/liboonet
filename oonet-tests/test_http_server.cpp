@@ -70,7 +70,7 @@ namespace oonet
 		if (!myServer.listening())
 			return false;
 
-		if (myServer.get_clients().size() != 0)
+		if (myServer.handlers_pool().size() != 0)
 			return false;
 
 		return true;
@@ -97,7 +97,7 @@ namespace oonet
 		if (!myServer.listening())
 			return false;
 
-		if (myServer.get_clients().size() != 0)
+		if (myServer.handlers_pool().size() != 0)
 			return false;
 
 		// Stop server
@@ -126,7 +126,7 @@ namespace oonet
 		if (!myServer.listening())
 			return false;
 
-		if (myServer.get_clients().size() != 0)
+		if (myServer.handlers_pool().size() != 0)
 			return false;
 
 		// Stop server
@@ -188,11 +188,11 @@ namespace oonet
 			return false;
 
 		// Get count of clients
-		if (myServer.get_clients().size() != 1)
+		if (myServer.handlers_pool().size() != 1)
 			return false;
 
 		// Check if client is connected
-		if (! myServer.get_clients().front()->connected())
+		if (! myServer.handlers_pool().front()->connected())
 			return false;
 
 		// Stop server
@@ -202,7 +202,7 @@ namespace oonet
 			return false;
 
 		// Get count of clients
-		if (myServer.get_clients().size() != 1)
+		if (myServer.handlers_pool().size() != 1)
 			return false;
 		return true;
 	}

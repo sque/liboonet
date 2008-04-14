@@ -109,7 +109,7 @@ namespace oonet
 		{
 			client.send(test_d);
 		}
-		server.get_clients().front()->sem_arrived.wait();
+		server.handlers_pool().front()->sem_arrived.wait();
 		return true;
 	}
 

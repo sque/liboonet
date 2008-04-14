@@ -199,8 +199,12 @@ namespace oonet
 		inline bool listening() const
 		{	return running();	}
 
-		// Get the list of all clients
-		const std::list<handler_shared_ptr> & get_clients() const
+		// Get the pool of handlers (const)
+		const handlers_pool_type & handlers_pool() const
+		{	return m_handlers_pool;	}
+
+		// Get the pool of handlers
+		handlers_pool_type & handlers_pool()
 		{	return m_handlers_pool;	}
 	};
 };
