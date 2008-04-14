@@ -5,6 +5,7 @@
 #include "./netstream_threaded.hpp"
 
 #include <list>
+#include <boost/shared_ptr.hpp>
 
 namespace oonet
 {
@@ -47,6 +48,9 @@ namespace oonet
 	class netserver
 		: private mt::thread
 	{
+	public:
+		typedef typename boost::shared_ptr<C> handler_shared_ptr;
+
 	private:
 		// NonCopyable
 		netserver(const netserver &);
@@ -68,7 +72,7 @@ namespace oonet
 					cl_socket = l_socket.accept();
 
 					// Allocate new handler
-					C * p_netstream_client = impl_new_handler(cl_socket);
+					handler_shared_ptr p_netstream_client = impl_new_handler(cl_socket);
 
 					// Start handling
 					p_netstream_client->assign_socket(cl_socket);
@@ -94,18 +98,18 @@ namespace oonet
 			and populated with code that recycles disconnected handlers.
 			By default it creates a new one and adds it to the list.
 		*/
-		virtual C * impl_new_handler(socket & cl_socket)
+		virtual handler_shared_ptr impl_new_handler(socket & cl_socket)
 		{
 			// Create a new handler
-			C * p_tmp_server_streamhandler = new C(this);
-			v_pclients.push_back(p_tmp_server_streamhandler);
+			handler_shared_ptr p_streamhandler(new C(this));
+			v_pclients.push_back(p_streamhandler);
 
-			return p_tmp_server_streamhandler;
+			return p_streamhandler;
 		}
 
 		// Clients list
-		typedef typename std::list<C *>::iterator client_iterator;
-		std::list<C *> v_pclients;
+		typedef typename std::list<handler_shared_ptr>::iterator client_iterator;
+		std::list<handler_shared_ptr> v_pclients;
 
 		// Must be called to enter zombie mode
 		void initialize_destruction()
@@ -120,7 +124,7 @@ namespace oonet
 
 			// Delete all clients
 			while((it = v_pclients.begin()) != v_pclients.end())
-			{	delete (*it);
+			{	it->reset();
 				v_pclients.erase(it);
 			}
 		}
@@ -176,7 +180,7 @@ namespace oonet
 		{	return running();	}
 
 		// Get the list of all clients
-		const std::list<C *> & get_clients() const
+		const std::list<handler_shared_ptr> & get_clients() const
 		{	return v_pclients;	}
 	};
 };

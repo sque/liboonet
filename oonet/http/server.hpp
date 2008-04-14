@@ -32,7 +32,7 @@ namespace oonet
 			/*
 				Overide default behavior and recycle disconnected handlers
 			*/
-			virtual server_clienthandler * impl_new_handler(socket & cl_socket);
+			virtual handler_shared_ptr impl_new_handler(socket & cl_socket);
 		protected:
 			//! @name Exported events
 			//! @{

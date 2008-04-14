@@ -16,9 +16,9 @@ namespace oonet
 		{	initialize_destruction();	}
 
 
-		server_clienthandler * server::impl_new_handler(socket & cl_socket)
+		netserver<server_clienthandler>::handler_shared_ptr server::impl_new_handler(socket & cl_socket)
 		{	client_iterator it;
-			server_clienthandler * p_handler;
+			handler_shared_ptr p_handler;
 
 			// Try to recycle a disconnected one
 			for(it = v_pclients.begin();it != v_pclients.end();it++)
@@ -30,7 +30,7 @@ namespace oonet
 			}
 
 			// Create new one
-			p_handler = new server_clienthandler(this);
+			p_handler = handler_shared_ptr(new server_clienthandler(this));
 			v_pclients.push_back(p_handler);
 
 			return p_handler;
