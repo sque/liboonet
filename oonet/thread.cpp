@@ -19,7 +19,7 @@ namespace oonet
     #endif
 
         void thread::_soft_join(ulong tm_timeoutms)
-        {   OONET_DEBUG_L2("Thread::_soft_join()_\n");
+        {
             // Local variables
             ulong tm_passed;		// A counter for time passed
 
@@ -52,7 +52,7 @@ namespace oonet
                 (*pthis)();
 			}
             catch(std::exception)
-            {   OONET_DEBUG_L1(_T("Thread::_thread_func() exception was thrown from thread!\n"));    }
+            {}
 
             // To lock exei noima giati to bRunning mporei na tropopoihthei apo allo thread
             {scoped_lock tmp_lock(*pthis);
@@ -84,9 +84,7 @@ namespace oonet
         {
             // Skip join if we never started thread
             if (thread_h == NOTHREAD)
-			{   OONET_DEBUG_L2(_T("Thread::Join() skipping we don't have handle\n"));
-				return;
-			}
+			{	return;		}
 
 			return _system_join(tm_timeoutms);
         }

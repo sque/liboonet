@@ -170,7 +170,7 @@
 
 
 // Externsive debug info on console output
-#if defined(OONET_DEBUG_LEVEL_1)
+/*#if defined(OONET_DEBUG_LEVEL_1)
     #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL2: %s"), x)
     #define OONET_DEBUG_L2(x)
 #elif defined(OONET_DEBUG_LEVEL_2)
@@ -180,6 +180,7 @@
     #define OONET_DEBUG_L1(x)
     #define OONET_DEBUG_L2(x)
 #endif
+*/
 
 /*******************************
  * Configuration

@@ -11,23 +11,23 @@ namespace oonet
 	protected:
 		////////////////////////////
 		// SUB TESTS
-		OONET_DECLARESUBTEST(TestTCPCtor, _T("Ctor() IPv4/TCP"));
-		OONET_DECLARESUBTESTEXC(TestUDPCtor, _T("Ctor() IPv4/UDP"), _T("ExceptionAssertationFailed"));
-		OONET_DECLARESUBTESTEXC(TestConnectWrong, _T("Connect() imposible"), _T("ExceptionConnectionRefused"));
-		OONET_DECLARESUBTEST(TestFastConnect, _T("Fast: Create,Connect,Delete"));
-		OONET_DECLARESUBTEST(TestReconnect, _T("Connect() DC and connect"));
-		OONET_DECLARESUBTEST(TestReconnectWrong, _T("Connect() and Connect()"));
+		OONET_DECLARESUBTEST(TestCtor, "Ctor()");
+		OONET_DECLARESUBTESTEXC(TestConnectWrong, "Connect() imposible", "ExceptionConnectionRefused");
+		OONET_DECLARESUBTEST(TestFastConnect, "Fast: Create,Connect,Delete");
+		OONET_DECLARESUBTEST(TestConDCCon, "Connect() DC and connect");
+		OONET_DECLARESUBTEST(TestReconnect, "Connect() and Connect()");
+		OONET_DECLARESUBTEST(TestEventQuality, "on_XXX() quality test");
 	public:
 		// Constructor
 		test_netstream_threaded()
 			:Test(_T("netstream_threaded"))
 		{
-			OONET_REGISTERSUBTEST(TestTCPCtor);
-			//OONET_REGISTERSUBTEST(TestUDPCtor);
+			OONET_REGISTERSUBTEST(TestCtor);
 			OONET_REGISTERSUBTEST(TestConnectWrong);
 			OONET_REGISTERSUBTEST(TestFastConnect);
+			OONET_REGISTERSUBTEST(TestConDCCon);
 			OONET_REGISTERSUBTEST(TestReconnect);
-			OONET_REGISTERSUBTEST(TestReconnectWrong);
+			OONET_REGISTERSUBTEST(TestEventQuality);
 		}
 
 	} ;	// !TestInetClient class

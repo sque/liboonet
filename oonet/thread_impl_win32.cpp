@@ -48,24 +48,19 @@ namespace oonet
         }
 
         void thread::_system_join(ulong tm_timeoutms)
-        {   OONET_DEBUG_L2("Thread::_win32_join()_\n");
-
-            DWORD dwResult;
+        {	DWORD dwResult;
 			// Wait for joining
 			dwResult = WaitForSingleObject(thread_h, tm_timeoutms);
 
 			switch(dwResult)
 			{
 			case WAIT_TIMEOUT:
-				OONET_DEBUG_L2("Thread::_win32_join() time-out!\n");
 				OONET_THROW_EXCEPTION(ExceptionTimeOut,
 					"TimeOut waiting to join thread!");
 				return;
 			case WAIT_OBJECT_0:
-				OONET_DEBUG_L2("Thread::_win32_join() succeed!\n");
 				return;
 			default:
-                OONET_DEBUG_L1("Thread::_win32_join() failed for unknown reason!\n");
 				OONET_THROW_EXCEPTION(ExceptionSystemError, 
 					"Unable to join thread!");
 			}
