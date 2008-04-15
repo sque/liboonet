@@ -262,7 +262,8 @@ namespace oonet
 			EchoServer.semArrived.wait(1000);
 			binary_data reply = TCPSocket.receive(1000);
 			if (reply != msg)
-			{	EchoServer.StopS();
+			{	printf("Wrong message!\n");
+				EchoServer.StopS();
 				return false;
 			}
 

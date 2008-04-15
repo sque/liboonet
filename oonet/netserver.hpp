@@ -156,6 +156,10 @@ namespace oonet
 		// start listen
 		void start_listen(const socket_address & l_addr, ulong back_log)
 		{
+			// Skip starting if we are in zombie mode
+			if (b_zombie)
+				return;
+
 			if(listening())
 				OONET_THROW_EXCEPTION(ExceptionAlreadyConnected,
 					"Server is already started!!!");
@@ -189,6 +193,5 @@ namespace oonet
 
 	};
 };
-
 
 #endif // !OONET_NETSERVER_HPP_INCLUDED

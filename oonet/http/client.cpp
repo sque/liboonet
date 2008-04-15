@@ -20,7 +20,7 @@ namespace oonet
 
 		// Destructor
 		client::~client()
-		{}
+		{	initialize_destruction();	}
 
 
 

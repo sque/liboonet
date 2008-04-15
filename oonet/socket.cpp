@@ -24,7 +24,6 @@ namespace oonet
 		impl(int s_family, int s_type, int s_proto)
 		{
 			_handle = ::socket(s_family, s_type, s_proto);
-			//printf("new socket %d\n", _handle);
 		}
 
 		// Assign an existing socket handle
@@ -37,7 +36,6 @@ namespace oonet
 		{
 			if (_handle != INVALID_SOCKET)
 			{
-				//printf("socket abandoned(%d)\n", _handle);
 				shutdown();
 				CLOSESOCKET(_handle);
 			}
@@ -67,7 +65,7 @@ namespace oonet
     	// Check construction
     	if (pimpl_->get_socket() == INVALID_SOCKET)
 			// then we throw exception
-			_throw_last_error("Cannot create Socket()");
+			_throw_last_error("Cannot create socket(int, int, int)");
 	}
 
 	// Constructor that creates an invalid socket
@@ -220,7 +218,7 @@ namespace oonet
 
         // Create a binary data block
         if ((received_size == INVALID_SOCKET) || (received_size <= 0))
-			_throw_last_error("Cannot Socket::receive()");
+			_throw_last_error("Cannot socket::receive()");
 
 		// Return data
 		return received_data.get_until(received_size);
@@ -233,7 +231,7 @@ namespace oonet
         if (sent <= 0)
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::send()");
+			_throw_last_error("Cannot socket::send()");
         }
         return sent;
     }
@@ -244,7 +242,7 @@ namespace oonet
         if (0 != ::connect(pimpl_->get_socket(), (sockaddr *) serv_addr.sockaddr_ptr(), serv_addr.size()) )
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::connect()");
+			_throw_last_error("Cannot socket::connect()");
         }
     }
 
@@ -253,7 +251,7 @@ namespace oonet
     {
         if(0 != ::bind(pimpl_->get_socket(), (sockaddr *) local_addr.sockaddr_ptr(), local_addr.size()))
         {	// Throw exception
-			_throw_last_error("Cannot Socket::bind()");
+			_throw_last_error("Cannot socket::bind()");
         }
     }
 
@@ -263,7 +261,7 @@ namespace oonet
         if (0 != ::listen(pimpl_->get_socket(), max_connections))
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::listen()");
+			_throw_last_error("Cannot socket::listen()");
         }
     }
 
@@ -277,7 +275,7 @@ namespace oonet
         if (temp_sock_handler == INVALID_SOCKET)
         {
 			// Throw exception
-			_throw_last_error("Cannot Socket::accept()");
+			_throw_last_error("Cannot socket::accept()");
         }
 
         // Return a Socket object representing this handler
@@ -292,7 +290,7 @@ namespace oonet
         SOCKLEN addr_len = sizeof(sockaddr);
 
         if (0 != ::getsockname(pimpl_->get_socket(),  &l_addr, &addr_len))
-			_throw_last_error("Cannot Socket::get_local_address()");
+			_throw_last_error("Cannot socket::get_local_address()");
 
         // Create a SocketAddress and return it
         return socket_address(l_addr);
@@ -306,7 +304,7 @@ namespace oonet
         SOCKLEN addr_len = sizeof(sockaddr);
 
         if (0 != ::getpeername(pimpl_->get_socket(),  &p_addr, &addr_len))
-			_throw_last_error("Cannot Socket::get_peer_address()");
+			_throw_last_error("Cannot socket::get_peer_address()");
 
         // Create a SocketAddress and return it
         return socket_address(p_addr);
@@ -322,7 +320,7 @@ namespace oonet
     void socket::set_option(int level, int opt_name, const void * opt_val, int opt_size) throw(exception)
     {
         if (0 != setsockopt(pimpl_->get_socket(), level, opt_name, (char*)opt_val, opt_size))
-            _throw_last_error("Error on setting socket option set_option()");
+			_throw_last_error("Error on setting socket option socket::set_option()");
     }
 
 };  // !oonet namespace

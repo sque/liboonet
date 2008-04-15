@@ -47,7 +47,7 @@ namespace oonet
 			// Wait for new socket
 			sem_newsocket.wait();
 
-			// On zombie mode exit
+			// On zombie-mode exit thread
 			if (b_zombie)
 				return;
 

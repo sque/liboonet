@@ -8,7 +8,7 @@ namespace oonet
 	bool TestStringConverter::TestCtor::OnExecute()
 	{	StringConverter ansitest("Test Ansi");
 		StringConverter widetest(L"Test Wide");
-		printf("Size of wchar_t %u\n", sizeof(wchar_t));
+		//printf("Size of wchar_t %u\n", sizeof(wchar_t));
 		return true;
 	}
 
