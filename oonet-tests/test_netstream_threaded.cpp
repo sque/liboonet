@@ -33,16 +33,7 @@ namespace oonet
 
 		~MiniServer()
 		{
-			lSocket.shutdown();
-			lSocket = socket();
-			join(mt::Infinity);
-
-			for(int i = 0;i < 1000;i++)
-			{
-                if (clSocket[i])
-                    delete clSocket[i];
-                clSocket[i] = NULL;
-			}
+			StopS();
 		}
 
 		virtual void operator()()
@@ -320,6 +311,52 @@ namespace oonet
 			if (g_on_data  != 2) return false;
 			if (g_on_connected  != 2) return false;
 			if (g_on_disconnect  != 2) return false;
+		}
+
+		{g_on_data = g_on_connected = g_on_disconnect = 0;
+			MiniServer theServer;
+			MyClient mClient;
+
+			// Check if it is connected
+			if (mClient.connected())
+				return false;
+
+			// Connect to miniserver
+			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+			mt::thread::sleep(500);
+			if (g_on_data  != 0) return false;
+			if (g_on_connected  != 1) return false;
+			if (g_on_disconnect  != 0) return false;
+
+			// Stop server
+			theServer.StopS();
+			mt::thread::sleep(500);
+			if (g_on_data  != 0) return false;
+			if (g_on_connected  != 1) return false;
+			if (g_on_disconnect  != 1) return false;
+		}
+
+		{g_on_data = g_on_connected = g_on_disconnect = 0;
+			MiniServer theServer(true);
+			MyClient mClient;
+
+			// Check if it is connected
+			if (mClient.connected())
+				return false;
+
+			// Connect to miniserver
+			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+			mt::thread::sleep(500);
+			if (g_on_data  != 1) return false;
+			if (g_on_connected  != 1) return false;
+			if (g_on_disconnect  != 0) return false;
+
+			// Stop server
+			theServer.StopS();
+			mt::thread::sleep(500);
+			if (g_on_data  != 1) return false;
+			if (g_on_connected  != 1) return false;
+			if (g_on_disconnect  != 1) return false;
 		}
 		return true;
 	}
