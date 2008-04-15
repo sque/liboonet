@@ -21,7 +21,7 @@ namespace oonet
 			handler_shared_ptr p_handler;
 
 			// Try to recycle a disconnected one
-			for(it = m_handlers_pool.begin();it != m_handlers_pool.end();it++)
+			for(it = handlers_pool().begin();it != handlers_pool().end();it++)
 			{	p_handler = *it;
 				if (! p_handler->connected())
 				{
@@ -31,7 +31,7 @@ namespace oonet
 
 			// Create new one
 			p_handler = handler_shared_ptr(new server_clienthandler(this));
-			m_handlers_pool.push_back(p_handler);
+			handlers_pool().push_back(p_handler);
 
 			return p_handler;
 		}

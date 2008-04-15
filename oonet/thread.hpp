@@ -11,12 +11,13 @@ namespace oonet
     {
 		//! A thread abstract class.
         /**
-            Thread is used as base class to create threads. The idea is to deriver a class that implements
-            the function Thread::thread_routine. When you start the thread, it will create a new thread and
-            run Thread::thread_routine at the new one.
+            thread is used as base class to create threads. The idea is to subclass thread and implement
+            operator() with the code that new thread will run. At the creation of a thread object, the
+            thread isn't start, you have to call explicitly start() to create and run a new system thread.
+            Each object is able to hold only one thread, to create more thread of same time you have
+            to create more objects.
         @remarks At the derivered class you should take care of shutting down thread before destroying the
-            object, otherwise you'll be at the risk of "pure virtual function was called" error.
-        @brief
+            object, otherwise you'll have <b>Undefined Behaviour</b> problems
         */
         class thread : private mutex
         {
@@ -79,24 +80,24 @@ namespace oonet
 				//! The thread's basic routine.
                 /**
 					Here you must put all the code that the thread will do.
-					This is the core of the thread, everything works, to run this
+					This is the core of the thread, everything works to run this
 					function at new thread ;)
                 */
                 virtual void operator()() = 0;
 
             public:
 
-				//! Contructor of Thread, It does <b>NOT</b> start the thread
+				//! Contructor of thread, It does <b>NOT</b> start the thread
                 /**
 					It initializes all the values and prepares the object so
-					that you can call start()
+					that you can call start().
                 */
                 thread();
 
+				//! Destructor of thread, it tries to kill the thread.
                 /**
-                * You should kill object at the deriverd desctructor before reaching
-                * this point.
-                * @brief Destructor of thread, it tries to kill the thread.
+					You should kill object at the derivered desctructor before reaching
+					this point.
                 */
                 virtual ~thread();
 
@@ -104,12 +105,12 @@ namespace oonet
                 inline bool running() const
                 {   return b_running; }
 
-				//! Join with this thread in a predefined maximum time.
+				//! Try to join with this thread in predifine time period
                 /**
 					This function does <b>NOT</b> tries to stop the thread, it just waits
-					until the thread has stopped or the maximume time is reached
+					until the thread has stopped or the maximum time is reached.
                 @param tm_timeoutms The maximum time in milliseconds to wait until the thread is finished
-					or pass Thread::Infinity to lock for ever until the thread stops.
+					or pass mt::Infinity to wait for ever until the thread stops.
 				@throw ExceptionNotSupported If this systems implementation doesn't support joinable threads.
 				@throw ExceptionTimeOut If maximum time has been reached and the thread hasn't stopped yet.
                 */
@@ -117,8 +118,8 @@ namespace oonet
 
 				//! Start the thread
                 /**
-					It will create a new thread and run the Thread::ThreadRoutine
-					(in a controllable safe-way) at the new created thread.
+					It will create a new system thread that will run the implemented
+					function thread::operator()
 				@throw ExceptionThreadAlreadyStarted If the thread is already started.
 				@throw ExceptionSystemError If there was an internal system error while starting thread.
                 */
@@ -130,19 +131,19 @@ namespace oonet
 					defined time. It is a static function and can be called
 					from everywhere without instantiating any object.
                 @param tm_sleepms The amount of time in milliseconds that the thread will be suspended.
-                @throw ExceptionInterrupted If the suspension of thread was interrupt by another thread.
+                @throw ExceptionInterrupted If the suspension of thread was interrupt by a signal.
                 */
                 static void sleep(ulong tm_sleepms);
 
-				//! Returns the system thread handle of this thread.
+				//! Returns the platform-specific thread handle of this thread.
                 /**
 					The return value type, varies from platform to platform, so take care
 					for cross-platform probs.
                 */
-                native_handle_type get_thread_handle()
+                native_handle_type get_handle()
                 {   return thread_h; }
 
-        };  // Thread class
+        };  // thread class
     };  // mt namespace
 };	// !oonet namespace
 
