@@ -41,7 +41,7 @@ namespace oonet
                 //! A flag if the thread is running
                 bool b_running;
 
-                //! A flag if thread has been joined. (Only for linux)
+                //! A flag if thread has been joined. (Only for posix)
                 bool b_joined;
 
 				//! An event to wait for thread to start
@@ -140,7 +140,7 @@ namespace oonet
 					The return value type, varies from platform to platform, so take care
 					for cross-platform probs.
                 */
-                native_handle_type get_handle()
+                native_handle_type get_handle() const
                 {   return thread_h; }
 
         };  // thread class

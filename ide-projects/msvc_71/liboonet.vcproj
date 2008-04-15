@@ -151,6 +151,9 @@
 				RelativePath="..\..\oonet\socket_address_inet.cpp">
 			</File>
 			<File
+				RelativePath="..\..\oonet\socket_impl_win32.cpp">
+			</File>
+			<File
 				RelativePath="..\..\oonet\string_converter.cpp">
 			</File>
 			<File
