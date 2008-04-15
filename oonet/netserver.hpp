@@ -37,9 +37,7 @@ namespace oonet
 
 		// Just a default virtual destructor
 		virtual ~netserver_clienthandler()
-		{	disconnect();
-			get_server_ptr()->_remove_handler(this);
-		}
+		{	disconnect();		}
 	};
 
 
@@ -50,42 +48,23 @@ namespace oonet
 	class netserver
 		: private mt::thread
 	{
-	private:
-		// NonCopyable
-		netserver(const netserver &);
-		netserver & operator=(const netserver &);
-
-		// Private data
-		socket l_socket;			// Listen socket
-		bool b_zombie;				// Flag if we are in zombie mode
-
 	public:
-		// Friend-ship
-		template<class S>friend class netserver_clienthandler;
 
 		// Public type definitions
 		typedef typename boost::shared_ptr<W> handler_shared_ptr;
 		typedef typename std::list<handler_shared_ptr> handlers_pool_type;
 		typedef typename handlers_pool_type::iterator handlers_pool_iterator;
 
-	protected:
-
-		// The pool of stream handlers
-		handlers_pool_type m_handlers_pool;
-
 	private:
 
-		void _remove_handler(void * _byebye_handler)
-		{	handlers_pool_iterator it;
-			for(it = m_handlers_pool.begin();it != m_handlers_pool.end();it++)
-			{
-				if (it->get() == _byebye_handler)
-				{
-					m_handlers_pool.erase(it);
-					return;
-				}
-			}
-		};
+		// NonCopyable
+		netserver(const netserver &);
+		netserver & operator=(const netserver &);
+
+		// Private data
+		socket l_socket;					// Listen socket
+		bool b_zombie;						// Flag if we are in zombie mode
+		handlers_pool_type m_handlers_pool;	// The pool of stream handlers
 
 		// Thread routine
 		void operator()()
@@ -149,6 +128,14 @@ namespace oonet
 			m_handlers_pool.clear();
 		}
 
+		// Get the pool of handlers (const)
+		const handlers_pool_type & handlers_pool() const
+		{	return m_handlers_pool;	}
+
+		// Get the pool of handlers
+		handlers_pool_type & handlers_pool()
+		{	return m_handlers_pool;	}
+
 	public:
 		// Constructor
 		netserver()
@@ -199,13 +186,7 @@ namespace oonet
 		inline bool listening() const
 		{	return running();	}
 
-		// Get the pool of handlers (const)
-		const handlers_pool_type & handlers_pool() const
-		{	return m_handlers_pool;	}
 
-		// Get the pool of handlers
-		handlers_pool_type & handlers_pool()
-		{	return m_handlers_pool;	}
 	};
 };
 

@@ -15,6 +15,9 @@ namespace oonet
 		}
 
 
+		handlers_pool_type & pool()
+		{	return handlers_pool();	}
+
 	protected:
 		virtual http::response on_url_request(const http::url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
 		{
@@ -70,7 +73,7 @@ namespace oonet
 		if (!myServer.listening())
 			return false;
 
-		if (myServer.handlers_pool().size() != 0)
+		if (myServer.pool().size() != 0)
 			return false;
 
 		return true;
@@ -97,7 +100,7 @@ namespace oonet
 		if (!myServer.listening())
 			return false;
 
-		if (myServer.handlers_pool().size() != 0)
+		if (myServer.pool().size() != 0)
 			return false;
 
 		// Stop server
@@ -126,7 +129,7 @@ namespace oonet
 		if (!myServer.listening())
 			return false;
 
-		if (myServer.handlers_pool().size() != 0)
+		if (myServer.pool().size() != 0)
 			return false;
 
 		// Stop server
@@ -188,11 +191,11 @@ namespace oonet
 			return false;
 
 		// Get count of clients
-		if (myServer.handlers_pool().size() != 1)
+		if (myServer.pool().size() != 1)
 			return false;
 
 		// Check if client is connected
-		if (! myServer.handlers_pool().front()->connected())
+		if (! myServer.pool().front()->connected())
 			return false;
 
 		// Stop server
@@ -202,7 +205,7 @@ namespace oonet
 			return false;
 
 		// Get count of clients
-		if (myServer.handlers_pool().size() != 1)
+		if (myServer.pool().size() != 1)
 			return false;
 		return true;
 	}

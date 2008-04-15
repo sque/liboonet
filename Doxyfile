@@ -85,8 +85,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = "liboonet" \
-                         "liboonet/Http"
+INPUT                  = "oonet"
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
@@ -129,7 +128,7 @@ FILE_PATTERNS          = *.c \
                          *.M \
                          *.MM \
                          *.PY
-RECURSIVE              = NO
+RECURSIVE              = YES
 EXCLUDE                = 
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 

@@ -54,6 +54,9 @@ namespace oonet
 
 		virtual ~bench_server()
 		{	initialize_destruction();	}
+
+		handlers_pool_type & pool()
+		{	return handlers_pool();	}
 	};
 
 
@@ -109,7 +112,7 @@ namespace oonet
 		{
 			client.send(test_d);
 		}
-		server.handlers_pool().front()->sem_arrived.wait();
+		server.pool().front()->sem_arrived.wait();
 		return true;
 	}
 

@@ -37,6 +37,9 @@ namespace oonet
 	public:
 		virtual ~EchoServer()
 		{	initialize_destruction();	}
+
+		handlers_pool_type & pool()
+		{	return handlers_pool();	}
 	};
 
 	bool test_netserver::TestCtor::OnExecute()
@@ -95,7 +98,7 @@ namespace oonet
 		if (!mEchoServer.listening())
 			return false;
 
-		if (mEchoServer.handlers_pool().size() != 0)
+		if (mEchoServer.pool().size() != 0)
 			return false;
 
 		return true;
@@ -119,7 +122,7 @@ namespace oonet
 		if (!mEchoServer.listening())
 			return false;
 
-		if (mEchoServer.handlers_pool().size() != 0)
+		if (mEchoServer.pool().size() != 0)
 			return false;
 
 		// Stop server
@@ -148,7 +151,7 @@ namespace oonet
 		if (!mEchoServer.listening())
 			return false;
 
-		if (mEchoServer.handlers_pool().size() != 0)
+		if (mEchoServer.pool().size() != 0)
 			return false;
 
 		// Stop server
@@ -204,11 +207,11 @@ namespace oonet
 			return false;
 
 		// Get count of clients
-		if (mEchoServer.handlers_pool().size() != 1)
+		if (mEchoServer.pool().size() != 1)
 			return false;
 
 		// Check if client is connected
-		if (! mEchoServer.handlers_pool().front()->connected())
+		if (! mEchoServer.pool().front()->connected())
 			return false;
 
 		// Stop server
@@ -218,7 +221,7 @@ namespace oonet
 			return false;
 
 		// Get count of clients ( clients are not affected)
-		if (mEchoServer.handlers_pool().size() != 1)
+		if (mEchoServer.pool().size() != 1)
 			return false;
 		return true;
 	}
