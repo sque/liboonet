@@ -84,6 +84,7 @@
 		<Unit filename="../../oonet/socket_address.hpp" />
 		<Unit filename="../../oonet/socket_address_inet.cpp" />
 		<Unit filename="../../oonet/socket_address_inet.hpp" />
+		<Unit filename="../../oonet/socket_impl_posix.cpp" />
 		<Unit filename="../../oonet/string_converter.cpp" />
 		<Unit filename="../../oonet/string_converter.h" />
 		<Unit filename="../../oonet/thread.cpp" />

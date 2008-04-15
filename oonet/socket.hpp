@@ -27,17 +27,9 @@ namespace oonet
 		class impl;
 		boost::shared_ptr<impl> pimpl_;
 
-		//! Get last error linux implementation.
-		int _linux_get_last_error() const;
-
-		//! Get last error win32 implementation.
-		int _win32_get_last_error() const;
-
-		//! General get last error function
-		int _get_last_error() const;
-
 		//! Internal function for converting system errors to exceptions
 		void _throw_last_error(const string & ErrorMessage) const;
+
 	public:
 
 		//! Native type of socket handle
@@ -212,7 +204,7 @@ namespace oonet
 			library for extended explanation.
 		*/
         void set_option(int level, int opt_name, const void * opt_val, int opt_size) throw(exception);
-	};  // !Socket class
+	};  // !socket class
 };  // !oonet namespace
 
 #endif // !OONET_SOCKET_HPP_INCLUDED

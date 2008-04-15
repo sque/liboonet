@@ -20,6 +20,7 @@ liboonet_a_SOURCES = \
 	socket_address.cpp \
 	socket_address_inet.cpp \
 	socket.cpp \
+	socket_impl_posix.cpp \
 	string_converter.cpp \
 	thread.cpp \
 	thread_impl_posix.cpp \
