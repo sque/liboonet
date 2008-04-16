@@ -32,15 +32,23 @@ namespace oonet
 				REQUEST_DELETE,		//! DELETE request
 				REQUEST_TRACE,		//! TRACE request
 				REQUEST_CONNECT,	//! CONNECT request
-				REQUEST_UNKNOWN		//! The rest here..
+				REQUEST_CUSTOM		//! The rest here.. (extension)
 			};
 
 		protected:
+			const static binary_data const_options;
 			const static binary_data const_get;
 			const static binary_data const_post;
+			const static binary_data const_head;
+			const static binary_data const_put;
+			const static binary_data const_delete;
+			const static binary_data const_trace;
+			const static binary_data const_connect;
+
 
 			E_REQUEST_METHOD m_req_method;	//!< HTTP request method
 			binary_data m_http_version;		//!< HTTP version
+			binary_data m_custom_method;	//!< Extended request method (if used)
 			url m_uri;						//!< Requested url
 
 		public:
@@ -100,6 +108,14 @@ namespace oonet
 			//! Reference at request method (const)
 			inline const E_REQUEST_METHOD & request_method() const
 			{	return m_req_method;	}
+
+			//! Reference to extended request method 
+			inline binary_data & custom_method()
+			{	return m_custom_method;	}
+
+			//! Reference to extended request method  (const)
+			inline const binary_data & custom_method() const
+			{	return m_custom_method;	}
 		};	// !request class
 	};	// !http namespace
 };	// !oonet namespace

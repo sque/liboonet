@@ -27,6 +27,9 @@ namespace oonet
 		// Reset timer
 		void ResetTimer();
 
+		// Get current time
+		double TimePassed();
+
 		string SubTestName;		// Subtest name
 		bool bMustThrow;		// When this test forces to throw exception
 		string ExceptionType;	// The exception type that must throw

@@ -179,10 +179,13 @@ namespace oonet
 		LockThread.pMutex = &mymut;
 		LockThread.waitfor_ms = 8000;
 		LockThread.start();
-		mt::thread::sleep(2000);
+		mt::thread::sleep(1000);
 
 		// Try to lock
 		mymut.lock(1500);
+		double tm_passed =TimePassed();
+		if ((tm_passed > 2700) || ( tm_passed < 2300))
+			return false;
 		return true;
 	}
 };	// !oonet namespace

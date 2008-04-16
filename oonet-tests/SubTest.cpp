@@ -45,6 +45,10 @@ namespace oonet
 		ExceptionType = ExcType;
 	}
 
+	// Get current time
+	double SubTest::TimePassed()
+	{	return get_current_msecs() - StartTime;	}
+
 	bool SubTest::Execute()
 	{	bool bResult;
 

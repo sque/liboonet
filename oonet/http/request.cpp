@@ -10,6 +10,12 @@ namespace oonet
 	{
 		const binary_data request::const_get = binary_data("GET");
 		const binary_data request::const_post = binary_data("POST");
+		const binary_data request::const_options = binary_data("OPTIONS");
+		const binary_data request::const_head = binary_data("HEAD");
+		const binary_data request::const_put = binary_data("PUT");
+		const binary_data request::const_delete = binary_data("DELETE");
+		const binary_data request::const_trace = binary_data("TRACE");
+		const binary_data request::const_connect = binary_data("CONNECT");
 
 		request::request(void)
 		{
@@ -50,18 +56,55 @@ namespace oonet
 		binary_data request::render(const binary_data & nl_delimiter)
 		{
 			// Make up title
-			if (m_req_method == REQUEST_GET)
+			switch(m_req_method)
 			{
+			case REQUEST_GET:			// GET
 				m_title = const_get;
 				m_title += const_space;
 				b_has_body = false;
-			}
-			else if (m_req_method == REQUEST_POST)
-			{
+				break;
+			case REQUEST_POST:			// POST
 				m_title = const_post;
 				m_title += const_space;
 				b_has_body = true;
+				break;
+			case REQUEST_OPTIONS:		// OPTIONS
+				m_title = const_options;
+				m_title += const_space;
+				b_has_body = true;
+				break;
+			case REQUEST_HEAD:			// HEAD
+				m_title = const_head;
+				m_title += const_space;
+				b_has_body = true;
+				break;
+			case REQUEST_PUT:			// PUT
+				m_title = const_put;
+				m_title += const_space;
+				b_has_body = true;
+				break;
+			case REQUEST_TRACE:			// TRACE
+				m_title = const_trace;
+				m_title += const_space;
+				b_has_body = true;
+				break;
+			case REQUEST_DELETE:		// DELETE
+				m_title = const_delete;
+				m_title += const_space;
+				b_has_body = true;
+				break;
+			case REQUEST_CONNECT:		// CONNECT
+				m_title = const_connect;
+				m_title += const_space;
+				b_has_body = true;
+				break;
+			case REQUEST_CUSTOM:		// CUSTOM (extended)
+				m_title = m_custom_method;
+				m_title += const_space;
+				b_has_body = true;
+				break;
 			}
+
 			m_title += binary_data((string)m_uri);
 			m_title += const_space;
 			m_title += m_http_version;
@@ -84,15 +127,29 @@ namespace oonet
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
 			_command_string = m_title.sub_data(0, commandend_pos);
-			if (_command_string == const_get)
+			if (_command_string.size() == 0)
+				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
+					"This is not an http request message");
+			else if (_command_string == const_get)		// GET
 				m_req_method = REQUEST_GET;
-			else if (_command_string == const_post)
+			else if (_command_string == const_post)		// POST
 				m_req_method = REQUEST_POST;
-			else
+			else if (_command_string == const_head)		// HEAD
+				m_req_method = REQUEST_HEAD;
+			else if (_command_string == const_put)		// PUT
+				m_req_method = REQUEST_PUT;
+			else if (_command_string == const_delete)	// DELETE
+				m_req_method = REQUEST_DELETE;
+			else if (_command_string == const_options)	// OPTIONS
+				m_req_method = REQUEST_OPTIONS;
+			else if (_command_string == const_trace)	// TRACE
+				m_req_method = REQUEST_TRACE;
+			else if (_command_string == const_connect)	// CONNECT
+				m_req_method = REQUEST_CONNECT;
+			else										// CUSTOM (extended)
 			{
-				m_req_method = REQUEST_UNKNOWN;
-				OONET_THROW_EXCEPTION(ExceptionUnimplemented,
-					"This http request is not implemented!");
+				m_req_method = REQUEST_CUSTOM;
+				m_custom_method = _command_string;
 			}
 
 			// Get URL
