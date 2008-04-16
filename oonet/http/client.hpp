@@ -69,7 +69,7 @@ namespace oonet
 			{	netstream_threaded::disconnect();	}
 
 			//! Check if it is connected
-			bool connected()
+			inline bool connected()
 			{	return netstream_threaded::connected();	}
 
 		private:

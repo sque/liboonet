@@ -1,5 +1,6 @@
 #include "test_http_client.hpp"
 #include <oonet/http/client.hpp>
+#include <oonet/http/server.hpp>
 
 namespace oonet
 {
@@ -125,7 +126,7 @@ namespace oonet
 				socket clSocket = lSocket.accept();
 
 				// dc client
-				sleep(1000);
+				sleep(100);
 				clSocket.shutdown();
 				clSocket = socket();
 			}
@@ -138,6 +139,23 @@ namespace oonet
 		{	lSocket.shutdown();
 		    lSocket = socket();
 		    join(mt::Infinity);
+		}
+	};
+
+	class HTTPServer
+		: public http::server
+	{
+	public:
+		void parametrize_listen_socket(socket & l_sock)
+		{
+			int reuse = 1;
+			l_sock.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+		}
+
+		http::response std_resp;
+		http::response on_url_request(const http::url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
+		{
+			return std_resp;
 		}
 	};
 
@@ -199,6 +217,7 @@ namespace oonet
 		resp.reason_phrase() = binary_data("Not Found");
 		resp.body() = binary_data('a', 60000);
 		respBinary = resp.render();
+		respBinary += respBinary;
 
 		// Format req
 		req.uri() = "/";
@@ -232,6 +251,49 @@ namespace oonet
 		return true;
 	}
 
+	bool TestHTTPClient::TestSendSpeed::OnExecute()
+	{	http::client mClient;
+		http::response resp, theResp;
+		http::request req;
+		binary_data respBinary;
+
+		// Format response
+		resp.status_code() = 404;
+		resp.reason_phrase() = binary_data("Not Found");
+		resp.body() = binary_data('a', 1000);
+		respBinary = resp.render();
+
+		// Format req
+		req.uri() = "/";
+		req.request_method() = http::request::REQUEST_GET;
+		req.headers().add("Host", "www.google.com");
+
+		// Create http server
+		HTTPServer myServer;
+		myServer.std_resp = resp;
+
+		// Start server
+		myServer.start_listen(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)), 100);
+		mt::thread::sleep(500);    //WAit to start
+
+
+		// Connect with client
+		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+
+		for(int i = 0;i < (50 * 1000);i ++)
+		{
+			//if ((i % 5000) == 0)
+			//printf("%d\n", i);
+
+			// Send request
+			theResp = mClient.send(req, 3000);
+		}
+
+		if (theResp.render() != resp.render())
+			return false;
+
+		return true;
+	}
 
 	bool TestHTTPClient::TestSendTimeOut::OnExecute()
 	{	http::client mClient;
@@ -373,18 +435,21 @@ namespace oonet
 		http::client mClient;
 
 		myserver.start();
-		mt::thread::sleep(1500);    //Wait to star
+		mt::thread::sleep(500);    //Wait to star
+
 
 		// Format req
 		req.uri() = "/";
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 
-		// Connect with client
-		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+		for(int i = 0;i < 1000;i++)
+		{
+			// Connect with client
+			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 
-		mClient.send(req, 3000);
-
+			mClient.send(req, 3000);
+		}
 		return false;
 	}
 }; // !oonet namespace

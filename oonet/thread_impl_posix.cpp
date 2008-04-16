@@ -51,8 +51,7 @@ namespace oonet
         }
 
         void thread::_system_join(ulong tm_timeoutms)
-        {   OONET_DEBUG_L2("Thread::_linux_join()_\n");
-
+        {
             // Skip if thread is already joine
             if (b_joined)
                 return;
