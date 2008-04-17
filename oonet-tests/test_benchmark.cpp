@@ -85,8 +85,7 @@ namespace oonet
 		~bench_http_server()
 		{	initialize_destruction();	}
 
-		virtual http::response on_url_request(const http::url & Uri,
-			const http::request & full_request,
+		virtual http::response on_url_request(const http::request & full_request,
 			const socket_address_inet & client_addr)
 		{	saved = full_request;
 			cur_data += full_request.body().size();

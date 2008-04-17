@@ -153,7 +153,7 @@ namespace oonet
 		}
 
 		http::response std_resp;
-		http::response on_url_request(const http::url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
+		http::response on_url_request(const http::request & full_request, const socket_address_inet & client_addr)
 		{
 			return std_resp;
 		}

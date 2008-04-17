@@ -19,7 +19,7 @@ namespace oonet
 		{	return handlers_pool();	}
 
 	protected:
-		virtual http::response on_url_request(const http::url & Uri, const http::request & full_request, const socket_address_inet & client_addr)
+		virtual http::response on_url_request(const http::request & full_request, const socket_address_inet & client_addr)
 		{
 			http::response tmpResponse;
 			tmpResponse.body() = binary_data("<HTML><BODY>Dont know how to handle this url!</BODY></HTML>");

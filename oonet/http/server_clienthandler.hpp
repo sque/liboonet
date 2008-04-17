@@ -19,6 +19,7 @@ namespace oonet
 		private:
 			// A buffer with the data
 			binary_data stream_data;
+			socket_address peer_address;
 
 			// httpserver_clienthandler is NonCopyable
 			server_clienthandler(const server_clienthandler &);
@@ -29,14 +30,14 @@ namespace oonet
 			virtual void on_data_received(const binary_data & data);
 
 			// On new connection reset buffer
-			virtual void on_connected()
-			{	stream_data.clear();	}
+			virtual void on_connected();
 
 		public:
 
 			// Constructor
 			server_clienthandler(void * _s)
-				:netserver_clienthandler<server>(_s)
+				:netserver_clienthandler<server>(_s),
+				peer_address(socket_address::FAMILY_INET)
 			{}
 
 			// Destructor

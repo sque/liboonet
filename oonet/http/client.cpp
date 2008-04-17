@@ -26,8 +26,7 @@ namespace oonet
 
 		// Make an http request
 		response client::send(request & req, long TimeOutMS)
-		{	response tmpResponse;
-			binary_data BinaryRequest, BinaryReply;
+		{	binary_data BinaryRequest;
 
 			// Check if we are connected
 			if (! connected())
@@ -50,16 +49,24 @@ namespace oonet
 				if (connected())
 					disconnect();
 				// Maximum time reached
-				OONET_THROW_EXCEPTION(ExceptionTimeOut, "Maximum time has been reached while waiting for an answer.");
+				OONET_THROW_EXCEPTION(ExceptionTimeOut,
+					"Maximum time has been reached while waiting for an answer.");
 			}
 
 			// Gather answer
 			{mt::scoped_lock m(mux_access_data);
-				if (!tmpResponse.parse(WaitingToProcessData, &WaitingToProcessData ))
-					OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole message before connection get closed.");
-			}
 
-			return tmpResponse;
+				if (m_response_queue.size() > 0)
+				{
+					response tmpResponse(m_response_queue.front());
+					m_response_queue.pop_front();
+					return tmpResponse;
+				}
+
+				//if (!tmpResponse.parse(WaitingToProcessData))
+					//OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole message before connection get closed.");
+
+			}
 		}
 
 		// When data arrives from net
@@ -69,27 +76,28 @@ namespace oonet
 			// Add data in queue
 			{mt::scoped_lock m(mux_access_data);
 				WaitingToProcessData += data;
-			}
 
-			// Check if a response arrived
-			try
-			{
-				// Parse data
-				if (!ResponsePacket.parse(WaitingToProcessData))
-					return;
+				// Check if a response arrived
+				try
+				{
+					// Parse data
+					if (!ResponsePacket.parse(WaitingToProcessData, &WaitingToProcessData))
+						return;
 
-				// Raise semaphore
-				b_waiting_anwser = false;
-				sem_anwser_arrived.post();
-			}
-			catch(ExceptionWrongFormat)
-			{
-				// Wrong response
-				disconnect();
+					// Save result
+					m_response_queue.push_back(ResponsePacket);
+					b_waiting_anwser = false;
+					sem_anwser_arrived.post();
+				}
+				catch(ExceptionWrongFormat)
+				{
+					// Wrong response
+					disconnect();
 
-				// Unlock to get answer
-				b_waiting_anwser = false;
-				sem_anwser_arrived.post();
+					// Unlock to get answer
+					b_waiting_anwser = false;
+					sem_anwser_arrived.post();
+				}
 			}
 		}
 
@@ -98,6 +106,7 @@ namespace oonet
 			// Clear data
 			{mt::scoped_lock m(mux_access_data);
 				WaitingToProcessData.clear();
+				m_response_queue.clear();
 			}
 
 			b_waiting_anwser = false;

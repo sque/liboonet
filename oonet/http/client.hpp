@@ -8,6 +8,8 @@
 #include "./response.hpp"
 #include "./request.hpp"
 
+#include <deque>
+
 namespace oonet
 {
 	namespace http
@@ -29,10 +31,11 @@ namespace oonet
 			client & operator=(const client &);
 
 			// Private data
-			mt::semaphore sem_anwser_arrived;	//!< Semaphore triggered when an answer arrives
-			binary_data WaitingToProcessData;	//!< Unprocessed received data
-			mt::mutex mux_access_data;			//!< Mutex for synchronization on stack
-			bool b_waiting_anwser;				//!< If someone is waiting for a server answer
+			mt::semaphore sem_anwser_arrived;			//!< Semaphore triggered when an answer arrives
+			binary_data WaitingToProcessData;			//!< Unprocessed received data
+			std::deque<response> m_response_queue;		//!< Queue of responses
+			mt::mutex mux_access_data;					//!< Mutex for synchronization on queue
+			bool b_waiting_anwser;						//!< If someone is waiting for a server answer
 		public:
 			//! Default constructor
 			/**

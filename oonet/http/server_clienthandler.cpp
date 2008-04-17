@@ -14,6 +14,11 @@ namespace oonet
 			initialize_destruction();
 		}
 
+		void server_clienthandler::on_connected()
+		{	stream_data.clear();										// Clear stream data
+			peer_address = get_connection_socket().get_peer_address();	// Cache peer address
+		}
+
 		// When data arrives
 		void server_clienthandler::on_data_received(const binary_data & data)
 		{	request TmpRequest;
@@ -28,7 +33,7 @@ namespace oonet
 				while(TmpRequest.parse(stream_data, &stream_data))
 				{
 					// Triger server event
-					CustomResponse = get_server_ptr()->on_url_request(TmpRequest.uri(), TmpRequest, get_connection_socket().get_peer_address());
+					CustomResponse = get_server_ptr()->on_url_request(TmpRequest, peer_address);
 					// Send response
 					send(CustomResponse.render());
 				}
