@@ -24,15 +24,15 @@ namespace oonet
 			//! Enumerate the request type
 			enum E_REQUEST_METHOD
 			{
-				REQUEST_OPTIONS,	//! OPTIONS request
-				REQUEST_GET,		//! GET request
-				REQUEST_POST,		//! POST request
-				REQUEST_HEAD,		//! HEAD request
-				REQUEST_PUT,		//! PUT request
-				REQUEST_DELETE,		//! DELETE request
-				REQUEST_TRACE,		//! TRACE request
-				REQUEST_CONNECT,	//! CONNECT request
-				REQUEST_CUSTOM		//! The rest here.. (extension)
+				REQUEST_OPTIONS,	//!< OPTIONS request
+				REQUEST_GET,		//!< GET request
+				REQUEST_POST,		//!< POST request
+				REQUEST_HEAD,		//!< HEAD request
+				REQUEST_PUT,		//!< PUT request
+				REQUEST_DELETE,		//!< DELETE request
+				REQUEST_TRACE,		//!< TRACE request
+				REQUEST_CONNECT,	//!< CONNECT request
+				REQUEST_CUSTOM		//!< The rest here.. (extension)
 			};
 
 		protected:
@@ -109,7 +109,7 @@ namespace oonet
 			inline const E_REQUEST_METHOD & request_method() const
 			{	return m_req_method;	}
 
-			//! Reference to extended request method 
+			//! Reference to extended request method
 			inline binary_data & custom_method()
 			{	return m_custom_method;	}
 

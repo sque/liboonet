@@ -37,6 +37,7 @@ namespace oonet
 			m_uri = r.m_uri;
 			m_req_method = r.m_req_method;
 			m_http_version = r.m_http_version;
+			m_custom_method = r.m_custom_method;
 		}
 
 		// Copy Operator
@@ -49,6 +50,7 @@ namespace oonet
 			m_uri = r.m_uri;
 			m_req_method = r.m_req_method;
 			m_http_version = r.m_http_version;
+			m_custom_method = r.m_custom_method;
 			return *this;
 		}
 

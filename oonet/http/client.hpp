@@ -43,7 +43,12 @@ namespace oonet
 			*/
 			client();
 
-			client(const socket_address & dst_addr);
+			//! Construct and connect
+			/**
+			@throw ExceptionConnectionRefused It may be thrown by netstream_threaded::connect()
+			@remarks If the connection fails the construction will too.
+			*/
+			client(const socket_address_inet & dst_addr);
 
 			//! Destructor
 			virtual ~client();
@@ -53,11 +58,16 @@ namespace oonet
 				It will sent the specified request to a server
 				and wait for the answer to arrive in a specied
 				maximum time.
-			@param req The http::request to sent at the server
+			@param req The request to sent at the server
 			@param tm_timeoutms The maximum time to wait for answer in milliseconds
-			@return An http::response object holding the answer from the server.
+			@return A response object holding the answer from the server.
 			@throw ExceptionTimeOut If maximum time reached without receiving any answer
-			@throw ExceptionNotConnected If http::Client is not connected in any server yet, or connection was closed
+			@throw ExceptionNotConnected If client is not connected in any server yet, or the connection has closed
+				before calling send().
+			@throw ExceptionWrongFormat If the server sent a response that is not a well-formated http response message.
+				After the exception the connection is closed too.
+			@throw ExceptionIncomplete This is a special case where the connection was closed without finishing the
+				reception of a complete response.
 			@remarks In case that a wrong formated message
 				arrives, then the client is automatically disconnected
 				from server.

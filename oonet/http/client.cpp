@@ -14,7 +14,7 @@ namespace oonet
 			:b_waiting_anwser(false)
 		{}
 
-		client::client(const socket_address & dst_addr)
+		client::client(const socket_address_inet & dst_addr)
 			:b_waiting_anwser(false)
 		{	connect(dst_addr);		}
 
