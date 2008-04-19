@@ -74,6 +74,7 @@
 		<Unit filename="../../oonet/netstream.hpp" />
 		<Unit filename="../../oonet/netstream_threaded.cpp" />
 		<Unit filename="../../oonet/netstream_threaded.hpp" />
+		<Unit filename="../../oonet/oonet.cpp" />
 		<Unit filename="../../oonet/oonet.hpp" />
 		<Unit filename="../../oonet/port_inet.cpp" />
 		<Unit filename="../../oonet/port_inet.hpp" />

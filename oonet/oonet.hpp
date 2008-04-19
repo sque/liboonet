@@ -59,6 +59,13 @@
 #endif // __cplusplus
 
 /************************************/
+// Library version
+#define OONET_VERSION_MAJOR 0
+#define OONET_VERSION_MINOR 2
+#define OONET_VERSION_MICRO 0
+#define OONET_VERSION_PHRASE "ALPHA"
+
+/************************************/
 // Examine OS
 #define OONET_OS_WIN32	1
 #define OONET_OS_LINUX	2
@@ -236,6 +243,12 @@ namespace oonet
 	typedef unsigned short ushort;
 	typedef unsigned long ulong;
 	typedef unsigned char uchar;
+
+	/* Version */
+	ushort version_major();			//!< Major part of version e.g. "Y.x.x xxxxxxx" Y is major
+	ushort version_minor();			//!< Minor part of version e.g. "x.Y.x xxxxxxx" Y is minor
+	ushort version_micro();			//!< Micro part of version e.g. "x.x.Y xxxxxxx" Y is micro
+	std::string version_phrase();	//!< Description phrase of this version e.g. "x.x.x YYYYYYYYY" Y is description phrase
 
 	//! OONet's sub namespace to organize all multi-thread related classes
 	namespace mt

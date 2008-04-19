@@ -26,7 +26,9 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-march=native -mtune=native" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

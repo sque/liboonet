@@ -21,6 +21,21 @@ int _tmain(int argc, TCHAR * argv[])
     string testname;
 	bool res;
 
+	// Display intro
+	printf(	"+-------------------------------------------------+\n"
+			"|OONet's Test Suite                               |\n"
+			"| compiled against version %u.%u.%u %-17s|\n"
+			"| linked against version %u.%u.%u %-17s  |\n"
+			"+-------------------------------------------------+\n\n",
+		OONET_VERSION_MAJOR,
+		OONET_VERSION_MINOR,
+		OONET_VERSION_MICRO,
+		OONET_VERSION_PHRASE,
+		oonet::version_major(),
+		oonet::version_minor(),
+		oonet::version_micro(),
+		oonet::version_phrase().c_str()
+	);
 	// For windows
 #if (OONET_OS ==  OONET_OS_WIN32)
 	WSADATA wsaData;
@@ -41,7 +56,7 @@ int _tmain(int argc, TCHAR * argv[])
 		}
 
 		if (!res)
-			_tprintf(_T("!!One or more tests failed!!!\n"));
+			printf("!!One or more tests failed!!!\n");
     }
     else
     {
