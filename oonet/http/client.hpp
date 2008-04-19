@@ -31,11 +31,16 @@ namespace oonet
 			client & operator=(const client &);
 
 			// Private data
-			mt::semaphore sem_anwser_arrived;			//!< Semaphore triggered when an answer arrives
-			binary_data WaitingToProcessData;			//!< Unprocessed received data
-			std::deque<response> m_response_queue;		//!< Queue of responses
-			mt::mutex mux_access_data;					//!< Mutex for synchronization on queue
-			bool b_waiting_anwser;						//!< If someone is waiting for a server answer
+			binary_data dt_unprocessed;					//!< Unprocessed received data
+
+			mt::semaphore sem_answer_received;			//!< Semaphore triggered when an answer arrives
+			mt::mutex mux_access_data;					//!< Mutex for safe access in data
+
+			http::response m_last_response;				//!< Last response
+
+			bool b_have_response;						//!< If there is a response stored
+			bool b_waiting_answer;						//!< If someone is waiting for a server answer
+
 		public:
 			//! Default constructor
 			/**
@@ -86,11 +91,14 @@ namespace oonet
 			{	return netstream_threaded::connected();	}
 
 		private:
-			// When data arrives
-			virtual void on_data_received(const binary_data &);
 
-			// Raised when we loose conenction from server
+			//! @name Events inherited from netstream_threaded
+			//! @{
+
+			virtual void on_data_received(const binary_data &);
 		    virtual void on_disconnected();
+
+		    //! @}
 
 		};	// !Client class
 	};	// !http namespace

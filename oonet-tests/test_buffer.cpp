@@ -23,22 +23,22 @@ namespace oonet
 		if (myBuff.size() != 0 )
 			return false;
 
-		myBuff.pushBack(binary_data(Char_M, 1));
+		myBuff.push_back(binary_data(Char_M, 1));
 
 		if (myBuff.size() != 1 )
 			return false;
 
-		myBuff.pushBack(binary_data(Char_M, 2));
+		myBuff.push_back(binary_data(Char_M, 2));
 
 		if (myBuff.size() != 3 )
 			return false;
 
-		myBuff.pushFront(binary_data(Char_M, 1));
+		myBuff.push_front(binary_data(Char_M, 1));
 
 		if (myBuff.size() != 4 )
 			return false;
 
-		myBuff.pushBack(binary_data(Char_M, 2));
+		myBuff.push_back(binary_data(Char_M, 2));
 
 		if (myBuff.size() != 6 )
 			return false;
@@ -49,8 +49,8 @@ namespace oonet
 	{	buffer myBuff;
 		size_t outSize;
 
-		myBuff.pushBack(binary_data(Char_M, 10000));
-		myBuff.pushBack(binary_data(Char_M, 10000));
+		myBuff.push_back(binary_data(Char_M, 10000));
+		myBuff.push_back(binary_data(Char_M, 10000));
 
 		ResetTimer();
 		for(long i = 0;i < 1000000;i++)
@@ -72,8 +72,8 @@ namespace oonet
 		if (myBuff.size() != 0)
 			return false;
 
-		myBuff.pushBack(binary_data(Char_M, 10000));
-		myBuff.pushBack(binary_data(Char_M, 10000));
+		myBuff.push_back(binary_data(Char_M, 10000));
+		myBuff.push_back(binary_data(Char_M, 10000));
 
 		if (myBuff.size() != 20000)
 			return false;
@@ -83,7 +83,7 @@ namespace oonet
 		if (myBuff.size() != 0)
 			return false;
 
-		myBuff.pushBack(binary_data(Char_M, 5000));
+		myBuff.push_back(binary_data(Char_M, 5000));
 
 		if (myBuff.size() != 5000)
 			return false;
@@ -108,8 +108,8 @@ namespace oonet
 		if (myBuff.size() != 0)
 			return false;
 
-		myBuff.pushBack(binary_data(Char_M, 10000));
-		myBuff.pushBack(binary_data(Char_M, 10000));
+		myBuff.push_back(binary_data(Char_M, 10000));
+		myBuff.push_back(binary_data(Char_M, 10000));
 
 		ResetTimer();
 		for(long i = 0;i < 100000;i++)
@@ -126,80 +126,80 @@ namespace oonet
 		binary_data revorderedPattern("8765431");
 
 		// From back in two pieces
-		myBuff.pushBack(smallPattern);
-		myBuff.pushBack(smallPattern);
+		myBuff.push_back(smallPattern);
+		myBuff.push_back(smallPattern);
 
-		if (myBuff.peekBack(40) != bigPattern)
+		if (myBuff.peek_back(40) != bigPattern)
 			return false;
 
-		if (myBuff.peekFront(40) != bigPattern)
+		if (myBuff.peek_front(40) != bigPattern)
 			return false;
 		myBuff.flush();
 
 		// From back in one piece
-		myBuff.pushBack(bigPattern);
+		myBuff.push_back(bigPattern);
 
-		if (myBuff.peekBack(40) != bigPattern)
+		if (myBuff.peek_back(40) != bigPattern)
 			return false;
 
-		if (myBuff.peekFront(40) != bigPattern)
+		if (myBuff.peek_front(40) != bigPattern)
 			return false;
 		myBuff.flush();
 
 		// Front in two pieces
-		myBuff.pushFront(smallPattern);
-		myBuff.pushFront(smallPattern);
+		myBuff.push_front(smallPattern);
+		myBuff.push_front(smallPattern);
 
-		if (myBuff.peekBack(40) != bigPattern)
+		if (myBuff.peek_back(40) != bigPattern)
 			return false;
 
-		if (myBuff.peekFront(40) != bigPattern)
+		if (myBuff.peek_front(40) != bigPattern)
 			return false;
 		myBuff.flush();
 
 		// Front in one piece
-		myBuff.pushFront(bigPattern);
+		myBuff.push_front(bigPattern);
 
-		if (myBuff.peekBack(40) != bigPattern)
+		if (myBuff.peek_back(40) != bigPattern)
 			return false;
 
-		if (myBuff.peekFront(40) != bigPattern)
+		if (myBuff.peek_front(40) != bigPattern)
 			return false;
 		myBuff.flush();
 
 
 		// One by one char from front
-		myBuff.pushFront(binary_data('1', 1));
-		myBuff.pushFront(binary_data('2', 1));
-		myBuff.pushFront(binary_data('3', 1));
-		myBuff.pushFront(binary_data('4', 1));
-		myBuff.pushFront(binary_data('5', 1));
-		myBuff.pushFront(binary_data('6', 1));
-		myBuff.pushFront(binary_data('7', 1));
-		myBuff.pushFront(binary_data('8', 1));
+		myBuff.push_front(binary_data('1', 1));
+		myBuff.push_front(binary_data('2', 1));
+		myBuff.push_front(binary_data('3', 1));
+		myBuff.push_front(binary_data('4', 1));
+		myBuff.push_front(binary_data('5', 1));
+		myBuff.push_front(binary_data('6', 1));
+		myBuff.push_front(binary_data('7', 1));
+		myBuff.push_front(binary_data('8', 1));
 
-		if (myBuff.peekFront(4) != binary_data("8765"))
+		if (myBuff.peek_front(4) != binary_data("8765"))
 			return false;
 
-		if (myBuff.peekBack(4) != binary_data("4321"))
+		if (myBuff.peek_back(4) != binary_data("4321"))
 			return false;
 
 		myBuff.flush();
 
 		// One by one char from back
-		myBuff.pushBack(binary_data('1', 1));
-		myBuff.pushBack(binary_data('2', 1));
-		myBuff.pushBack(binary_data('3', 1));
-		myBuff.pushBack(binary_data('4', 1));
-		myBuff.pushBack(binary_data('5', 1));
-		myBuff.pushBack(binary_data('6', 1));
-		myBuff.pushBack(binary_data('7', 1));
-		myBuff.pushBack(binary_data('8', 1));
+		myBuff.push_back(binary_data('1', 1));
+		myBuff.push_back(binary_data('2', 1));
+		myBuff.push_back(binary_data('3', 1));
+		myBuff.push_back(binary_data('4', 1));
+		myBuff.push_back(binary_data('5', 1));
+		myBuff.push_back(binary_data('6', 1));
+		myBuff.push_back(binary_data('7', 1));
+		myBuff.push_back(binary_data('8', 1));
 
-		if (myBuff.peekFront(4) != binary_data("1234"))
+		if (myBuff.peek_front(4) != binary_data("1234"))
 			return false;
 
-		if (myBuff.peekBack(4) != binary_data("5678"))
+		if (myBuff.peek_back(4) != binary_data("5678"))
 			return false;
 		return true;
 	}
@@ -209,16 +209,16 @@ namespace oonet
 		binary_data peekD, popD;
 
 		myBuff.flush();
-		myBuff.pushBack(binary_data("1234123"));
-		peekD = myBuff.peekBack(3);
-		popD = myBuff.popBack(3);
+		myBuff.push_back(binary_data("1234123"));
+		peekD = myBuff.peek_back(3);
+		popD = myBuff.pop_back(3);
 		if (peekD != popD)
 			return false;
 
 		myBuff.flush();
-		myBuff.pushBack(binary_data("1234123"));
-		peekD = myBuff.peekFront(3);
-		popD = myBuff.popFront(3);
+		myBuff.push_back(binary_data("1234123"));
+		peekD = myBuff.peek_front(3);
+		popD = myBuff.pop_front(3);
 		if (peekD != popD)
 			return false;
 
@@ -233,7 +233,7 @@ namespace oonet
 		ResetTimer();
 		for(long i = 0; i < 1000;i++)
 		{
-			myBuff.pushFront(data);
+			myBuff.push_front(data);
 		}
 
 		return true;
@@ -246,7 +246,7 @@ namespace oonet
 		ResetTimer();
 		for(long i = 0; i < 100000;i++)
 		{
-			myBuff.popFront(10000);
+			myBuff.pop_front(10000);
 		}
 
 		return true;
@@ -259,7 +259,7 @@ namespace oonet
 		ResetTimer();
 		for(long i = 0; i < 100000;i++)
 		{
-			myBuff.peekFront(10000);
+			myBuff.peek_front(10000);
 		}
 
 		return true;
@@ -272,7 +272,7 @@ namespace oonet
 		ResetTimer();
 		for(long i = 0; i < 1000;i++)
 		{
-			myBuff.pushBack(data);
+			myBuff.push_back(data);
 		}
 
 		return true;
@@ -285,7 +285,7 @@ namespace oonet
 		ResetTimer();
 		for(long i = 0; i < 100000;i++)
 		{
-			myBuff.popBack(10000);
+			myBuff.pop_back(10000);
 		}
 
 		return true;
@@ -298,7 +298,7 @@ namespace oonet
 		ResetTimer();
 		for(long i = 0; i < 100000;i++)
 		{
-			myBuff.peekBack(10000);
+			myBuff.peek_back(10000);
 		}
 
 		return true;

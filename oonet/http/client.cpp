@@ -11,11 +11,11 @@ namespace oonet
 	{
 		// Default constructor
 		client::client()
-			:b_waiting_anwser(false)
+			:b_waiting_answer(false)
 		{}
 
 		client::client(const socket_address_inet & dst_addr)
-			:b_waiting_anwser(false)
+			:b_waiting_answer(false)
 		{	connect(dst_addr);		}
 
 		// Destructor
@@ -25,97 +25,74 @@ namespace oonet
 
 
 		// Make an http request
-		response client::send(request & req, long TimeOutMS)
-		{	binary_data BinaryRequest;
+		response client::send(request & req, long tm_timeoutms)
+		{	response tmp_response;
+			if (!connected())
+				OONET_THROW_EXCEPTION(ExceptionNotConnected,
+					"You must connect before sending an http request!");
 
-			// Check if we are connected
-			if (! connected())
-				OONET_THROW_EXCEPTION(ExceptionNotConnected, "Client is not yet connected!");
+			// Initialize flags
+			b_have_response = false;
+			b_waiting_answer = true;
 
-			// Process the request
-			BinaryRequest = req.render();
+			// Send Real data
+			netstream_threaded::send(req.render());
 
-			// Send it to net
-			b_waiting_anwser = true;
-			netstream_threaded::send(BinaryRequest);
-
-			// Wait for an answer to arrive
-			try
-			{
-				sem_anwser_arrived.wait(TimeOutMS);
+			// Wait for answer
+			try	{	sem_answer_received.wait(tm_timeoutms);	}
+			catch(oonet::exception)
+			{	// Stream is broken, we need to disconnect
+				b_waiting_answer = false;
+				disconnect();
+				throw;
 			}
-			catch(ExceptionTimeOut)
-			{	// Disconnect as the http pipeline will be broken
-				if (connected())
-					disconnect();
-				// Maximum time reached
-				OONET_THROW_EXCEPTION(ExceptionTimeOut,
-					"Maximum time has been reached while waiting for an answer.");
-			}
+			b_waiting_answer = false;
 
-			// Gather answer
-			{mt::scoped_lock m(mux_access_data);
+			// Event raised
+			if (b_have_response)
+				return m_last_response;
+			else if (!tmp_response.parse(dt_unprocessed))
+				OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole message before connection get closed.");
 
-				if (m_response_queue.size() > 0)
-				{
-					response tmpResponse(m_response_queue.front());
-					m_response_queue.pop_front();
-					return tmpResponse;
-				}
-
-				//if (!tmpResponse.parse(WaitingToProcessData))
-					//OONET_THROW_EXCEPTION(ExceptionIncomplete, "Couldn't gather the whole message before connection get closed.");
-
-			}
+			OONET_ASSERT(0);	// This point is unreachable!
 		}
 
 		// When data arrives from net
-		void client::on_data_received(const binary_data & data)
-		{	response ResponsePacket;
+		void client::on_data_received(const binary_data & dt_received)
+		{	binary_data dt_remain;
 
-			// Add data in queue
-			{mt::scoped_lock m(mux_access_data);
-				WaitingToProcessData += data;
+			// Push data in queue
+			dt_unprocessed += dt_received;
 
-				// Check if a response arrived
-				try
+			// Parse last response
+			try
+			{
+				if (m_last_response.parse(dt_unprocessed, &dt_remain))
 				{
-					// Parse data
-					if (!ResponsePacket.parse(WaitingToProcessData, &WaitingToProcessData))
-						return;
-
-					// Save result
-					m_response_queue.push_back(ResponsePacket);
-					b_waiting_anwser = false;
-					sem_anwser_arrived.post();
+					b_have_response = true;
+					dt_unprocessed = dt_remain;
+					sem_answer_received.post();
 				}
-				catch(ExceptionWrongFormat)
-				{
-					// Wrong response
-					disconnect();
-
-					// Unlock to get answer
-					b_waiting_anwser = false;
-					sem_anwser_arrived.post();
-				}
+			}
+			catch(oonet::exception)
+			{
+				sem_answer_received.post();
 			}
 		}
 
 		void client::connect(const socket_address_inet & dest_addr)
 		{
-			// Clear data
-			{mt::scoped_lock m(mux_access_data);
-				WaitingToProcessData.clear();
-				m_response_queue.clear();
-			}
-
-			b_waiting_anwser = false;
 			netstream_threaded::connect(dest_addr);
 		}
 
 		void client::on_disconnected()
-		{	if (b_waiting_anwser)
-				sem_anwser_arrived.post();
+		{
+			if (b_waiting_answer)
+				sem_answer_received.post();
+
+			// Clear data
+			b_waiting_answer = false;
+			dt_unprocessed.clear();
 		}
 
 	}; // !HTTP Namespace

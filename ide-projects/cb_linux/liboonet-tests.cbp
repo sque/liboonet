@@ -12,7 +12,6 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="http::client" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

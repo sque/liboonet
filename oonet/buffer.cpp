@@ -9,7 +9,7 @@
 namespace oonet
 {
 	// Push at front
-	void buffer::pushFront(const binary_data & r)
+	void buffer::push_front(const binary_data & r)
 	{	mt::scoped_lock fun_lock(*this);
 
 		binary_data tmp(r);
@@ -20,24 +20,24 @@ namespace oonet
 	}
 
 	// Push at end
-	void buffer::pushBack(const binary_data & r)
+	void buffer::push_back(const binary_data & r)
 	{	mt::scoped_lock fun_lock(*this);
 
 		bd_data += r;
 	}
 
 	// Pop at front
-	binary_data buffer::popFront(size_t MaxSize, bool only_peek)
+	binary_data buffer::pop_front(size_t sz_max, bool only_peek)
 	{	binary_data res;
-		size_t _finalSize = MaxSize;
+		size_t _finalSize = sz_max;
 
-		if (MaxSize == 0)
+		if (sz_max == 0)
 			return binary_data::nothing;
 
 		mt::scoped_lock fun_lock(*this);
 
 		// Fix maxsize
-		if (MaxSize > bd_data.size())
+		if (sz_max > bd_data.size())
 			_finalSize = bd_data.size();
 
 		res = bd_data.get_until(_finalSize);
@@ -48,18 +48,18 @@ namespace oonet
 	}
 
 	// Pop from the back
-	binary_data buffer::popBack(size_t MaxSize, bool only_peek)
+	binary_data buffer::pop_back(size_t sz_max, bool only_peek)
 	{	binary_data res;
 		size_t ReversePosition;
-		size_t _finalSize = MaxSize;
+		size_t _finalSize = sz_max;
 
-		if (MaxSize == 0)
+		if (sz_max == 0)
 			return binary_data::nothing;
 
 		mt::scoped_lock fun_lock(*this);
 
 		// Fix maxsize
-		if (MaxSize > bd_data.size())
+		if (sz_max > bd_data.size())
 			_finalSize = bd_data.size();
 
 		ReversePosition = bd_data.size() - _finalSize;

@@ -26,44 +26,44 @@ namespace oonet
 		inline ~buffer(){};
 
 		//! Push data at the end of buffer
-		void pushBack(const binary_data & r);
+		void push_back(const binary_data & r);
 
 		//! Push data in front of buffer
-		void pushFront(const binary_data & r);
+		void push_front(const binary_data & r);
 
 		//! Pop data from the end of buffer
 		/**
-		@param MaxSize The size of data to pop from the end. If MaxSize
+		@param sz_max The size of data to pop from the end. If sz_max
 			is bigger than the size of current data in buffer, all the
 			data are popped silently.
 		@param only_peek When set to true, data will not be removed from
 			buffer, they will be only copied.
 		*/
-		binary_data popBack(size_t MaxSize, bool only_peek = false);
+		binary_data pop_back(size_t sz_max, bool only_peek = false);
 
 		//! Pop data from the begining of buffer
 		/**
-		@param MaxSize The size of data to pop from the start of buffer.
+		@param sz_max The size of data to pop from the start of buffer.
 			If it is bigger than the size of current stored data in buffer, then
 			all the data are popped silently.
 		@param only_peek When set to true, data will not be removed from
 			buffer, they will be only copied.
 		*/
-		binary_data popFront(size_t MaxSize, bool only_peek = false);
+		binary_data pop_front(size_t sz_max, bool only_peek = false);
 
 		//! Peek data from the end of buffer
 		/**
-		@deprecated Use Buffer::popBack instead
+		@deprecated Use Buffer::pop_back instead
 		*/
-		inline binary_data peekBack(size_t MaxSize)
-		{	return popBack(MaxSize, true);	}
+		inline binary_data peek_back(size_t sz_max)
+		{	return pop_back(sz_max, true);	}
 
 		//! Peek data from the begining of buffer
 		/**
-		@deprecated Use Buffer::peekFront instead
+		@deprecated Use Buffer::pop_front instead
 		*/
-		inline binary_data peekFront(size_t MaxSize)
-		{	return popFront(MaxSize, true);	}
+		inline binary_data peek_front(size_t sz_max)
+		{	return pop_front(sz_max, true);	}
 
 		//! Flush buffer
 		void flush();
