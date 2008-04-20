@@ -41,9 +41,7 @@ namespace oonet
 	};
 
 
-	/**
-		Server templarized class
-	*/
+	//! Server templarized class
 	template <class W>
 	class netserver
 		: private mt::thread
@@ -77,11 +75,8 @@ namespace oonet
 					// Wait for connection
 					cl_socket = l_socket.accept();
 
-					// Allocate new handler
-					handler_shared_ptr p_netstream_client = impl_new_handler(cl_socket);
-
-					// Start handling
-					p_netstream_client->assign_socket(cl_socket);
+					// Assign a handler
+					assign_handler(cl_socket);
 
 					// Abandon client socket
 					cl_socket = socket();
@@ -95,54 +90,61 @@ namespace oonet
 			}
 		}
 
-
 	protected:
 
-		// Parametrize listen socket at creation time
+		//! Parametrize listen socket at creation time
 		virtual void parametrize_listen_socket(socket & l_sock)	{}
 
-		/*	Implementation of new client allocation, this may be overloaded
+		//! Control over handler pool management
+		/**	Implementation of new client allocation, this may be overloaded
 			and populated with code that recycles disconnected handlers.
 			By default it creates a new one and adds it to the list.
 		*/
-		virtual handler_shared_ptr impl_new_handler(socket & cl_socket)
+		virtual void assign_handler(socket & cl_socket)
 		{
 			// Create a new handler
 			handler_shared_ptr p_streamhandler(new W(this));
 			m_handlers_pool.push_back(p_streamhandler);
 
-			return p_streamhandler;
+			// Assign socket to it
+			p_streamhandler->assign_socket(cl_socket);
 		}
 
-		// Must be called to enter zombie mode
+		//! Must be called at derived destructor
 		void initialize_destruction()
 		{
 			// Enter zombie
 			b_zombie = true;
 
 			// Stop listening
-			if (listening())
-				stop_listen();
+			stop_listen();
 
 			// Delete all clients
 			m_handlers_pool.clear();
 		}
 
-		// Get the pool of handlers (const)
+		//! Get the pool of handlers (const)
 		const handlers_pool_type & handlers_pool() const
 		{	return m_handlers_pool;	}
 
-		// Get the pool of handlers
+		//! Get the pool of handlers
 		handlers_pool_type & handlers_pool()
 		{	return m_handlers_pool;	}
 
 	public:
-		// Constructor
+
+		//! Constructor
+		/**
+		@remarks Doesn't start the server
+		*/
 		netserver()
 			:b_zombie(false)
 		{}
 
-		// Destructor
+		//! Destructor
+		/**
+			It will stop listening, and abandon all handlers.
+		*/
 		virtual ~netserver()
 		{
 			/*
@@ -153,7 +155,7 @@ namespace oonet
 			OONET_ASSERT(b_zombie);
 		}
 
-		// start listen
+		//! Start listen
 		void start_listen(const socket_address & l_addr, ulong back_log)
 		{
 			// Skip starting if we are in zombie mode
@@ -178,7 +180,10 @@ namespace oonet
 			start();
 		}
 
-		// stop listen
+		//! Stop listen
+		/**
+			Already connected clients will not get disconnected.
+		*/
 		void stop_listen()
 		{
 			// Close socket and join
@@ -186,7 +191,7 @@ namespace oonet
 			join();
 		}
 
-		// Check if server is listening
+		//! Check if server is listening
 		inline bool listening() const
 		{	return running();	}
 

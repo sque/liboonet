@@ -33,7 +33,7 @@ namespace oonet
 			/*
 				Overide default behavior and recycle disconnected handlers
 			*/
-			virtual handler_shared_ptr impl_new_handler(socket & cl_socket);
+			virtual void assign_handler(socket & cl_socket);
 
 		protected:
 

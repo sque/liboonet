@@ -78,8 +78,8 @@ namespace oonet
 		/**
 			Data will be copied at new object, thus original data can be
 			erased after the creation of object.
-		@param p_data Pointer to data array.
-		@param sz_data Size of array in bytes.
+		@param _p_data Pointer to data array.
+		@param _sz_data Size of array in bytes.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
 		binary_data(const void * _p_data, size_t _sz_data);
@@ -88,8 +88,8 @@ namespace oonet
 		/**
 			It will fill the new object with the same byte as many
 			times as the user defines.
-		@param mByte byte that will be repeated.
-		@param bTimes How many times the byte will be repeat. This will be the size of new buffer too.
+		@param bt_repeated Byte that will be repeated.
+		@param s_times How many times the byte will be repeat. This will be the size of new buffer too.
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
 		binary_data(const byte & bt_repeated, size_t s_times);
@@ -219,6 +219,7 @@ namespace oonet
 			first succesfull matching, starting from the begining
 			of data, it will return its offset
 		@param pattern Pattern of data to search inside this object.
+		@param offset The offset to start searching from.
 		@return The offset of the matched data, or binary_data::npos if pattern couldn't
 			be found.
 		@throw ExceptionWrongArgument If the pattern is an empty binary_data object.
