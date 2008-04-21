@@ -63,7 +63,7 @@
 #define OONET_VERSION_MAJOR 0
 #define OONET_VERSION_MINOR 2
 #define OONET_VERSION_MICRO 0
-#define OONET_VERSION_PHRASE "vcs snapshot"
+#define OONET_VERSION_PHRASE "bzr snapshot"
 
 /************************************/
 // Examine OS

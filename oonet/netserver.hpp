@@ -10,37 +10,6 @@
 namespace oonet
 {
 
-	/**
-		Server client handler templarized class
-	*/
-	template<class S>
-	class netserver_clienthandler
-		: public netstream_threaded
-	{
-	private:
-		// Pointer to server that we belong at
-		S * p_server;
-
-		// NonCopyable
-		netserver_clienthandler(const netserver_clienthandler &);
-		netserver_clienthandler & operator=(const netserver_clienthandler &);
-
-	protected:
-		// Get server pointer
-		S * get_server_ptr()
-		{	return p_server;	}
-
-	public:
-		// Default constructor
-		netserver_clienthandler(void * _s)
-		{	p_server = static_cast<S *>(_s);	}
-
-		// Just a default virtual destructor
-		virtual ~netserver_clienthandler()
-		{	disconnect();		}
-	};
-
-
 	//! Server templarized class
 	template <class W>
 	class netserver
@@ -100,15 +69,7 @@ namespace oonet
 			and populated with code that recycles disconnected handlers.
 			By default it creates a new one and adds it to the list.
 		*/
-		virtual void assign_handler(socket & cl_socket)
-		{
-			// Create a new handler
-			handler_shared_ptr p_streamhandler(new W(this));
-			m_handlers_pool.push_back(p_streamhandler);
-
-			// Assign socket to it
-			p_streamhandler->assign_socket(cl_socket);
-		}
+		virtual void assign_handler(socket & cl_socket) = 0;
 
 		//! Must be called at derived destructor
 		void initialize_destruction()

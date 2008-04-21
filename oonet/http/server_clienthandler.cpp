@@ -33,7 +33,7 @@ namespace oonet
 				while(TmpRequest.parse(stream_data, &stream_data))
 				{
 					// Triger server event
-					CustomResponse = get_server_ptr()->on_url_request(TmpRequest, peer_address);
+					CustomResponse = p_server->on_url_request(TmpRequest, peer_address);
 					// Send response
 					send(CustomResponse.render());
 				}

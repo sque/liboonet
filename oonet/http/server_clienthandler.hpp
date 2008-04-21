@@ -14,9 +14,12 @@ namespace oonet
 		* The handler of client for the Server
 		*/
 		class server_clienthandler
-			:public netserver_clienthandler<server>
+			:public netstream_threaded
 		{
 		private:
+			// Pointer to server
+			server * p_server;
+
 			// A buffer with the data
 			binary_data stream_data;
 			socket_address peer_address;
@@ -35,14 +38,13 @@ namespace oonet
 		public:
 
 			// Constructor
-			server_clienthandler(void * _s)
-				:netserver_clienthandler<server>(_s),
+			server_clienthandler(server * _s)
+				:p_server(_s),
 				peer_address(socket_address::FAMILY_INET)
 			{}
 
 			// Destructor
 			virtual ~server_clienthandler(void);
-
 
 		};
 	};	// !http namespace

@@ -71,7 +71,7 @@ namespace oonet
 				// Send back reply
 				clSocket.send(myResp);
 
-				if (wt_after_send)
+				if (wt_after_send != 0)
 					mt::thread::sleep(wt_after_send);
 				// Raise semaphore
 				semArrived.post();
@@ -342,7 +342,7 @@ namespace oonet
 		req.headers().add("Host", "www.google.com");
 
 		// Create http server
-		MiniHTTPServer myServer(respBinary);
+		MiniHTTPServer myServer(respBinary, 100);
 
 		// Start server
 		myServer.start();

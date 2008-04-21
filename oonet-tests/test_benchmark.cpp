@@ -12,11 +12,10 @@ namespace oonet
 
 
 	class bench_client:
-		public netserver_clienthandler<bench_server>
+		public netstream_threaded
 	{
 	public:
-		bench_client(void * s)
-			:netserver_clienthandler<bench_server>(s)
+		bench_client()
 		{	cur_data = 0;
 		}
 
@@ -48,6 +47,16 @@ namespace oonet
 			int reuse = 1;
 		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 		};
+
+		void assign_handler(socket & cl_sock)
+		{
+			// Create a new handler
+			handler_shared_ptr p_streamhandler(new bench_client);
+			handlers_pool().push_back(p_streamhandler);
+
+			// Assign socket to it
+			p_streamhandler->assign_socket(cl_sock);
+		}
 	public:
 		bench_server(ulong total)
 		{	total_data = total;	}

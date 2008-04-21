@@ -34,6 +34,5 @@ namespace oonet
 			handlers_pool().push_back(p_handler);
 			p_handler->assign_socket(cl_socket);
 		}
-
 	};	// !http namespace
 };	// !oonet namespace

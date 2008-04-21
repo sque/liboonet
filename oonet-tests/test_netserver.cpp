@@ -8,11 +8,10 @@ namespace oonet
 	class EchoServer;
 
 	class EchoClient:
-		public netserver_clienthandler<EchoServer>
+		public netstream_threaded
 	{
 	public:
-		EchoClient(void * s)
-			:netserver_clienthandler<EchoServer>(s)
+		EchoClient()
 		{}
 
 		~EchoClient()
@@ -34,6 +33,16 @@ namespace oonet
 			int reuse = 1;
 		    listen_socket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 		};
+
+		void assign_handler(socket & cl_sock)
+		{
+			// Create a new handler
+			handler_shared_ptr p_streamhandler(new EchoClient);
+			handlers_pool().push_back(p_streamhandler);
+
+			// Assign socket to it
+			p_streamhandler->assign_socket(cl_sock);
+		}
 	public:
 		virtual ~EchoServer()
 		{	initialize_destruction();	}
