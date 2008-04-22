@@ -119,7 +119,7 @@
 	#include <errno.h>
     #include <semaphore.h>
 	#include <wchar.h>
-#endif // !SLIB_OS_LINUX
+#endif // !OONET_OS
 
 /************************************
  * OS independant -> OS specific macros
@@ -220,7 +220,7 @@
 
 
     #if !defined(_MT)
-        #error SLib requires multi-thread library to be loaded!.
+        #error OONet requires multi-thread library to be loaded!.
     #endif// _MT
 
 	////////////////////////////////
