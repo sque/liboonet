@@ -6,6 +6,7 @@ liboonet_a_http_includedir=$(includedir)/oonet/http
 
 # Source files
 liboonet_a_SOURCES = \
+	oonet.cpp \
 	base64.cpp \
 	binary_data.cpp \
 	buffer.cpp \

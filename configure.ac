@@ -2,7 +2,7 @@
 # 8-3-2008
 #  * Initial configuration
 
-AC_INIT([liboonet], [0.2])
+AC_INIT([liboonet], [0.2-beta1])
 AM_INIT_AUTOMAKE ([−Wall −Werror foreign])
 
 AC_PROG_CXX
