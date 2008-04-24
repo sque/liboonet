@@ -126,7 +126,7 @@ namespace oonet
 		*/
 		binary_data & operator+=(const byte &r);
 
-		//! Access element
+		//! Subscribe operator (const)
 		/**
 			It will return the byte that correspond in the index
 			given by user.
@@ -135,7 +135,7 @@ namespace oonet
 		*/
 		const byte & operator[](size_t offset) const;
 
-		//! Access elemt
+		//! Subscribe operator
 		byte & operator[](size_t offset);
 
 		//! Equal comparison operator

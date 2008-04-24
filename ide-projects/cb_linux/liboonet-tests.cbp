@@ -12,6 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="serialization" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -85,6 +86,8 @@
 		<Unit filename="../../oonet-tests/test_port_inet.hpp" />
 		<Unit filename="../../oonet-tests/test_semaphore.cpp" />
 		<Unit filename="../../oonet-tests/test_semaphore.hpp" />
+		<Unit filename="../../oonet-tests/test_serialize.cpp" />
+		<Unit filename="../../oonet-tests/test_serialize.hpp" />
 		<Unit filename="../../oonet-tests/test_socket.cpp" />
 		<Unit filename="../../oonet-tests/test_socket.hpp" />
 		<Unit filename="../../oonet-tests/test_socket_address_inet.cpp" />
