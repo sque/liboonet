@@ -50,6 +50,7 @@ liboonet_a_include_HEADERS = \
 	oonet.hpp \
 	port_inet.hpp \
 	scoped_lock.hpp \
+	serialization.hpp \
 	semaphore.hpp \
 	socket_address.hpp \
 	socket_address_inet.hpp \

@@ -3,6 +3,8 @@
 
 #include "./oonet.hpp"
 #include "./binary_data.hpp"
+#include <list>
+#include <vector>
 
 namespace oonet
 {
@@ -128,6 +130,35 @@ namespace oonet
 		dst << serialize_pod(str.size());		// Push size
 		return dst += binary_data(str.c_str(), str.size() * sizeof(C));	// Push data
 	}
+
+	//! Serialization of "std::list" object
+	template<class T>
+	inline binary_data & operator<<(binary_data & dst, const std::list<T> & _list)
+	{	typename std::list<T>::const_iterator it;
+
+		// Push size
+		dst << serialize_pod(_list.size());
+
+		// Push items
+		for(it = _list.begin();it != _list.end();it++)
+			dst << (*it);
+		return dst;
+	};
+
+	//! Serialization of "std::vector" object
+	template<class T>
+	inline binary_data & operator<<(binary_data & dst, const std::vector<T> & _list)
+	{	typename std::vector<T>::const_iterator it;
+
+		// Push size
+		dst << serialize_pod(_list.size());
+
+		// Push items
+		for(it = _list.begin();it != _list.end();it++)
+			dst << (*it);
+		return dst;
+	};
+
 	//! @}
 
 
@@ -149,7 +180,7 @@ namespace oonet
 	//! Unserialize "std::basic_string" objects
 	template<class C>
 	inline binary_data & operator>>(binary_data & dst, std::basic_string<C> & str)
-	{	std::string::size_type ssize;
+	{	typename std::basic_string<C>::size_type ssize;
 
 		// Read string size in characters
 		serialize_pod(ssize).unserialize(dst);
@@ -162,6 +193,50 @@ namespace oonet
 		// Get string
 		str = std::basic_string<C>((C *)(dst.get_data_ptr()+sizeof(ssize)), ssize);
 		return dst = dst.get_from((ssize * sizeof(C))+ sizeof(ssize));
+	}
+
+	//! Unserialize "std::list objects"
+	template<class C>
+	inline binary_data & operator>>(binary_data & dst, std::list<C> & _list)
+	{	typename std::list<C>::size_type lsize;
+		C tmp_item;
+		binary_data copy_dst(dst);
+
+		// Read size
+		copy_dst >> serialize_pod(lsize);
+
+		// Clear list
+		_list.clear();
+
+		while(lsize != 0)
+		{
+			copy_dst >> tmp_item;
+			_list.push_back(tmp_item);
+			lsize--;
+		}
+		return dst = dst.get_from(dst.size() - copy_dst.size());
+	}
+
+	//! Unserialize "std::vector objects"
+	template<class C>
+	inline binary_data & operator>>(binary_data & dst, std::vector<C> & _list)
+	{	typename std::vector<C>::size_type lsize;
+		C tmp_item;
+		binary_data copy_dst(dst);
+
+		// Read size
+		copy_dst >> serialize_pod(lsize);
+
+		// Clear list
+		_list.clear();
+
+		while(lsize != 0)
+		{
+			copy_dst >> tmp_item;
+			_list.push_back(tmp_item);
+			lsize--;
+		}
+		return dst = dst.get_from(dst.size() - copy_dst.size());
 	}
 	//! @}
 };	// !oonet namespace

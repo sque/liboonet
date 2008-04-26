@@ -489,4 +489,109 @@ namespace oonet
 
 		return true;
 	}
+
+	bool test_serialize::TestSerializeSTLList::OnExecute()
+	{	std::list<string> m_list;
+		binary_data serial, copy_serial;
+
+		// Add data
+		m_list.push_back("test1");
+		m_list.push_back("test3");
+		m_list.push_back("test5");
+
+		serial << m_list;
+		copy_serial = serial;
+
+		// Final check
+		std::list<string> m_list2;
+
+		// Unserialize (twice)
+		serial >> m_list2;
+		copy_serial >> m_list2;
+
+		if (m_list != m_list2)
+			return false;
+
+		return true;
+	}
+
+	bool test_serialize::TestSerializeSTLVector::OnExecute()
+	{	std::vector<string> m_list;
+		binary_data serial, copy_serial;
+
+		// Add data
+		m_list.push_back("test1");
+		m_list.push_back("test3");
+		m_list.push_back("test5");
+
+		serial << m_list;
+		copy_serial = serial;
+
+		// Final check
+		std::vector<string> m_list2;
+
+		// Unserialize (twice)
+		serial >> m_list2;
+		copy_serial >> m_list2;
+
+		if (m_list != m_list2)
+			return false;
+
+		return true;
+	}
+
+	bool test_serialize::TestSerializeSpeedList::OnExecute()
+	{	std::list<string> m_list;
+		binary_data serial, copy_serial;
+
+		// Add data
+		m_list.push_back("test1");
+		m_list.push_back("test3");
+		m_list.push_back("test5");
+
+		for(long i = 0; i < 1000000;i++)
+		{	serial.clear();
+			serial << m_list;
+		}
+		copy_serial = serial;
+
+		// Final check
+		std::list<string> m_list2;
+
+		// Unserialize (twice)
+		serial >> m_list2;
+		copy_serial >> m_list2;
+
+		if (m_list != m_list2)
+			return false;
+
+		return true;
+	}
+
+	bool test_serialize::TestUnSerializeSpeedList::OnExecute()
+	{	std::list<string> m_list;
+		binary_data serial, copy_serial;
+
+		// Add data
+		m_list.push_back("test1");
+		m_list.push_back("test3");
+		m_list.push_back("test5");
+
+		serial << m_list;
+		copy_serial = serial;
+
+		// Final check
+		std::list<string> m_list2;
+
+		// Unserialize (twice)
+		for(long i = 0;i < 1000000;i++)
+		{	copy_serial = serial;
+			copy_serial >> m_list2;
+		}
+
+		if (m_list != m_list2)
+			return false;
+
+		return true;
+	}
 };

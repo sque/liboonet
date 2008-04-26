@@ -20,6 +20,8 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestCastPod,  _T("Cast POD type") );
 		OONET_DECLARESUBTEST(TestSerializeStrings,  _T("Work with std::string") );
 		OONET_DECLARESUBTEST(TestSerializeWStrings,  _T("Work with std::wstring") );
+		OONET_DECLARESUBTEST(TestSerializeSTLList,  _T("Work with std::list<>") );
+		OONET_DECLARESUBTEST(TestSerializeSTLVector,  _T("Work with std::vector<>") );
 		OONET_DECLARESUBTEST(TestSerializeSpeed,  _T("ser/ze() speed w/o cast") );
 		OONET_DECLARESUBTEST(TestSerializeSpeedWCast,  _T("ser/ze() speed w/cast") );
 		OONET_DECLARESUBTEST(TestSerializeSpeedConst,  _T("ser/ze(const) spd w/o cast") );
@@ -28,6 +30,9 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestUnSerializeSpeedWCast,  _T("unser/ze() speed w/cast") );
 		OONET_DECLARESUBTEST(TestSerializeSpeedString,  _T("ser/ze() speed string") );
 		OONET_DECLARESUBTEST(TestUnSerializeSpeedString,  _T("unser/ze() speed string") );
+		OONET_DECLARESUBTEST(TestSerializeSpeedList,  _T("ser/ze() speed std::list") );
+		OONET_DECLARESUBTEST(TestUnSerializeSpeedList,  _T("unser/ze() speed std::list") );
+
 
 	public:
 		// Constructor
@@ -42,14 +47,18 @@ namespace oonet
 			OONET_REGISTERSUBTEST(TestCastPod);
 			OONET_REGISTERSUBTEST(TestSerializeStrings);
 			OONET_REGISTERSUBTEST(TestSerializeWStrings);
-			OONET_REGISTERSUBTEST(TestSerializeSpeed);
+			OONET_REGISTERSUBTEST(TestSerializeSTLList);
+			OONET_REGISTERSUBTEST(TestSerializeSTLVector);
+			/*OONET_REGISTERSUBTEST(TestSerializeSpeed);
 			OONET_REGISTERSUBTEST(TestSerializeSpeedWCast);
 			OONET_REGISTERSUBTEST(TestSerializeSpeedConst);
 			OONET_REGISTERSUBTEST(TestSerializeSpeedConstWCast);
 			OONET_REGISTERSUBTEST(TestUnSerializeSpeed);
 			OONET_REGISTERSUBTEST(TestUnSerializeSpeedWCast);
 			OONET_REGISTERSUBTEST(TestSerializeSpeedString);
-			OONET_REGISTERSUBTEST(TestUnSerializeSpeedString);
+			OONET_REGISTERSUBTEST(TestUnSerializeSpeedString);*/
+			OONET_REGISTERSUBTEST(TestSerializeSpeedList);
+			OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);
 
 		}
 

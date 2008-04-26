@@ -44,6 +44,8 @@ oonet_tests_SOURCES = main.cpp  \
 	test_port_inet.hpp  \
 	test_semaphore.cpp  \
 	test_semaphore.hpp  \
+	test_serialize.cpp \
+	test_serialize.hpp \
 	test_socket_address_inet.cpp  \
 	test_socket_address_inet.hpp  \
 	test_socket.cpp  \
