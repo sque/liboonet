@@ -197,6 +197,25 @@ namespace oonet
 		return true;
 	}
 
+	bool TestUrl::TestFind::OnExecute()
+	{	http::url b = http::url("http://www.gogla.gr/test1?par=1&par2=3");
+		http::url_params::const_iterator par_it;
+
+		if ((par_it = b.parameters().find("par")) == b.parameters().end())
+			return false;
+		if ((par_it->first != "par") || (par_it->second != "1"))
+			return false;
+
+		if ((par_it = b.parameters().find("par2")) == b.parameters().end())
+			return false;
+		if ((par_it->first != "par2") || (par_it->second != "3"))
+			return false;
+
+		if ((par_it = b.parameters().find("par3")) != b.parameters().end())
+			return false;
+		return true;
+	}
+
 	bool TestUrl::TestSplit3Wrong1::OnExecute()
 	{	http::url b("http:/lolalosadfadsf");
 

@@ -5,10 +5,10 @@ namespace oonet
 	namespace http
 	{
 		//! find the 1st occurance of a parameter by name
-		url_params::const_iterator url_params::find(const string & _name)
+		url_params::const_iterator url_params::find(const string & _name) const
 		{	const_iterator c_it;
 
-			for(c_it = begin();c_it != end(); c_it ++)
+			for(c_it = begin();c_it != end(); c_it++)
 			{
 				if (c_it->first == _name)
 					return c_it;

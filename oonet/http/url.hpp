@@ -77,7 +77,7 @@ namespace oonet
 			{	return m_parameters;	}
 
 			//! find the 1st occurance of a parameter by name
-			const_iterator find(const string & _name);
+			const_iterator find(const string & _name) const;
 
 			//! Check if there is a parameter
 			inline bool exist(const string & _name)
@@ -187,7 +187,7 @@ namespace oonet
 			{	return m_path;	}
 
 			//! Get extracted parameters
-			const url_params parameters() const
+			const url_params & parameters() const
 			{	return m_params;	}
 
 			//! Get original url string that we parsed
