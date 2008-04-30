@@ -16,7 +16,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_GET)
 			return false;
-		if ((string)a.uri() != "/")
+		if (a.uri().full() != "/")
 			return false;
 		return true;
 	}
@@ -29,7 +29,7 @@ namespace oonet
 		a.headers().add("a", "123");
 		a.title() = binary_data("GET / HTTP/1.1");
 		a.request_method() = http::request::REQUEST_POST;
-		a.uri() = "/index.html";
+		a.uri() = http::url("/index.html");
 
 		if (a.body()  != binary_data("koukouroukou"))
 			return false;
@@ -41,7 +41,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_POST)
 			return false;
-		if ((string)a.uri() != "/index.html")
+		if (a.uri().full() != "/index.html")
 			return false;
 
 		http::request b(a);
@@ -55,7 +55,7 @@ namespace oonet
 			return false;
 		if (b.request_method() != http::request::REQUEST_POST)
 			return false;
-		if ((string)b.uri() != "/index.html")
+		if (b.uri().full() != "/index.html")
 			return false;
 		return true;
 	}
@@ -67,7 +67,7 @@ namespace oonet
 		a.headers().add("a", "123");
 		a.title() = binary_data("GET / HTTP/1.1");
 		a.request_method() = http::request::REQUEST_POST;
-		a.uri() = "/index.html";
+		a.uri() = http::url("/index.html");
 
 		if (a.body()  != binary_data("koukouroukou"))
 			return false;
@@ -79,7 +79,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_POST)
 			return false;
-		if ((string)a.uri() != "/index.html")
+		if (a.uri().full() != "/index.html")
 			return false;
 
 		b = a;
@@ -93,7 +93,7 @@ namespace oonet
 			return false;
 		if (b.request_method() != http::request::REQUEST_POST)
 			return false;
-		if ((string)b.uri() != "/index.html")
+		if (b.uri().full() != "/index.html")
 			return false;
 		return true;
 	}
@@ -107,7 +107,7 @@ namespace oonet
 		a.body() = binary_data("koukouroukou");
 		a.headers().add("a", "123");
 		a.request_method() = http::request::REQUEST_POST;
-		a.uri() = "/index.html";
+		a.uri() = http::url("/index.html");
 
 		out = a.render(http::const_lf).to_string();
 		if (out != shouldbeLF)
@@ -128,7 +128,7 @@ namespace oonet
 		a.body() = binary_data("koukouroukou");
 		a.headers().add("a", "123");
 		a.request_method() = http::request::REQUEST_POST;
-		a.uri() = "/index.html";
+		a.uri() = http::url("/index.html");
 
 		ResetTimer();
 		for(long i = 0;i < 10000;i++)
@@ -165,7 +165,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_POST)
 			return false;
-		if ((string)a.uri() != "/index.html")
+		if (a.uri().full() != "/index.html")
 			return false;
 
 		// Post CRLF
@@ -184,7 +184,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_POST)
 			return false;
-		if ((string)a.uri() != "/index.html")
+		if (a.uri().full() != "/index.html")
 			return false;
 
 		// GET CRLF
@@ -203,7 +203,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_GET)
 			return false;
-		if ((string)a.uri() != "/index.html")
+		if (a.uri().full() != "/index.html")
 			return false;
 		return true;
 	}
@@ -248,7 +248,7 @@ namespace oonet
 			return false;
 		if (a.request_method() != http::request::REQUEST_GET)
 			return false;
-		if ((string)a.uri() != "/index.html")
+		if (a.uri().full() != "/index.html")
 			return false;
 		return true;
 	}

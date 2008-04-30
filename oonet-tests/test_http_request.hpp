@@ -17,7 +17,7 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestRender, _T("Render() quality"));
 		OONET_DECLARESUBTEST(TestRenderSpeed, _T("Render() speed 10k"));
 		OONET_DECLARESUBTEST(TestParse, _T("Parse() quality"));
-		OONET_DECLARESUBTESTEXC(TestParseWrong1, _T("Parse() wrong"), _T("ExceptionWrongFormat"));
+		OONET_DECLARESUBTESTEXC(TestParseWrong1, _T("Parse() wrong"), _T("ExceptionWrongUrl"));
 		OONET_DECLARESUBTESTEXC(TestParseWrong2, _T("Parse() wrong"), _T("ExceptionWrongFormat"));
 		OONET_DECLARESUBTEST(TestParseSpeed, _T("Parse() speed 10k"))
 	public:

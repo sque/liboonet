@@ -220,7 +220,7 @@ namespace oonet
 		respBinary += respBinary;
 
 		// Format req
-		req.uri() = "/";
+		req.uri() = http::url("/");
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 
@@ -264,7 +264,7 @@ namespace oonet
 		respBinary = resp.render();
 
 		// Format req
-		req.uri() = "/";
+		req.uri() = http::url("/");
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 
@@ -302,7 +302,7 @@ namespace oonet
 		binary_data respBinary = binary_data("Asdadsasdasdasdasdasd");
 
 		// Format req
-		req.uri() = "/";
+		req.uri() = http::url("/");
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 
@@ -337,7 +337,7 @@ namespace oonet
 		binary_data respBinary = binary_data("asdfadsf\n\nadsf\n");
 
 		// Format req
-		req.uri() = "/";
+		req.uri() = http::url("/");
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 
@@ -378,7 +378,7 @@ namespace oonet
 		respBinary2 = resp.render();
 
 		// Format req
-		req.uri() = "/";
+		req.uri() = http::url("/");
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 
@@ -439,7 +439,7 @@ namespace oonet
 
 
 		// Format req
-		req.uri() = "/";
+		req.uri() = http::url("/");
 		req.request_method() = http::request::REQUEST_GET;
 		req.headers().add("Host", "www.google.com");
 

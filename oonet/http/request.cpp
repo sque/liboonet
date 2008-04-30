@@ -21,7 +21,7 @@ namespace oonet
 		{
 			// Default options
 			m_req_method = REQUEST_GET;
-			m_uri = "/";
+			m_uri = url("/");
 			m_http_version = const_http_ver1_1;
 		}
 
@@ -107,7 +107,7 @@ namespace oonet
 				break;
 			}
 
-			m_title += binary_data((string)m_uri);
+			m_title += binary_data(m_uri.full());
 			m_title += const_space;
 			m_title += m_http_version;
 
@@ -159,8 +159,8 @@ namespace oonet
 			if ((urlend_pos =  m_title.find(const_space, commandend_pos)) == binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
-			m_uri = title().sub_data(commandend_pos, urlend_pos - commandend_pos).to_string();
-			if ((string)m_uri == "")
+			m_uri = url(title().sub_data(commandend_pos, urlend_pos - commandend_pos).to_string());
+			if (m_uri.full() == "")
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
 

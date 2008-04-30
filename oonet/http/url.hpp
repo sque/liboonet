@@ -9,169 +9,190 @@ namespace oonet
 {
 	namespace http
 	{
-		//! Class for managing a url parameter
-		/**
-			It is just a tuple of name-value strings. It also
-			provides the ability to parse a string and split it
-			to name-param
-		*/
-		class url_param
+		class url;
+
+		//! Exception raised when the url was not properly formated.
+		OONET_DECLARE_EXCEPTION(ExceptionWrongUrl);
+
+		//! STL Compatible url parameters class
+		class url_params
 		{
 		public:
-			//! Constructor
-			url_param();
 
-			//! Construct and parse a string
-			/**
-				String will be parsed and member variables UrlParam::Name,
-				UrlParam::Value will be populated with the appropriate values.
-			@param parse_str [IN] The string that will be parsed at construction time
-			@see parse()
-			*/
-			explicit url_param(const string & parse_str);
+			friend class url;	//! url will populate list
 
-			//! Copy constuctor
-			url_param(const url_param & r);
+			//! Parse a parameters string
+			void parse(const string & _params_str);
+
+			//! Type definition of value type
+			typedef std::pair<string, string> value_type;
+
+			//! Type definition of internal list
+			typedef std::vector< value_type > list_type;
+
+			//! Type definition of iterator
+			typedef list_type::iterator iterator;
+
+			//! Type definition of const iterator
+			typedef list_type::const_iterator const_iterator;
+
+			//! Type definition of reference
+			typedef list_type::reference reference;
+
+			//! Type definition of const reference
+			typedef list_type::const_reference const_reference;
+		protected:
+
+			string m_param_string;
+			list_type m_parameters;
+
+		public:
+
+			//! Default constructor
+			url_params()
+			{}
+
+			//! Construct and parse string
+			explicit url_params(const string & _str)
+				:m_param_string(_str)
+			{
+				parse(_str);
+			}
+
+			//! Copy constructor
+			url_params(const url_params & r)
+				:m_param_string(r.m_param_string),
+				m_parameters(r.m_parameters)
+			{}
 
 			//! Copy operator
-			url_param & operator=(const url_param & r);
+			url_params & operator=(const url_params & r)
+			{	m_param_string = r.m_param_string;
+				m_parameters = r.m_parameters;
+				return *this;
+			}
 
-			//! Destructor
-			~url_param();
+			//! Get a direct const reference to the list
+			const list_type & list() const
+			{	return m_parameters;	}
 
-			//! Parse a string of url format e.g myname=myvalue
-			/**
-			@param parse_str [IN] The string in url format that will be parsed.
+			//! find the 1st occurance of a parameter by name
+			const_iterator find(const string & _name);
 
-				After parsing the UrlParam::Name and UrlParam::Value
-				will be populated with the name and value of parameter.
-			*/
-			void parse(const string & parse_str);
+			//! Check if there is a parameter
+			inline bool exist(const string & _name)
+			{	return (end() != find(_name));	}
 
-			//! The name of url parameter
-			string Name;
+			//! begin()
+			inline const_iterator begin() const
+			{	return m_parameters.begin();	}
 
-			//! The value of url parameter
-			string Value;
-		};	// UrlParam class
+			//! end()
+			inline const_iterator end() const
+			{	return m_parameters.end();	}
+
+			inline const string & full() const
+			{	return m_param_string;	}
+
+			inline void clear()
+			{	m_parameters.clear();
+				m_param_string.clear();
+			}
+
+		};	// !url_params class
 
 		//! Class for parsing url strings
 		/**
 			It can parse an http/ftp url and split it in smaller
-			parts. There are 3 levels of spliting that can be performed.\n
-			<i>e.g. http://www.google.com:8080/search.php?file=a&lan=en</i>
-			@li Scheme - Host - Resource
-				The result will be:\n
-				<b>Scheme:</b> <i>http</i>\n
-				<b>Host:</b> <i>www.google.com:8080</i>\n
-				<b>Resource:</b> <i>/search.php?file=a&lan=en</i>\n
-			@li Scheme - Host - Port - Resource
-				The result will be:\n
-				<b>Scheme:</b> <i>http</i>\n
-				<b>Host:</b> <i>www.google.com</i>\n
-				<b>Port:</b> <i>8080</i>\n
-				<b>Resource:</b> <i>/search.php?file=a&lan=en</i>\n
-			@li Scheme - Host - Port - Path - Parameters List
-				The result will be:\n
-				<b>Scheme:</b> <i>http</i>\n
-				<b>Host:</b> <i>www.google.com</i>\n
-				<b>Port:</b> <i>8080</i>\n
-				<b>Path:</b> <i>/search.php</i>\n
-				<b>Parameters List:</b> <i>file=a&lan=en</i>\n
+			parts.
 		*/
 		class url
 		{
-		public:
-			//! Exception raised when the url was not properly formated.
-			OONET_DECLARE_EXCEPTION(ExceptionWrongUrl);
-
-			//! Parameter List definition
-			typedef std::vector<url_param> ParameterList;
-
-			//! Default constructor
-			/**
-				Url will be empty
-			*/
-			url(void);
-
-			//! Construct from string
-			/**
-				Url will be copied internally and used
-				in future operations.
-			*/
-			inline url(const string & url_str)
-			{	full_url = url_str;	}
-
-			//! Copy constructor
-			inline url(const url &r)
-			{	full_url = r.full_url;	}
-
-			//! Destructor
-			virtual ~url(void);
-
-			//! Copy operator
-			inline url & operator=(const url &r)
-			{	full_url = r.full_url;
-				return *this;
-			}
-
-			//! Assign a string
-			/**
-				A new url will be stored to be used
-				at future operations.
-			*/
-			inline url & operator=(const string & url_str)
-			{	full_url = url_str;
-				return *this;
-			}
-
-			//! Cast to string
-			inline operator const string & () const
-			{	return full_url;	}
-
-			//! Split url in 3 major pieces
-			/**
-				The url will be splitted in 3 major pieces <b>Scheme</b>, <b>Host Port</b> and <b>Resource</b>
-			@param scheme [OUT] The string to store the scheme that url referes.
-			@param hostport [OUT] The string to store the host n port tha resource resides.
-			@param resource [OUT] The string to save the resource path.
-			@throw ExceptionWrongUrl If the url has not the proper format.
-			*/
-			void split(string & scheme, string & hostport, string & resource) const;
-
-			//! Split url in 4 major pieces
-			/**
-				The url will be splitted in 3 major pieces <b>Scheme</b>, <b>Host</b>, <b>Port</b> and <b>Resource</b>
-			@param scheme [OUT] The string to store the scheme that url referes.
-			@param host [OUT] The string to store the host tha resource resides.
-			@param port [OUT] The string to store the port that server host listens.
-			@param resource [OUT] The string to save the resource path.
-			@throw ExceptionWrongUrl If the url has not the proper format.
-			*/
-			void split (string & scheme, string & host, string & port, string & resource) const;
-
-			//! Split url in 4 major pieces
-			/**
-				The url will be splitted in 3 major pieces <b>Scheme</b>, <b>Host</b>, <b>Port</b>, <b>Path</b> and  <b>Parameters List</b>
-			@param scheme [OUT] The string to store the scheme that url referes.
-			@param host [OUT] The string to store the host tha resource resides.
-			@param port [OUT] The string to store the port that server host listens.
-			@param path [OUT] The string to save the resource path.
-			@param params [OUT] The string to save the resource's parameters.
-			@throw ExceptionWrongUrl If the url has not the proper format.
-			*/
-			void split(string & scheme, string & host, string & port, string & path, ParameterList & params) const;
+		private:
+			// Internal implementation of parsing
+			void _second_level_parse();
 
 		protected:
-			string full_url;	//!< The full url
 
-		private:
-			//! Tool to split the parameters of the url in a list
-			/**
-				Input must not have the leading '?' character and parameters must be splitted
-				using the & sign.
-			*/
-			void _split_params(const string & par_string, ParameterList & param_list) const;
+			string m_url;			//!< Full url string
+			string m_scheme;		//!< Extracted scheme from url string
+			string m_host_port;		//!< Extracted host port from url string
+			string m_host;			//!< Extracted host from url string
+			string m_port;			//!< Extracted port from url string
+			string m_resource;		//!< Extracted resource of url string
+			string m_path;			//!< Extracted path from url string
+			url_params m_params;	//!< Extracted parameters from url string
+
+			//! Parse a url and populate variables
+			virtual void _parse(const string & _url);
+
+		public:
+
+			//! Default constructor
+			url(){}
+
+			//! Construct and parse a string
+			explicit url(const string & _full_url)
+				:m_url(_full_url)
+			{	_parse(_full_url);	}
+
+			//! Copy constructor
+			url(const url & r)
+				:m_url(r.m_url),
+				m_scheme(r.m_scheme),
+				m_host_port(r.m_host_port),
+				m_host(r.m_host),
+				m_port(r.m_port),
+				m_resource(r.m_resource),
+				m_path(r.m_path),
+				m_params(r.m_params)
+			{}
+
+			//! Copy operator
+			url & operator=(const url & r)
+			{
+				m_url = r.m_url;
+				m_scheme = r.m_scheme;
+				m_host_port = r.m_host_port;
+				m_host = r.m_host;
+				m_port = r.m_port;
+				m_resource = r.m_resource;
+				m_path = r.m_path;
+				m_params = r.m_params;
+				return *this;
+			}
+
+			//! Get extracted scheme
+			const string & scheme() const
+			{	return m_scheme;	}
+
+			//! Get extracted host + port
+			const string & host_port() const
+			{	return m_host_port;	}
+
+			//! Get extracted host
+			const string & host() const
+			{	return  m_host;	}
+
+			//! Get extracted port
+			const string & port() const
+			{	return  m_port;	}
+
+			//! Get extracted resource (path+parameters)
+			const string & resource() const
+			{	return m_resource;	}
+
+			//! Get extracted path
+			const string & path() const
+			{	return m_path;	}
+
+			//! Get extracted parameters
+			const url_params parameters() const
+			{	return m_params;	}
+
+			//! Get original url string that we parsed
+			const string & full() const
+			{	return m_url;	}
 
 		}; // !url class
 	};	// !http namespace

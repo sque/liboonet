@@ -20,7 +20,6 @@ namespace oonet
 		OONET_DECLARESUBTEST(TestUrlCtorString, _T("Ctor() from string"));
 		OONET_DECLARESUBTEST(TestCopyCtor, _T("Ctor() copy"));
 		OONET_DECLARESUBTEST(TestCopyOperatorUrl, _T("operator= (Url)"));
-		OONET_DECLARESUBTEST(TestCopyOperatorString, _T("operator= (string)"));
 		OONET_DECLARESUBTESTEXC(TestSplit3Wrong1, _T("Split3() wrong"), _T("ExceptionWrongUrl"));
 		OONET_DECLARESUBTESTEXC(TestSplit3Wrong2, _T("Split3() wrong"), _T("ExceptionWrongUrl"));
 		OONET_DECLARESUBTEST(TestSplit3Speed, _T("Split3() speed 10K"));
@@ -45,12 +44,11 @@ namespace oonet
 			OONET_REGISTERSUBTEST(TestUrlCtorString);
 			OONET_REGISTERSUBTEST(TestCopyCtor);
 			OONET_REGISTERSUBTEST(TestCopyOperatorUrl);
-			OONET_REGISTERSUBTEST(TestCopyOperatorString);
 			OONET_REGISTERSUBTEST(TestSplit3Wrong1);
 			OONET_REGISTERSUBTEST(TestSplit3Wrong2);
 			OONET_REGISTERSUBTEST(TestSplit3Speed);
 			OONET_REGISTERSUBTEST(TestSplit3Quality);
-			// Must reade the full specification to make proper tests OONET_REGISTERSUBTEST(TestSplit4Wrong1);
+			/* Must reade the full specification to make proper tests OONET_REGISTERSUBTEST(TestSplit4Wrong1);*/
 			OONET_REGISTERSUBTEST(TestSplit4Quality);
 			OONET_REGISTERSUBTEST(TestSplit4Speed);
 			OONET_REGISTERSUBTEST(TestSplit5Wrong1);

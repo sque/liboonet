@@ -6,12 +6,12 @@ namespace oonet
 	TestUrl theTestUrl;
 
 	bool TestUrl::TestUrlParamCtor::OnExecute()
-	{	http::url_param a;
+	{	http::url_params a;
 
-		if (a.Value != "")
+		if (!a.list().empty())
 			return false;
 
-		if (a.Name != "")
+		if (!a.full().empty())
 			return false;
 
 		return true;
@@ -20,147 +20,206 @@ namespace oonet
 	bool TestUrl::TestUrlParamParseCtor::OnExecute()
 	{
 		// Test some parsing
-		http::url_param a("b=124");
-		if (a.Name != "b")
+		http::url_params a("b=124");
+		if (a.full() != "b=124")
 			return false;
-		if (a.Value != "124")
+		if (a.list().size() != 1)
+			return false;
+		if (a.begin()->first != "b")
+			return false;
+		if (a.begin()->second != "124")
 			return false;
 
-		http::url_param b("250402kfoe=sdfgklsjdflgkjsdfg90sdfug09sdfugoj");
-		if (b.Name != "250402kfoe")
+
+		http::url_params b("250402kfoe=sdfgklsjdflgkjsdfg90sdfug09sdfugoj");
+		if (b.full() != "250402kfoe=sdfgklsjdflgkjsdfg90sdfug09sdfugoj")
 			return false;
-		if (b.Value != "sdfgklsjdflgkjsdfg90sdfug09sdfugoj")
+		if (b.list().size() != 1)
+			return false;
+		if (b.begin()->first != "250402kfoe")
+			return false;
+		if (b.begin()->second != "sdfgklsjdflgkjsdfg90sdfug09sdfugoj")
 			return false;
 
 		// No value
-		http::url_param c("dsfklgjsdkflgjsdf");
-		if (c.Name != "dsfklgjsdkflgjsdf")
+		http::url_params c("dsfklgjsdkflgjsdf");
+		if (c.full() != "dsfklgjsdkflgjsdf")
 			return false;
-		if (c.Value != "")
+		if (c.list().size() != 1)
+			return false;
+		if (c.begin()->first != "dsfklgjsdkflgjsdf")
+			return false;
+		if (c.begin()->second != "")
 			return false;
 
 		// Embended =
-		http::url_param d("dsfklgjsdkflgjsdf=123=123");
-		if (d.Name != "dsfklgjsdkflgjsdf")
+		http::url_params d("dsfklgjsdkflgjsdf=123=123");
+		if (d.full() != "dsfklgjsdkflgjsdf=123=123")
 			return false;
-		if (d.Value != "123=123")
+		if (d.list().size() != 1)
+			return false;
+		if (d.begin()->first != "dsfklgjsdkflgjsdf")
+			return false;
+		if (d.begin()->second != "123=123")
 			return false;
 
 		return true;
 	}
 
 	bool TestUrl::TestUrlParamCopyCtor::OnExecute()
-	{	http::url_param a("kaka=lola");
-		http::url_param b(a);
+	{	http::url_params a("kaka=lola");
+		http::url_params b(a);
 
-		if (b.Name != "kaka")
+		if (b.list().size() != 1)
 			return false;
-		if (b.Value != "lola")
+		if (b.begin()->first != "kaka")
+			return false;
+		if (b.begin()->second != "lola")
 			return false;
 		return true;
 	}
 
 	bool TestUrl::TestUrlParamCopyOperator::OnExecute()
-	{	http::url_param a("kaka=lola");
-		http::url_param b;
+	{	http::url_params a("kaka=lola");
+		http::url_params b;
 
 		b = a;
-		if (b.Name != "kaka")
+		if (b.list().size() != 1)
 			return false;
-		if (b.Value != "lola")
+		if (b.begin()->first != "kaka")
+			return false;
+		if (b.begin()->second != "lola")
 			return false;
 		return true;
 	}
 
 	bool TestUrl::TestUrlParamParse::OnExecute()
-	{	http::url_param a;
+	{	http::url_params a;
 
 		// Test 100k parsings
 		for(long i = 0;i < 100000; i++)
 			a.parse("fofo=lola");
 
-		if (a.Name != "fofo")
+		if (a.list().size() != 1)
 			return false;
-		if (a.Value != "lola")
+		if (a.begin()->first != "fofo")
 			return false;
-		return true;
+		if (a.begin()->second != "lola")
+			return false;		return true;
 	}
 
 	bool TestUrl::TestUrlCtor::OnExecute()
 	{	http::url a;
 
-		if ((string)a != "")
+		if (a.full() != "")
+			return false;
+		if (a.host_port() != "")
+			return false;
+		if (a.host() != "")
+			return false;
+		if (a.port() != "")
+			return false;
+		if (a.resource() != "")
+			return false;
+		if (a.path() != "")
+			return false;
+		if (a.parameters().full() != "")
 			return false;
 		return true;
 	}
 
 	bool TestUrl::TestUrlCtorString::OnExecute()
-	{	http::url a = string("http://www.google.com");
+	{	http::url a = http::url("http://www.gogla.gr/test1?par=1&par2=3");
 
-		if ((string)a != "http://www.google.com")
+		if (a.full() != "http://www.gogla.gr/test1?par=1&par2=3")
 			return false;
-
+		if (a.scheme() != "http")
+			return false;
+		if (a.host_port() != "www.gogla.gr")
+			return false;
+		if (a.host() != "www.gogla.gr")
+			return false;
+		if (a.port() != "")
+			return false;
+		if (a.resource() != "/test1?par=1&par2=3")
+			return false;
+		if (a.path() != "/test1")
+			return false;
+		if (a.parameters().list().size() != 2)
+			return false;
 		return true;
 	}
 
 	bool TestUrl::TestCopyCtor::OnExecute()
-	{	http::url a = string("http://www.gogla.gr");
-		http::url b(a);
+	{	http::url b = http::url("http://www.gogla.gr/test1?par=1&par2=3");
+		http::url a(b);
 
-		if ((string)b != "http://www.gogla.gr")
+		if (a.full() != "http://www.gogla.gr/test1?par=1&par2=3")
 			return false;
-
+		if (a.scheme() != "http")
+			return false;
+		if (a.host_port() != "www.gogla.gr")
+			return false;
+		if (a.host() != "www.gogla.gr")
+			return false;
+		if (a.port() != "")
+			return false;
+		if (a.resource() != "/test1?par=1&par2=3")
+			return false;
+		if (a.path() != "/test1")
+			return false;
+		if (a.parameters().list().size() != 2)
+			return false;
 		return true;
 	}
 
 	bool TestUrl::TestCopyOperatorUrl::OnExecute()
-	{	http::url a = string("http://www.gogla.gr");
-		http::url b;
-		b = a;
+	{	http::url b = http::url("http://www.gogla.gr/test1?par=1&par2=3");
+		http::url a;
 
-		if ((string)b != "http://www.gogla.gr")
+		a = b;
+		if (a.full() != "http://www.gogla.gr/test1?par=1&par2=3")
 			return false;
-
-		return true;
-	}
-
-	bool TestUrl::TestCopyOperatorString::OnExecute()
-	{	string a = string("http://www.gogla.gr");
-		http::url b;
-		b = a;
-
-		if ((string)b != "http://www.gogla.gr")
+		if (a.scheme() != "http")
 			return false;
-
+		if (a.host_port() != "www.gogla.gr")
+			return false;
+		if (a.host() != "www.gogla.gr")
+			return false;
+		if (a.port() != "")
+			return false;
+		if (a.resource() != "/test1?par=1&par2=3")
+			return false;
+		if (a.path() != "/test1")
+			return false;
+		if (a.parameters().list().size() != 2)
+			return false;
 		return true;
 	}
 
 	bool TestUrl::TestSplit3Wrong1::OnExecute()
-	{	http::url b = string("http:/lolalosadfadsf");
-		string scheme, host, resource;
-		b.split(scheme, host, resource);
+	{	http::url b("http:/lolalosadfadsf");
+
 		return false;
 	}
 
 	bool TestUrl::TestSplit3Wrong2::OnExecute()
-	{	http::url b = string("http//lolalosadfadsf");
-		string scheme, host, resource;
-		b.split(scheme, host, resource);
+	{	http::url b("http//lolalosadfadsf");
+
 		return false;
 	}
 
 	bool TestUrl::TestSplit3Speed::OnExecute()
-	{	http::url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
-		string scheme, host, resource;
+	{	http::url b;
 
 		for(long i = 0;i < 10000;i++)
-			b.split(scheme, host, resource);
+			b = http::url("http://www.google.com:43/sadf.sf?asdfasd%");
 
-		if (scheme != "http")
+		if (b.scheme() != "http")
 			return false;
-		if (host != "www.google.com:43")
+		if (b.host_port() != "www.google.com:43")
 			return false;
-		if (resource != "/sadf.sf?asdfasd%")
+		if (b.resource() != "/sadf.sf?asdfasd%")
 			return false;
 		return true;
 	}
@@ -169,259 +228,233 @@ namespace oonet
 	{	http::url b;
 		string scheme, host, resource;
 
-		b = "http://www.google.com:43/sadf.sf?asdfasd%";
-		b.split(scheme, host, resource);
-		if (scheme != "http")
+		b = http::url("http://www.google.com:43/sadf.sf?asdfasd%");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "www.google.com:43")
+		if (b.host_port() != "www.google.com:43")
 			return false;
-		if (resource != "/sadf.sf?asdfasd%")
-			return false;
-
-		b = "http://:www.goo:gle.com:43//////";
-		b.split(scheme, host, resource);
-		if (scheme != "http")
-			return false;
-		if (host != ":www.goo:gle.com:43")
-			return false;
-		if (resource != "//////")
+		if (b.resource() != "/sadf.sf?asdfasd%")
 			return false;
 
-		b = "http://";
-		b.split(scheme, host, resource);
-		if (scheme != "http")
+		b = http::url("http://:www.goo:gle.com:43//////");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host_port() != ":www.goo:gle.com:43")
 			return false;
-		if (resource != "")
+		if (b.resource() != "//////")
 			return false;
 
-		b = "http:///";
-		b.split(scheme, host, resource);
-		if (scheme != "http")
+		b = http::url("http://");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host_port() != "")
 			return false;
-		if (resource != "/")
+		if (b.resource() != "")
+			return false;
+
+		b = http::url("http:///");
+		if (b.scheme() != "http")
+			return false;
+		if (b.host_port() != "")
+			return false;
+		if (b.resource() != "/")
 			return false;
 		return true;
 	}
 
 	bool TestUrl::TestSplit4Wrong1::OnExecute()
-	{	http::url b = string("http:://lolal:/osadfadsf");
-		string scheme, host, port, resource;
-		b.split(scheme, host, port, resource);
-		printf("scheme %s, host %s, port %s, resource %s\n", scheme.c_str(), host.c_str(), port.c_str(), resource.c_str());
+	{	http::url b("http:://lolal:/osadfadsf");
+
 		return false;
 	}
 
 	bool TestUrl::TestSplit4Quality::OnExecute()
 	{	http::url b;
-		string scheme, host, port, resource;
 
-		b = "http://asdfasD:12/";
-		b.split(scheme, host, port, resource);
-		if (scheme != "http")
+		b = http::url("http://asdfasD:12/");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "asdfasD")
+		if (b.host() != "asdfasD")
 			return false;
-		if (port != "12")
+		if (b.port() != "12")
 			return false;
-		if (resource != "/")
+		if (b.resource() != "/")
 			return false;
 
-		b = "http://asdfa:sD:12/";
-		b.split(scheme, host, port, resource);
-		if (scheme != "http")
+		b = http::url("http://asdfa:sD:12/");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "asdfa")
+		if (b.host() != "asdfa")
 			return false;
-		if (port != "sD:12")
+		if (b.port() != "sD:12")
 			return false;
-		if (resource != "/")
+		if (b.resource() != "/")
 			return false;
 
 
-		b = "http://www/12:32";
-		b.split(scheme, host, port, resource);
-		if (scheme != "http")
+		b = http::url("http://www/12:32");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "www")
+		if (b.host() != "www")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "/12:32")
-			return false;
-
-		b = "http://";
-		b.split(scheme, host, port, resource);
-		if (scheme != "http")
-			return false;
-		if (host != "")
-			return false;
-		if (port != "")
-			return false;
-		if (resource != "")
+		if (b.resource() != "/12:32")
 			return false;
 
-		b = "http:///";
-		b.split(scheme, host, port, resource);
-		if (scheme != "http")
+		b = http::url("http://");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host() != "")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "/")
+		if (b.resource() != "")
 			return false;
 
-		b = "http:///:";
-		b.split(scheme, host, port, resource);
-		if (scheme != "http")
+		b = http::url("http:///");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host() != "")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "/:")
+		if (b.resource() != "/")
+			return false;
+
+		b = http::url("http:///:");
+		if (b.scheme() != "http")
+			return false;
+		if (b.host() != "")
+			return false;
+		if (b.port() != "")
+			return false;
+		if (b.resource() != "/:")
 			return false;
 
 		return true;
 	}
 
 	bool TestUrl::TestSplit4Speed::OnExecute()
-	{	http::url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
-		string scheme, host, port, resource;
+	{	http::url b;
 
 		for(long i = 0;i < 10000;i++)
-			b.split(scheme, host, port, resource);
+			b = http::url("http://www.google.com:43/sadf.sf?asdfasd%");
 
-		if (scheme != "http")
+		if (b.scheme() != "http")
 			return false;
-		if (host != "www.google.com")
+		if (b.host() != "www.google.com")
 			return false;
-		if (port != "43")
+		if (b.port() != "43")
 			return false;
-		if (resource != "/sadf.sf?asdfasd%")
+		if (b.resource() != "/sadf.sf?asdfasd%")
 			return false;
 		return true;
 	}
 
 	bool TestUrl::TestSplit5Wrong1::OnExecute()
-	{	http::url b = string("http///lolal:/osadfadsf?");
-		string scheme, host, port, resource;
-		http::url::ParameterList params;
+	{	http::url b("http///lolal:/osadfadsf?");
 
-		b.split(scheme, host, port, resource, params);
 		return false;
 	}
 
 	bool TestUrl::TestSplit5Quality::OnExecute()
 	{	http::url b;
-		string scheme, host, port, resource;
-		http::url::ParameterList params;
 
-
-		b = "http://?";
-		b.split(scheme, host, port, resource, params);
-		if (scheme != "http")
+		b = http::url("http://?");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "?")
+		if (b.host() != "?")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "")
+		if (b.path() != "")
 			return false;
-		if (params.size() != 0)
+		if (b.parameters().list().size() != 0)
 			return false;
 
-		b = "http:///?";
-		b.split(scheme, host, port, resource, params);
-		if (scheme != "http")
+		b = http::url("http:///?");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host() != "")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "/")
+		if (b.path() != "/")
 			return false;
-		if (params.size() != 0)
-			return false;
-
- 		b = "http:///?a";
-		b.split(scheme, host, port, resource, params);
-		if (scheme != "http")
-			return false;
-		if (host != "")
-			return false;
-		if (port != "")
-			return false;
-		if (resource != "/")
-			return false;
-		if (params.size() != 1)
-			return false;
-		if (params[0].Name != "a")
-			return false;
-		if (params[0].Value != "")
+		if (b.parameters().list().size() != 0)
 			return false;
 
-		b = "http:///??a";
-		b.split(scheme, host, port, resource, params);
-		if (scheme != "http")
+ 		b = http::url("http:///?a");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host() != "")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "/")
+		if (b.path() != "/")
 			return false;
-		if (params.size() != 1)
+		if (b.parameters().list().size() != 1)
 			return false;
-		if (params[0].Name != "?a")
+		if (b.parameters().list()[0].first != "a")
 			return false;
-		if (params[0].Value != "")
+		if (b.parameters().list()[0].second != "")
 			return false;
 
-		b = "http:///?&a";
-		b.split(scheme, host, port, resource, params);
-		if (scheme != "http")
+		b = http::url("http:///??a");
+		if (b.scheme() != "http")
 			return false;
-		if (host != "")
+		if (b.host() != "")
 			return false;
-		if (port != "")
+		if (b.port() != "")
 			return false;
-		if (resource != "/")
+		if (b.path() != "/")
 			return false;
-		if (params.size() != 1)
+		if (b.parameters().list().size() != 1)
 			return false;
-		if (params[0].Name != "a")
+		if (b.parameters().list()[0].first != "?a")
 			return false;
-		if (params[0].Value != "")
+		if (b.parameters().list()[0].second != "")
+			return false;
+
+		b = http::url("http:///?&a");
+		if (b.scheme() != "http")
+			return false;
+		if (b.host() != "")
+			return false;
+		if (b.port() != "")
+			return false;
+		if (b.path() != "/")
+			return false;
+		if (b.parameters().list().size() != 1)
+			return false;
+		if (b.parameters().list()[0].first != "a")
+			return false;
+		if (b.parameters().list()[0].second != "")
 			return false;
 
 		return true;
 	}
 
 	bool TestUrl::TestSplit5Speed::OnExecute()
-	{	http::url b = string("http://www.google.com:43/sadf.sf?asdfasd%");
-		string scheme, host, port, resource;
-		http::url::ParameterList params;
-		for(long i = 0;i < 10000;i++)
-			b.split(scheme, host, port, resource, params);
+	{	http::url b;
 
-		if (scheme != "http")
+		for(long i = 0;i < 10000;i++)
+			b = http::url("http://www.google.com:43/sadf.sf?asdfasd%");
+
+		if (b.scheme() != "http")
 			return false;
-		if (host != "www.google.com")
+		if (b.host() != "www.google.com")
 			return false;
-		if (port != "43")
+		if (b.port() != "43")
 			return false;
-		if (resource != "/sadf.sf")
+		if (b.path() != "/sadf.sf")
 			return false;
-		if (params.size() != 1)
+		if (b.parameters().list().size() != 1)
 			return false;
-		if (params[0].Name != "asdfasd%")
+		if (b.parameters().list()[0].first != "asdfasd%")
 			return false;
-		if (params[0].Value != "")
+		if (b.parameters().list()[0].second != "")
 			return false;
 		return true;
 	}

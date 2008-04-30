@@ -74,7 +74,7 @@ namespace oonet
 		}
 	};
 
-	//! Serialization of POD types of const type
+	//  Serialization of POD types of const type
 	template<class T>
 	class serialize_const_pod_type
 		:public serializable

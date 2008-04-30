@@ -1,172 +1,118 @@
-/**
-@file url.cpp
-@brief Implementation of http::url_param and http::url class
-*/
 #include "./url.hpp"
 
 namespace oonet
 {
 	namespace http
 	{
-		// Constructor
-		url_param::url_param()
-		{}
+		//! find the 1st occurance of a parameter by name
+		url_params::const_iterator url_params::find(const string & _name)
+		{	const_iterator c_it;
 
-		// Constructor from string
-		url_param::url_param(const string & parse_str)
-		{	parse(parse_str);	}
+			for(c_it = begin();c_it != end(); c_it ++)
+			{
+				if (c_it->first == _name)
+					return c_it;
+			}
 
-		// Parse string
-		void url_param::parse(const string & parse_str)
-		{	size_t off_equal;
+			return end();	// Not found
+		}
+
+		//! Parse a parameters string
+		void url_params::parse(const string & _params_str)
+		{	size_t off_start, off_end, off_equal;
+			string _name, _value, _param;
 
 			// Initialize data
-			Value = Name = "";
-
-			// Parse string
-			if ((off_equal = parse_str.find('=')) != string::npos)
-			{
-				Name = parse_str.substr(0, off_equal);
-				Value = parse_str.substr(off_equal + 1, string::npos);
-			}
-			else
-				Name = parse_str;
-		}
-
-		// Copy constuctor
-		url_param::url_param(const url_param & r)
-			:Name(r.Name),
-			Value(r.Value)
-		{}
-
-		// Copy operator
-		url_param & url_param::operator=(const url_param & r)
-		{
-			Name = r.Name;
-			Value = r.Value;
-			return *this;
-		}
-
-		// Destructor
-		url_param::~url_param()
-		{}
-
-
-		// URL Implementation
-		url::url(void)
-		{
-		}
-
-		url::~url(void)
-		{
-		}
-
-		// Split url in major pieces
-		void url::split(string & scheme, string & hostport, string & resource) const
-		{	string tmp_host, full_host;
-			size_t Offset1;
-
-			// Check size
-			if (full_url.size() == 0)
-				OONET_THROW_EXCEPTION(ExceptionWrongUrl, "Cannot parse an empty url..");
-
-			// Initialize data
-			scheme = hostport = resource = "";
-
-			// Check if there is scheme
-			if (full_url[0] != '/')
-			{
-				// Scheme
-				Offset1 = full_url.find("://");	// lest find scheme ending
-				if (Offset1 == string::npos)
-					OONET_THROW_EXCEPTION(ExceptionWrongUrl, string("Cannot parse url: ") + full_url);
-
-				scheme = full_url.substr(0, Offset1);
-				tmp_host = full_url.substr(Offset1 + 3, string::npos);
-
-				// Find hostport
-				Offset1 = tmp_host.find("/");
-				hostport = tmp_host.substr(0, Offset1);
-
-				// Resource
-				if (Offset1 == string::npos)
-					resource = "";
-				else
-					resource = tmp_host.substr(Offset1, string::npos);
-			}
-			else
-				resource = full_url;
-		}
-
-		// Split url in major pieces but split port too
-		void url::split(string & scheme, string & host, string & port, string & resource) const
-		{	string hostport;
-			size_t Offset1;
-
-			// Split in major parts
-			split(scheme, hostport, resource);
-
-			// Initialize data
-			host = port = "";
-
-			// Split host/port
-			Offset1 = hostport.find(':');
-			if (Offset1 == string::npos)
-			{
-				host = hostport;
-			}
-			else
-			{
-				host = hostport.substr(0,Offset1);
-				port = hostport.substr(Offset1 + 1, string::npos);
-			}
-		}
-
-		// Split url
-		void url::split(string & scheme, string & host, string & port, string & path, ParameterList & params) const
-		{	string full_params, resource;
-			size_t Offset1;
-
-			// Initialize data
-			resource = "";
-			params.clear();
-
-			// Split in major parts
-			split(scheme, host, port, resource);
-
-
-			// Split path and params
-			Offset1 = resource.find('?');
-			if (Offset1 == string::npos)
-				path = resource;
-			else
-			{
-				path = resource.substr(0, Offset1);
-				full_params = resource.substr(Offset1 + 1, string::npos);
-
-				// Split params
-				_split_params(full_params, params);
-
-			}
-		}
-
-		// Tool to split params of the url
-		void url::_split_params(const string &par_string, ParameterList & param_list) const
-		{	size_t off_start, off_end;
-			string ParamLiteral;
-
-			// Initialize data
-			off_start = string::npos;
+			m_parameters.clear();
+			off_start = - 1;
 
 			do{
 				off_start ++;
-				off_end = par_string.find('&', off_start);
+				off_end = _params_str.find('&', off_start);
+
 				// Omit empty parameters
-				if ((ParamLiteral = par_string.substr(off_start, off_end)) == "")
+				if ((_param = _params_str.substr(off_start, off_end)) == "")
 					continue;
-				param_list.push_back(url_param(ParamLiteral));
+
+				if ((off_equal = _param.find('=')) == string::npos)
+					m_parameters.push_back(value_type(_param, ""));
+				else
+					m_parameters.push_back(value_type(_param.substr(0, off_equal), _param.substr(off_equal + 1)));
+
+
 			}
-			while((off_start = par_string.find('&', off_end)) != string::npos);
+			while((off_start =_params_str.find('&', off_end)) != string::npos);
 		}
+
+		// Parse a url and populate variables
+		void url::_parse(const string & _url)
+		{	size_t off_end_scheme, off_end_hostport;
+
+			// Reset internal data
+			m_scheme = m_host_port = m_host = m_port = m_path = m_resource = "";
+			m_params.clear();
+
+			// Check size
+			if (_url.empty())
+				OONET_THROW_EXCEPTION(ExceptionWrongUrl, "Cannot parse an empty url..");
+
+			if (_url[0] == '/')
+			{	// Relative resource url (it doesn't provide scheme host port) only resource
+				m_resource = _url;
+			}
+			else	// Url in absolute format
+			{
+				// Find scheme end
+				if ((off_end_scheme = _url.find("://")) == string::npos)
+					OONET_THROW_EXCEPTION(ExceptionWrongUrl, string("Cannot parse url: ") + _url);
+
+				// Get scheme
+				m_scheme = _url.substr(0, off_end_scheme);
+
+				// Find host port ending
+				if ((off_end_hostport = _url.find("/", off_end_scheme + 3)) == string::npos)
+				{
+					// There is no resource in the url
+					m_host_port = _url.substr(off_end_scheme + 3);
+				}
+				else
+				{
+					m_host_port = _url.substr(off_end_scheme + 3, off_end_hostport - off_end_scheme - 3);
+					m_resource = _url.substr(off_end_hostport);
+				}
+			}
+
+			// Do second level parsing
+			_second_level_parse();
+		}
+
+		// Internal implementation of parsing
+		void url::_second_level_parse()
+		{	size_t off_preport_colon;
+			size_t off_preparam_quest_mark;
+
+			// Split host/port
+			if ((off_preport_colon = m_host_port.find(':')) == string::npos)
+			{
+				m_host = m_host_port;
+			}
+			else
+			{
+				m_host = m_host_port.substr(0, off_preport_colon);
+				m_port = m_host_port.substr(off_preport_colon + 1);
+			}
+
+			// Split path/parameters
+			if ((off_preparam_quest_mark = m_resource.find('?')) == string::npos)
+			{
+				m_path = m_resource;
+			}
+			else
+			{
+				m_path = m_resource.substr(0, off_preparam_quest_mark);
+				m_params.parse(m_resource.substr(off_preparam_quest_mark + 1));
+			}
+		}
+
 	};	// !http namespace
 };	// !oonet namespace
