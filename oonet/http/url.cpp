@@ -31,7 +31,7 @@ namespace oonet
 				off_end = _params_str.find('&', off_start);
 
 				// Omit empty parameters
-				if ((_param = _params_str.substr(off_start, off_end)) == "")
+				if ((_param = _params_str.substr(off_start, off_end - off_start)) == "")
 					continue;
 
 				if ((off_equal = _param.find('=')) == string::npos)

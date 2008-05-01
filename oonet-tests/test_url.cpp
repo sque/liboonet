@@ -452,6 +452,42 @@ namespace oonet
 		if (b.parameters().list()[0].second != "")
 			return false;
 
+		b = http::url("http://localhost:8080/dqp_calculator?ac=12&br=3&ts=4&ku=5&rl=6&session=134521611");
+		if (b.scheme() != "http")
+			return false;
+		if (b.host() != "localhost")
+			return false;
+		if (b.port() != "8080")
+			return false;
+		if (b.path() != "/dqp_calculator")
+			return false;
+		if (b.parameters().list().size() != 6)
+			return false;
+		if (b.parameters().list()[0].first != "ac")
+			return false;
+		if (b.parameters().list()[0].second != "12")
+			return false;
+		if (b.parameters().list()[1].first != "br")
+			return false;
+		if (b.parameters().list()[1].second != "3")
+			return false;
+		if (b.parameters().list()[2].first != "ts")
+			return false;
+		if (b.parameters().list()[2].second != "4")
+			return false;
+		if (b.parameters().list()[3].first != "ku")
+			return false;
+		if (b.parameters().list()[3].second != "5")
+			return false;
+		if (b.parameters().list()[4].first != "rl")
+			return false;
+		if (b.parameters().list()[4].second != "6")
+			return false;
+		if (b.parameters().list()[5].first != "session")
+			return false;
+		if (b.parameters().list()[5].second != "134521611")
+			return false;
+
 		return true;
 	}
 
