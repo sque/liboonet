@@ -1,34 +1,38 @@
 #ifndef MUTEX_TEST_H_DEFINED
 #define MUTEX_TEST_H_DEFINED
 
-#include <oonet/binary_data.hpp>
-#include "Test.h"
+#include "./oonet-tests.h"
 
 namespace oonet
 {
-	class TestMutex
-		:public Test
+	namespace test
 	{
-	protected:
-		////////////////////////////
-		// SUB TESTS
-		OONET_DECLARESUBTEST(TestRecursiveMutex, _T("Assure Recursive mutex"));
-		OONET_DECLARESUBTESTEXC(TestLockTimeOut, _T("Lock() time out 3s"), _T("ExceptionTimeOut"));
-		OONET_DECLARESUBTEST(TestNonSafe,  _T("1000 Thread unsafe data") );
-		OONET_DECLARESUBTEST(TestSafeData,  _T("1000 Thread safe data") );
-
-	public:
-		// Constructor
-		TestMutex()
-			:Test(_T("mt::mutex"))
+		class test_mutex
+			:public test_set
 		{
-			OONET_REGISTERSUBTEST(TestRecursiveMutex);
-			OONET_REGISTERSUBTEST(TestLockTimeOut);
-			OONET_REGISTERSUBTEST(TestNonSafe);
-			OONET_REGISTERSUBTEST(TestSafeData);
-		}
+		protected:
+			////////////////////////////
+			// SUB TESTS
+			OONET_DECLARESUBTEST(TestRecursiveMutex, "Assure Recursive mutex");
+			OONET_DECLARESUBTESTEXC(TestLockTimeOut, "Lock() time out 3s", "ExceptionTimeOut");
+			OONET_DECLARESUBTEST(TestNonSafe, "1000 Thread unsafe data");
+			OONET_DECLARESUBTEST(TestSafeData, "1000 Thread safe data");
 
-	} ;	// !TestMutex class
+		public:
+			// Constructor
+			test_mutex()
+				:test_set("mt::mutex")
+			{
+				OONET_REGISTERSUBTEST(TestRecursiveMutex);
+				OONET_REGISTERSUBTEST(TestLockTimeOut);
+				OONET_REGISTERSUBTEST(TestNonSafe);
+				OONET_REGISTERSUBTEST(TestSafeData);
+
+				register_test(this);
+			}
+
+		} ;	// !test_mutex class
+	};	// !test namespace
 };	// !oonet namespace
 
 #endif // MUTEX_TEST_H_DEFINED

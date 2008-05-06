@@ -12,6 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
+				<Option parameters="host_inet" />
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-Wall" />
@@ -82,6 +83,7 @@
 		<Unit filename="../../oonet/semaphore.hpp" />
 		<Unit filename="../../oonet/semaphore_impl_posix.cpp" />
 		<Unit filename="../../oonet/serialization.hpp" />
+		<Unit filename="../../oonet/serialization_operators.hpp" />
 		<Unit filename="../../oonet/socket.cpp" />
 		<Unit filename="../../oonet/socket.hpp" />
 		<Unit filename="../../oonet/socket_address.cpp" />
@@ -91,6 +93,8 @@
 		<Unit filename="../../oonet/socket_impl_posix.cpp" />
 		<Unit filename="../../oonet/string_converter.cpp" />
 		<Unit filename="../../oonet/string_converter.h" />
+		<Unit filename="../../oonet/test.cpp" />
+		<Unit filename="../../oonet/test.hpp" />
 		<Unit filename="../../oonet/thread.cpp" />
 		<Unit filename="../../oonet/thread.hpp" />
 		<Unit filename="../../oonet/thread_impl_posix.cpp" />

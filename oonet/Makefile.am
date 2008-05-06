@@ -23,6 +23,7 @@ liboonet_a_SOURCES = \
 	socket.cpp \
 	socket_impl_posix.cpp \
 	string_converter.cpp \
+	test.cpp \
 	thread.cpp \
 	thread_impl_posix.cpp \
 	http/client.cpp \
@@ -55,7 +56,8 @@ liboonet_a_include_HEADERS = \
 	socket_address.hpp \
 	socket_address_inet.hpp \
 	socket.hpp \
-	thread.hpp
+	thread.hpp \
+	test.hpp
 
 # Header files of http
 liboonet_a_http_include_HEADERS = \

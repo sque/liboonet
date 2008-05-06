@@ -1,68 +1,71 @@
 #ifndef TEST_SERIALIZE_HPP_INCLUDED
 #define TEST_SERIALIZE_HPP_INCLUDED
 
-#include <oonet/oonet.hpp>
-#include "Test.h"
+#include "oonet-tests.h"
 
 namespace oonet
 {
-	class test_serialize
-		:public Test
+	namespace test
 	{
-	protected:
-		////////////////////////////
-		// SUB TESTS
-		OONET_DECLARESUBTEST(TestBasic,  _T("basic functionality") );
-		OONET_DECLARESUBTEST(TestLeftOperator,  _T("operator<< ") );
-		OONET_DECLARESUBTEST(TestLeftConstOperator,  _T("operator<< const") );
-		OONET_DECLARESUBTEST(TestRightOperator,  _T("operator>>") );
-		OONET_DECLARESUBTEST(TestMultipleActions,  _T("Multiple actions") );
-		OONET_DECLARESUBTEST(TestCastPod,  _T("Cast POD type") );
-		OONET_DECLARESUBTEST(TestSerializeStrings,  _T("Work with std::string") );
-		OONET_DECLARESUBTEST(TestSerializeWStrings,  _T("Work with std::wstring") );
-		OONET_DECLARESUBTEST(TestSerializeSTLList,  _T("Work with std::list<>") );
-		OONET_DECLARESUBTEST(TestSerializeSTLVector,  _T("Work with std::vector<>") );
-		OONET_DECLARESUBTEST(TestSerializeSpeed,  _T("ser/ze() speed w/o cast") );
-		OONET_DECLARESUBTEST(TestSerializeSpeedWCast,  _T("ser/ze() speed w/cast") );
-		OONET_DECLARESUBTEST(TestSerializeSpeedConst,  _T("ser/ze(const) spd w/o cast") );
-		OONET_DECLARESUBTEST(TestSerializeSpeedConstWCast,  _T("ser/ze(const) spd w/cast") );
-		OONET_DECLARESUBTEST(TestUnSerializeSpeed,  _T("unser/ze() speed w/o cast") );
-		OONET_DECLARESUBTEST(TestUnSerializeSpeedWCast,  _T("unser/ze() speed w/cast") );
-		OONET_DECLARESUBTEST(TestSerializeSpeedString,  _T("ser/ze() speed string") );
-		OONET_DECLARESUBTEST(TestUnSerializeSpeedString,  _T("unser/ze() speed string") );
-		OONET_DECLARESUBTEST(TestSerializeSpeedList,  _T("ser/ze() speed std::list") );
-		OONET_DECLARESUBTEST(TestUnSerializeSpeedList,  _T("unser/ze() speed std::list") );
-
-
-	public:
-		// Constructor
-		test_serialize()
-			:Test(_T("serialization"))
+		class test_serialize
+			:public test_set
 		{
-			OONET_REGISTERSUBTEST(TestBasic);
-			OONET_REGISTERSUBTEST(TestLeftOperator);
-			OONET_REGISTERSUBTEST(TestLeftConstOperator);
-			OONET_REGISTERSUBTEST(TestRightOperator);
-			OONET_REGISTERSUBTEST(TestMultipleActions);
-			OONET_REGISTERSUBTEST(TestCastPod);
-			OONET_REGISTERSUBTEST(TestSerializeStrings);
-			OONET_REGISTERSUBTEST(TestSerializeWStrings);
-			OONET_REGISTERSUBTEST(TestSerializeSTLList);
-			OONET_REGISTERSUBTEST(TestSerializeSTLVector);
-			/*OONET_REGISTERSUBTEST(TestSerializeSpeed);
-			OONET_REGISTERSUBTEST(TestSerializeSpeedWCast);
-			OONET_REGISTERSUBTEST(TestSerializeSpeedConst);
-			OONET_REGISTERSUBTEST(TestSerializeSpeedConstWCast);
-			OONET_REGISTERSUBTEST(TestUnSerializeSpeed);
-			OONET_REGISTERSUBTEST(TestUnSerializeSpeedWCast);
-			OONET_REGISTERSUBTEST(TestSerializeSpeedString);
-			OONET_REGISTERSUBTEST(TestUnSerializeSpeedString);*/
-			OONET_REGISTERSUBTEST(TestSerializeSpeedList);
-			OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);
+		protected:
+			////////////////////////////
+			// SUB TESTS
+			OONET_DECLARESUBTEST(TestBasic, "basic functionality");
+			OONET_DECLARESUBTEST(TestLeftOperator, "operator<< ");
+			OONET_DECLARESUBTEST(TestLeftConstOperator, "operator<< const");
+			OONET_DECLARESUBTEST(TestRightOperator, "operator>>");
+			OONET_DECLARESUBTEST(TestMultipleActions, "Multiple actions");
+			OONET_DECLARESUBTEST(TestCastPod, "Cast POD type");
+			OONET_DECLARESUBTEST(TestSerializeStrings, "Work with std::string");
+			OONET_DECLARESUBTEST(TestSerializeWStrings, "Work with std::wstring");
+			OONET_DECLARESUBTEST(TestSerializeSTLList, "Work with std::list<>");
+			OONET_DECLARESUBTEST(TestSerializeSTLVector, "Work with std::vector<>");
+			OONET_DECLARESUBTEST(TestSerializeSpeed, "ser/ze() speed w/o cast");
+			OONET_DECLARESUBTEST(TestSerializeSpeedWCast, "ser/ze() speed w/cast");
+			OONET_DECLARESUBTEST(TestSerializeSpeedConst, "ser/ze(const) spd w/o cast");
+			OONET_DECLARESUBTEST(TestSerializeSpeedConstWCast, "ser/ze(const) spd w/cast");
+			OONET_DECLARESUBTEST(TestUnSerializeSpeed, "unser/ze() speed w/o cast");
+			OONET_DECLARESUBTEST(TestUnSerializeSpeedWCast, "unser/ze() speed w/cast");
+			OONET_DECLARESUBTEST(TestSerializeSpeedString, "ser/ze() speed string");
+			OONET_DECLARESUBTEST(TestUnSerializeSpeedString, "unser/ze() speed string");
+			OONET_DECLARESUBTEST(TestSerializeSpeedList, "ser/ze() speed std::list");
+			OONET_DECLARESUBTEST(TestUnSerializeSpeedList, "unser/ze() speed std::list");
 
-		}
 
-	} ;	// !test_serialize class
+		public:
+			// Constructor
+			test_serialize()
+				:test_set(_T("serialization"))
+			{
+				OONET_REGISTERSUBTEST(TestBasic);
+				OONET_REGISTERSUBTEST(TestLeftOperator);
+				OONET_REGISTERSUBTEST(TestLeftConstOperator);
+				OONET_REGISTERSUBTEST(TestRightOperator);
+				OONET_REGISTERSUBTEST(TestMultipleActions);
+				OONET_REGISTERSUBTEST(TestCastPod);
+				OONET_REGISTERSUBTEST(TestSerializeStrings);
+				OONET_REGISTERSUBTEST(TestSerializeWStrings);
+				OONET_REGISTERSUBTEST(TestSerializeSTLList);
+				OONET_REGISTERSUBTEST(TestSerializeSTLVector);
+				OONET_REGISTERSUBTEST(TestSerializeSpeed);
+				OONET_REGISTERSUBTEST(TestSerializeSpeedWCast);
+				OONET_REGISTERSUBTEST(TestSerializeSpeedConst);
+				OONET_REGISTERSUBTEST(TestSerializeSpeedConstWCast);
+				OONET_REGISTERSUBTEST(TestUnSerializeSpeed);
+				OONET_REGISTERSUBTEST(TestUnSerializeSpeedWCast);
+				OONET_REGISTERSUBTEST(TestSerializeSpeedString);
+				OONET_REGISTERSUBTEST(TestUnSerializeSpeedString);
+				OONET_REGISTERSUBTEST(TestSerializeSpeedList);
+				OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);
+
+				register_test(this);
+			}
+
+		} ;	// !test_serialize class
+	}	// !test namespace
 };	// !oonet namespace
 
 

@@ -12,7 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="http::url" />
+				<Option parameters="host_resolver" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -46,14 +46,10 @@
 			<Add library="pthread" />
 			<Add directory="." />
 		</Linker>
-		<Unit filename="../../oonet-tests/SubTest.cpp" />
-		<Unit filename="../../oonet-tests/SubTest.h" />
-		<Unit filename="../../oonet-tests/Test.cpp" />
-		<Unit filename="../../oonet-tests/Test.h" />
-		<Unit filename="../../oonet-tests/TestEssentials.h" />
 		<Unit filename="../../oonet-tests/TestStringConverter.cpp" />
 		<Unit filename="../../oonet-tests/TestStringConverter.h" />
 		<Unit filename="../../oonet-tests/main.cpp" />
+		<Unit filename="../../oonet-tests/oonet-tests.h" />
 		<Unit filename="../../oonet-tests/test_benchmark.cpp" />
 		<Unit filename="../../oonet-tests/test_benchmark.hpp" />
 		<Unit filename="../../oonet-tests/test_binary_data.cpp" />

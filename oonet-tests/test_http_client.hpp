@@ -1,44 +1,49 @@
 #ifndef HTTPCLIENT_TEST_H_DEFINED
 #define HTTPCLIENT_TEST_H_DEFINED
 
-#include "Test.h"
+#include "oonet-tests.h"
 
 namespace oonet
 {
-	class TestHTTPClient
-		:public Test
+	namespace test
 	{
-	protected:
-		////////////////////////////
-		// SUB TESTS
-		OONET_DECLARESUBTEST(TestCtor, _T("ctor() default"));
-		OONET_DECLARESUBTESTEXC(TestCtorWrong, _T("ctor() on imposible svr"), _T("ExceptionConnectionRefused"));
-		OONET_DECLARESUBTEST(TestConnect, _T("connect() on not con"));
-		OONET_DECLARESUBTEST(TestConnectConnected, _T("connect() on connected"));
-		OONET_DECLARESUBTEST(TestSend, _T("send() quality"));
-		OONET_DECLARESUBTEST(TestSendSpeed, _T("send() speed 50MB/1k block"));
-		OONET_DECLARESUBTESTEXC(TestSendTimeOut, _T("send() time out"), _T("ExceptionTimeOut"));
-		OONET_DECLARESUBTESTEXC(TestSendWrongResponse, _T("send() wrong response"), _T("ExceptionWrongFormat"));
-		OONET_DECLARESUBTEST(TestReuseDisconnected, _T("Reuse disconencted"));
-		OONET_DECLARESUBTESTEXC(TestSendServerReset, _T("send() server resets"), "ExceptionIncomplete");
-	public:
-		// Constructor
-		TestHTTPClient()
-			:Test(_T("http::client"))
+		class test_http_client
+			:public test_set
 		{
-			OONET_REGISTERSUBTEST(TestCtor);
-			OONET_REGISTERSUBTEST(TestCtorWrong);
-			OONET_REGISTERSUBTEST(TestConnect);
-			OONET_REGISTERSUBTEST(TestConnectConnected);
-			OONET_REGISTERSUBTEST(TestSend);
-			OONET_REGISTERSUBTEST(TestSendSpeed);
-			OONET_REGISTERSUBTEST(TestSendTimeOut);
-			OONET_REGISTERSUBTEST(TestSendWrongResponse);
-			OONET_REGISTERSUBTEST(TestReuseDisconnected);
-			OONET_REGISTERSUBTEST(TestSendServerReset);
-		}
+		protected:
+			////////////////////////////
+			// SUB TESTS
+			OONET_DECLARESUBTEST(TestCtor, "ctor() default");
+			OONET_DECLARESUBTESTEXC(TestCtorWrong, "ctor() on imposible svr", "ExceptionConnectionRefused");
+			OONET_DECLARESUBTEST(TestConnect, "connect() on not con");
+			OONET_DECLARESUBTEST(TestConnectConnected, "connect() on connected");
+			OONET_DECLARESUBTEST(TestSend, "send() quality");
+			OONET_DECLARESUBTEST(TestSendSpeed, "send() speed 50MB/1k block");
+			OONET_DECLARESUBTESTEXC(TestSendTimeOut, "send() time out", "ExceptionTimeOut");
+			OONET_DECLARESUBTESTEXC(TestSendWrongResponse, "send() wrong response", "ExceptionWrongFormat");
+			OONET_DECLARESUBTEST(TestReuseDisconnected, "Reuse disconencted");
+			OONET_DECLARESUBTESTEXC(TestSendServerReset, "send() server resets", "ExceptionIncomplete");
+		public:
+			// Constructor
+			test_http_client()
+				:test_set("http::client")
+			{
+				OONET_REGISTERSUBTEST(TestCtor);
+				OONET_REGISTERSUBTEST(TestCtorWrong);
+				OONET_REGISTERSUBTEST(TestConnect);
+				OONET_REGISTERSUBTEST(TestConnectConnected);
+				OONET_REGISTERSUBTEST(TestSend);
+				OONET_REGISTERSUBTEST(TestSendSpeed);
+				OONET_REGISTERSUBTEST(TestSendTimeOut);
+				OONET_REGISTERSUBTEST(TestSendWrongResponse);
+				OONET_REGISTERSUBTEST(TestReuseDisconnected);
+				OONET_REGISTERSUBTEST(TestSendServerReset);
 
-	} ;	// !TestHTTPClient class
+				register_test(this);
+			}
+
+		} ;	// !test_http_client class
+	};	// !test namespace
 };	// !oonet namespace
 
 #endif // HTTPCLIENT_TEST_H_DEFINED

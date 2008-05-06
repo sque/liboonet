@@ -4,65 +4,68 @@
 
 namespace oonet
 {
-	TestSemaphore theTestSemaphore;
-
-	class TestThreadSemaphore : mt::thread
+	namespace test
 	{
+		test_semaphore test_semaphore_inst;
 
-	};
+		class TestThreadSemaphore : mt::thread
+		{
 
-	bool TestSemaphore::TestLockTimeOut::OnExecute()
-	{	mt::semaphore mySema;
+		};
 
-		mySema.wait(3000);
-		return false;
-	}
+		bool test_semaphore::TestLockTimeOut::operator()()
+		{	mt::semaphore mySema;
 
-	bool TestSemaphore::TestInitialState::OnExecute()
-	{	mt::semaphore mySema(3);
+			mySema.wait(3000);
+			return false;
+		}
 
-		// We can wait 3 times
-		mySema.wait(3000);
-		mySema.wait(3000);
-		mySema.wait(3000);
+		bool test_semaphore::TestInitialState::operator()()
+		{	mt::semaphore mySema(3);
 
-		// 4th must timeout!
-		try	{	mySema.wait(3000);	}
-		catch(ExceptionTimeOut & e)
-		{	e = e; return true;	}
+			// We can wait 3 times
+			mySema.wait(3000);
+			mySema.wait(3000);
+			mySema.wait(3000);
 
-		return false;
-	}
+			// 4th must timeout!
+			try	{	mySema.wait(3000);	}
+			catch(ExceptionTimeOut & e)
+			{	e = e; return true;	}
 
-	bool TestSemaphore::TestPostWait::OnExecute()
-	{	mt::semaphore mySema;
+			return false;
+		}
 
-		// Post 5 times
-		mySema.post();
-		mySema.post();
-		mySema.post();
-		mySema.post();
-		mySema.post();
+		bool test_semaphore::TestPostWait::operator()()
+		{	mt::semaphore mySema;
 
-		// Wait 5 times
-		mySema.wait();
-		mySema.wait();
-		mySema.wait();
-		mySema.wait();
-		mySema.wait();
+			// Post 5 times
+			mySema.post();
+			mySema.post();
+			mySema.post();
+			mySema.post();
+			mySema.post();
 
-		// 6th must timeout!
-		try	{	mySema.wait(3000);	}
-		catch(ExceptionTimeOut & e)
-		{	e = e; return true;	}
+			// Wait 5 times
+			mySema.wait();
+			mySema.wait();
+			mySema.wait();
+			mySema.wait();
+			mySema.wait();
 
-		return false;
-	}
+			// 6th must timeout!
+			try	{	mySema.wait(3000);	}
+			catch(ExceptionTimeOut & e)
+			{	e = e; return true;	}
 
-	bool TestSemaphore::TestDestructorSignaled::OnExecute()
-	{	mt::semaphore mySema;
+			return false;
+		}
 
-		mySema.post();	// Signale it and wait to destruct on exit of function
-		return true;
-	}
+		bool test_semaphore::TestDestructorSignaled::operator()()
+		{	mt::semaphore mySema;
+
+			mySema.post();	// Signale it and wait to destruct on exit of function
+			return true;
+		}
+	};	// !test namespace
 };	// !oonet namespace

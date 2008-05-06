@@ -7,17 +7,13 @@ check_PROGRAMS = oonet-tests
 
 # Source files
 oonet_tests_SOURCES = main.cpp  \
-	SubTest.cpp  \
-	SubTest.h  \
+	oonet-tests.h  \
 	test_benchmark.cpp  \
 	test_benchmark.hpp  \
 	test_binary_data.cpp  \
 	test_binary_data.hpp  \
 	test_buffer.cpp  \
 	test_buffer.hpp  \
-	Test.cpp  \
-	TestEssentials.h  \
-	Test.h  \
 	test_host_inet.cpp  \
 	test_host_inet.hpp  \
 	test_host_resolver.cpp  \

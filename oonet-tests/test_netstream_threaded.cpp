@@ -5,125 +5,138 @@
 
 namespace oonet
 {
-	test_netstream_threaded test_netstream_threaded_inst;
-
-	// Mini server
-	class MiniServer
-		: public mt::thread
+	namespace test
 	{
-	public:
-		socket lSocket;
-		socket * clSocket[1000];
-		int i;
-		bool b_send;
+		test_netstream_threaded test_netstream_threaded_inst;
 
-		MiniServer(bool _b_send = false)
-			:lSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT),
-			b_send(_b_send)
+		// Mini server
+		class MiniServer
+			: public mt::thread
 		{
-		    int reuse = 1;
-		    lSocket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
-			lSocket.bind(socket_address_inet(host_resolver("127.0.0.1"), port_inet(55123)));
-			lSocket.listen(1000);
-			for(int i = 0;i < 1000;i++)
-				clSocket[i] = NULL;
-			start();
+		public:
+			socket lSocket;
+			socket * clSocket[1000];
+			int i;
+			bool b_send;
 
-		}
-
-		~MiniServer()
-		{
-			StopS();
-		}
-
-		virtual void operator()()
-		{	i = 0;
-			try
+			MiniServer(bool _b_send = false)
+				:lSocket(socket::FAMILY_INET, socket::TYPE_STREAM, socket::PROTO_DEFAULT),
+				b_send(_b_send)
 			{
-				while(1)
+				int reuse = 1;
+				lSocket.set_option(SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+				lSocket.bind(socket_address_inet(host_resolver("127.0.0.1"), port_inet(55123)));
+				lSocket.listen(1000);
+				for(int i = 0;i < 1000;i++)
+					clSocket[i] = NULL;
+				start();
+
+			}
+
+			~MiniServer()
+			{
+				StopS();
+			}
+
+			virtual void operator()()
+			{	i = 0;
+				try
 				{
-					clSocket[i] = new socket(lSocket.accept());
-					if (b_send)
-						clSocket[i]->send(binary_data("Malakas"));
-					i++;
+					while(1)
+					{
+						clSocket[i] = new socket(lSocket.accept());
+						if (b_send)
+							clSocket[i]->send(binary_data("Malakas"));
+						i++;
+					}
+				}
+				catch(exception)
+				{ }
+			}
+
+			// Exit server
+			void StopS()
+			{
+				lSocket.shutdown();
+				lSocket = socket();
+				join(mt::Infinity);
+
+				for(int i = 0;i < 1000;i++)
+				{
+					if (clSocket[i])
+						delete clSocket[i];
+					clSocket[i] = NULL;
 				}
 			}
-			catch(exception)
-			{ }
+		};
+
+		int g_on_data, g_on_connected, g_on_disconnect;
+		// Custom client
+		class MyClient
+			:public netstream_threaded
+		{
+		public:
+		MyClient()
+			:netstream_threaded()
+		{}
+
+		~MyClient()
+		{	initialize_destruction();
 		}
 
-		// Exit server
-		void StopS()
-		{
-		    lSocket.shutdown();
-			lSocket = socket();
-			join(mt::Infinity);
 
-			for(int i = 0;i < 1000;i++)
-			{
-                if (clSocket[i])
-                    delete clSocket[i];
-                clSocket[i] = NULL;
+		protected:
+			virtual void on_data_received(const binary_data & data)
+			{	g_on_data ++;	}
+
+			virtual void on_connected()
+			{	g_on_connected ++; }
+
+			virtual void on_disconnected()
+			{	g_on_disconnect++;	}
+
+		};
+
+		bool test_netstream_threaded::TestCtor::operator()()
+		{	g_on_data = g_on_connected = g_on_disconnect = 0;
+
+			{MyClient mClient;
+
+				if (g_on_data  != 0)
+					return false;
+				if (g_on_connected  != 0)
+					return false;
+				if (g_on_disconnect  != 0)
+					return false;
 			}
+				if (g_on_data  != 0)
+					return false;
+				if (g_on_connected  != 0)
+					return false;
+				if (g_on_disconnect  != 0)
+					return false;
+			return true;
 		}
-	};
 
-	int g_on_data, g_on_connected, g_on_disconnect;
-	// Custom client
-	class MyClient
-		:public netstream_threaded
-	{
-	public:
-	MyClient()
-		:netstream_threaded()
-	{}
+		bool test_netstream_threaded::TestConnectWrong::operator()()
+		{	g_on_data = g_on_connected = g_on_disconnect = 0;
 
-	~MyClient()
-    {	initialize_destruction();
-    }
-
-
-	protected:
-		virtual void on_data_received(const binary_data & data)
-		{	g_on_data ++;	}
-
-		virtual void on_connected()
-		{	g_on_connected ++; }
-
-		virtual void on_disconnected()
-		{	g_on_disconnect++;	}
-
-	};
-
-	bool test_netstream_threaded::TestCtor::OnExecute()
-	{	g_on_data = g_on_connected = g_on_disconnect = 0;
-
-		{MyClient mClient;
-
-			if (g_on_data  != 0)
-				return false;
-			if (g_on_connected  != 0)
-				return false;
-			if (g_on_disconnect  != 0)
-				return false;
-		}
-			if (g_on_data  != 0)
-				return false;
-			if (g_on_connected  != 0)
-				return false;
-			if (g_on_disconnect  != 0)
-				return false;
-		return true;
-	}
-
-	bool test_netstream_threaded::TestConnectWrong::OnExecute()
-	{	g_on_data = g_on_connected = g_on_disconnect = 0;
-
-		try
-		{
-			MyClient mClient;
-			try{
-				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(34782)));
+			try
+			{
+				MyClient mClient;
+				try{
+					mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(34782)));
+				}
+				catch(oonet::exception)
+				{
+					if (g_on_data  != 0)
+						return false;
+					if (g_on_connected  != 0)
+						return false;
+					if (g_on_disconnect  != 0)
+						return false;
+					throw;
+				}
 			}
 			catch(oonet::exception)
 			{
@@ -135,134 +148,98 @@ namespace oonet
 					return false;
 				throw;
 			}
+			return false;
 		}
-		catch(oonet::exception)
-		{
-			if (g_on_data  != 0)
-				return false;
-			if (g_on_connected  != 0)
-				return false;
-			if (g_on_disconnect  != 0)
-				return false;
-			throw;
+
+		bool test_netstream_threaded::TestFastConnect::operator()()
+		{	g_on_data = g_on_connected = g_on_disconnect = 0;
+			MiniServer theServer;
+			MyClient * pClient;
+
+			for(long i = 0;i < 100; i++)
+			{
+				// debug printf(" %d...", i);
+
+				// CREATE
+				pClient = new MyClient;
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != i) return false;
+				if (g_on_disconnect  != i) return false;
+
+				// CONNECT
+				pClient->connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				if (g_on_data  != 0)return false;
+				if (g_on_connected  != i + 1)return false;
+				if (g_on_disconnect  != i)return false;
+
+				// DESTROY
+				delete pClient;
+
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != i + 1) return false;
+				if (g_on_disconnect  != i + 1) return false;
+				// debug  printf("OK \n");
+			}
+			return true;
 		}
-		return false;
-	}
 
-	bool test_netstream_threaded::TestFastConnect::OnExecute()
-	{	g_on_data = g_on_connected = g_on_disconnect = 0;
-		MiniServer theServer;
-		MyClient * pClient;
+		bool test_netstream_threaded::TestConDCCon::operator()()
+		{	g_on_data = g_on_connected = g_on_disconnect = 0;
+			MiniServer theServer;
+			MyClient mClient;
 
-		for(long i = 0;i < 100; i++)
-		{
-		    // debug printf(" %d...", i);
+			// Check if it is connected
+			if (mClient.connected())
+				return false;
 
-			// CREATE
-			pClient = new MyClient;
+			// Connect to miniserver
+			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 			if (g_on_data  != 0) return false;
-			if (g_on_connected  != i) return false;
-			if (g_on_disconnect  != i) return false;
-			
-			// CONNECT
-			pClient->connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-			if (g_on_data  != 0)return false;
-			if (g_on_connected  != i + 1)return false;
-			if (g_on_disconnect  != i)return false;
+			if (g_on_connected  != 1) return false;
+			if (g_on_disconnect  != 0) return false;
 
-			// DESTROY
-			delete pClient;
+			// Check if it is connected
+			if (!mClient.connected())
+				return false;
 
-			if (g_on_data  != 0) return false;
-			if (g_on_connected  != i + 1) return false;
-			if (g_on_disconnect  != i + 1) return false;
-			// debug  printf("OK \n");
-		}
-		return true;
-	}
-
-	bool test_netstream_threaded::TestConDCCon::OnExecute()
-	{	g_on_data = g_on_connected = g_on_disconnect = 0;
-		MiniServer theServer;
-		MyClient mClient;
-
-		// Check if it is connected
-		if (mClient.connected())
-			return false;
-
-		// Connect to miniserver
-		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-		if (g_on_data  != 0) return false;
-		if (g_on_connected  != 1) return false;
-		if (g_on_disconnect  != 0) return false;
-
-		// Check if it is connected
-		if (!mClient.connected())
-			return false;
-
-		// Disconnect
-		mClient.disconnect();
-		mt::thread::sleep(1000);
-		if (g_on_data  != 0) return false;
-		if (g_on_connected  != 1) return false;
-		if (g_on_disconnect  != 1) return false;
-		
-
-		// Check if it is connected
-		if (mClient.connected())
-			return false;
-
-		// Reconnect
-		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-		if (g_on_data  != 0) return false;
-		if (g_on_connected  != 2) return false;
-		if (g_on_disconnect  != 1) return false;
-
-		// Check if it is connected
-		if (!mClient.connected())
-			return false;
-
-		// And same in fast mode
-		for(long i = 0;i < 100;i++)
-		{
+			// Disconnect
 			mClient.disconnect();
+			mt::thread::sleep(1000);
+			if (g_on_data  != 0) return false;
+			if (g_on_connected  != 1) return false;
+			if (g_on_disconnect  != 1) return false;
+
+
+			// Check if it is connected
+			if (mClient.connected())
+				return false;
+
 			// Reconnect
 			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
 			if (g_on_data  != 0) return false;
-			if (g_on_connected  != i+3) return false;
-			if (g_on_disconnect  != i+2) return false;
+			if (g_on_connected  != 2) return false;
+			if (g_on_disconnect  != 1) return false;
+
+			// Check if it is connected
+			if (!mClient.connected())
+				return false;
+
+			// And same in fast mode
+			for(long i = 0;i < 100;i++)
+			{
+				mClient.disconnect();
+				// Reconnect
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != i+3) return false;
+				if (g_on_disconnect  != i+2) return false;
+			}
+
+			return true;
 		}
 
-		return true;
-	}
-
-	bool test_netstream_threaded::TestReconnect::OnExecute()
-	{	g_on_data = g_on_connected = g_on_disconnect = 0;
-		MiniServer theServer;
-		MyClient mClient;
-
-		// Check if it is connected
-		if (mClient.connected())
-			return false;
-
-		// Connect to miniserver
-		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-		if (g_on_data  != 0) return false;
-		if (g_on_connected  != 1) return false;
-		if (g_on_disconnect  != 0) return false;
-
-		// Connect again
-		mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-		if (g_on_data  != 0) return false;
-		if (g_on_connected  != 2) return false;
-		if (g_on_disconnect  != 1) return false;
-
-		return true;
-	}
-
-	bool test_netstream_threaded::TestEventQuality::OnExecute()
-	{	
-		{g_on_data = g_on_connected = g_on_disconnect = 0;
+		bool test_netstream_threaded::TestReconnect::operator()()
+		{	g_on_data = g_on_connected = g_on_disconnect = 0;
 			MiniServer theServer;
 			MyClient mClient;
 
@@ -272,7 +249,6 @@ namespace oonet
 
 			// Connect to miniserver
 			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-			mt::thread::sleep(500);
 			if (g_on_data  != 0) return false;
 			if (g_on_connected  != 1) return false;
 			if (g_on_disconnect  != 0) return false;
@@ -282,82 +258,109 @@ namespace oonet
 			if (g_on_data  != 0) return false;
 			if (g_on_connected  != 2) return false;
 			if (g_on_disconnect  != 1) return false;
+
+			return true;
 		}
 
-		{g_on_data = g_on_connected = g_on_disconnect = 0;
-			MiniServer theServer(true);
-			MyClient mClient;
+		bool test_netstream_threaded::TestEventQuality::operator()()
+		{
+			{g_on_data = g_on_connected = g_on_disconnect = 0;
+				MiniServer theServer;
+				MyClient mClient;
 
-			// Check if it is connected
-			if (mClient.connected())
-				return false;
+				// Check if it is connected
+				if (mClient.connected())
+					return false;
 
-			// Connect to miniserver
-			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-			mt::thread::sleep(500);
-			if (g_on_data  != 1) return false;
-			if (g_on_connected  != 1) return false;
-			if (g_on_disconnect  != 0) return false;
+				// Connect to miniserver
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				mt::thread::sleep(500);
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != 1) return false;
+				if (g_on_disconnect  != 0) return false;
 
-			// Connect again
-			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-			mt::thread::sleep(500);
-			if (g_on_data  != 2) return false;
-			if (g_on_connected  != 2) return false;
-			if (g_on_disconnect  != 1) return false;
+				// Connect again
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != 2) return false;
+				if (g_on_disconnect  != 1) return false;
+			}
 
-			mClient.disconnect();
-			mt::thread::sleep(500);
-			if (g_on_data  != 2) return false;
-			if (g_on_connected  != 2) return false;
-			if (g_on_disconnect  != 2) return false;
+			{g_on_data = g_on_connected = g_on_disconnect = 0;
+				MiniServer theServer(true);
+				MyClient mClient;
+
+				// Check if it is connected
+				if (mClient.connected())
+					return false;
+
+				// Connect to miniserver
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				mt::thread::sleep(500);
+				if (g_on_data  != 1) return false;
+				if (g_on_connected  != 1) return false;
+				if (g_on_disconnect  != 0) return false;
+
+				// Connect again
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				mt::thread::sleep(500);
+				if (g_on_data  != 2) return false;
+				if (g_on_connected  != 2) return false;
+				if (g_on_disconnect  != 1) return false;
+
+				mClient.disconnect();
+				mt::thread::sleep(500);
+				if (g_on_data  != 2) return false;
+				if (g_on_connected  != 2) return false;
+				if (g_on_disconnect  != 2) return false;
+			}
+
+			{g_on_data = g_on_connected = g_on_disconnect = 0;
+				MiniServer theServer;
+				MyClient mClient;
+
+				// Check if it is connected
+				if (mClient.connected())
+					return false;
+
+				// Connect to miniserver
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				mt::thread::sleep(500);
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != 1) return false;
+				if (g_on_disconnect  != 0) return false;
+
+				// Stop server
+				theServer.StopS();
+				mt::thread::sleep(500);
+				if (g_on_data  != 0) return false;
+				if (g_on_connected  != 1) return false;
+				if (g_on_disconnect  != 1) return false;
+			}
+
+			{g_on_data = g_on_connected = g_on_disconnect = 0;
+				MiniServer theServer(true);
+				MyClient mClient;
+
+				// Check if it is connected
+				if (mClient.connected())
+					return false;
+
+				// Connect to miniserver
+				mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
+				mt::thread::sleep(500);
+				if (g_on_data  != 1) return false;
+				if (g_on_connected  != 1) return false;
+				if (g_on_disconnect  != 0) return false;
+
+				// Stop server
+				theServer.StopS();
+				mt::thread::sleep(500);
+				if (g_on_data  != 1) return false;
+				if (g_on_connected  != 1) return false;
+				if (g_on_disconnect  != 1) return false;
+			}
+			return true;
 		}
-
-		{g_on_data = g_on_connected = g_on_disconnect = 0;
-			MiniServer theServer;
-			MyClient mClient;
-
-			// Check if it is connected
-			if (mClient.connected())
-				return false;
-
-			// Connect to miniserver
-			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-			mt::thread::sleep(500);
-			if (g_on_data  != 0) return false;
-			if (g_on_connected  != 1) return false;
-			if (g_on_disconnect  != 0) return false;
-
-			// Stop server
-			theServer.StopS();
-			mt::thread::sleep(500);
-			if (g_on_data  != 0) return false;
-			if (g_on_connected  != 1) return false;
-			if (g_on_disconnect  != 1) return false;
-		}
-
-		{g_on_data = g_on_connected = g_on_disconnect = 0;
-			MiniServer theServer(true);
-			MyClient mClient;
-
-			// Check if it is connected
-			if (mClient.connected())
-				return false;
-
-			// Connect to miniserver
-			mClient.connect(socket_address_inet(host_inet::LOCALHOST, port_inet(55123)));
-			mt::thread::sleep(500);
-			if (g_on_data  != 1) return false;
-			if (g_on_connected  != 1) return false;
-			if (g_on_disconnect  != 0) return false;
-
-			// Stop server
-			theServer.StopS();
-			mt::thread::sleep(500);
-			if (g_on_data  != 1) return false;
-			if (g_on_connected  != 1) return false;
-			if (g_on_disconnect  != 1) return false;
-		}
-		return true;
-	}
+	}	// !test namespace
 };	// !oonet namespace

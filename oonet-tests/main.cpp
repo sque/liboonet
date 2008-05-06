@@ -1,17 +1,17 @@
 #include <oonet/oonet.hpp>
 #include <map>
-#include "TestEssentials.h"
+#include <oonet/test.hpp>
 
 using namespace std;
 using namespace oonet;
 
-typedef map<string, Test *> TestMap_t;
-typedef map<string, Test *>::iterator TestMapIterator;
+typedef map<string, test::test_set *> TestMap_t;
+typedef map<string, test::test_set *>::iterator TestMapIterator;
 
 TestMap_t * pTestsMap = 0;
 
 // Prototypes
-extern void RegisterTest(Test * pTest);
+extern void RegisterTest(test::test_set * p_test);
 void printRegisteredTests();
 
 // Main function
@@ -26,6 +26,7 @@ int _tmain(int argc, TCHAR * argv[])
 			"|OONet's Test Suite                               |\n"
 			"| compiled against version %u.%u.%u %-17s|\n"
 			"| linked against version %u.%u.%u %-17s  |\n"
+			"| registered: %d tests                            |\n"
 			"+-------------------------------------------------+\n\n",
 		OONET_VERSION_MAJOR,
 		OONET_VERSION_MINOR,
@@ -34,7 +35,8 @@ int _tmain(int argc, TCHAR * argv[])
 		oonet::version_major(),
 		oonet::version_minor(),
 		oonet::version_micro(),
-		oonet::version_phrase().c_str()
+		oonet::version_phrase().c_str(),
+		pTestsMap->size()
 	);
 	// For windows
 #if (OONET_OS ==  OONET_OS_WIN32)
@@ -51,7 +53,7 @@ int _tmain(int argc, TCHAR * argv[])
         // Run all registered tests
         for(it = pTestsMap->begin();it != pTestsMap->end(); it++)
 		{
-            if (it->second->Execute() == false) res = false;
+            if (it->second->execute_all() == false) res = false;
 			printf("\n");
 		}
 
@@ -67,7 +69,7 @@ int _tmain(int argc, TCHAR * argv[])
             it = pTestsMap->find(testname);
             if (it != pTestsMap->end())
             {
-               if (it->second->Execute())
+               if (it->second->execute_all())
 				   _tprintf(_T("OK\n"));
 			   else
 				   _tprintf(_T("FAILED!\n"));
@@ -87,20 +89,21 @@ int _tmain(int argc, TCHAR * argv[])
     getc(stdin);
 }
 
-void RegisterTest(Test * pTest)
+void register_test(test::test_set * p_test)
 {   // Allocate space first run time
 	if (pTestsMap == NULL)
 	{	pTestsMap = new TestMap_t;
 	}
-	(*pTestsMap)[pTest->TestName] = pTest;	}
+	(*pTestsMap)[p_test->name()] = p_test;
+}
 
 void printRegisteredTests()
 {   TestMapIterator it;
-	Test * pTest;
+	test::test_set * p_test;
 
-	_tprintf(_T("Registered tests are:\n"));
+	printf("Registered tests are:\n");
     for(it = pTestsMap->begin();it != pTestsMap->end(); it++)
-	{	pTest = it->second;
-		_tprintf(_T("  %s\n"), pTest->TestName.c_str());
+	{	p_test = it->second;
+		printf("  %s\n", p_test->name().c_str());
     }
 }
