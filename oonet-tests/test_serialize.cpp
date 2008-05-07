@@ -91,7 +91,7 @@ namespace oonet
 			binary_data serial;
 
 			obj1.age = 10;
-			obj2.height = 3.4123123;
+			obj2.height = 3.412f;
 
 			if (obj1 == obj2)
 				return false;
@@ -112,7 +112,7 @@ namespace oonet
 			binary_data serial;
 
 			obj1.age = 10;
-			obj1.height = 3.1412412;
+			obj1.height = 3.412f;
 
 			if (obj1 == obj2)
 				return false;
@@ -135,7 +135,7 @@ namespace oonet
 			const MySerializable & const_obj1 = obj1;
 
 			obj1.age = 10;
-			obj1.height = 3.1412412;
+			obj1.height = 3.412f;
 
 			if (obj1 != const_obj1)
 				return false;
@@ -157,7 +157,7 @@ namespace oonet
 			const MySerializable & const_obj1 = obj1;
 
 			obj1.age = 10;
-			obj1.height = 3.1412412;
+			obj1.height = 3.412f;
 
 			if (obj1 != const_obj1)
 				return false;
@@ -187,7 +187,7 @@ namespace oonet
 			const MySerializable & const_obj1 = obj1;
 
 			obj1.age = 10;
-			obj1.height = 3.1412412;
+			obj1.height = 3.412f;
 
 			if (obj1 != const_obj1)
 				return false;
@@ -215,7 +215,7 @@ namespace oonet
 			const MySerializablePOD & const_obj1 = obj1;
 
 			obj1.age = 10;
-			obj1.height = 3.1412412;
+			obj1.height = 3.412f;
 
 			if (obj1 != const_obj1)
 				return false;
@@ -242,7 +242,7 @@ namespace oonet
 			binary_data serial;
 
 			obj1.age = 10;
-			obj1.height = 3.1412412;
+			obj1.height = 3.412f;
 
 			for(long i =0 ;i < 1000000; i++)
 			{
@@ -266,7 +266,7 @@ namespace oonet
 		}
 
 		bool test_serialize::TestSerializeSpeedWCast::operator()()
-		{	MySerializablePOD obj1(10, 3.1234), obj2(30, 42);
+		{	MySerializablePOD obj1(10, 3.1234f), obj2(30, 42);
 			binary_data serial;
 
 			for(long i =0 ;i < 1000000; i++)
@@ -291,7 +291,7 @@ namespace oonet
 		}
 
 		bool test_serialize::TestSerializeSpeedConst::operator()()
-		{	MySerializable obj1(10, 3.141412), obj2(30, 42);
+		{	MySerializable obj1(10, 3.141412f), obj2(30, 42);
 			binary_data serial;
 			const MySerializable & const_obj1 =obj1;
 			const MySerializable & const_obj2 =obj2;
@@ -318,7 +318,7 @@ namespace oonet
 		}
 
 		bool test_serialize::TestSerializeSpeedConstWCast::operator()()
-		{	MySerializablePOD obj1(10, 3.1234), obj2(30, 42);
+		{	MySerializablePOD obj1(10, 3.1234f), obj2(30, 42);
 			binary_data serial;
 			const MySerializablePOD & const_obj1 =obj1;
 			const MySerializablePOD & const_obj2 =obj2;
@@ -345,7 +345,7 @@ namespace oonet
 		}
 
 		bool test_serialize::TestUnSerializeSpeed::operator()()
-		{	MySerializable obj1(10, 3.1234), obj2(30, 42);
+		{	MySerializable obj1(10, 3.1234f), obj2(30, 42);
 			binary_data serial, bk_up;
 
 
@@ -370,7 +370,7 @@ namespace oonet
 		}
 
 		bool test_serialize::TestUnSerializeSpeedWCast::operator()()
-		{	MySerializablePOD obj1(10, 3.1234), obj2(30, 42);
+		{	MySerializablePOD obj1(10, 3.1234f), obj2(30, 42);
 			binary_data serial, bk_up;
 
 			bk_up << obj1 << obj2;

@@ -136,6 +136,9 @@
 				RelativePath="..\..\oonet\netstream_threaded.cpp">
 			</File>
 			<File
+				RelativePath="..\..\oonet\oonet.cpp">
+			</File>
+			<File
 				RelativePath="..\..\oonet\port_inet.cpp">
 			</File>
 			<File
@@ -155,6 +158,9 @@
 			</File>
 			<File
 				RelativePath="..\..\oonet\string_converter.cpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet\test.cpp">
 			</File>
 			<File
 				RelativePath="..\..\oonet\thread.cpp">
@@ -238,6 +244,12 @@
 				RelativePath="..\..\oonet\semaphore.hpp">
 			</File>
 			<File
+				RelativePath="..\..\oonet\serialization.hpp">
+			</File>
+			<File
+				RelativePath="..\..\oonet\serialization_operators.hpp">
+			</File>
+			<File
 				RelativePath="..\..\oonet\socket.hpp">
 			</File>
 			<File
@@ -248,6 +260,9 @@
 			</File>
 			<File
 				RelativePath="..\..\oonet\string_converter.h">
+			</File>
+			<File
+				RelativePath="..\..\oonet\test.hpp">
 			</File>
 			<File
 				RelativePath="..\..\oonet\thread.hpp">
