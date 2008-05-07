@@ -110,16 +110,16 @@ namespace oonet
 
 
 #define OONET_DECLARESUBTEST(one_test_class, desc) \
-		class one_test_class :public one_test	\
+		class one_test_class :public oonet::test::one_test	\
 		{	public: one_test_class()	\
-				:one_test(desc) {} \
+				: oonet::test::one_test(desc) {} \
 			protected: virtual bool operator()(); \
 		};
 
 #define OONET_DECLARESUBTESTEXC(one_test_class, desc, exc_type) \
-		class one_test_class :public one_test	\
+		class one_test_class :public oonet::test::one_test	\
 		{	public: one_test_class()	\
-				:one_test(desc, exc_type) {} \
+				: oonet::test::one_test(desc, exc_type) {} \
 			protected: virtual bool operator()(); \
 		};
 
