@@ -21,15 +21,15 @@ namespace oonet
 		size_t sz_mem;	//!< Size of current allocated buffer
 		byte * p_mem;	//!< Pointer to our memory
 
-		void _scale_mem(size_t desired_mem_block)
+		void _scale_mem(size_t _sz_desired)
 		{	size_t sz_new;
 
 			// Check if we fit (Upper boundry) (Lowest boundry no need to calculate for shrinking) (Half of buff)
-			if ((desired_mem_block <= sz_mem) && ((sz_mem == 1024) || (desired_mem_block >= sz_mem/2)))
+			if ((_sz_desired <= sz_mem) && ((sz_mem == 1024) || (_sz_desired >= sz_mem/2)))
 				return;
 
 			// Calculate new size
-			sz_new = ((desired_mem_block) / 1024) + 1;
+			sz_new = ((_sz_desired) / 1024) + 1;
 			sz_new *= 1024;
 
 			// Allocate mem
@@ -227,11 +227,15 @@ namespace oonet
 	{
 		_assure_local_copy();
 
-		// Scale memory to fit all data
-		p_mem_block->_scale_mem(off_data + s_data + r.s_data);
+		// move data at the begining
+		memmove(p_mem_block->p_mem + off_data, p_mem_block->p_mem, s_data);
+		off_data = 0;
+
+		// Scale memory to fit new data
+		p_mem_block->_scale_mem(s_data + r.s_data);
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + off_data + s_data, r.get_data_ptr(), r.s_data);
+		memcpy(p_mem_block->p_mem + s_data, r.get_data_ptr(), r.s_data);
 
 		// Add size
 		s_data += r.s_data;
