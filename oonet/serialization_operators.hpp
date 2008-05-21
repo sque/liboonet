@@ -1,6 +1,10 @@
 #ifndef OONET_SERIALIZATION_OPERATORS_HPP_INCLUDED
 #define OONET_SERIALIZATION_OPERATORS_HPP_INCLUDED
 
+#include <map>
+#include <vector>
+#include <list>
+
 namespace oonet
 {
 	//! @name Serialization cast operators
@@ -59,6 +63,24 @@ namespace oonet
 		return dst;
 	};
 
+	//! Serialization of "std::pair" object
+	template<class F, class S>
+	inline binary_data & operator<<(binary_data & dst, const std::pair<F, S> & _pair)
+	{	return dst << _pair.first << _pair.second;	}
+
+	//! Serialization of "std::map" object
+	template<class F, class S>
+	inline binary_data & operator<<(binary_data & dst, const std::map<F, S> & _map)
+	{	typename std::map<F, S>::const_iterator it;
+
+		// Push size
+		dst << serialize_pod(_map.size());
+
+		// Push items
+		for(it = _map.begin();it != _map.end();it++)
+			dst << (*it);
+		return dst;
+	};
 	//! @}
 
 
@@ -134,6 +156,33 @@ namespace oonet
 		{
 			copy_dst >> tmp_item;
 			_list.push_back(tmp_item);
+			lsize--;
+		}
+		return dst = dst.get_from(dst.size() - copy_dst.size());
+	}
+
+	//! Unserialize "std::pair" object
+	template<class F, class S>
+	inline binary_data & operator>>(binary_data & dst, std::pair<F, S> & _pair)
+	{	return dst >> _pair.first >> _pair.second;	}
+
+	//! Unserialize "std::map objects"
+	template<class F, class S>
+	inline binary_data & operator>>(binary_data & dst, std::map<F, S> & _map)
+	{	typename std::map<F, S>::size_type lsize;
+		std::pair<F, S> tmp_item;
+		binary_data copy_dst(dst);
+
+		// Read size
+		copy_dst >> serialize_pod(lsize);
+
+		// Clear list
+		_map.clear();
+
+		while(lsize != 0)
+		{
+			copy_dst >> tmp_item;
+			_map[tmp_item.first] = tmp_item.second;
 			lsize--;
 		}
 		return dst = dst.get_from(dst.size() - copy_dst.size());

@@ -22,7 +22,6 @@ namespace oonet
 			{}
 
 
-
 			// Comparison
 			bool operator==(const MySerializable & r)
 			{	return ((age == r.age) && (height == r.height));		}
@@ -537,6 +536,52 @@ namespace oonet
 			copy_serial >> m_list2;
 
 			if (m_list != m_list2)
+				return false;
+
+			return true;
+		}
+
+		bool test_serialize::TestSerializeSTLPair::operator()()
+		{	std::pair<string, string> m_pair1, m_pair2;
+			binary_data serial, copy_serial;
+
+			// Add data
+			m_pair1 = std::pair<string,string>("test2", "lala");
+			
+			if (m_pair1 == m_pair2)
+				return false;
+
+			serial << m_pair1;
+
+			// Unserialize
+			serial >> m_pair2;
+
+			if (!(m_pair1 == m_pair2))
+				return false;
+
+			return true;
+		}
+
+		bool test_serialize::TestSerializeSTLMap::operator()()
+		{	std::map<string, string> m_map;
+			binary_data serial, copy_serial;
+
+			// Add data
+			m_map["test1"] = "blablala";
+			m_map["test4"] = "blabasdfasd";
+			m_map["test3"] = "blab";
+
+			serial << m_map;
+			copy_serial = serial;
+
+			// Final check
+			std::map<string, string> m_map2;
+
+			// Unserialize (twice)
+			serial >> m_map2;
+			copy_serial >> m_map2;
+
+			if (m_map != m_map2)
 				return false;
 
 			return true;

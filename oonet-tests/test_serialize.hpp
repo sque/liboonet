@@ -23,6 +23,8 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestSerializeWStrings, "Work with std::wstring");
 			OONET_DECLARESUBTEST(TestSerializeSTLList, "Work with std::list<>");
 			OONET_DECLARESUBTEST(TestSerializeSTLVector, "Work with std::vector<>");
+			OONET_DECLARESUBTEST(TestSerializeSTLPair, "Work with std::pair<>");
+			OONET_DECLARESUBTEST(TestSerializeSTLMap, "Work with std::map<>");
 			OONET_DECLARESUBTEST(TestSerializeSpeed, "ser/ze() speed w/o cast");
 			OONET_DECLARESUBTEST(TestSerializeSpeedWCast, "ser/ze() speed w/cast");
 			OONET_DECLARESUBTEST(TestSerializeSpeedConst, "ser/ze(const) spd w/o cast");
@@ -50,7 +52,9 @@ namespace oonet
 				OONET_REGISTERSUBTEST(TestSerializeWStrings);
 				OONET_REGISTERSUBTEST(TestSerializeSTLList);
 				OONET_REGISTERSUBTEST(TestSerializeSTLVector);
-				OONET_REGISTERSUBTEST(TestSerializeSpeed);
+				OONET_REGISTERSUBTEST(TestSerializeSTLPair);
+				OONET_REGISTERSUBTEST(TestSerializeSTLMap);
+				/*OONET_REGISTERSUBTEST(TestSerializeSpeed);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedWCast);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedConst);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedConstWCast);
@@ -59,7 +63,7 @@ namespace oonet
 				OONET_REGISTERSUBTEST(TestSerializeSpeedString);
 				OONET_REGISTERSUBTEST(TestUnSerializeSpeedString);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedList);
-				OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);
+				OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);*/
 
 				register_test(this);
 			}

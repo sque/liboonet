@@ -7,7 +7,7 @@
 					programmatic techniques that C++ provides in a simple, clean, and cross-platform way.
 					It works with almost no external dependency on Windows, GNU/Linux and OSX
 	Date:			28 / 8 /2003
-	Website:		https://launchpad.net/liboonet
+	Website:		http://launchpad.net/liboonet
 	Version:		0.1
 	Revision:		10 Mar 2008
 
@@ -205,19 +205,10 @@
 
 	// Linking directives
 	#if defined(_DEBUG)
-		#if defined(_DLL)
-			#pragma comment(lib, "liboonetLD.lib")
-		#else
-			#pragma comment(lib, "liboonetD.lib")
-		#endif
+		#pragma comment(lib, "liboonetD.lib")
 	#else
-		#if defined(_DLL)
-			#pragma comment(lib, "liboonetL.lib")
-		#else
-			#pragma comment(lib, "liboonet.lib")
-		#endif
+		#pragma comment(lib, "liboonet.lib")
 	#endif // _DEBUG
-
 
     #if !defined(_MT)
         #error OONet requires multi-thread library to be loaded!.
