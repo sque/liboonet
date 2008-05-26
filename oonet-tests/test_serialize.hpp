@@ -54,7 +54,7 @@ namespace oonet
 				OONET_REGISTERSUBTEST(TestSerializeSTLVector);
 				OONET_REGISTERSUBTEST(TestSerializeSTLPair);
 				OONET_REGISTERSUBTEST(TestSerializeSTLMap);
-				/*OONET_REGISTERSUBTEST(TestSerializeSpeed);
+				OONET_REGISTERSUBTEST(TestSerializeSpeed);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedWCast);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedConst);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedConstWCast);
@@ -63,7 +63,7 @@ namespace oonet
 				OONET_REGISTERSUBTEST(TestSerializeSpeedString);
 				OONET_REGISTERSUBTEST(TestUnSerializeSpeedString);
 				OONET_REGISTERSUBTEST(TestSerializeSpeedList);
-				OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);*/
+				OONET_REGISTERSUBTEST(TestUnSerializeSpeedList);
 
 				register_test(this);
 			}
