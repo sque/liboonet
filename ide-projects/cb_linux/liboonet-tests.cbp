@@ -12,6 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="netserver" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -25,6 +26,7 @@
 				<Option external_deps="liboonet.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="netserver" />
 				<Compiler>
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
