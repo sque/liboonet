@@ -62,8 +62,8 @@
 // Library version
 #define OONET_VERSION_MAJOR 0
 #define OONET_VERSION_MINOR 2
-#define OONET_VERSION_MICRO 0
-#define OONET_VERSION_PHRASE "beta-2"
+#define OONET_VERSION_MICRO 1
+#define OONET_VERSION_PHRASE ""
 
 /************************************/
 // Examine OS
@@ -174,20 +174,6 @@
         #define _tmain main
     #endif
 #endif  // !_T
-
-
-// Externsive debug info on console output
-/*#if defined(OONET_DEBUG_LEVEL_1)
-    #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL2: %s"), x)
-    #define OONET_DEBUG_L2(x)
-#elif defined(OONET_DEBUG_LEVEL_2)
-    #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL1: %s"), x)
-    #define OONET_DEBUG_L2(x) _tprintf(_T(" DBGL2: %s"), x)
-#else
-    #define OONET_DEBUG_L1(x)
-    #define OONET_DEBUG_L2(x)
-#endif
-*/
 
 /*******************************
  * Configuration
