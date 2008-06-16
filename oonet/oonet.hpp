@@ -97,10 +97,11 @@
  */
  // Standard Libraries
 #include <stdio.h>
-#include <string>
 #include <exception>
 #include <ctype.h>
 #include <time.h>
+#include <cstring>	// Old plain C strings (in std namespace)
+#include <string>	// C++ Strings (in std namespace)
 
 // Win32 libraries
 #if (OONET_OS == OONET_OS_WIN32)
