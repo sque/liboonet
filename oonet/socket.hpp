@@ -64,6 +64,10 @@ namespace oonet
             FAMILY_PACKET = PF_PACKET       //!<   Low level message interface       message(7)
 #elif (OONET_OS == OONET_OS_WIN32)
 			FAMILY_INET = AF_INET			//!<   IPv4 Internet protocols
+#elif (OONET_OS == OONET_OS_OSX)
+            FAMILY_LOCAL = AF_UNIX,        //!<   (UNIX internal protocols),
+            FAMILY_INET = AF_INET,         //!<   (ARPA Internet protocols),
+            FAMILY_ISO = AF_ISO            //!<   (ISO protocols),
 #endif
         };
 

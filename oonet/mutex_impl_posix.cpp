@@ -45,6 +45,8 @@ namespace oonet
 				return;
 			}
 
+// If pthread_mutex_timedlock is supported, use it!
+#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS - 200112L) >= 0
             // Current time
             time_t curTime;
             timespec expireTime;
@@ -66,6 +68,21 @@ namespace oonet
                 OONET_THROW_EXCEPTION(ExceptionLockError,
 					"Unable to lock mutex!");
             }
+#else
+            ulong tm_waited_ms = 0;
+            // The resolution clock will not be so good
+            while(pthread_mutex_trylock(&mutex_h) != 0)
+            {
+                usleep(10000);  // 10 Miliseconds
+                tm_waited_ms += 10;
+                if (tm_waited_ms > tm_timeoutms)
+                {   // Time out
+                    OONET_THROW_EXCEPTION(ExceptionTimeOut,
+                        "TimeOut waiting to lock mutex!");
+                }
+            }
+
+#endif
 		}
 	}; // !mt namespace
 };	// !oonet namespace

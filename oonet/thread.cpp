@@ -14,7 +14,7 @@ namespace oonet
         // NOTHREAD
     #if (OONET_OS == OONET_OS_WIN32)
         #define NOTHREAD NULL
-    #elif (OONET_OS == OONET_OS_LINUX)
+    #elif ((OONET_OS == OONET_OS_LINUX) || (OONET_OS == OONET_OS_OSX))
         #define NOTHREAD 0
     #endif
 

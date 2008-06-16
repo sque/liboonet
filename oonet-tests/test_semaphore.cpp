@@ -8,11 +8,6 @@ namespace oonet
 	{
 		test_semaphore test_semaphore_inst;
 
-		class TestThreadSemaphore : mt::thread
-		{
-
-		};
-
 		bool test_semaphore::TestLockTimeOut::operator()()
 		{	mt::semaphore mySema;
 

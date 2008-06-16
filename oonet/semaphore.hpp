@@ -13,13 +13,12 @@ namespace oonet
 		*/
         class semaphore
         {
-		public:
-			//! Native handle type of semaphores
-			typedef SEMAPHORE_HANDLE native_handle_type;
-
         private:
-			//! Handle of system's semaphore
-            native_handle_type sem_h;
+			//! Prototype of internal implementation
+			class impl;
+
+			//! Pointer to internal imlementation
+			impl * pimpl;
 
 			// Semaphore is NonCopyable
             semaphore(const semaphore &r);
@@ -35,9 +34,9 @@ namespace oonet
 
             //! Constructor with custom initial value
             /**
-			@param initial The inital value of semaphore
+			@param init_count The inital count of semaphore
 			*/
-            explicit semaphore(int initial);
+            explicit semaphore(int init_count);
 
             //! Destructor
             virtual ~semaphore();

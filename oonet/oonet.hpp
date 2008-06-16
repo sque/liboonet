@@ -69,14 +69,16 @@
 // Examine OS
 #define OONET_OS_WIN32	1
 #define OONET_OS_LINUX	2
+#define OONET_OS_OSX 3
 #define OONET_OS_UNKNOWN 3
 
 #if defined(WIN32)
 	#define OONET_OS	OONET_OS_WIN32
 #elif defined(linux)
 	#define OONET_OS	OONET_OS_LINUX
+#elif defined(__APPLE__)
+	#define	OONET_OS	OONET_OS_OSX
 #else
-	#define	OONET_OS	OONET_OS_UNKNOWN
 	#error Unsupported or unknown OS!
 #endif
 
@@ -107,7 +109,7 @@
 	#include <process.h>
 	#include <tchar.h>
 // Linux
-#elif (OONET_OS == OONET_OS_LINUX)
+#elif ((OONET_OS == OONET_OS_LINUX) || (OONET_OS == OONET_OS_OSX))
 	#include <netinet/in.h>
 	#include <sys/socket.h>
 	#include <sys/types.h>
@@ -135,7 +137,7 @@
 	#define CLOSESOCKET ::closesocket			// Function to close a socket
 	#define SOCKLEN int                         // The socklen used by getsockname
 	#define SOCKET_HANDLE SOCKET				// The socket handle
-#elif (OONET_OS == OONET_OS_LINUX)
+#elif ((OONET_OS == OONET_OS_LINUX) || (OONET_OS == OONET_OS_OSX))
 	#define MUTEX_HANDLE pthread_mutex_t		// Mutex handle
 	#define SOCKET_HANDLE int					// Socket handle
 	#define DWORD unsigned long					// realy needed?

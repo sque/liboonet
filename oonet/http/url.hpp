@@ -162,6 +162,9 @@ namespace oonet
 				return *this;
 			}
 
+            //! Destructor
+            virtual ~url(){}
+
 			//! Get extracted scheme
 			const string & scheme() const
 			{	return m_scheme;	}

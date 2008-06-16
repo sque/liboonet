@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option parameters="host_inet" />
+				<Option parameters="mt::mutex mt::semaphore" />
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-Wall" />
@@ -81,7 +81,7 @@
 		<Unit filename="../../oonet/port_inet.hpp" />
 		<Unit filename="../../oonet/scoped_lock.hpp" />
 		<Unit filename="../../oonet/semaphore.hpp" />
-		<Unit filename="../../oonet/semaphore_impl_posix.cpp" />
+		<Unit filename="../../oonet/semaphore_impl_unixnamed.cpp" />
 		<Unit filename="../../oonet/serialization.hpp" />
 		<Unit filename="../../oonet/serialization_operators.hpp" />
 		<Unit filename="../../oonet/socket.cpp" />
