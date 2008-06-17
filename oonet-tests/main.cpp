@@ -20,6 +20,7 @@ int _tmain(int argc, TCHAR * argv[])
     TestMapIterator it;
     string testname;
 	bool res;
+	bool b_exclude_speed = false;
 
 	// Display intro
 	printf(	"+-------------------------------------------------+\n"
@@ -46,14 +47,19 @@ int _tmain(int argc, TCHAR * argv[])
 #endif
 
 	// Check arguments
-    if (argc == 1)
+    if ((argc == 1) ||
+		((argc == 2) && (strcmp(argv[1], "-nospeed") == 0)))
     {
 		res = true;		// Result true by default
+		
+		// Exclude speed results
+		if (argc == 2)
+			b_exclude_speed = true;
 
         // Run all registered tests
         for(it = pTestsMap->begin();it != pTestsMap->end(); it++)
 		{
-            if (it->second->execute_all() == false) res = false;
+            if (it->second->execute_all(b_exclude_speed) == false) res = false;
 			printf("\n");
 		}
 
@@ -63,13 +69,20 @@ int _tmain(int argc, TCHAR * argv[])
     else
     {
 		// Run the selected ones only
-        for(int i=1;i < argc;i++)
-        {
+        for(int i=1; i < argc;i++)
+        {			
+			// Check if it is an option
+			if (strcmp(argv[i], "-nospeed") == 0)
+			{
+				b_exclude_speed = true;
+				continue;
+			}
+				
             testname = argv[i];
             it = pTestsMap->find(testname);
             if (it != pTestsMap->end())
             {
-               if (it->second->execute_all())
+               if (it->second->execute_all(b_exclude_speed))
 				   _tprintf(_T("OK\n"));
 			   else
 				   _tprintf(_T("FAILED!\n"));

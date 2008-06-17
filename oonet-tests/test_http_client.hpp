@@ -18,7 +18,7 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestConnect, "connect() on not con");
 			OONET_DECLARESUBTEST(TestConnectConnected, "connect() on connected");
 			OONET_DECLARESUBTEST(TestSend, "send() quality");
-			OONET_DECLARESUBTEST(TestSendSpeed, "send() speed 50MB/1k block");
+			OONET_DECLARESUBTEST_SPEED(TestSendSpeed, "send() speed 50MB/1k block");
 			OONET_DECLARESUBTESTEXC(TestSendTimeOut, "send() time out", "ExceptionTimeOut");
 			OONET_DECLARESUBTESTEXC(TestSendWrongResponse, "send() wrong response", "ExceptionWrongFormat");
 			OONET_DECLARESUBTEST(TestReuseDisconnected, "Reuse disconencted");

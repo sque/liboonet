@@ -13,8 +13,8 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestTCPSpeed4G, "Raw tcp data 4Gb");
-			OONET_DECLARESUBTEST(TestHTTPSpeed500Mb, "HTTP data 500Mb");
+			OONET_DECLARESUBTEST_SPEED(TestTCPSpeed4G, "Raw tcp data 4Gb");
+			OONET_DECLARESUBTEST_SPEED(TestHTTPSpeed500Mb, "HTTP data 500Mb");
 		public:
 			// Constructor
 			test_benchmark()

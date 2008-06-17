@@ -61,9 +61,9 @@
 /************************************/
 // Library version
 #define OONET_VERSION_MAJOR 0
-#define OONET_VERSION_MINOR 2
-#define OONET_VERSION_MICRO 1
-#define OONET_VERSION_PHRASE ""
+#define OONET_VERSION_MINOR 3
+#define OONET_VERSION_MICRO 0
+#define OONET_VERSION_PHRASE "bzr"
 
 /************************************/
 // Examine OS
@@ -109,8 +109,8 @@
 	#include <windows.h>
 	#include <process.h>
 	#include <tchar.h>
-// Linux
-#elif ((OONET_OS == OONET_OS_LINUX) || (OONET_OS == OONET_OS_OSX))
+// Posix Interface
+#else
 	#include <netinet/in.h>
 	#include <sys/socket.h>
 	#include <sys/types.h>

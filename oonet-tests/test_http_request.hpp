@@ -17,11 +17,11 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestCopyCtor, "Ctor() copy constructor");
 			OONET_DECLARESUBTEST(TestCopyOperator, "operator= quality");
 			OONET_DECLARESUBTEST(TestRender, "Render() quality");
-			OONET_DECLARESUBTEST(TestRenderSpeed, "Render() speed 10k");
+			OONET_DECLARESUBTEST_SPEED(TestRenderSpeed, "Render() speed 10k");
 			OONET_DECLARESUBTEST(TestParse, "Parse() quality");
 			OONET_DECLARESUBTESTEXC(TestParseWrong1, "Parse() wrong", "ExceptionWrongUrl");
 			OONET_DECLARESUBTESTEXC(TestParseWrong2, "Parse() wrong", "ExceptionWrongFormat");
-			OONET_DECLARESUBTEST(TestParseSpeed, "Parse() speed 10k")
+			OONET_DECLARESUBTEST_SPEED(TestParseSpeed, "Parse() speed 10k")
 		public:
 			// Constructor
 			test_http_request()

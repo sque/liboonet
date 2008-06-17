@@ -19,13 +19,13 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestGetBody, "body() quality");
 			OONET_DECLARESUBTEST(TestGetTitle, "title() quality");
 			OONET_DECLARESUBTEST(TestRender, "render() quality");
-			OONET_DECLARESUBTEST(TestRenderSpeed, "render() speed 10K");
+			OONET_DECLARESUBTEST_SPEED(TestRenderSpeed, "render() speed 10K");
 			OONET_DECLARESUBTEST(TestParse, "parse() quality");
 			OONET_DECLARESUBTESTEXC(TestParseWrong1, "parse() wrong length", "ExceptionWrongFormat");
 			OONET_DECLARESUBTEST(TestParseIncomplete1, "parse() incomplete");
 			OONET_DECLARESUBTEST(TestParseIncomplete2, "parse() incomplete");
-			OONET_DECLARESUBTEST(TestParseSpeedLF, "parse()\'\\n\' speed 10k");
-			OONET_DECLARESUBTEST(TestParseSpeedCRLF, "parse()\'\\r\\n\' speed 10k");
+			OONET_DECLARESUBTEST_SPEED(TestParseSpeedLF, "parse()\'\\n\' speed 10k");
+			OONET_DECLARESUBTEST_SPEED(TestParseSpeedCRLF, "parse()\'\\r\\n\' speed 10k");
 		public:
 			// Constructor
 			test_http_message()

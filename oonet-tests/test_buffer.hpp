@@ -15,17 +15,17 @@ namespace oonet
 			// SUB TESTS
 			OONET_DECLARESUBTEST(TestCtor, "Ctor() ");
 			OONET_DECLARESUBTEST(TestSize, "Size() quality ");
-			OONET_DECLARESUBTEST(TestSizeSpeed, "Size() speed 1Mtimes");
+			OONET_DECLARESUBTEST_SPEED(TestSizeSpeed, "Size() speed 1Mtimes");
 			OONET_DECLARESUBTEST(TestFlush, "Flush()");
-			OONET_DECLARESUBTEST(TestFlushSpeed, "Flush() speed 100Ktimes");
+			OONET_DECLARESUBTEST_SPEED(TestFlushSpeed, "Flush() speed 100Ktimes");
 			OONET_DECLARESUBTEST(TestByteOrder, "Push,Pop order check");
 			OONET_DECLARESUBTEST(TestPeekPopCompability, "Peek&Pop must be same");
-			OONET_DECLARESUBTEST(TestPushFrontSpeed, "PushFront() speed 1k");
-			OONET_DECLARESUBTEST(TestPopFrontSpeed, "PopFront() speed 100k");
-			OONET_DECLARESUBTEST(TestPeekFrontSpeed, "PeekFront() speed 100k");
-			OONET_DECLARESUBTEST(TestPushBackSpeed, "PushFront() speed 1k");
-			OONET_DECLARESUBTEST(TestPopBackSpeed, "PopFront() speed 100k");
-			OONET_DECLARESUBTEST(TestPeekBackSpeed, "PeekFront() speed 100k");
+			OONET_DECLARESUBTEST_SPEED(TestPushFrontSpeed, "PushFront() speed 1k");
+			OONET_DECLARESUBTEST_SPEED(TestPopFrontSpeed, "PopFront() speed 100k");
+			OONET_DECLARESUBTEST_SPEED(TestPeekFrontSpeed, "PeekFront() speed 100k");
+			OONET_DECLARESUBTEST_SPEED(TestPushBackSpeed, "PushFront() speed 1k");
+			OONET_DECLARESUBTEST_SPEED(TestPopBackSpeed, "PopFront() speed 100k");
+			OONET_DECLARESUBTEST_SPEED(TestPeekBackSpeed, "PeekFront() speed 100k");
 
 		public:
 			// Constructor

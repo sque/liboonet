@@ -25,14 +25,14 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestFind, "find() ");
 			OONET_DECLARESUBTESTEXC(TestSplit3Wrong1, "Split3() wrong", "ExceptionWrongUrl");
 			OONET_DECLARESUBTESTEXC(TestSplit3Wrong2, "Split3() wrong", "ExceptionWrongUrl");
-			OONET_DECLARESUBTEST(TestSplit3Speed, "Split3() speed 10K");
+			OONET_DECLARESUBTEST_SPEED(TestSplit3Speed, "Split3() speed 10K");
 			OONET_DECLARESUBTEST(TestSplit3Quality, "Split3() quality");
 			OONET_DECLARESUBTESTEXC(TestSplit4Wrong1, "Split4() wrong", "ExceptionWrongUrl");
 			OONET_DECLARESUBTEST(TestSplit4Quality, "Split4() quality");
-			OONET_DECLARESUBTEST(TestSplit4Speed, "Split4() speed 10K");
+			OONET_DECLARESUBTEST_SPEED(TestSplit4Speed, "Split4() speed 10K");
 			OONET_DECLARESUBTESTEXC(TestSplit5Wrong1, "Split5() wrong", "ExceptionWrongUrl");
 			OONET_DECLARESUBTEST(TestSplit5Quality, "Split5() quality");
-			OONET_DECLARESUBTEST(TestSplit5Speed, "Split5() speed 10K");
+			OONET_DECLARESUBTEST_SPEED(TestSplit5Speed, "Split5() speed 10K");
 		public:
 			// Constructor
 			test_url()

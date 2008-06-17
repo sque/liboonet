@@ -29,10 +29,11 @@ namespace oonet
 			return tmp_out;
 		}
 #endif
-		one_test::one_test(const string & _name)
+		one_test::one_test(const string & _name, bool _speed_test)
 			:m_name(_name),
 			m_thrown_exception("", 0, "", ""),
-			b_must_throw(false)
+			b_must_throw(false),
+			b_speed_test(_speed_test)
 		{
 		}
 
@@ -41,7 +42,8 @@ namespace oonet
 			:m_name(_name),
 			m_expected_exception(_exc_name),
 			m_thrown_exception("", 0, "", ""),
-			b_must_throw(true)
+			b_must_throw(true),
+			b_speed_test(false)
 		{
 		}
 
@@ -84,7 +86,7 @@ namespace oonet
 		{
 		}
 
-		bool test_set::execute_all()
+		bool test_set::execute_all(bool b_exclude_speed)
 		{	iterator it;
 			int count = 0;
 			bool b_fail_flag = false;	// A flag raised if at least one test was failed
@@ -97,8 +99,14 @@ namespace oonet
 
 			// Run one-by-one the tests
 			for(it = m_tests.begin(); it != m_tests.end(); it++)
-			{	count++;
-				one_test & m_test = *it->get();
+			{	one_test & m_test = *it->get();
+				
+				// skip speed tests if requested
+				if ((b_exclude_speed) && (m_test.is_speed_test()))
+					continue;
+					
+				// Increment counter
+				count++;
 
 				// Print title
 				printf("  %2d| %-30s", count, string(m_test.name() + "...").c_str());

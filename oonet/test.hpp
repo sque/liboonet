@@ -15,7 +15,7 @@ namespace oonet
 		public:
 
 			//! Constructor of a test that must NOT throw exception
-			one_test(const string & _name);
+			one_test(const string & _name, bool _speed_test = false);
 
 			//! Constructor of a test that must throw exception.
 			one_test(const string & _name,
@@ -46,6 +46,10 @@ namespace oonet
 			//! Time spent in seconds
 			double time_spent() const
 			{	return m_time_spent;	}
+			
+			//! Check if it is a speed test
+			const bool & is_speed_test() const
+			{	return b_speed_test;		}
 
 		protected:
 
@@ -55,6 +59,7 @@ namespace oonet
 			bool b_must_throw;				//!< A flag if test must throw
 			double m_timer_start;			//!< Start time of timer
 			double m_time_spent;			//!< Time spent for test
+			bool b_speed_test;				//!< Flag if this test is a speed test
 
 			//! Time passed for the begining of timer
 			double time_passed();
@@ -105,16 +110,19 @@ namespace oonet
 			{	return m_tests;	}
 
 			//! Execute all tests
-			bool execute_all();
+			bool execute_all(bool b_exclude_speed = false);
 		};
 
 
-#define OONET_DECLARESUBTEST(one_test_class, desc) \
+#define OONET_DECLARESUBTEST_DETAILED(one_test_class, desc, speed) \
 		class one_test_class :public oonet::test::one_test	\
 		{	public: one_test_class()	\
-				: oonet::test::one_test(desc) {} \
+				: oonet::test::one_test(desc, speed) {} \
 			protected: virtual bool operator()(); \
 		};
+
+#define OONET_DECLARESUBTEST(one_test, desc) OONET_DECLARESUBTEST_DETAILED(one_test, desc, false)
+#define OONET_DECLARESUBTEST_SPEED(one_test, desc) OONET_DECLARESUBTEST_DETAILED(one_test, desc, true)
 
 #define OONET_DECLARESUBTESTEXC(one_test_class, desc, exc_type) \
 		class one_test_class :public oonet::test::one_test	\

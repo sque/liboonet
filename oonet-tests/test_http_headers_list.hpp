@@ -21,15 +21,15 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestCopyOperator, "operator= quality");
 			OONET_DECLARESUBTESTEXC(TestSetHeaderWrong1, "set() wrong", "ExceptionAssertationFailed");
 			OONET_DECLARESUBTEST(TestSetHeader, "set() quality");
-			OONET_DECLARESUBTEST(TestSetHeaderSpeed, "set() 100k speed");
+			OONET_DECLARESUBTEST_SPEED(TestSetHeaderSpeed, "set() 100k speed");
 			OONET_DECLARESUBTEST(TestRemoveHeader, "erase() quality");
 			OONET_DECLARESUBTEST(TestRemoveHeaderSpeed, "erase() 100k Speed");
 			OONET_DECLARESUBTEST(TestRender, "render() quality");
-			OONET_DECLARESUBTEST(TestRenderSpeed100k_2, "render() 100k/2H speed");
-			OONET_DECLARESUBTEST(TestRenderSpeed100k_100, "render() 100k/100h speed");
+			OONET_DECLARESUBTEST_SPEED(TestRenderSpeed100k_2, "render() 100k/2H speed");
+			OONET_DECLARESUBTEST_SPEED(TestRenderSpeed100k_100, "render() 100k/100h speed");
 			OONET_DECLARESUBTEST(TestParse, "parse() quality");
 			OONET_DECLARESUBTESTEXC(TestParseWrong1, "parse() wrong", "ExceptionWrongFormat");
-			OONET_DECLARESUBTEST(TestParseSpeed100k, "parse() 100k speed");
+			OONET_DECLARESUBTEST_SPEED(TestParseSpeed100k, "parse() 100k speed");
 		public:
 			// Constructor
 			test_http_headers_list()

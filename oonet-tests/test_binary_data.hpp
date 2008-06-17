@@ -25,9 +25,9 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestNotFound, "find() for missing");
 			OONET_DECLARESUBTESTEXC(TestFindEmptyPattern, "find() with empty pattern", "ExceptionWrongArgument");
 			OONET_DECLARESUBTEST(TestFindGeneral, "find() general quality");
-			OONET_DECLARESUBTEST(TestFindByteIn100MBlock, "find() 1B in 100M block");
-			OONET_DECLARESUBTEST(TestFindBlockIn100MBlock, "find() 10K in 100M fast");
-			OONET_DECLARESUBTEST(TestFindBlockDifficult, "find() 10K in 100M hard");
+			OONET_DECLARESUBTEST_SPEED(TestFindByteIn100MBlock, "find() 1B in 100M block");
+			OONET_DECLARESUBTEST_SPEED(TestFindBlockIn100MBlock, "find() 10K in 100M fast");
+			OONET_DECLARESUBTEST_SPEED(TestFindBlockDifficult, "find() 10K in 100M hard");
 			OONET_DECLARESUBTEST(TestGetFromWrong, "get_from() wrong offset");
 			OONET_DECLARESUBTEST(TestGetFromGeneral, "get_from() general quality");
 			OONET_DECLARESUBTEST(TestGetUntilWrong, "get_until() wrong offset");
@@ -40,7 +40,7 @@ namespace oonet
 			OONET_DECLARESUBTESTEXC(TestElementWrongOffeset, "operator[] wrong offset", "ExceptionNotFound");
 			OONET_DECLARESUBTEST(TestElementGeneral, "operator[] general quality");
 			OONET_DECLARESUBTEST(TestLessGeneral, "operator< general quality");
-			OONET_DECLARESUBTEST(TestLessSpeed, "operator< speed");
+			OONET_DECLARESUBTEST_SPEED(TestLessSpeed, "operator< speed");
 			OONET_DECLARESUBTEST(TestAStringExporter, "Test exporting to AString");
 			OONET_DECLARESUBTEST(TestWStringExporter, "Test exporting to WString");
 			OONET_DECLARESUBTEST(TestCoW, "Test CoW (basic)");
