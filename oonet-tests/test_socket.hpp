@@ -16,14 +16,14 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestTCPCtor, "Ctor() IPv4/TCP");
 			OONET_DECLARESUBTEST(TestUDPCtor, "Ctor() IPv4/UDP");
 
-	#if OONET_OS == OONET_OS_WIN32
+	#if (OONET_OS_API == OONET_OS_API_WIN32)
 			OONET_DECLARESUBTEST(TestRAWCtor, "Ctor() IPv4/RAW");
 	#else
 			OONET_DECLARESUBTESTEXC(TestRAWCtor, "Ctor() IPv4/RAW", "ExceptionNotSupported");
 	#endif
 
 
-	#if OONET_OS == OONET_OS_WIN32
+	#if (OONET_OS_API == OONET_OS_API_WIN32)
 			OONET_DECLARESUBTESTEXC(TestWhateverCtor, "Ctor() IPv4/Invalid", "ExceptionNotSupported");
 	#else
 			OONET_DECLARESUBTESTEXC(TestWhateverCtor, "Ctor() IPv4/Invalid", "ExceptionWrongArgument");

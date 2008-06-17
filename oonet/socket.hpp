@@ -51,8 +51,7 @@ namespace oonet
         //! Enumeration of socket families
         enum SocketFamily
         {
-#if (OONET_OS == OONET_OS_LINUX)
-            FAMILY_LOCAL = PF_LOCAL,	    //!<   Local communication              unix(7)
+            /*FAMILY_LOCAL = PF_LOCAL,	    //!<   Local communication              unix(7)
             FAMILY_INET = PF_INET,          //!<   IPv4 Internet protocols          ip(7)
             FAMILY_INET6 = PF_INET6,        //!<   IPv6 Internet protocols
             FAMILY_IPX = PF_IPX,            //!<   IPX - Novell protocols
@@ -61,14 +60,11 @@ namespace oonet
             FAMILY_AX25 = PF_AX25,          //!<   Amateur radio AX.25 protocol
             FAMILY_ATMPVC = PF_ATMPVC,      //!<   Access to raw ATM PVCs
             FAMILY_APPLETALK = PF_APPLETALK,//!<   Appletalk                        ddp(7)
-            FAMILY_PACKET = PF_PACKET       //!<   Low level message interface       message(7)
-#elif (OONET_OS == OONET_OS_WIN32)
-			FAMILY_INET = AF_INET			//!<   IPv4 Internet protocols
-#elif (OONET_OS == OONET_OS_OSX)
+            FAMILY_PACKET = PF_PACKET       //!<   Low level message interface       message(7)*/
+
             FAMILY_LOCAL = AF_UNIX,        //!<   (UNIX internal protocols),
             FAMILY_INET = AF_INET,         //!<   (ARPA Internet protocols),
             FAMILY_ISO = AF_ISO            //!<   (ISO protocols),
-#endif
         };
 
         //! Enumeration of socket types

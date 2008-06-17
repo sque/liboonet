@@ -12,10 +12,10 @@ namespace oonet
         /////////////////////////////////
         // OS-Independant -> OS-Specific
         // NOTHREAD
-    #if (OONET_OS == OONET_OS_WIN32)
+    #if (OONET_OS_API == OONET_OS_API_WIN32)
         #define NOTHREAD NULL
-    #elif ((OONET_OS == OONET_OS_LINUX) || (OONET_OS == OONET_OS_OSX))
-        #define NOTHREAD 0
+    #else	// Posix interface
+		#define NOTHREAD 0
     #endif
 
         void thread::_soft_join(ulong tm_timeoutms)

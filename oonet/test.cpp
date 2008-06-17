@@ -1,7 +1,7 @@
 #include "./test.hpp"
 
 // Include unix time
-#if (OONET_OS != OONET_OS_WIN32)
+#if (OONET_OS_API == OONET_OS_API_POSIX)
 	#include <sys/time.h>
 	#include <time.h>
 #endif
@@ -11,7 +11,7 @@ namespace oonet
 	namespace test
 	{
 
-#if OONET_OS == OONET_OS_WIN32
+#if OONET_OS_API == OONET_OS_API_WIN32
 		double get_current_msecs()
 		{
 			double tm = timeGetTime();

@@ -11,7 +11,7 @@ namespace oonet
 	{	// Skip empty strings
 		if (r.size() == 0)
 			return wstring();
-#if (OONET_OS == OONET_OS_WIN32)
+#if (OONET_OS_API == OONET_OS_API_WIN32)
 		// Calculate size of wchar needed
 		size_t sAr = r.size() * sizeof(wchar_t);
 
@@ -56,7 +56,7 @@ namespace oonet
 		// Skip empty strings
 		if (r.size() == 0)
 			return string();
-#if (OONET_OS == OONET_OS_WIN32)
+#if (OONET_OS_API == OONET_OS_API_WIN32)
 		// Calculate size of char needed
 		size_t sAr = r.size() + 2;
 

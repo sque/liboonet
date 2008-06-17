@@ -15,13 +15,17 @@ namespace oonet
 	    class semaphore::impl
 	    {
         public:
+
             // Posix semaphore handle
 			sem_t sem_h;
-
+			
+			// Pointer to semaphore handle
+			sem_t * sem_ph;
+			
 #if defined(__APPLE__)
             ////////////////////////////////////////////////////////
             //    On apple OSX posix implementation does not support unnamed sockets, so here we are!
-
+			
             void print_current_status(const char * error_desc)
             {
                 printf("\n"
@@ -44,6 +48,7 @@ namespace oonet
 
             // Default constructor (Initialize counter to zero)
 	        impl(unsigned int init_count = 0)
+				:sem_ph(&sem_h)
 	        {
                 // Create a unique name
                 sprintf(unique_name, "/tmp/oonet/0000/%lu", sem_count_id++);
@@ -53,7 +58,7 @@ namespace oonet
                 sem_unlink(unique_name);
 
                 // Create a new one
-                if (SEM_FAILED == (sem_h = sem_open(unique_name,
+                if (SEM_FAILED == (sem_ph = sem_open(unique_name,
                     O_EXCL | O_CREAT,   // Create new one
                     666,                // We dont want to be accesible from other processes
                     init_count))        // Initial count name
@@ -62,15 +67,13 @@ namespace oonet
                     OONET_THROW_EXCEPTION(ExceptionSystemError,
                         "Unable to create semaphore!");
                 }
-
-                //print_current_status("Creating new semaphores\n");
 	        }
 
 	        // Destructor
 	        ~impl()
 	        {
 	            // Close connection to semaphore
-                if (0 != sem_close(sem_h))
+                if (0 != sem_close(sem_ph))
                     print_current_status("Error on closing semaphore!");
 
                 // Delete it too
@@ -80,6 +83,7 @@ namespace oonet
 
             // Default constructor (Initialize counter to zero)
 	        impl(unsigned int init_count = 0)
+				:sem_ph(&sem_h)
 	        {
                 if (-1 == sem_init(&sem_h,
                     0,  // Not process-shared
@@ -95,15 +99,14 @@ namespace oonet
 	        ~impl()
 	        {
 	            // Destroy semaphore
-                sem_destroy(&sem_h);
+                sem_destroy(sem_ph);
 	        }
 
 #endif
 	        void post()
 	        {
-	            if (sem_post(&sem_h) != 0)
+	            if (sem_post(sem_ph) != 0)
 	            {
-	                //print_current_status("Error on sem_post");
                     OONET_THROW_EXCEPTION(ExceptionSystemError,
                         "Unable to post on semaphore!");
 	            }
@@ -114,7 +117,7 @@ namespace oonet
 	            // Wait for infinity
                 if (tm_timeoutms == Infinity)
                 {
-                    if (sem_wait(&sem_h) != 0)
+                    if (sem_wait(sem_ph) != 0)
                     {
                         //print_current_status("Error on sem_post");
                         OONET_THROW_EXCEPTION(ExceptionSystemError,
@@ -135,14 +138,14 @@ namespace oonet
                 expireTime.tv_nsec =  (tm_timeoutms % 1000) * 1000000;
 
                 // Try to time out sema
-                if ((0 != sem_timedwait(&sem_h, &expireTime))
+                if ((0 != sem_timedwait(sem_ph, &expireTime))
                     &&  (errno == ETIMEDOUT))
                     OONET_THROW_EXCEPTION(ExceptionTimeOut, "Semaphore was abandoned");
 
 #else
                 ulong tm_waited_ms = 0;
                 // The resolution clock will not be so good
-                while(sem_trywait(&sem_h) != 0)
+                while(sem_trywait(sem_ph) != 0)
                 {
                     usleep(10000);  // 10 Miliseconds
                     tm_waited_ms += 10;

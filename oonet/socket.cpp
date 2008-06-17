@@ -44,9 +44,9 @@ namespace oonet
 		// Implementation of shutdown
 		void shutdown()
 		{
-#if (OONET_OS == OONET_OS_LINUX)
+#if (OONET_OS_API == OONET_OS_API_POSIX)
 			::shutdown(_handle, SHUT_RDWR);
-#elif (OONET_OS == OONET_OS_WIN32)
+#else
 			::shutdown(_handle, SD_BOTH);
 #endif
 		}

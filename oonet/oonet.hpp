@@ -66,20 +66,18 @@
 #define OONET_VERSION_PHRASE "bzr"
 
 /************************************/
-// Examine OS
-#define OONET_OS_WIN32	1
-#define OONET_OS_LINUX	2
-#define OONET_OS_OSX 3
-#define OONET_OS_UNKNOWN 3
+// Examine OS supported APIs
+#define OONET_OS_API_POSIX 1	//!< Declares that OS support Posix API
+#define OONET_OS_API_WIN32 2	//!< Declares that OS support Win32 API
 
 #if defined(WIN32)
-	#define OONET_OS	OONET_OS_WIN32
+	#define OONET_OS_API	OONET_OS_API_WIN32
 #elif defined(linux)
-	#define OONET_OS	OONET_OS_LINUX
+	#define OONET_OS_API	OONET_OS_API_POSIX
 #elif defined(__APPLE__)
-	#define	OONET_OS	OONET_OS_OSX
+	#define	OONET_OS_API	OONET_OS_API_POSIX
 #else
-	#error Unsupported or unknown OS!
+	#define OONET_OS_API	OONET_OS_API_POSIX
 #endif
 
 /************************************/
@@ -104,7 +102,7 @@
 #include <string>	// C++ Strings (in std namespace)
 
 // Win32 libraries
-#if (OONET_OS == OONET_OS_WIN32)
+#if (OONET_OS_API == OONET_OS_API_WIN32)
 	#include <winsock2.h>
 	#include <windows.h>
 	#include <process.h>
@@ -128,7 +126,7 @@
  * OS independant -> OS specific macros
  */
 // MUTEX definition
-#if (OONET_OS == OONET_OS_WIN32)
+#if (OONET_OS_API == OONET_OS_API_WIN32)
 	#define MUTEX_HANDLE HANDLE					// Mutex handle
 	#define SEMAPHORE_HANDLE HANDLE				// Semapore handle
 	#define THREAD_HANDLE HANDLE				// Thread handle
@@ -138,7 +136,7 @@
 	#define CLOSESOCKET ::closesocket			// Function to close a socket
 	#define SOCKLEN int                         // The socklen used by getsockname
 	#define SOCKET_HANDLE SOCKET				// The socket handle
-#elif ((OONET_OS == OONET_OS_LINUX) || (OONET_OS == OONET_OS_OSX))
+#else // Posix Interface
 	#define MUTEX_HANDLE pthread_mutex_t		// Mutex handle
 	#define SOCKET_HANDLE int					// Socket handle
 	#define DWORD unsigned long					// realy needed?
@@ -188,7 +186,7 @@
 /*******************************
  * Specific compiler options
  */
-#if (OONET_OS == OONET_OS_WIN32) && defined(_MSC_VER)
+#if (OONET_OS_API == OONET_OS_API_WIN32) && defined(_MSC_VER)
 	// C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
 	#pragma warning( disable : 4290 )	// Disable warning
 

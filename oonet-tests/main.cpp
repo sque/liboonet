@@ -40,7 +40,7 @@ int _tmain(int argc, TCHAR * argv[])
 		pTestsMap->size()
 	);
 	// For windows
-#if (OONET_OS ==  OONET_OS_WIN32)
+#if (OONET_OS_API ==  OONET_OS_API_WIN32)
 	WSADATA wsaData;
 	WORD wVersionRequested = MAKEWORD( 2, 2 );
 	WSAStartup(wVersionRequested, &wsaData);
@@ -95,7 +95,7 @@ int _tmain(int argc, TCHAR * argv[])
         }
     }
 
-#if (OONET_OS == OONET_OS_WIN32)
+#if (OONET_OS_API == OONET_OS_API_WIN32)
 	WSACleanup();
 #endif
 	_tprintf(_T("Finished.. PRESS anykey to continue\n"));
