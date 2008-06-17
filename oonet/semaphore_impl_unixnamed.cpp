@@ -16,7 +16,7 @@ namespace oonet
 	    {
         public:
             // Posix semaphore handle
-			sem_t * sem_h;
+			sem_t sem_h;
 
 #if defined(__APPLE__)
             ////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ namespace oonet
                 // Delete it too
                 sem_unlink(unique_name);
 	        }
-#else   // Using unnamed posix interface
+#else   // Using unnamed posix native unamed counting semaphores
 
             // Default constructor (Initialize counter to zero)
 	        impl(unsigned int init_count = 0)
@@ -101,9 +101,9 @@ namespace oonet
 #endif
 	        void post()
 	        {
-	            if (sem_post(sem_h) != 0)
+	            if (sem_post(&sem_h) != 0)
 	            {
-	                print_current_status("Error on sem_post");
+	                //print_current_status("Error on sem_post");
                     OONET_THROW_EXCEPTION(ExceptionSystemError,
                         "Unable to post on semaphore!");
 	            }
@@ -114,9 +114,9 @@ namespace oonet
 	            // Wait for infinity
                 if (tm_timeoutms == Infinity)
                 {
-                    if (sem_wait(sem_h) != 0)
+                    if (sem_wait(&sem_h) != 0)
                     {
-                        print_current_status("Error on sem_post");
+                        //print_current_status("Error on sem_post");
                         OONET_THROW_EXCEPTION(ExceptionSystemError,
                             "Unable to post on semaphore!");
                     }
@@ -142,7 +142,7 @@ namespace oonet
 #else
                 ulong tm_waited_ms = 0;
                 // The resolution clock will not be so good
-                while(sem_trywait(sem_h) != 0)
+                while(sem_trywait(&sem_h) != 0)
                 {
                     usleep(10000);  // 10 Miliseconds
                     tm_waited_ms += 10;

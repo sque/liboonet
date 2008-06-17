@@ -12,7 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="binary_data buffer host_inet host_resolver http::client http::headers_list http::message http::request http::response http::server http::url mt::mutex mt::semaphore mt::thread netserver netstream_threaded port_inet serialization socket socket_address_inet" />
+				<Option parameters="-nospeed" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
