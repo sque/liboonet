@@ -64,7 +64,7 @@ namespace oonet
 
             FAMILY_LOCAL = AF_UNIX,        //!<   (UNIX internal protocols),
             FAMILY_INET = AF_INET,         //!<   (ARPA Internet protocols),
-            FAMILY_ISO = AF_ISO            //!<   (ISO protocols),
+            //FAMILY_ISO = AF_ISO            //!<   (ISO protocols),
         };
 
         //! Enumeration of socket types
