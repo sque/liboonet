@@ -253,8 +253,8 @@
 		42F55C880E06B05200DCFBDA /* oonet */ = {
 			isa = PBXGroup;
 			children = (
-				42644DB50E09DAEE0053BAF6 /* semaphore_impl_posix.cpp */,
 				4239E8C80E06F2B900B56756 /* url.cpp */,
+				42644DB50E09DAEE0053BAF6 /* semaphore_impl_posix.cpp */,
 				42F55CAA0E06B05200DCFBDA /* base64.cpp */,
 				42F55CAB0E06B05200DCFBDA /* base64.hpp */,
 				42F55CAD0E06B05200DCFBDA /* binary_data.cpp */,

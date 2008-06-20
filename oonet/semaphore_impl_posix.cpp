@@ -3,7 +3,7 @@
 @brief Implementation of semaphore class on Posix Platform
 */
 #include "./semaphore.hpp"
-#include "./mutex.hpp"
+#include "./scoped_lock.hpp"
 
 namespace oonet
 {
@@ -24,33 +24,16 @@ namespace oonet
 
 #if defined(__APPLE__)
             ////////////////////////////////////////////////////////
-            //    On apple OSX posix implementation does not support unnamed sockets, so here we are!
-
-            void print_current_status(const char * error_desc)
-            {
-                printf("\n"
-                    "+____________\n"
-                    "| %s\n"
-                    "| sem name: %s\n"
-                    "| sem_h: 0x%08x\n"
-                    "| errno: %d \n"
-                    "+____________\n",
-                    error_desc,
-                    unique_name,
-                    sem_h,
-                    errno);
-            }
+            // On apple OSX posix implementation does not support unnamed sockets,
+			// so here we are unnamed sockets over named!
 
 			// Unique name of this named semaphore
 			char unique_name[256];
 
-            // Mutex on count id
-
             // Default constructor (Initialize counter to zero)
 	        impl(unsigned int init_count = 0)
 				:sem_ph(&sem_h)
-	        {
-                // Create a unique name
+	        {	// Create a unique name
                 sprintf(unique_name, "/tmp/oonet/%05lu/%lu", getpid(), sem_count_id++);
 
                 // Delete if any previous
@@ -59,7 +42,7 @@ namespace oonet
                 // Create a new one
                 if (SEM_FAILED == (sem_ph = sem_open(unique_name,
                     O_EXCL | O_CREAT,   // Create new one
-                    666,                // We dont want to be accesible from other processes
+                    600,                // We dont want to be accesible from other processes
                     init_count))        // Initial count name
                 )
                 {
@@ -72,10 +55,9 @@ namespace oonet
 	        ~impl()
 	        {
 	            // Close connection to semaphore
-                if (0 != sem_close(sem_ph))
-                    print_current_status("Error on closing semaphore!");
-
-                // Delete it too
+                sem_close(sem_ph);
+                
+				// Delete it too
                 sem_unlink(unique_name);
 	        }
 #else   // Using unnamed posix native unamed counting semaphores
