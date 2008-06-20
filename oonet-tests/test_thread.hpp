@@ -13,14 +13,14 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestCtor, "Thread() simple");
-			OONET_DECLARESUBTEST(TestSleepAccuracy, "Sleep() accuracy 5sec");
-			OONET_DECLARESUBTESTEXC(TestJoinTimeout, "Join() time out 3sec", "ExceptionTimeOut");
-			OONET_DECLARESUBTEST(TestJoinQuality, "Join() quality");
-			OONET_DECLARESUBTEST(TestSpam100, "Spam 100 threads");
-			OONET_DECLARESUBTEST(TestFastSpam100, "Fast: new,start,del");
-			OONET_DECLARESUBTESTEXC(TestDoubleStart, "Start() twice", "ExceptionThreadAlreadyStarted");
-			OONET_DECLARESUBTEST(TestBug1, "B#1: create and destroy");
+			OONET_DECLARE_SUBTEST(TestCtor, "Thread() simple");
+			OONET_DECLARE_SUBTEST(TestSleepAccuracy, "Sleep() accuracy 5sec");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestJoinTimeout, "Join() time out 3sec", "ExceptionTimeOut");
+			OONET_DECLARE_SUBTEST(TestJoinQuality, "Join() quality");
+			OONET_DECLARE_SUBTEST(TestSpam100, "Spam 100 threads");
+			OONET_DECLARE_SUBTEST(TestFastSpam100, "Fast: new,start,del");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestDoubleStart, "Start() twice", "ExceptionThreadAlreadyStarted");
+			OONET_DECLARE_SUBTEST(TestBug1, "B#1: create and destroy");
 
 		public:
 			// Constructor
@@ -28,14 +28,14 @@ namespace oonet
 				:test_set("mt::thread")
 			{
 
-				OONET_REGISTERSUBTEST(TestCtor);
-				OONET_REGISTERSUBTEST(TestSleepAccuracy);
-				OONET_REGISTERSUBTEST(TestJoinTimeout);
-				OONET_REGISTERSUBTEST(TestJoinQuality);
-				OONET_REGISTERSUBTEST(TestSpam100);
-				OONET_REGISTERSUBTEST(TestFastSpam100);
-				OONET_REGISTERSUBTEST(TestDoubleStart);
-				OONET_REGISTERSUBTEST(TestBug1);
+				OONET_EXECUTE_SUBTEST(TestCtor);
+				OONET_EXECUTE_SUBTEST(TestSleepAccuracy);
+				OONET_EXECUTE_SUBTEST(TestJoinTimeout);
+				OONET_EXECUTE_SUBTEST(TestJoinQuality);
+				OONET_EXECUTE_SUBTEST(TestSpam100);
+				OONET_EXECUTE_SUBTEST(TestFastSpam100);
+				OONET_EXECUTE_SUBTEST(TestDoubleStart);
+				OONET_EXECUTE_SUBTEST(TestBug1);
 
 				register_test(this);
 			}

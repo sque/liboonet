@@ -37,10 +37,9 @@ namespace oonet
 		{
 		}
 
-		one_test::one_test(const string & _name,
-			const string & _exc_name)
+		one_test::one_test(const string & _name, const char * pc_exc_name)
 			:m_name(_name),
-			m_expected_exception(_exc_name),
+			m_expected_exception(pc_exc_name),
 			m_thrown_exception("", 0, "", ""),
 			b_must_throw(true),
 			b_speed_test(false)

@@ -46,7 +46,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestEnormousAlloc::operator()()
-		{	binary_data * pb = new binary_data(Char_A, 3000000000);
+		{	binary_data * pb = new binary_data(Char_A, 3000000000u);
 			delete pb;
 			return false;
 		}

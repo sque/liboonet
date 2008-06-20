@@ -13,36 +13,36 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestCtor, "Ctor() default");
-			OONET_DECLARESUBTEST(TestHostPortCtor, "Ctor() Host,Port");
-			OONET_DECLARESUBTEST(TestResolverPortCtor, "Ctor() Resolver,Port");
-			OONET_DECLARESUBTEST(TestSockAddrCtor, "Ctor() from sockaddr");
-			OONET_DECLARESUBTESTEXC(TestSockAddrNonInetCtor, "Ctor() from non-inet", "ExceptionAssertationFailed");
-			OONET_DECLARESUBTEST(TestCopyCtor, "Ctor() copy");
-			OONET_DECLARESUBTEST(TestDefaultValues, "Default values");
-			OONET_DECLARESUBTEST(TestCopyOperator, "operator= quality test");
-			OONET_DECLARESUBTEST(TestCompOperator, "operator== quality test");
-			OONET_DECLARESUBTEST(TestInCompOperator, "operator!= quality test");
-			OONET_DECLARESUBTEST(TestSetHost, "setHostInet() quality test");
-			OONET_DECLARESUBTEST(TestSetPost, "setPostInet() quality test");
+			OONET_DECLARE_SUBTEST(TestCtor, "Ctor() default");
+			OONET_DECLARE_SUBTEST(TestHostPortCtor, "Ctor() Host,Port");
+			OONET_DECLARE_SUBTEST(TestResolverPortCtor, "Ctor() Resolver,Port");
+			OONET_DECLARE_SUBTEST(TestSockAddrCtor, "Ctor() from sockaddr");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestSockAddrNonInetCtor, "Ctor() from non-inet", "ExceptionAssertationFailed");
+			OONET_DECLARE_SUBTEST(TestCopyCtor, "Ctor() copy");
+			OONET_DECLARE_SUBTEST(TestDefaultValues, "Default values");
+			OONET_DECLARE_SUBTEST(TestCopyOperator, "operator= quality test");
+			OONET_DECLARE_SUBTEST(TestCompOperator, "operator== quality test");
+			OONET_DECLARE_SUBTEST(TestInCompOperator, "operator!= quality test");
+			OONET_DECLARE_SUBTEST(TestSetHost, "setHostInet() quality test");
+			OONET_DECLARE_SUBTEST(TestSetPost, "setPostInet() quality test");
 
 		public:
 			// Constructor
 			test_socket_address_inet()
 				:test_set("socket_address_inet")
 			{
-				OONET_REGISTERSUBTEST(TestCtor);
-				OONET_REGISTERSUBTEST(TestHostPortCtor);
-				OONET_REGISTERSUBTEST(TestResolverPortCtor);
-				OONET_REGISTERSUBTEST(TestSockAddrCtor);
-				OONET_REGISTERSUBTEST(TestSockAddrNonInetCtor);
-				OONET_REGISTERSUBTEST(TestCopyCtor);
-				OONET_REGISTERSUBTEST(TestDefaultValues);
-				OONET_REGISTERSUBTEST(TestCopyOperator);
-				OONET_REGISTERSUBTEST(TestSetHost);
-				OONET_REGISTERSUBTEST(TestSetPost);
-				OONET_REGISTERSUBTEST(TestCompOperator);
-				OONET_REGISTERSUBTEST(TestInCompOperator);
+				OONET_EXECUTE_SUBTEST(TestCtor);
+				OONET_EXECUTE_SUBTEST(TestHostPortCtor);
+				OONET_EXECUTE_SUBTEST(TestResolverPortCtor);
+				OONET_EXECUTE_SUBTEST(TestSockAddrCtor);
+				OONET_EXECUTE_SUBTEST(TestSockAddrNonInetCtor);
+				OONET_EXECUTE_SUBTEST(TestCopyCtor);
+				OONET_EXECUTE_SUBTEST(TestDefaultValues);
+				OONET_EXECUTE_SUBTEST(TestCopyOperator);
+				OONET_EXECUTE_SUBTEST(TestSetHost);
+				OONET_EXECUTE_SUBTEST(TestSetPost);
+				OONET_EXECUTE_SUBTEST(TestCompOperator);
+				OONET_EXECUTE_SUBTEST(TestInCompOperator);
 
 				register_test(this);
 			}

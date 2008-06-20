@@ -13,29 +13,29 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestCtor, "Ctor() default");
-			OONET_DECLARESUBTEST(TestCopyCtor, "Ctor() copy constructor");
-			OONET_DECLARESUBTEST(TestCopyOperator, "operator= quality");
-			OONET_DECLARESUBTEST(TestRender, "Render() quality");
-			OONET_DECLARESUBTEST_SPEED(TestRenderSpeed, "Render() speed 10k");
-			OONET_DECLARESUBTEST(TestParse, "Parse() quality");
-			OONET_DECLARESUBTESTEXC(TestParseWrong1, "Parse() wrong", "ExceptionWrongFormat");
-			OONET_DECLARESUBTESTEXC(TestParseWrong2, "Parse() wrong", "ExceptionWrongFormat");
-			OONET_DECLARESUBTEST_SPEED(TestParseSpeed, "Parse() speed 10k")
+			OONET_DECLARE_SUBTEST(TestCtor, "Ctor() default");
+			OONET_DECLARE_SUBTEST(TestCopyCtor, "Ctor() copy constructor");
+			OONET_DECLARE_SUBTEST(TestCopyOperator, "operator= quality");
+			OONET_DECLARE_SUBTEST(TestRender, "Render() quality");
+			OONET_DECLARE_SUBTEST_SPEED(TestRenderSpeed, "Render() speed 10k");
+			OONET_DECLARE_SUBTEST(TestParse, "Parse() quality");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestParseWrong1, "Parse() wrong", "ExceptionWrongFormat");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestParseWrong2, "Parse() wrong", "ExceptionWrongFormat");
+			OONET_DECLARE_SUBTEST_SPEED(TestParseSpeed, "Parse() speed 10k")
 		public:
 			// Constructor
 			test_http_response()
 				:test_set("http::response")
 			{
-				OONET_REGISTERSUBTEST(TestCtor);
-				OONET_REGISTERSUBTEST(TestCopyCtor);
-				OONET_REGISTERSUBTEST(TestCopyOperator);
-				OONET_REGISTERSUBTEST(TestRender);
-				OONET_REGISTERSUBTEST(TestRenderSpeed);
-				OONET_REGISTERSUBTEST(TestParse);
-				OONET_REGISTERSUBTEST(TestParseWrong1);
-				OONET_REGISTERSUBTEST(TestParseWrong2);
-				OONET_REGISTERSUBTEST(TestParseSpeed);
+				OONET_EXECUTE_SUBTEST(TestCtor);
+				OONET_EXECUTE_SUBTEST(TestCopyCtor);
+				OONET_EXECUTE_SUBTEST(TestCopyOperator);
+				OONET_EXECUTE_SUBTEST(TestRender);
+				OONET_EXECUTE_SUBTEST(TestRenderSpeed);
+				OONET_EXECUTE_SUBTEST(TestParse);
+				OONET_EXECUTE_SUBTEST(TestParseWrong1);
+				OONET_EXECUTE_SUBTEST(TestParseWrong2);
+				OONET_EXECUTE_SUBTEST(TestParseSpeed);
 
 				register_test(this);
 			}

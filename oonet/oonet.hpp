@@ -128,7 +128,6 @@
 // MUTEX definition
 #if (OONET_OS_API == OONET_OS_API_WIN32)
 	#define MUTEX_HANDLE HANDLE					// Mutex handle
-	#define SEMAPHORE_HANDLE HANDLE				// Semapore handle
 	#define THREAD_HANDLE HANDLE				// Thread handle
 	#define THREADTYPE _stdcall					// Thread call_type convention
 	#define THREADPROC LPTHREAD_START_ROUTINE	// Thread routine format
@@ -148,7 +147,6 @@
 	#define THREADPROC_RETURN void *			// Thread proc return type
 	#define CLOSESOCKET ::close					// Function to close socket
 	#define SOCKLEN socklen_t                   // The socklen used by getsockname
-	#define SEMAPHORE_HANDLE sem_t              // Semaphore handle
 #endif
 
 // Create TCHAR Macros and routines for systems that doens't exist

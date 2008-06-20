@@ -14,28 +14,28 @@ namespace oonet
 
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestDefaultCtor, _T("Default Ctor 0.0.0.0"));
-			OONET_DECLARESUBTEST(TestUlongCtor, _T("HostInet() ulong ctor"));
-			OONET_DECLARESUBTEST(TestCopyCtor, _T("HostInet() copy ctor"));
-			OONET_DECLARESUBTEST(TestCopyOperator, _T("operator= quality test"));
-			OONET_DECLARESUBTEST(TestCompOperator, _T("operator== quality test"));
-			OONET_DECLARESUBTEST(TestInCompOperator, _T("operator!= quality test"));
-			OONET_DECLARESUBTEST(TestGetInetHost, _T("GetInetHost() net-b-order"));
-			OONET_DECLARESUBTEST(TestStaticAddress, _T("Static: LOCALHOST, ANY"));
+			OONET_DECLARE_SUBTEST(TestDefaultCtor, _T("Default Ctor 0.0.0.0"));
+			OONET_DECLARE_SUBTEST(TestUlongCtor, _T("HostInet() ulong ctor"));
+			OONET_DECLARE_SUBTEST(TestCopyCtor, _T("HostInet() copy ctor"));
+			OONET_DECLARE_SUBTEST(TestCopyOperator, _T("operator= quality test"));
+			OONET_DECLARE_SUBTEST(TestCompOperator, _T("operator== quality test"));
+			OONET_DECLARE_SUBTEST(TestInCompOperator, _T("operator!= quality test"));
+			OONET_DECLARE_SUBTEST(TestGetInetHost, _T("GetInetHost() net-b-order"));
+			OONET_DECLARE_SUBTEST(TestStaticAddress, _T("Static: LOCALHOST, ANY"));
 
 		public:
 			// Constructor
 			test_host_inet()
 				:test_set("host_inet")
 			{
-				OONET_REGISTERSUBTEST(TestDefaultCtor);
-				OONET_REGISTERSUBTEST(TestUlongCtor);
-				OONET_REGISTERSUBTEST(TestCopyCtor);
-				OONET_REGISTERSUBTEST(TestCopyOperator);
-				OONET_REGISTERSUBTEST(TestCompOperator);
-				OONET_REGISTERSUBTEST(TestInCompOperator);
-				OONET_REGISTERSUBTEST(TestGetInetHost);
-				OONET_REGISTERSUBTEST(TestStaticAddress);
+				OONET_EXECUTE_SUBTEST(TestDefaultCtor);
+				OONET_EXECUTE_SUBTEST(TestUlongCtor);
+				OONET_EXECUTE_SUBTEST(TestCopyCtor);
+				OONET_EXECUTE_SUBTEST(TestCopyOperator);
+				OONET_EXECUTE_SUBTEST(TestCompOperator);
+				OONET_EXECUTE_SUBTEST(TestInCompOperator);
+				OONET_EXECUTE_SUBTEST(TestGetInetHost);
+				OONET_EXECUTE_SUBTEST(TestStaticAddress);
 
 				register_test(this);
 			}

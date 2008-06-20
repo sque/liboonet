@@ -13,21 +13,21 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTESTEXC(TestErrorResolv, "Resolve koukouroukou", "ExceptionServerNotFound");
-			OONET_DECLARESUBTEST(TestLocalhost, "Resolve localhost");
-			OONET_DECLARESUBTEST(TestResolveIPs, "Resolve ready ips");
-			OONET_DECLARESUBTEST(TestCopyCtor, "Copy constructor");
-			OONET_DECLARESUBTESTEXC(TestGetAddressOver, "getAddress() overflow", "ExceptionNotFound");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestErrorResolv, "Resolve koukouroukou", "ExceptionServerNotFound");
+			OONET_DECLARE_SUBTEST(TestLocalhost, "Resolve localhost");
+			OONET_DECLARE_SUBTEST(TestResolveIPs, "Resolve ready ips");
+			OONET_DECLARE_SUBTEST(TestCopyCtor, "Copy constructor");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestGetAddressOver, "getAddress() overflow", "ExceptionNotFound");
 		public:
 			// Constructor
 			test_host_resolver()
 				:test_set("host_resolver")
 			{
-				OONET_REGISTERSUBTEST(TestErrorResolv);
-				OONET_REGISTERSUBTEST(TestLocalhost);
-				OONET_REGISTERSUBTEST(TestResolveIPs);
-				OONET_REGISTERSUBTEST(TestCopyCtor);
-				OONET_REGISTERSUBTEST(TestGetAddressOver);
+				OONET_EXECUTE_SUBTEST(TestErrorResolv);
+				OONET_EXECUTE_SUBTEST(TestLocalhost);
+				OONET_EXECUTE_SUBTEST(TestResolveIPs);
+				OONET_EXECUTE_SUBTEST(TestCopyCtor);
+				OONET_EXECUTE_SUBTEST(TestGetAddressOver);
 
 				register_test(this);
 			}

@@ -13,20 +13,20 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestRecursiveMutex, "Assure Recursive mutex");
-			OONET_DECLARESUBTESTEXC(TestLockTimeOut, "Lock() time out 3s", "ExceptionTimeOut");
-			OONET_DECLARESUBTEST(TestNonSafe, "1000 Thread unsafe data");
-			OONET_DECLARESUBTEST(TestSafeData, "1000 Thread safe data");
+			OONET_DECLARE_SUBTEST(TestRecursiveMutex, "Assure Recursive mutex");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestLockTimeOut, "Lock() time out 3s", "ExceptionTimeOut");
+			OONET_DECLARE_SUBTEST(TestNonSafe, "1000 Thread unsafe data");
+			OONET_DECLARE_SUBTEST(TestSafeData, "1000 Thread safe data");
 
 		public:
 			// Constructor
 			test_mutex()
 				:test_set("mt::mutex")
 			{
-				OONET_REGISTERSUBTEST(TestRecursiveMutex);
-				OONET_REGISTERSUBTEST(TestLockTimeOut);
-				OONET_REGISTERSUBTEST(TestNonSafe);
-				OONET_REGISTERSUBTEST(TestSafeData);
+				OONET_EXECUTE_SUBTEST(TestRecursiveMutex);
+				OONET_EXECUTE_SUBTEST(TestLockTimeOut);
+				OONET_EXECUTE_SUBTEST(TestNonSafe);
+				OONET_EXECUTE_SUBTEST(TestSafeData);
 
 				register_test(this);
 			}

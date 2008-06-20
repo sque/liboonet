@@ -18,8 +18,7 @@ namespace oonet
 			one_test(const string & _name, bool _speed_test = false);
 
 			//! Constructor of a test that must throw exception.
-			one_test(const string & _name,
-				const string & _exc_name);
+			one_test(const string & _name, const char * pc_exc_name);
 
 			//! Destructor
 			virtual ~one_test(){}
@@ -46,7 +45,7 @@ namespace oonet
 			//! Time spent in seconds
 			double time_spent() const
 			{	return m_time_spent;	}
-			
+
 			//! Check if it is a speed test
 			const bool & is_speed_test() const
 			{	return b_speed_test;		}
@@ -114,25 +113,25 @@ namespace oonet
 		};
 
 
-#define OONET_DECLARESUBTEST_DETAILED(one_test_class, desc, speed) \
+#define _OONET_DECLARE_SUBTEST_DETAILED(one_test_class, desc, speed) \
 		class one_test_class :public oonet::test::one_test	\
 		{	public: one_test_class()	\
 				: oonet::test::one_test(desc, speed) {} \
 			protected: virtual bool operator()(); \
 		};
 
-#define OONET_DECLARESUBTEST(one_test, desc) OONET_DECLARESUBTEST_DETAILED(one_test, desc, false)
-#define OONET_DECLARESUBTEST_SPEED(one_test, desc) OONET_DECLARESUBTEST_DETAILED(one_test, desc, true)
+#define OONET_DECLARE_SUBTEST(one_test, desc) _OONET_DECLARE_SUBTEST_DETAILED(one_test, desc, false)
+#define OONET_DECLARE_SUBTEST_SPEED(one_test, desc) _OONET_DECLARE_SUBTEST_DETAILED(one_test, desc, true)
 
-#define OONET_DECLARESUBTESTEXC(one_test_class, desc, exc_type) \
+#define OONET_DECLARE_SUBTEST_MUSTTHROW(one_test_class, desc, exc_type) \
 		class one_test_class :public oonet::test::one_test	\
 		{	public: one_test_class()	\
 				: oonet::test::one_test(desc, exc_type) {} \
 			protected: virtual bool operator()(); \
 		};
 
-#define OONET_REGISTERSUBTEST(subtype) \
-		m_tests.push_back(boost::shared_ptr<subtype>( new  subtype()));
+#define OONET_EXECUTE_SUBTEST(subtype) \
+		m_tests.push_back(boost::shared_ptr<subtype>(new subtype()));
 
 	};	// !test namespace
 };	// !oonet namespace

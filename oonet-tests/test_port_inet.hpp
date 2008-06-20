@@ -13,25 +13,25 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestDefaultCtor, "Default Ctor must be 0");
-			OONET_DECLARESUBTEST(TestUshortCtor, "PortInet(ushort) ctor");
-			OONET_DECLARESUBTEST(TestCopyConstructor, "PortInet() copy ctor");
-			OONET_DECLARESUBTEST(TestCopyOperator, "operator= quality test");
-			OONET_DECLARESUBTEST(TestComparisonOperator, "operator== quality test");
-			OONET_DECLARESUBTEST(TestInComparisonOperator, "operator!= quality test");
-			OONET_DECLARESUBTEST(TestGetInetPort, "GetInetPort() net-b-order");
+			OONET_DECLARE_SUBTEST(TestDefaultCtor, "Default Ctor must be 0");
+			OONET_DECLARE_SUBTEST(TestUshortCtor, "PortInet(ushort) ctor");
+			OONET_DECLARE_SUBTEST(TestCopyConstructor, "PortInet() copy ctor");
+			OONET_DECLARE_SUBTEST(TestCopyOperator, "operator= quality test");
+			OONET_DECLARE_SUBTEST(TestComparisonOperator, "operator== quality test");
+			OONET_DECLARE_SUBTEST(TestInComparisonOperator, "operator!= quality test");
+			OONET_DECLARE_SUBTEST(TestGetInetPort, "GetInetPort() net-b-order");
 		public:
 			// Constructor
 			test_port_inet()
 				:test_set("port_inet")
 			{
-				OONET_REGISTERSUBTEST(TestDefaultCtor);
-				OONET_REGISTERSUBTEST(TestUshortCtor);
-				OONET_REGISTERSUBTEST(TestCopyConstructor);
-				OONET_REGISTERSUBTEST(TestCopyOperator);
-				OONET_REGISTERSUBTEST(TestComparisonOperator);
-				OONET_REGISTERSUBTEST(TestInComparisonOperator);
-				OONET_REGISTERSUBTEST(TestGetInetPort);
+				OONET_EXECUTE_SUBTEST(TestDefaultCtor);
+				OONET_EXECUTE_SUBTEST(TestUshortCtor);
+				OONET_EXECUTE_SUBTEST(TestCopyConstructor);
+				OONET_EXECUTE_SUBTEST(TestCopyOperator);
+				OONET_EXECUTE_SUBTEST(TestComparisonOperator);
+				OONET_EXECUTE_SUBTEST(TestInComparisonOperator);
+				OONET_EXECUTE_SUBTEST(TestGetInetPort);
 
 				register_test(this);
 			}

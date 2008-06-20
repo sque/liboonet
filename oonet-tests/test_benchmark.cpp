@@ -109,7 +109,7 @@ namespace oonet
 
 		// Sub tests implementation
 		bool test_benchmark::TestTCPSpeed4G::operator()()
-		{	bench_server server(4000000000);
+		{	bench_server server(4000000000u);
 			netstream_threaded client;
 			binary_data test_d('a', 1000);
 

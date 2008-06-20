@@ -13,33 +13,33 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestCtor, "Ctor()");
-			OONET_DECLARESUBTEST(TestStart, "Start()");
-			OONET_DECLARESUBTESTEXC(TestDoubleStart, "Start() double", "ExceptionAlreadyConnected");
-			OONET_DECLARESUBTEST(TestStartRecovery, "Start() recovery");
-			OONET_DECLARESUBTEST(TestStop, "Stop() quality test");
-			OONET_DECLARESUBTEST(TestStopWrong1, "Start() wrong");
-			OONET_DECLARESUBTEST(TestStopWrong2, "Start() wrong");
-			OONET_DECLARESUBTEST(TestStopCleanup, "Stop() cleanup");
-			OONET_DECLARESUBTEST(TestDCInvalidClients, "DC invalid clients");
-			OONET_DECLARESUBTEST(TestPureVirtuals1, "Pure Virtual Calls");
-			OONET_DECLARESUBTEST(TestDoS1, "Emulate DoS#1");
+			OONET_DECLARE_SUBTEST(TestCtor, "Ctor()");
+			OONET_DECLARE_SUBTEST(TestStart, "Start()");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestDoubleStart, "Start() double", "ExceptionAlreadyConnected");
+			OONET_DECLARE_SUBTEST(TestStartRecovery, "Start() recovery");
+			OONET_DECLARE_SUBTEST(TestStop, "Stop() quality test");
+			OONET_DECLARE_SUBTEST(TestStopWrong1, "Start() wrong");
+			OONET_DECLARE_SUBTEST(TestStopWrong2, "Start() wrong");
+			OONET_DECLARE_SUBTEST(TestStopCleanup, "Stop() cleanup");
+			OONET_DECLARE_SUBTEST(TestDCInvalidClients, "DC invalid clients");
+			OONET_DECLARE_SUBTEST(TestPureVirtuals1, "Pure Virtual Calls");
+			OONET_DECLARE_SUBTEST(TestDoS1, "Emulate DoS#1");
 		public:
 			// Constructor
 			test_http_server()
 				:test_set("http::server")
 			{
-				OONET_REGISTERSUBTEST(TestCtor);
-				OONET_REGISTERSUBTEST(TestStart);
-				OONET_REGISTERSUBTEST(TestDoubleStart);
-				OONET_REGISTERSUBTEST(TestStartRecovery);
-				OONET_REGISTERSUBTEST(TestStop);
-				OONET_REGISTERSUBTEST(TestStopWrong1);
-				OONET_REGISTERSUBTEST(TestStopWrong2);
-				OONET_REGISTERSUBTEST(TestStopCleanup);
-				OONET_REGISTERSUBTEST(TestDCInvalidClients);
-				OONET_REGISTERSUBTEST(TestPureVirtuals1);
-				OONET_REGISTERSUBTEST(TestDoS1);
+				OONET_EXECUTE_SUBTEST(TestCtor);
+				OONET_EXECUTE_SUBTEST(TestStart);
+				OONET_EXECUTE_SUBTEST(TestDoubleStart);
+				OONET_EXECUTE_SUBTEST(TestStartRecovery);
+				OONET_EXECUTE_SUBTEST(TestStop);
+				OONET_EXECUTE_SUBTEST(TestStopWrong1);
+				OONET_EXECUTE_SUBTEST(TestStopWrong2);
+				OONET_EXECUTE_SUBTEST(TestStopCleanup);
+				OONET_EXECUTE_SUBTEST(TestDCInvalidClients);
+				OONET_EXECUTE_SUBTEST(TestPureVirtuals1);
+				OONET_EXECUTE_SUBTEST(TestDoS1);
 
 				register_test(this);
 			}

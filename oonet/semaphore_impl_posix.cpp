@@ -51,8 +51,7 @@ namespace oonet
 				:sem_ph(&sem_h)
 	        {
                 // Create a unique name
-                sprintf(unique_name, "/tmp/oonet/0000/%lu", sem_count_id++);
-                //fprintf(stderr, "%lu\n", sem_count_id);
+                sprintf(unique_name, "/tmp/oonet/%05lu/%lu", getpid(), sem_count_id++);
 
                 // Delete if any previous
                 sem_unlink(unique_name);

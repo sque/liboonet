@@ -13,31 +13,31 @@ namespace oonet
 		protected:
 			////////////////////////////
 			// SUB TESTS
-			OONET_DECLARESUBTEST(TestCtor, "ctor() default");
-			OONET_DECLARESUBTESTEXC(TestCtorWrong, "ctor() on imposible svr", "ExceptionConnectionRefused");
-			OONET_DECLARESUBTEST(TestConnect, "connect() on not con");
-			OONET_DECLARESUBTEST(TestConnectConnected, "connect() on connected");
-			OONET_DECLARESUBTEST(TestSend, "send() quality");
-			OONET_DECLARESUBTEST_SPEED(TestSendSpeed, "send() speed 50MB/1k block");
-			OONET_DECLARESUBTESTEXC(TestSendTimeOut, "send() time out", "ExceptionTimeOut");
-			OONET_DECLARESUBTESTEXC(TestSendWrongResponse, "send() wrong response", "ExceptionWrongFormat");
-			OONET_DECLARESUBTEST(TestReuseDisconnected, "Reuse disconencted");
-			OONET_DECLARESUBTESTEXC(TestSendServerReset, "send() server resets", "ExceptionIncomplete");
+			OONET_DECLARE_SUBTEST(TestCtor, "ctor() default");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestCtorWrong, "ctor() on imposible svr", "ExceptionConnectionRefused");
+			OONET_DECLARE_SUBTEST(TestConnect, "connect() on not con");
+			OONET_DECLARE_SUBTEST(TestConnectConnected, "connect() on connected");
+			OONET_DECLARE_SUBTEST(TestSend, "send() quality");
+			OONET_DECLARE_SUBTEST_SPEED(TestSendSpeed, "send() speed 50MB/1k block");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestSendTimeOut, "send() time out", "ExceptionTimeOut");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestSendWrongResponse, "send() wrong response", "ExceptionWrongFormat");
+			OONET_DECLARE_SUBTEST(TestReuseDisconnected, "Reuse disconencted");
+			OONET_DECLARE_SUBTEST_MUSTTHROW(TestSendServerReset, "send() server resets", "ExceptionIncomplete");
 		public:
 			// Constructor
 			test_http_client()
 				:test_set("http::client")
 			{
-				OONET_REGISTERSUBTEST(TestCtor);
-				OONET_REGISTERSUBTEST(TestCtorWrong);
-				OONET_REGISTERSUBTEST(TestConnect);
-				OONET_REGISTERSUBTEST(TestConnectConnected);
-				OONET_REGISTERSUBTEST(TestSend);
-				OONET_REGISTERSUBTEST(TestSendSpeed);
-				OONET_REGISTERSUBTEST(TestSendTimeOut);
-				OONET_REGISTERSUBTEST(TestSendWrongResponse);
-				OONET_REGISTERSUBTEST(TestReuseDisconnected);
-				OONET_REGISTERSUBTEST(TestSendServerReset);
+				OONET_EXECUTE_SUBTEST(TestCtor);
+				OONET_EXECUTE_SUBTEST(TestCtorWrong);
+				OONET_EXECUTE_SUBTEST(TestConnect);
+				OONET_EXECUTE_SUBTEST(TestConnectConnected);
+				OONET_EXECUTE_SUBTEST(TestSend);
+				OONET_EXECUTE_SUBTEST(TestSendSpeed);
+				OONET_EXECUTE_SUBTEST(TestSendTimeOut);
+				OONET_EXECUTE_SUBTEST(TestSendWrongResponse);
+				OONET_EXECUTE_SUBTEST(TestReuseDisconnected);
+				OONET_EXECUTE_SUBTEST(TestSendServerReset);
 
 				register_test(this);
 			}

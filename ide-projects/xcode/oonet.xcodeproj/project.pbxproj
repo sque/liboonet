@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4239E8C90E06F2B900B56756 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4239E8C80E06F2B900B56756 /* url.cpp */; };
+		42644DB60E09DAEE0053BAF6 /* semaphore_impl_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42644DB50E09DAEE0053BAF6 /* semaphore_impl_posix.cpp */; };
 		42F55CF30E06B05200DCFBDA /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CAA0E06B05200DCFBDA /* base64.cpp */; };
 		42F55CF40E06B05200DCFBDA /* base64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CAB0E06B05200DCFBDA /* base64.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55CF60E06B05200DCFBDA /* binary_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CAD0E06B05200DCFBDA /* binary_data.cpp */; };
@@ -48,7 +49,6 @@
 		42F55D210E06B05200DCFBDA /* port_inet.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CD90E06B05200DCFBDA /* port_inet.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D220E06B05200DCFBDA /* scoped_lock.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CDA0E06B05200DCFBDA /* scoped_lock.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D230E06B05200DCFBDA /* semaphore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CDB0E06B05200DCFBDA /* semaphore.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		42F55D260E06B05200DCFBDA /* semaphore_impl_unixnamed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CDE0E06B05200DCFBDA /* semaphore_impl_unixnamed.cpp */; };
 		42F55D280E06B05200DCFBDA /* serialization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CE00E06B05200DCFBDA /* serialization.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D290E06B05200DCFBDA /* serialization_operators.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CE10E06B05200DCFBDA /* serialization_operators.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D2A0E06B05200DCFBDA /* socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CE20E06B05200DCFBDA /* socket.cpp */; };
@@ -58,14 +58,11 @@
 		42F55D2E0E06B05200DCFBDA /* socket_address_inet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CE60E06B05200DCFBDA /* socket_address_inet.cpp */; };
 		42F55D2F0E06B05200DCFBDA /* socket_address_inet.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CE70E06B05200DCFBDA /* socket_address_inet.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D300E06B05200DCFBDA /* socket_impl_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CE80E06B05200DCFBDA /* socket_impl_posix.cpp */; };
-		42F55D320E06B05200DCFBDA /* string_converter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CEA0E06B05200DCFBDA /* string_converter.cpp */; };
-		42F55D330E06B05200DCFBDA /* string_converter.h in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CEB0E06B05200DCFBDA /* string_converter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D340E06B05200DCFBDA /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CEC0E06B05200DCFBDA /* test.cpp */; };
 		42F55D350E06B05200DCFBDA /* test.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CED0E06B05200DCFBDA /* test.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D360E06B05200DCFBDA /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CEE0E06B05200DCFBDA /* thread.cpp */; };
 		42F55D370E06B05200DCFBDA /* thread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 42F55CEF0E06B05200DCFBDA /* thread.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		42F55D380E06B05200DCFBDA /* thread_impl_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55CF00E06B05200DCFBDA /* thread_impl_posix.cpp */; };
-		42F55DD80E06BE1A00DCFBDA /* TestStringConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55DA90E06BE1A00DCFBDA /* TestStringConverter.cpp */; };
 		42F55DD90E06BE1A00DCFBDA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55DAB0E06BE1A00DCFBDA /* main.cpp */; };
 		42F55DDA0E06BE1A00DCFBDA /* test_benchmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55DAD0E06BE1A00DCFBDA /* test_benchmark.cpp */; };
 		42F55DDB0E06BE1A00DCFBDA /* test_binary_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F55DAF0E06BE1A00DCFBDA /* test_binary_data.cpp */; };
@@ -103,6 +100,7 @@
 
 /* Begin PBXFileReference section */
 		4239E8C80E06F2B900B56756 /* url.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = url.cpp; path = http/url.cpp; sourceTree = "<group>"; };
+		42644DB50E09DAEE0053BAF6 /* semaphore_impl_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = semaphore_impl_posix.cpp; sourceTree = "<group>"; };
 		42F55CAA0E06B05200DCFBDA /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		42F55CAB0E06B05200DCFBDA /* base64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base64.hpp; sourceTree = "<group>"; };
 		42F55CAD0E06B05200DCFBDA /* binary_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = binary_data.cpp; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 		42F55CD90E06B05200DCFBDA /* port_inet.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = port_inet.hpp; sourceTree = "<group>"; };
 		42F55CDA0E06B05200DCFBDA /* scoped_lock.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scoped_lock.hpp; sourceTree = "<group>"; };
 		42F55CDB0E06B05200DCFBDA /* semaphore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = semaphore.hpp; sourceTree = "<group>"; };
-		42F55CDE0E06B05200DCFBDA /* semaphore_impl_unixnamed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = semaphore_impl_unixnamed.cpp; sourceTree = "<group>"; };
 		42F55CE00E06B05200DCFBDA /* serialization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = serialization.hpp; sourceTree = "<group>"; };
 		42F55CE10E06B05200DCFBDA /* serialization_operators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = serialization_operators.hpp; sourceTree = "<group>"; };
 		42F55CE20E06B05200DCFBDA /* socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = socket.cpp; sourceTree = "<group>"; };
@@ -153,16 +150,12 @@
 		42F55CE60E06B05200DCFBDA /* socket_address_inet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = socket_address_inet.cpp; sourceTree = "<group>"; };
 		42F55CE70E06B05200DCFBDA /* socket_address_inet.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = socket_address_inet.hpp; sourceTree = "<group>"; };
 		42F55CE80E06B05200DCFBDA /* socket_impl_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = socket_impl_posix.cpp; sourceTree = "<group>"; };
-		42F55CEA0E06B05200DCFBDA /* string_converter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string_converter.cpp; sourceTree = "<group>"; };
-		42F55CEB0E06B05200DCFBDA /* string_converter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_converter.h; sourceTree = "<group>"; };
 		42F55CEC0E06B05200DCFBDA /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
 		42F55CED0E06B05200DCFBDA /* test.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = test.hpp; sourceTree = "<group>"; };
 		42F55CEE0E06B05200DCFBDA /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
 		42F55CEF0E06B05200DCFBDA /* thread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = thread.hpp; sourceTree = "<group>"; };
 		42F55CF00E06B05200DCFBDA /* thread_impl_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_impl_posix.cpp; sourceTree = "<group>"; };
 		42F55D890E06BDF600DCFBDA /* test-oonet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-oonet"; sourceTree = BUILT_PRODUCTS_DIR; };
-		42F55DA90E06BE1A00DCFBDA /* TestStringConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestStringConverter.cpp; sourceTree = "<group>"; };
-		42F55DAA0E06BE1A00DCFBDA /* TestStringConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStringConverter.h; sourceTree = "<group>"; };
 		42F55DAB0E06BE1A00DCFBDA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		42F55DAC0E06BE1A00DCFBDA /* oonet-tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "oonet-tests.h"; sourceTree = "<group>"; };
 		42F55DAD0E06BE1A00DCFBDA /* test_benchmark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_benchmark.cpp; sourceTree = "<group>"; };
@@ -260,6 +253,7 @@
 		42F55C880E06B05200DCFBDA /* oonet */ = {
 			isa = PBXGroup;
 			children = (
+				42644DB50E09DAEE0053BAF6 /* semaphore_impl_posix.cpp */,
 				4239E8C80E06F2B900B56756 /* url.cpp */,
 				42F55CAA0E06B05200DCFBDA /* base64.cpp */,
 				42F55CAB0E06B05200DCFBDA /* base64.hpp */,
@@ -287,7 +281,6 @@
 				42F55CD90E06B05200DCFBDA /* port_inet.hpp */,
 				42F55CDA0E06B05200DCFBDA /* scoped_lock.hpp */,
 				42F55CDB0E06B05200DCFBDA /* semaphore.hpp */,
-				42F55CDE0E06B05200DCFBDA /* semaphore_impl_unixnamed.cpp */,
 				42F55CE00E06B05200DCFBDA /* serialization.hpp */,
 				42F55CE10E06B05200DCFBDA /* serialization_operators.hpp */,
 				42F55CE20E06B05200DCFBDA /* socket.cpp */,
@@ -297,8 +290,6 @@
 				42F55CE60E06B05200DCFBDA /* socket_address_inet.cpp */,
 				42F55CE70E06B05200DCFBDA /* socket_address_inet.hpp */,
 				42F55CE80E06B05200DCFBDA /* socket_impl_posix.cpp */,
-				42F55CEA0E06B05200DCFBDA /* string_converter.cpp */,
-				42F55CEB0E06B05200DCFBDA /* string_converter.h */,
 				42F55CEC0E06B05200DCFBDA /* test.cpp */,
 				42F55CED0E06B05200DCFBDA /* test.hpp */,
 				42F55CEE0E06B05200DCFBDA /* thread.cpp */,
@@ -334,8 +325,6 @@
 		42F55D8D0E06BE1A00DCFBDA /* oonet-tests */ = {
 			isa = PBXGroup;
 			children = (
-				42F55DA90E06BE1A00DCFBDA /* TestStringConverter.cpp */,
-				42F55DAA0E06BE1A00DCFBDA /* TestStringConverter.h */,
 				42F55DAB0E06BE1A00DCFBDA /* main.cpp */,
 				42F55DAC0E06BE1A00DCFBDA /* oonet-tests.h */,
 				42F55DAD0E06BE1A00DCFBDA /* test_benchmark.cpp */,
@@ -426,7 +415,6 @@
 				42F55D2B0E06B05200DCFBDA /* socket.hpp in Headers */,
 				42F55D2D0E06B05200DCFBDA /* socket_address.hpp in Headers */,
 				42F55D2F0E06B05200DCFBDA /* socket_address_inet.hpp in Headers */,
-				42F55D330E06B05200DCFBDA /* string_converter.h in Headers */,
 				42F55D350E06B05200DCFBDA /* test.hpp in Headers */,
 				42F55D370E06B05200DCFBDA /* thread.hpp in Headers */,
 			);
@@ -492,7 +480,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42F55DD80E06BE1A00DCFBDA /* TestStringConverter.cpp in Sources */,
 				42F55DD90E06BE1A00DCFBDA /* main.cpp in Sources */,
 				42F55DDA0E06BE1A00DCFBDA /* test_benchmark.cpp in Sources */,
 				42F55DDB0E06BE1A00DCFBDA /* test_binary_data.cpp in Sources */,
@@ -540,16 +527,15 @@
 				42F55D1B0E06B05200DCFBDA /* netstream_threaded.cpp in Sources */,
 				42F55D1D0E06B05200DCFBDA /* oonet.cpp in Sources */,
 				42F55D200E06B05200DCFBDA /* port_inet.cpp in Sources */,
-				42F55D260E06B05200DCFBDA /* semaphore_impl_unixnamed.cpp in Sources */,
 				42F55D2A0E06B05200DCFBDA /* socket.cpp in Sources */,
 				42F55D2C0E06B05200DCFBDA /* socket_address.cpp in Sources */,
 				42F55D2E0E06B05200DCFBDA /* socket_address_inet.cpp in Sources */,
 				42F55D300E06B05200DCFBDA /* socket_impl_posix.cpp in Sources */,
-				42F55D320E06B05200DCFBDA /* string_converter.cpp in Sources */,
 				42F55D340E06B05200DCFBDA /* test.cpp in Sources */,
 				42F55D360E06B05200DCFBDA /* thread.cpp in Sources */,
 				42F55D380E06B05200DCFBDA /* thread_impl_posix.cpp in Sources */,
 				4239E8C90E06F2B900B56756 /* url.cpp in Sources */,
+				42644DB60E09DAEE0053BAF6 /* semaphore_impl_posix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
