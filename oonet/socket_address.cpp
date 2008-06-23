@@ -15,7 +15,7 @@ namespace oonet
 		m_sockaddr.sa_family = addr_family;
 		
 		// Set length
-		m_sockaddr.sa_len = sizeof(sockaddr);
+		//m_sockaddr.sa_len = sizeof(sockaddr);
 	}
 
 	// Construct from a berkley sockaddr structure

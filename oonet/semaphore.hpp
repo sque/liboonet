@@ -36,7 +36,7 @@ namespace oonet
             /**
 			@param init_count The inital count of semaphore
 			*/
-            explicit semaphore(int init_count);
+            explicit semaphore(unsigned int init_count);
 
             //! Destructor
             virtual ~semaphore();

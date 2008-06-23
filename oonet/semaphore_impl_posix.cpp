@@ -149,7 +149,7 @@ namespace oonet
 
 
         // Destructor
-        semaphore::semaphore(int init_count)
+        semaphore::semaphore(unsigned int init_count)
             :pimpl(NULL)
         {
             pimpl = new impl(init_count);

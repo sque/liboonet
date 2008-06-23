@@ -182,9 +182,6 @@
 			<File
 				RelativePath="..\..\oonet-tests\test_url.cpp">
 			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestStringConverter.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -255,9 +252,6 @@
 			</File>
 			<File
 				RelativePath="..\..\oonet-tests\test_url.hpp">
-			</File>
-			<File
-				RelativePath="..\..\oonet-tests\TestStringConverter.h">
 			</File>
 		</Filter>
 		<Filter
