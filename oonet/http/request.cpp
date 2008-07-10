@@ -8,14 +8,14 @@ namespace oonet
 {
 	namespace http
 	{
-		const binary_data request::const_get = binary_data("GET");
-		const binary_data request::const_post = binary_data("POST");
-		const binary_data request::const_options = binary_data("OPTIONS");
-		const binary_data request::const_head = binary_data("HEAD");
-		const binary_data request::const_put = binary_data("PUT");
-		const binary_data request::const_delete = binary_data("DELETE");
-		const binary_data request::const_trace = binary_data("TRACE");
-		const binary_data request::const_connect = binary_data("CONNECT");
+		const binary_data request::const_get = cmem_ref("GET");
+		const binary_data request::const_post = cmem_ref("POST");
+		const binary_data request::const_options = cmem_ref("OPTIONS");
+		const binary_data request::const_head = cmem_ref("HEAD");
+		const binary_data request::const_put = cmem_ref("PUT");
+		const binary_data request::const_delete = cmem_ref("DELETE");
+		const binary_data request::const_trace = cmem_ref("TRACE");
+		const binary_data request::const_connect = cmem_ref("CONNECT");
 
 		request::request(void)
 		{
@@ -107,7 +107,7 @@ namespace oonet
 				break;
 			}
 
-			m_title += binary_data(m_uri.full());
+			m_title += cmem_ref(m_uri.full());
 			m_title += const_space;
 			m_title += m_http_version;
 

@@ -153,7 +153,7 @@ namespace oonet
 			a.add("b", "3");
 			rendered = a.render();
 
-			if (rendered != binary_data("a: 1\r\nb: 2\r\nb: 3"))
+			if (rendered != cmem_ref("a: 1\r\nb: 2\r\nb: 3"))
 				return false;
 
 			a.add("a", "1");
@@ -162,7 +162,7 @@ namespace oonet
 			rendered = a.render(http::const_lf);
 
 			//printf("-%s-", rendered.to_string().c_str());
-			if (rendered != binary_data("a: 1\nb: 2\nb: 3\na: 1\nb: 2\nb: 3"))
+			if (rendered != cmem_ref("a: 1\nb: 2\nb: 3\na: 1\nb: 2\nb: 3"))
 				return false;
 
 			a = http::headers_list();
@@ -184,7 +184,7 @@ namespace oonet
 			for(long i = 0;i < 100000;i++)
 				rendered = a.render(http::const_lf);
 
-			if (rendered != binary_data("a: 1\nb: 3"))
+			if (rendered != cmem_ref("a: 1\nb: 3"))
 				return false;
 
 			return true;
@@ -207,13 +207,13 @@ namespace oonet
 		}
 
 		bool test_http_headers_list::TestParse::operator()()
-		{	binary_data rendered = binary_data("a: 1\r\nbabalokos: 123123\r\nkoko: asd\r\n");
-			binary_data rendered2 = binary_data("mimikos: d\r\nvagelis: qwe\r\nolalola:123\r\n");
-			binary_data rendered3 = binary_data("mimikos : d\r\nvagelis   : qwe\r\nolalola :123\r\n");
-			binary_data renderedLF = binary_data("mimikos: d\nvagelis: qwe\nolalola: 123\r\n");
-			binary_data renderedMixed1 = binary_data("mimikos: d\r\nvagelis: qwe\nolalola: 123\r\n");
-			binary_data renderedMixed2 = binary_data("mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n");
-			binary_data renderedMixedComplete = binary_data("mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n\n");
+		{	binary_data rendered = cmem_ref("a: 1\r\nbabalokos: 123123\r\nkoko: asd\r\n");
+			binary_data rendered2 = cmem_ref("mimikos: d\r\nvagelis: qwe\r\nolalola:123\r\n");
+			binary_data rendered3 = cmem_ref("mimikos : d\r\nvagelis   : qwe\r\nolalola :123\r\n");
+			binary_data renderedLF = cmem_ref("mimikos: d\nvagelis: qwe\nolalola: 123\r\n");
+			binary_data renderedMixed1 = cmem_ref("mimikos: d\r\nvagelis: qwe\nolalola: 123\r\n");
+			binary_data renderedMixed2 = cmem_ref("mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n");
+			binary_data renderedMixedComplete = cmem_ref("mimikos: d\nvagelis: qwe\r\nolalola: 123\r\n\n");
 			string header_value;
 			http::headers_list a;
 			size_t ret_value;
@@ -328,7 +328,7 @@ namespace oonet
 		}
 
 		bool test_http_headers_list::TestParseWrong1::operator()()
-		{	binary_data rendered = binary_data("asdkfalsdkfasdf\nsadf");
+		{	binary_data rendered = cmem_ref("asdkfalsdkfasdf\nsadf");
 			http::headers_list a;
 
 			a.parse(rendered);
@@ -337,7 +337,7 @@ namespace oonet
 
 		bool test_http_headers_list::TestParseSpeed100k::operator()()
 		{	http::headers_list a;
-			binary_data rendered = binary_data("a: 1\r\nbabalokos:    123123\r\nkoko: asd");
+			binary_data rendered = cmem_ref("a: 1\r\nbabalokos:    123123\r\nkoko: asd");
 
 			reset_timer();
 			for(long i = 0;i < 100000; i++)
@@ -347,15 +347,15 @@ namespace oonet
 		}
 
 		bool test_http_headers_list::TestSmartNewLineQuality::operator()()
-		{	binary_data text_splitted_1 = binary_data("lalala\r\nadfad\nasdfadsf\r");
-			binary_data text_splitted_2 = binary_data("koukouroukou\r\r\nadfs\ntest");
-			binary_data text_splitted_3 = binary_data("\r\ntest\r\n");
-			binary_data text_splitted_4 = binary_data("\ntest\r\n");
-			binary_data text_splitted_5 = binary_data("\n\n");
-			binary_data text_splitted_6 = binary_data("\r\n");
-			binary_data text_splitted_7 = binary_data("test\r\n");
-			binary_data text_splitted_8 = binary_data("test\n");
-			binary_data text_splitted_9 = binary_data("test\r");
+		{	binary_data text_splitted_1 = cmem_ref("lalala\r\nadfad\nasdfadsf\r");
+			binary_data text_splitted_2 = cmem_ref("koukouroukou\r\r\nadfs\ntest");
+			binary_data text_splitted_3 = cmem_ref("\r\ntest\r\n");
+			binary_data text_splitted_4 = cmem_ref("\ntest\r\n");
+			binary_data text_splitted_5 = cmem_ref("\n\n");
+			binary_data text_splitted_6 = cmem_ref("\r\n");
+			binary_data text_splitted_7 = cmem_ref("test\r\n");
+			binary_data text_splitted_8 = cmem_ref("test\n");
+			binary_data text_splitted_9 = cmem_ref("test\r");
 			binary_data nl;
 			size_t offset;
 
@@ -406,8 +406,8 @@ namespace oonet
 
 			// Create text
 			for (long i = 0; i < 100; i++)
-				text_splitted += binary_data("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
-			text_splitted += binary_data("\r\n");
+				text_splitted += cmem_ref("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
+			text_splitted += cmem_ref("\r\n");
 
 			// Measure
 			reset_timer();
@@ -429,8 +429,8 @@ namespace oonet
 
 			// Create text
 			for (long i = 0; i < 100; i++)
-				text_splitted += binary_data("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
-			text_splitted += binary_data("\n");
+				text_splitted += cmem_ref("looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
+			text_splitted += cmem_ref("\n");
 
 			// Measure
 			reset_timer();

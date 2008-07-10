@@ -2,7 +2,7 @@
 #define OONET_BINARY_DATA_HPP_INCLUDED
 
 #include "./oonet.hpp"
-
+#include "./mem_ref.hpp"
 #include <vector>
 #include <boost/shared_ptr.hpp>
 
@@ -42,6 +42,9 @@ namespace oonet
 		*/
 		binary_data();
 
+		// Construct from cmem_ref
+		binary_data(const cmem_ref &);
+		
 		//! Destructor
 		virtual ~binary_data();
 
@@ -50,26 +53,6 @@ namespace oonet
 
 		//! Copy operator
 		binary_data & operator=(const binary_data & r);
-
-		//! Constructor from std::string
-		/**
-			A new object is created and all the characters of std::string
-			are copied <b>WITHOUT</b> a null character at the end.
-		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
-		*/
-		explicit binary_data(const string & str);
-
-		//! Constructor from std::wstring
-		/**
-			A new object is created and all the characters of std::string
-			are copied <b>WITHOUT</b> a null character at the end.
-		@remarks
-			The size of the binary_data depends on the size of wchar_t on
-			the current machine. If the size of wchar_t is 2 bytes then it
-			will have
-		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
-		*/
-		explicit binary_data(const wstring & str);
 
 		//! Constructor from a single byte
 		explicit binary_data(const byte & b);
@@ -101,6 +84,7 @@ namespace oonet
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
 		binary_data operator+(const binary_data &r) const;
+		binary_data operator+(const cmem_ref &r) const;
 
 		//! Add operator (one byte)
 		/**
@@ -118,6 +102,7 @@ namespace oonet
 		@throw ExceptionBadAllocation When allocation of new internal buffer is impossible for some reason.
 		*/
 		binary_data & operator+=(const binary_data &r);
+		binary_data & operator+=(const cmem_ref &r);
 
 		//! Self-add operator for one byte (push action)
 		/**
@@ -224,7 +209,7 @@ namespace oonet
 			be found.
 		@throw ExceptionWrongArgument If the pattern is an empty binary_data object.
 		*/
-		size_t find(const binary_data & pattern, size_t offset = 0) const;
+		size_t find(const cmem_ref & pattern, size_t offset = 0) const;
 
 		//! Slice data from a specific offset, with specific size
 		/**
@@ -242,6 +227,10 @@ namespace oonet
 		//! Check if it is an empty object.
 		inline bool empty() const throw()
 		{	return (s_data == 0);	}
+		
+		size_t mem_size() const;
+		byte * mem_ptr();
+		const byte * mem_ptr() const;
 	};  // !binary_data class
 };  // !oonet namespace
 

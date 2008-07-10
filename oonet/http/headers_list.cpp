@@ -12,12 +12,12 @@ namespace oonet
 		const string LF = "\n";
 		const string CRLF = "\r\n";
 
-		const binary_data const_lf = binary_data("\n");
-		const binary_data const_crlf = binary_data("\r\n");
+		const binary_data const_lf = cmem_ref("\n");
+		const binary_data const_crlf = cmem_ref("\r\n");
 		const binary_data const_lflf = const_lf + const_lf;
 		const binary_data const_crlfcrlf = const_crlf + const_crlf;
-		const binary_data const_space = binary_data(" ");
-		const binary_data const_colon = binary_data(":");
+		const binary_data const_space = cmem_ref(" ");
+		const binary_data const_colon = cmem_ref(":");
 
 		size_t _smart_find_new_line(const binary_data & dt_in, binary_data & nl_delimiter, size_t offset)
 		{	size_t nl_pos;
@@ -154,7 +154,7 @@ namespace oonet
 				_formated_field += it->second;
 			}
 
-			return binary_data(_formated_field);
+			return cmem_ref(_formated_field);
 		}
 
 		// Parse headers

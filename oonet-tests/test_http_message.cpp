@@ -22,27 +22,27 @@ namespace oonet
 		{	http::message a;
 			string header_value;
 
-			a.body() = binary_data("koukouroukou");
+			a.body() = cmem_ref("koukouroukou");
 			a.headers().add("a", "123");
-			a.title() = binary_data("GET / HTTP/1.1");
+			a.title() = cmem_ref("GET / HTTP/1.1");
 
-			if (a.body()  != binary_data("koukouroukou"))
+			if (a.body()  != cmem_ref("koukouroukou"))
 				return false;
 			if (a.headers().size() != 1)
 				return false;
 			if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 				return false;
-			if (a.title() != binary_data("GET / HTTP/1.1"))
+			if (a.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 
 			http::message b(a);
-			if (b.body()  != binary_data("koukouroukou"))
+			if (b.body()  != cmem_ref("koukouroukou"))
 				return false;
 			if (b.headers().size() != 1)
 				return false;
 			if (!(b.headers().find_first("a", header_value) && (header_value == "123")))
 				return false;
-			if (b.title() != binary_data("GET / HTTP/1.1"))
+			if (b.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 			return true;
 		}
@@ -51,27 +51,27 @@ namespace oonet
 		{	http::message a, b;
 			string header_value;
 
-			a.body() = binary_data("koukouroukou");
+			a.body() = cmem_ref("koukouroukou");
 			a.headers().add("a", "123");
-			a.title() = binary_data("GET / HTTP/1.1");
+			a.title() = cmem_ref("GET / HTTP/1.1");
 
-			if (a.body()  != binary_data("koukouroukou"))
+			if (a.body()  != cmem_ref("koukouroukou"))
 				return false;
 			if (a.headers().size() != 1)
 				return false;
 			if (!(a.headers().find_first("a", header_value) && (header_value == "123")))
 				return false;
-			if (a.title() != binary_data("GET / HTTP/1.1"))
+			if (a.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 
 			b = a;
-			if (b.body()  != binary_data("koukouroukou"))
+			if (b.body()  != cmem_ref("koukouroukou"))
 				return false;
 			if (b.headers().size() != 1)
 				return false;
 			if (!(b.headers().find_first("a", header_value) && (header_value == "123")))
 				return false;
-			if (b.title() != binary_data("GET / HTTP/1.1"))
+			if (b.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 			return true;
 		}
@@ -109,7 +109,7 @@ namespace oonet
 			binary_data shouldBeLF = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
 
 			// Populate a
-			a.title() = binary_data("GET / HTTP/1.1");
+			a.title() = cmem_ref("GET / HTTP/1.1");
 			a.body() = PredefBody;
 
 			// Render with default new line
@@ -118,7 +118,7 @@ namespace oonet
 				return false;
 
 			/// Render with LF
-			out = a.render(binary_data("\n"));
+			out = a.render(cmem_ref("\n"));
 			if (out != shouldBeLF)
 				return false;
 
@@ -131,7 +131,7 @@ namespace oonet
 			binary_data shouldBe= binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 
 			// Populate a
-			a.title() = binary_data("GET / HTTP/1.1");
+			a.title() = cmem_ref("GET / HTTP/1.1");
 			a.body() = PredefBody;
 
 			reset_timer();
@@ -158,7 +158,7 @@ namespace oonet
 
 			if (a.body() != PredefBody)
 				return false;
-			if (a.title() != binary_data("GET / HTTP/1.1"))
+			if (a.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 			if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 				return false;
@@ -186,7 +186,7 @@ namespace oonet
 
 			if (a.body() != PredefBody)
 				return false;
-			if (a.title() != binary_data("GET / HTTP/1.1"))
+			if (a.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 			if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 				return false;
@@ -194,7 +194,7 @@ namespace oonet
 			// Final quality test
 			if (!b_parsed)
 				return false;
-			if (remaining != binary_data("1234"))
+			if (remaining != cmem_ref("1234"))
 				return false;
 			return true;
 		}
@@ -215,7 +215,7 @@ namespace oonet
 			b_parsed = a.parse(PacketWBodyCRLF, &remaining);
 			if (a.body() != PredefBody)
 				return false;
-			if (a.title() != binary_data("POST / HTTP/1.1"))
+			if (a.title() != cmem_ref("POST / HTTP/1.1"))
 				return false;
 			if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 				return false;
@@ -226,7 +226,7 @@ namespace oonet
 			b_parsed = a.parse(PacketWBodyLF, &remaining);
 			if (a.body() != PredefBody)
 				return false;
-			if (a.title() != binary_data("POST / HTTP/1.1"))
+			if (a.title() != cmem_ref("POST / HTTP/1.1"))
 				return false;
 			if (!(a.headers().find_first("Content-Length", header_value) && (header_value == "60000")))
 				return false;
@@ -237,7 +237,7 @@ namespace oonet
 			b_parsed = a.parse(PacketCRLF, &remaining);
 			if (! a.body().empty())
 				return false;
-			if (a.title() != binary_data("GET / HTTP/1.1"))
+			if (a.title() != cmem_ref("GET / HTTP/1.1"))
 				return false;
 			if (!(a.headers().find_first("Host", header_value) && (header_value == "123")))
 				return false;

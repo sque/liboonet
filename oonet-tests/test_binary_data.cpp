@@ -15,15 +15,15 @@ namespace oonet
 		bool test_binary_data::TestStringConstructor::operator()()
 		{	binary_data b1, b2;
 
-			b1 = binary_data("malaka!!");
-			b2 = binary_data("lolo");
+			b1 = cmem_ref("malaka!!");
+			b2 = cmem_ref("lolo");
 
 			// Check if they are different
 			if ((b1 == b2) || (! (b1 != b2)))
 				return false;
 
 			// Create a new one with same string
-			b1 = binary_data("lolo");
+			b1 = cmem_ref("lolo");
 			if (b1 != b2)
 				return false;
 			return true;
@@ -32,14 +32,14 @@ namespace oonet
 		bool test_binary_data::TestEqOperator::operator()()
 		{	binary_data b1, b2;
 
-			b1 = binary_data("lola");
-			b2 = binary_data("lola");
+			b1 = cmem_ref("lola");
+			b2 = cmem_ref("lola");
 			if (b1 != b2)
 				return false;
 
 			// test operator== with same sizes
-			b1 = binary_data("1234");
-			b2 = binary_data("qwer");
+			b1 = cmem_ref("1234");
+			b2 = cmem_ref("qwer");
 			if (b1 == b2)
 				return false;
 			return true;
@@ -220,39 +220,39 @@ namespace oonet
 				return false;
 
 			// We will create a string in memory kikikokoko but the size will be 4!
-			b1 = binary_data(string("kokokokoko"));
-			b1 = binary_data(string("kiki"));
-			if (binary_data::npos != b1.find(binary_data(string("ko"))))
+			b1 = cmem_ref("kokokokoko");
+			b1 = cmem_ref("kiki");
+			if (binary_data::npos != b1.find(cmem_ref("ko")))
 				return false;
-			if (binary_data::npos != b1.find(binary_data(string("ko")), 3))
+			if (binary_data::npos != b1.find(cmem_ref("ko"), 3))
 				return false;
-			if (binary_data::npos != b1.find(binary_data(string("ko")), 4))
+			if (binary_data::npos != b1.find(cmem_ref("ko"), 4))
 				return false;
-			if (binary_data::npos != b1.find(binary_data(string("ko")), 5))
+			if (binary_data::npos != b1.find(cmem_ref("ko"), 5))
 				return false;
 
 			// We will try to find for last character of a string
-			b1 = binary_data(string("kokoa           "));
-			b1 = binary_data(string("kokoa"));
-			if (binary_data::npos == b1.find(binary_data(string("a"))))
+			b1 = cmem_ref("kokoa           ");
+			b1 = cmem_ref("kokoa");
+			if (binary_data::npos == b1.find(cmem_ref("a")))
 				return false;
 
 
 			// We will try to find a string starting from the last character
-			b1 = binary_data(string("kokoalb           "));
-			b1 = binary_data(string("kokoa"));
-			if (binary_data::npos != b1.find(binary_data(string("ala"))))
+			b1 = cmem_ref("kokoalb           ");
+			b1 = cmem_ref("kokoa");
+			if (binary_data::npos != b1.find(cmem_ref("ala")))
 				return false;
 
 			// We will try to find a string starting from the last character
-			b1 = binary_data(string("kokoala           "));
-			b1 = binary_data(string("kokoa"));
-			if (binary_data::npos != b1.find(binary_data(string("ala"))))
+			b1 = cmem_ref("kokoala           ");
+			b1 = cmem_ref("kokoa");
+			if (binary_data::npos != b1.find(cmem_ref("ala")))
 				return false;
 
 			// We will try to find a character at the begining
-			b1 = binary_data(string("akokoal           "));
-			if (binary_data::npos == b1.find(binary_data(string("a"))))
+			b1 = cmem_ref("akokoal           ");
+			if (binary_data::npos == b1.find(cmem_ref("a")))
 				return false;
 
 
@@ -451,15 +451,15 @@ namespace oonet
 		{	binary_data b1, b2, body;
 
 			body = binary_data(Char_M, 1000000);
-			b1 = binary_data(_T("askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf START"));
+			b1 = cmem_ref(_T("askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf START"));
 			b1 += body;
-			b1 += binary_data(_T("STOP askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf"));
+			b1 += cmem_ref(_T("STOP askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf"));
 
 			reset_timer();
 			for (int i = 0; i < 1000; i ++)
 			{
-				b2 = b1.get_from(b1.find(binary_data(_T("START"))) + (sizeof(TCHAR) * 5) );
-				b2 = b2.get_until(b2.find(binary_data(_T("STOP"))));
+				b2 = b1.get_from(b1.find(cmem_ref(_T("START"))) + (sizeof(TCHAR) * 5) );
+				b2 = b2.get_until(b2.find(cmem_ref(_T("STOP"))));
 			}
 
 			if (b2 != body)
@@ -473,15 +473,15 @@ namespace oonet
 			size_t offset, sz;
 
 			body = binary_data(Char_M, 1000000);
-			b1 = binary_data(_T("askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf START"));
+			b1 = cmem_ref(_T("askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf START"));
 			b1 += body;
-			b1 += binary_data(_T("STOP askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf"));
+			b1 += cmem_ref(_T("STOP askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf"));
 
 			reset_timer();
 			for (int i = 0; i < 1000; i ++)
 			{
-				offset = b1.find(binary_data(_T("START"))) + (sizeof(TCHAR) * 5);
-				sz = b1.find(binary_data(_T("STOP"))) - offset;
+				offset = b1.find(cmem_ref(_T("START"))) + (sizeof(TCHAR) * 5);
+				sz = b1.find(cmem_ref(_T("STOP"))) - offset;
 				b2 = b1.sub_data(offset, sz);
 			}
 
@@ -502,7 +502,7 @@ namespace oonet
 		bool test_binary_data::TestElementGeneral::operator()()
 		{	binary_data b1;
 
-			b1 = binary_data("lolalilolalo");
+			b1 = cmem_ref("lolalilolalo");
 			if (b1[0] != 'l')
 				return false;
 			if (b1[1] != 'o')
@@ -514,11 +514,11 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestLessGeneral::operator()()
-		{	binary_data a("A");
-			binary_data b("B");
-			binary_data ab("AB");
-			binary_data ac("AC");
-			binary_data bb("BB");
+		{	binary_data a(cmem_ref("A"));
+			binary_data b(cmem_ref("B"));
+			binary_data ab(cmem_ref("AB"));
+			binary_data ac(cmem_ref("AC"));
+			binary_data bb(cmem_ref("BB"));
 
 			// Empty must return false
 			if (binary_data::nothing < binary_data::nothing)
@@ -562,8 +562,8 @@ namespace oonet
 		bool test_binary_data::TestLessSpeed::operator()()
 		{	binary_data a((byte)'a', 50000);
 			binary_data b((byte)'a', 50000);
-			a += binary_data("1");
-			b += binary_data("2");
+			a += cmem_ref("1");
+			b += cmem_ref("2");
 
 			// 1 character comparison
 			if (b < a)
@@ -577,13 +577,13 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestAStringExporter::operator()()
-		{	binary_data b1 = binary_data(string("koukouroukou1"));
+		{	binary_data b1 = cmem_ref("koukouroukou1");
 
 			//printf("%s\n", b1.GetStringA().c_str());
 			if (b1.to_string() != "koukouroukou1")
 				return false;
 
-			b1 = binary_data(string("kiki"));
+			b1 = cmem_ref("kiki");
 			if (b1.to_string() != "kiki")
 				return false;
 
@@ -591,13 +591,13 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestWStringExporter::operator()()
-		{	binary_data b1 = binary_data(wstring(L"koukouroukou1"));
+		{	binary_data b1 = cmem_ref(L"koukouroukou1");
 
 			//printf("TEST: -%s-\n", StringConverter(b1.GetStringW()).toAnsi().c_str());
 			if (b1.to_wstring() != L"koukouroukou1")
 				return false;
 
-			b1 = binary_data(wstring(L"kiki"));
+			b1 = cmem_ref(L"kiki");
 			if (b1.to_wstring() != L"kiki")
 				return false;
 
@@ -605,7 +605,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestCoW::operator()()
-		{	binary_data b1 = binary_data(wstring(L"koukouroukou1"));
+		{	binary_data b1 = cmem_ref(L"koukouroukou1");
 			binary_data b2(b1);
 			binary_data b3;
 			b3 = b2;
@@ -619,7 +619,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestCoWExtend::operator()()
-		{	binary_data b1 = binary_data(wstring(L"koukouroukou1"));
+		{	binary_data b1 = cmem_ref(L"koukouroukou1");
 			binary_data b2(b1);
 			binary_data b3;
 			b3 = b2;
@@ -632,7 +632,7 @@ namespace oonet
 				return false;
 
 			// Change b2
-			b2 += binary_data(string("test"));
+			b2 += cmem_ref("test");
 			if (b2.get_data_ptr() == b3.get_data_ptr())
 				return false;
 
@@ -641,7 +641,7 @@ namespace oonet
 
 			// Change b2 and check if a new allocation has been done
 			p_old_pos = b2.get_data_ptr();
-			b2 += binary_data("1");
+			b2 += cmem_ref("1");
 			if (b2.get_data_ptr() != p_old_pos)
 				return false;
 
@@ -655,7 +655,7 @@ namespace oonet
 
 			// Change b2 and check if a new allocation has been done
 			p_old_pos = b2.get_data_ptr();
-			b2 += binary_data("1");
+			b2 += cmem_ref("1");
 			if (b2.get_data_ptr() == p_old_pos)
 				return false;
 

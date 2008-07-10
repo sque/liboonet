@@ -122,10 +122,10 @@ namespace oonet
 
 		bool test_buffer::TestByteOrder::operator()()
 		{	buffer myBuff;
-			binary_data smallPattern("1234");
-			binary_data bigPattern("12341234");
-			binary_data orderedPattern("12345678");
-			binary_data revorderedPattern("8765431");
+			binary_data smallPattern(cmem_ref("1234"));
+			binary_data bigPattern(cmem_ref("12341234"));
+			binary_data orderedPattern(cmem_ref("12345678"));
+			binary_data revorderedPattern(cmem_ref("8765431"));
 
 			// From back in two pieces
 			myBuff.push_back(smallPattern);
@@ -180,10 +180,10 @@ namespace oonet
 			myBuff.push_front(binary_data('7', 1));
 			myBuff.push_front(binary_data('8', 1));
 
-			if (myBuff.peek_front(4) != binary_data("8765"))
+			if (myBuff.peek_front(4) != cmem_ref("8765"))
 				return false;
 
-			if (myBuff.peek_back(4) != binary_data("4321"))
+			if (myBuff.peek_back(4) != cmem_ref("4321"))
 				return false;
 
 			myBuff.flush();
@@ -198,10 +198,10 @@ namespace oonet
 			myBuff.push_back(binary_data('7', 1));
 			myBuff.push_back(binary_data('8', 1));
 
-			if (myBuff.peek_front(4) != binary_data("1234"))
+			if (myBuff.peek_front(4) != cmem_ref("1234"))
 				return false;
 
-			if (myBuff.peek_back(4) != binary_data("5678"))
+			if (myBuff.peek_back(4) != cmem_ref("5678"))
 				return false;
 			return true;
 		}
@@ -211,14 +211,14 @@ namespace oonet
 			binary_data peekD, popD;
 
 			myBuff.flush();
-			myBuff.push_back(binary_data("1234123"));
+			myBuff.push_back(cmem_ref("1234123"));
 			peekD = myBuff.peek_back(3);
 			popD = myBuff.pop_back(3);
 			if (peekD != popD)
 				return false;
 
 			myBuff.flush();
-			myBuff.push_back(binary_data("1234123"));
+			myBuff.push_back(cmem_ref("1234123"));
 			peekD = myBuff.peek_front(3);
 			popD = myBuff.pop_front(3);
 			if (peekD != popD)

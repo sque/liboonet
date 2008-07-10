@@ -11,7 +11,7 @@ namespace oonet
 		response::response(void):
 			message(),
 			m_status_code(200),
-			m_reason_phrase("OK")
+			m_reason_phrase(cmem_ref("OK"))
 		{
 		}
 
@@ -46,7 +46,7 @@ namespace oonet
 				m_reason_phrase.to_string().c_str());
 
 			// Prepare Title
-			m_title = binary_data(_s_title);
+			m_title = cmem_ref((const char *)_s_title);
 
 			// Return rendered message
 			return message::render(nl_delimiter);

@@ -216,7 +216,7 @@ namespace oonet
 
 			// Format response
 			resp.status_code() = 404;
-			resp.reason_phrase() = binary_data("Not Found");
+			resp.reason_phrase() = cmem_ref("Not Found");
 			resp.body() = binary_data('a', 60000);
 			respBinary = resp.render();
 			respBinary += respBinary;
@@ -261,7 +261,7 @@ namespace oonet
 
 			// Format response
 			resp.status_code() = 404;
-			resp.reason_phrase() = binary_data("Not Found");
+			resp.reason_phrase() = cmem_ref("Not Found");
 			resp.body() = binary_data('a', 1000);
 			respBinary = resp.render();
 
@@ -301,7 +301,7 @@ namespace oonet
 		{	http::client mClient;
 			http::response theResp;
 			http::request req;
-			binary_data respBinary = binary_data("Asdadsasdasdasdasdasd");
+			binary_data respBinary = cmem_ref("Asdadsasdasdasdasdasd");
 
 			// Format req
 			req.uri() = http::url("/");
@@ -336,7 +336,7 @@ namespace oonet
 		{	http::client mClient;
 			http::response theResp;
 			http::request req;
-			binary_data respBinary = binary_data("asdfadsf\n\nadsf\n");
+			binary_data respBinary = cmem_ref("asdfadsf\n\nadsf\n");
 
 			// Format req
 			req.uri() = http::url("/");
@@ -371,11 +371,11 @@ namespace oonet
 		{	http::client mClient;
 			http::response resp, theResp;
 			http::request req;
-			binary_data respBinary = binary_data("asdfadsf\n\nadsf\n"), respBinary2;
+			binary_data respBinary = cmem_ref("asdfadsf\n\nadsf\n"), respBinary2;
 
 			// Format response
 			resp.status_code() = 404;
-			resp.reason_phrase() = binary_data("Not Found");
+			resp.reason_phrase() = cmem_ref("Not Found");
 			resp.body() = binary_data('a', 60000);
 			respBinary2 = resp.render();
 

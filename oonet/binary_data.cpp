@@ -151,21 +151,12 @@ namespace oonet
 	{
 	}
 
-	// Constructor from Ansi String
-	binary_data::binary_data(const string & str)
-		:p_mem_block(new _mem_block(str.c_str(), str.size() * sizeof(string::value_type))),
+	// Construct from cmem_ref
+	binary_data::binary_data(const cmem_ref & _ref)
+		:p_mem_block(new _mem_block(_ref.mem_ptr(), _ref.mem_size())),
 		off_data(0),
-		s_data(str.size() * sizeof(string::value_type))
-	{
-	}
-
-	// Constructor from Unicode String
-	binary_data::binary_data(const wstring & str)
-		:p_mem_block(new _mem_block(str.c_str(), str.size() * sizeof(wstring::value_type))),
-		off_data(0),
-		s_data(str.size() * sizeof(wstring::value_type))
-	{
-	}
+		s_data(_ref.mem_size())
+	{}
 
 	// Destructor
 	binary_data::~binary_data()
@@ -209,6 +200,18 @@ namespace oonet
 		return temp;
 	}
 
+	binary_data binary_data::operator+(const cmem_ref &r) const
+	{
+		// Create a temp
+		binary_data temp = *this;
+
+		// Add the right assignment
+		temp +=r;
+
+		// return the result
+		return temp;
+	}
+	
 	// Add action (one byte)
 	binary_data binary_data::operator+(const byte &r)const
 	{
@@ -243,6 +246,26 @@ namespace oonet
 		return *this;
 	}
 
+	binary_data & binary_data::operator+=(const cmem_ref &r)
+	{
+		_assure_local_copy();
+
+		// move data at the begining
+		memmove(p_mem_block->p_mem + off_data, p_mem_block->p_mem, s_data);
+		off_data = 0;
+
+		// Scale memory to fit new data
+		p_mem_block->_scale_mem(s_data + r.mem_size());
+
+		// Copy new data at the end
+		memcpy(p_mem_block->p_mem + s_data, r.mem_ptr(), r.mem_size());
+
+		// Add size
+		s_data += r.mem_size();
+
+		return *this;
+	}
+	
 	// Push action (one byte)
 	binary_data & binary_data::operator+=(const byte &r)
 	{
@@ -356,19 +379,18 @@ namespace oonet
 		return shallow_copy;
 	}
 	// Find a pattern in the data block
-	size_t binary_data::find(const binary_data & pattern, size_t offset) const
+	size_t binary_data::find(const cmem_ref & pattern, size_t offset) const
 	{	const byte * p, * p_end;
 		const byte * p_local_data = p_mem_block->p_mem + off_data;
-		const byte * p_pattern_data = pattern.p_mem_block->p_mem + pattern.off_data;
 		byte first_ch;	// First character that we search
 
 		// Check if there are data
-		if (pattern.s_data == 0)
+		if (pattern.mem_size() == 0)
 			OONET_THROW_EXCEPTION(ExceptionWrongArgument,
 			"Pattern is empty! Cannot search for something that does not exists");
 
         // Check if data fits in search
-        if (pattern.s_data > s_data)
+        if (pattern.mem_size() > s_data)
             return npos;
 
 		// Check if offset is outside isze
@@ -376,14 +398,14 @@ namespace oonet
 			return npos;
 
 		// Initialize values
-		p_end = p_local_data + s_data - pattern.s_data + 1;
-		first_ch = *p_pattern_data;
+		p_end = p_local_data + s_data - pattern.mem_size() + 1;
+		first_ch = *pattern.mem_ptr();
 
 		// Search for pattern - general optimized (The class is general, so we cant optimize it more specificly)
 		p = p_local_data + offset;
 		while((p =(byte *) memchr(p, first_ch, p_end - p)))
 		{
-			if (0 == memcmp(p, p_pattern_data, pattern.s_data) )
+			if (0 == memcmp(p, pattern.mem_ptr(), pattern.mem_size()) )
 				return (p - p_local_data);
 			p++;
 		}
@@ -400,4 +422,13 @@ namespace oonet
 
 	const byte * binary_data::get_data_ptr() const throw()
 	{   return p_mem_block->p_mem + off_data;   }
+	
+	const byte * binary_data::mem_ptr() const
+	{	return p_mem_block->p_mem + off_data;	}
+	
+	byte * binary_data::mem_ptr()
+	{	return p_mem_block->p_mem + off_data;	}
+	
+	size_t binary_data::mem_size() const
+	{	return s_data;	}
 };	// !oonet namespace

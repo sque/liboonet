@@ -8,9 +8,9 @@ namespace oonet
 {
 	namespace http
 	{
-		const binary_data message::const_http_ver1_1 = binary_data("HTTP/1.1");
-		const binary_data message::const_http_ver1_0 = binary_data("HTTP/1.0");
-		const binary_data message::const_content_length = binary_data("Content-Length");
+		const binary_data message::const_http_ver1_1 = cmem_ref("HTTP/1.1");
+		const binary_data message::const_http_ver1_0 = cmem_ref("HTTP/1.0");
+		const binary_data message::const_content_length = cmem_ref("Content-Length");
 
 		message::message(void)
 			:b_has_body(true)
