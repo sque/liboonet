@@ -86,7 +86,7 @@ namespace oonet
         binary_data received_data((byte)'\0', max_data);
 
         // Get data
-		received_size = ::recv(pimpl_->get_socket(), (char *)received_data.get_data_ptr(), max_data, 0);
+		received_size = ::recv(pimpl_->get_socket(), (char *)received_data.c_array(), max_data, 0);
 
         // Create a binary data block
         if ((received_size == INVALID_SOCKET) || (received_size <= 0))
@@ -99,7 +99,7 @@ namespace oonet
     // Send
     size_t socket::send(const binary_data & trans_data) throw (exception)
     {
-        int sent = ::send(pimpl_->get_socket(),(char *) trans_data.get_data_ptr(), trans_data.size(), 0);
+        int sent = ::send(pimpl_->get_socket(),(char *) trans_data.c_array(), trans_data.size(), 0);
         if (sent <= 0)
         {
 			// Throw exception

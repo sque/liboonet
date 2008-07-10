@@ -120,14 +120,6 @@ namespace oonet
 	{
 	}
 
-	//Construtor from binary pointer
-	binary_data::binary_data(const void * _p_data, size_t _s_data)
-		:p_mem_block(new _mem_block(_p_data, _s_data)),
-		off_data(0),
-		s_data(_s_data)
-	{
-	}
-
 	binary_data::binary_data(const binary_data & r)
 		:p_mem_block(r.p_mem_block),
 		off_data(r.off_data),
@@ -135,16 +127,8 @@ namespace oonet
 	{
 	}
 
-	// Constructor from a single byte
-	binary_data::binary_data(const byte & b)
-		:p_mem_block(new _mem_block(&b, 1)),
-		off_data(0),
-		s_data(1)
-	{
-	}
-
 	// Constructor from a byte replication
-	binary_data::binary_data(const byte &bt_repeated, size_t s_times)
+	binary_data::binary_data(const_reference bt_repeated, size_type s_times)
 		:p_mem_block(new _mem_block(bt_repeated, s_times)),
 		off_data(0),
 		s_data(s_times)
@@ -172,21 +156,38 @@ namespace oonet
 		return *this;
 	}
 
-	// Access elemnt operation
-	const byte & binary_data::operator[](size_t offset) const
-	{
-		if (offset > s_data)
-			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+	binary_data::iterator binary_data::begin()
+	{	return p_mem_block->p_mem + off_data;	}
+	
+	binary_data::const_iterator binary_data::begin() const
+	{	return p_mem_block->p_mem + off_data;	}
+	
+	binary_data::iterator binary_data::end()
+	{	return p_mem_block->p_mem + off_data + s_data;	}
+
+	binary_data::const_iterator binary_data::end() const
+	{	return p_mem_block->p_mem + off_data + s_data;	}
+		
+		
+	// Access element operation
+	binary_data::const_reference binary_data::operator[](size_type offset) const throw()
+	{	return p_mem_block->p_mem[off_data + offset];	}
+
+	binary_data::reference binary_data::operator[](size_type offset) throw()
+	{	return p_mem_block->p_mem[off_data + offset];	}
+
+	binary_data::const_reference binary_data::at(size_type offset) const
+	{	if (offset > s_data)
+			throw std::out_of_range("binary_data::at(off) has invalid offset");
 		return p_mem_block->p_mem[off_data + offset];
 	}
 
-	byte & binary_data::operator[](size_t offset)
-	{
-		if (offset > s_data)
-			OONET_THROW_EXCEPTION(ExceptionNotFound, "Offset is bigger than the actual size of datablock");
+	binary_data::reference binary_data::at(size_type offset)
+	{	if (offset > s_data)
+			throw std::out_of_range("binary_data::at(off) has invalid offset");
 		return p_mem_block->p_mem[off_data + offset];
 	}
-
+	
 	// Add action
 	binary_data binary_data::operator+(const binary_data &r) const
 	{
@@ -212,19 +213,6 @@ namespace oonet
 		return temp;
 	}
 	
-	// Add action (one byte)
-	binary_data binary_data::operator+(const byte &r)const
-	{
-		// Create a temp
-		binary_data temp = *this;
-
-		// Add the right assignment
-		temp += r;
-
-		// return result
-		return temp;
-	}
-
 	// Push action
 	binary_data & binary_data::operator+=(const binary_data &r)
 	{
@@ -238,7 +226,7 @@ namespace oonet
 		p_mem_block->_scale_mem(s_data + r.s_data);
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + s_data, r.get_data_ptr(), r.s_data);
+		memcpy(p_mem_block->p_mem + s_data, r.c_array(), r.s_data);
 
 		// Add size
 		s_data += r.s_data;
@@ -266,23 +254,6 @@ namespace oonet
 		return *this;
 	}
 	
-	// Push action (one byte)
-	binary_data & binary_data::operator+=(const byte &r)
-	{
-		_assure_local_copy();
-
-		// Scale memory to fit all data
-		p_mem_block->_scale_mem(off_data + s_data + 1);
-
-		// Add byte at end of buffer
-		*(p_mem_block->p_mem + off_data + s_data) = r;
-
-		// Increase buffer
-		s_data ++;
-
-		return (*this);
-	}
-
 	// Opposite comparison
 	bool binary_data::operator!=(const binary_data &r) const throw()
 	{   return  (! operator==(r));    }
@@ -298,7 +269,7 @@ namespace oonet
 		if (s_data == 0) return true;
 
 		// Compare data
-		if (0 != memcmp(get_data_ptr(), r.get_data_ptr(), s_data))
+		if (0 != memcmp(c_array(), r.c_array(), s_data))
 			return false;
 
 		// Else everything is ok
@@ -323,7 +294,7 @@ namespace oonet
 	// Get Ansi String object
 	string binary_data::to_string() const
 	{
-		return string((char *)get_data_ptr(), s_data);
+		return string((char *)c_array(), s_data);
 	}
 
 	// Get Winde String object
@@ -332,11 +303,11 @@ namespace oonet
 		float wstring_size = (float)s_data;
 		wstring_size /= sizeof(wchar_t);
 		wstring_size = floor(wstring_size);
-		return wstring((wchar_t *)get_data_ptr(), (wstring::size_type)wstring_size);
+		return wstring((wchar_t *)c_array(), (wstring::size_type)wstring_size);
 	}
 
 	// Get starting message until that size
-	binary_data binary_data::get_until(const size_t & offset) const throw()
+	binary_data binary_data::get_until(const size_type & offset) const throw()
 	{
 		// If requested is more than available, then return all data
 		if (offset > s_data)
@@ -349,7 +320,7 @@ namespace oonet
 	}
 
 	// Get the rest of message from a specific offset
-	binary_data binary_data::get_from(const size_t & offset) const throw()
+	binary_data binary_data::get_from(const size_type & offset) const throw()
 	{
 		// If requested is more than available, then return empty
 		if (offset > s_data)
@@ -364,7 +335,7 @@ namespace oonet
 	}
 
 	// Slice data from a point, till some size
-	binary_data binary_data::sub_data(size_t offset, size_t sz) const throw()
+	binary_data binary_data::sub_data(size_type offset, size_type sz) const throw()
 	{
 		// If requested size is more than available return until the end from the
 		// desired offset
@@ -378,8 +349,9 @@ namespace oonet
 
 		return shallow_copy;
 	}
+	
 	// Find a pattern in the data block
-	size_t binary_data::find(const cmem_ref & pattern, size_t offset) const
+	binary_data::size_type binary_data::find(const cmem_ref & pattern, size_type offset) const
 	{	const byte * p, * p_end;
 		const byte * p_local_data = p_mem_block->p_mem + off_data;
 		byte first_ch;	// First character that we search
@@ -416,19 +388,18 @@ namespace oonet
 
 	// Clear
 	void binary_data::clear()
-	{
-		s_data = 0;
-	}
+	{	s_data = 0;		}
 
-	const byte * binary_data::get_data_ptr() const throw()
+	const binary_data::pointer binary_data::c_array() const throw()
 	{   return p_mem_block->p_mem + off_data;   }
-	
+
+	binary_data::pointer binary_data::c_array() throw()
+	{   return p_mem_block->p_mem + off_data;   }
+
 	const byte * binary_data::mem_ptr() const
 	{	return p_mem_block->p_mem + off_data;	}
 	
 	byte * binary_data::mem_ptr()
 	{	return p_mem_block->p_mem + off_data;	}
 	
-	size_t binary_data::mem_size() const
-	{	return s_data;	}
 };	// !oonet namespace

@@ -59,7 +59,7 @@ namespace oonet
 		{}
 
 		binary_data serialize() const
-		{	return binary_data((byte *)p_value, sizeof(T));	}
+		{	return cmem_ref((byte *)p_value, sizeof(T));	}
 
 		size_t unserialize(const binary_data & dt)
 		{	// Check size
@@ -68,7 +68,7 @@ namespace oonet
 					"Not enough data to hold a serialization of this object");
 
 			// Get data
-			*p_value = *(T *)dt.get_data_ptr();
+			*p_value = *(T *)dt.c_array();
 
 			// Return used size
 			return sizeof(T);
@@ -93,7 +93,7 @@ namespace oonet
 		{}
 
 		binary_data serialize() const
-		{	return binary_data((byte *)&ref_value, sizeof(T));	}
+		{	return cmem_ref((byte *)&ref_value, sizeof(T));	}
 
 		size_t unserialize(const binary_data & dt)
 		{	OONET_THROW_EXCEPTION(ExceptionNotSupported,

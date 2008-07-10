@@ -33,7 +33,7 @@ namespace oonet
 		size_t i, j, iEnc=0;
 		TBase64 base64;
 		string b64string;
-		const char * pBuff = (const char *)r.get_data_ptr();
+		const char * pBuff = (const char *)r.c_array();
 		char * EncBuff;		// A buffer with encoded string
 		size_t sBuff = r.size();
 
@@ -175,7 +175,7 @@ namespace oonet
 
 	b64dec_finalize:
 		// Make binary object and relase buffer
-		DecodedData = binary_data((byte *)DecBuff, SizeDecBuff);
+		DecodedData = cmem_ref((byte *)DecBuff, SizeDecBuff);
 		delete [] DecBuff;
 		// Return object
 		return DecodedData;

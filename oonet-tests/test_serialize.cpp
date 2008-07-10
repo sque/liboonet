@@ -33,8 +33,8 @@ namespace oonet
 
 
 			virtual binary_data serialize() const
-			{	binary_data tmp = binary_data((byte*)&age, sizeof(age))
-					+ binary_data((byte*)&height, sizeof(height));
+			{	binary_data tmp = binary_data(cmem_ref((byte*)&age, sizeof(age)))
+					+ cmem_ref((byte*)&height, sizeof(height));
 				return tmp;
 			}
 
@@ -42,8 +42,8 @@ namespace oonet
 			{
 				if (r.size() < sizeof(age) + sizeof(height))
 					OONET_THROW_EXCEPTION(exception, "BOOM");
-				age = *(unsigned short*)r.get_data_ptr();
-				height = *(float *)(r.get_data_ptr() + sizeof(age));
+				age = *(unsigned short*)r.c_array();
+				height = *(float *)(r.c_array() + sizeof(age));
 				return sizeof(age) + sizeof(height);
 			};
 		};

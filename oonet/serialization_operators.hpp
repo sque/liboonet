@@ -32,7 +32,7 @@ namespace oonet
 	inline binary_data & operator<<(binary_data & dst, const std::basic_string<C> & str)
 	{
 		dst << serialize_pod(str.size());		// Push size
-		return dst += binary_data(str.c_str(), str.size() * sizeof(C));	// Push data
+		return dst += cmem_ref((const byte *)str.c_str(), str.size() * sizeof(C));	// Push data
 	}
 
 	//! Serialization of "std::list" object
@@ -113,7 +113,7 @@ namespace oonet
 					"Not enough data to hold a serialization of this object");
 
 		// Get string
-		str = std::basic_string<C>((C *)(dst.get_data_ptr()+sizeof(ssize)), ssize);
+		str = std::basic_string<C>((C *)(dst.c_array()+sizeof(ssize)), ssize);
 		return dst = dst.get_from((ssize * sizeof(C))+ sizeof(ssize));
 	}
 

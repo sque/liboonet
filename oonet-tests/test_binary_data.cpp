@@ -63,7 +63,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestAssertNullPointer::operator()()
-		{	binary_data * pb = new binary_data((byte *)NULL, 1);
+		{	binary_data * pb = new binary_data(cmem_ref(NULL, 1));
 			delete pb;
 			return false;
 		}
@@ -86,9 +86,9 @@ namespace oonet
 			};
 
 			// Create Binary Objects
-			b1 = binary_data(Array_A, 30);
-			b2 = binary_data(Array_B, 30);
-			b3 = binary_data(Array_Sum, 60);
+			b1 = cmem_ref(Array_A, 30);
+			b2 = cmem_ref(Array_B, 30);
+			b3 = cmem_ref(Array_Sum, 60);
 			b4 = b1 + b2;   // Create a new from adition
 
 			// Check if it is the same with a new created from the sum array
@@ -100,7 +100,7 @@ namespace oonet
 				return false;
 
 			// Check data in low level
-			if (memcmp(b4.get_data_ptr(), Array_Sum, 60) != 0)
+			if (memcmp(b4.c_array(), Array_Sum, 60) != 0)
 				return false;
 
 			// Check += with self
@@ -121,10 +121,10 @@ namespace oonet
 			b2 = binary_data(Char_M, 30) + binary_data(Char_A, 30);
 			b1 = binary_data::nothing;
 			for(i = 0;i < 30;i++)
-				b1 += Char_M;
+				b1 += cmem_ref(Char_M);
 
 			for(i = 0;i < 30;i++)
-				b1 += Char_A;
+				b1 += cmem_ref(Char_A);
 
 			if (b1 != b2)
 				return false;
@@ -132,9 +132,9 @@ namespace oonet
 			// byte operator +
 			b1 = binary_data::nothing;
 			for(i = 0;i < 30;i++)
-				b1 = b1 + Char_M;
+				b1 = b1 + cmem_ref(Char_M);
 			for(i = 0;i < 30;i++)
-				b1 = b1 + Char_A;
+				b1 = b1 + cmem_ref(Char_A);
 
 			if (b1 != b2)
 				return false;
@@ -152,8 +152,8 @@ namespace oonet
 			}
 
 			b1 = binary_data(Char_M, 30);
-			b2 = binary_data(Array_M, 30);
-			b3 = binary_data(Array_A, 30);
+			b2 = cmem_ref(Array_M, 30);
+			b3 = cmem_ref(Array_A, 30);
 			if (b1 != b2)
 				return false;
 
@@ -495,11 +495,34 @@ namespace oonet
 			byte b;
 
 			b = b1[1001];
-			return false;
+			return true;
 
 		}
 
 		bool test_binary_data::TestElementGeneral::operator()()
+		{	binary_data b1;
+
+			b1 = cmem_ref("lolalilolalo");
+			if (b1[0] != 'l')
+				return false;
+			if (b1[1] != 'o')
+				return false;
+			if (b1[b1.size()-1] != 'o')
+				return false;
+
+			return true;
+		}
+		
+		bool test_binary_data::TestAtElementWrongOffeset::operator()()
+		{	binary_data b1(Char_M, 1000);
+			byte b;
+
+			b = b1[1001];
+			return false;
+
+		}
+
+		bool test_binary_data::TestAtElementGeneral::operator()()
 		{	binary_data b1;
 
 			b1 = cmem_ref("lolalilolalo");
@@ -610,10 +633,10 @@ namespace oonet
 			binary_data b3;
 			b3 = b2;
 
-			if (b1.get_data_ptr() != b2.get_data_ptr())
+			if (b1.c_array() != b2.c_array())
 				return false;
 
-			if (b2.get_data_ptr() != b3.get_data_ptr())
+			if (b2.c_array() != b3.c_array())
 				return false;
 			return true;
 		}
@@ -625,38 +648,38 @@ namespace oonet
 			b3 = b2;
 			const void * p_old_pos;
 
-			if (b1.get_data_ptr() != b2.get_data_ptr())
+			if (b1.c_array() != b2.c_array())
 				return false;
 
-			if (b2.get_data_ptr() != b3.get_data_ptr())
+			if (b2.c_array() != b3.c_array())
 				return false;
 
 			// Change b2
 			b2 += cmem_ref("test");
-			if (b2.get_data_ptr() == b3.get_data_ptr())
+			if (b2.c_array() == b3.c_array())
 				return false;
 
-			if (b3.get_data_ptr() != b1.get_data_ptr())
+			if (b3.c_array() != b1.c_array())
 				return false;
 
 			// Change b2 and check if a new allocation has been done
-			p_old_pos = b2.get_data_ptr();
+			p_old_pos = b2.c_array();
 			b2 += cmem_ref("1");
-			if (b2.get_data_ptr() != p_old_pos)
+			if (b2.c_array() != p_old_pos)
 				return false;
 
 			// Assign b3 equal to b2
 			b3 = b2;
-			if (b3.get_data_ptr() != b2.get_data_ptr())
+			if (b3.c_array() != b2.c_array())
 				return false;
 
-			if (b1.get_data_ptr() == b3.get_data_ptr())
+			if (b1.c_array() == b3.c_array())
 				return false;
 
 			// Change b2 and check if a new allocation has been done
-			p_old_pos = b2.get_data_ptr();
+			p_old_pos = b2.c_array();
 			b2 += cmem_ref("1");
-			if (b2.get_data_ptr() == p_old_pos)
+			if (b2.c_array() == p_old_pos)
 				return false;
 
 			return true;
