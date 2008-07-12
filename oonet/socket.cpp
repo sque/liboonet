@@ -83,7 +83,7 @@ namespace oonet
     {	int received_size;
 
         // Allocate space for incoming data
-        binary_data received_data((byte)'\0', max_data);
+        binary_data received_data(max_data);
 
         // Get data
 		received_size = ::recv(pimpl_->get_socket(), (char *)received_data.c_array(), max_data, 0);

@@ -25,22 +25,22 @@ namespace oonet
 			if (myBuff.size() != 0 )
 				return false;
 
-			myBuff.push_back(binary_data(Char_M, 1));
+			myBuff.push_back(binary_data(1, Char_M));
 
 			if (myBuff.size() != 1 )
 				return false;
 
-			myBuff.push_back(binary_data(Char_M, 2));
+			myBuff.push_back(binary_data(2, Char_M));
 
 			if (myBuff.size() != 3 )
 				return false;
 
-			myBuff.push_front(binary_data(Char_M, 1));
+			myBuff.push_front(binary_data(1, Char_M));
 
 			if (myBuff.size() != 4 )
 				return false;
 
-			myBuff.push_back(binary_data(Char_M, 2));
+			myBuff.push_back(binary_data(2, Char_M));
 
 			if (myBuff.size() != 6 )
 				return false;
@@ -51,8 +51,8 @@ namespace oonet
 		{	buffer myBuff;
 			size_t outSize;
 
-			myBuff.push_back(binary_data(Char_M, 10000));
-			myBuff.push_back(binary_data(Char_M, 10000));
+			myBuff.push_back(binary_data(10000, Char_M));
+			myBuff.push_back(binary_data(10000, Char_M));
 
 			reset_timer();
 			for(long i = 0;i < 1000000;i++)
@@ -74,8 +74,8 @@ namespace oonet
 			if (myBuff.size() != 0)
 				return false;
 
-			myBuff.push_back(binary_data(Char_M, 10000));
-			myBuff.push_back(binary_data(Char_M, 10000));
+			myBuff.push_back(binary_data(10000, Char_M));
+			myBuff.push_back(binary_data(10000, Char_M));
 
 			if (myBuff.size() != 20000)
 				return false;
@@ -85,7 +85,7 @@ namespace oonet
 			if (myBuff.size() != 0)
 				return false;
 
-			myBuff.push_back(binary_data(Char_M, 5000));
+			myBuff.push_back(binary_data(5000, Char_M));
 
 			if (myBuff.size() != 5000)
 				return false;
@@ -110,8 +110,8 @@ namespace oonet
 			if (myBuff.size() != 0)
 				return false;
 
-			myBuff.push_back(binary_data(Char_M, 10000));
-			myBuff.push_back(binary_data(Char_M, 10000));
+			myBuff.push_back(binary_data(10000, Char_M));
+			myBuff.push_back(binary_data(10000, Char_M));
 
 			reset_timer();
 			for(long i = 0;i < 100000;i++)
@@ -171,14 +171,14 @@ namespace oonet
 
 
 			// One by one char from front
-			myBuff.push_front(binary_data('1', 1));
-			myBuff.push_front(binary_data('2', 1));
-			myBuff.push_front(binary_data('3', 1));
-			myBuff.push_front(binary_data('4', 1));
-			myBuff.push_front(binary_data('5', 1));
-			myBuff.push_front(binary_data('6', 1));
-			myBuff.push_front(binary_data('7', 1));
-			myBuff.push_front(binary_data('8', 1));
+			myBuff.push_front(binary_data(1, '1'));
+			myBuff.push_front(binary_data(1, '2'));
+			myBuff.push_front(binary_data(1, '3'));
+			myBuff.push_front(binary_data(1, '4'));
+			myBuff.push_front(binary_data(1, '5'));
+			myBuff.push_front(binary_data(1, '6'));
+			myBuff.push_front(binary_data(1, '7'));
+			myBuff.push_front(binary_data(1, '8'));
 
 			if (myBuff.peek_front(4) != cmem_ref("8765"))
 				return false;
@@ -189,14 +189,14 @@ namespace oonet
 			myBuff.flush();
 
 			// One by one char from back
-			myBuff.push_back(binary_data('1', 1));
-			myBuff.push_back(binary_data('2', 1));
-			myBuff.push_back(binary_data('3', 1));
-			myBuff.push_back(binary_data('4', 1));
-			myBuff.push_back(binary_data('5', 1));
-			myBuff.push_back(binary_data('6', 1));
-			myBuff.push_back(binary_data('7', 1));
-			myBuff.push_back(binary_data('8', 1));
+			myBuff.push_back(binary_data(1, '1'));
+			myBuff.push_back(binary_data(1, '2'));
+			myBuff.push_back(binary_data(1, '3'));
+			myBuff.push_back(binary_data(1, '4'));
+			myBuff.push_back(binary_data(1, '5'));
+			myBuff.push_back(binary_data(1, '6'));
+			myBuff.push_back(binary_data(1, '7'));
+			myBuff.push_back(binary_data(1, '8'));
 
 			if (myBuff.peek_front(4) != cmem_ref("1234"))
 				return false;
@@ -230,7 +230,7 @@ namespace oonet
 
 		bool test_buffer::TestPushFrontSpeed::operator()()
 		{	buffer myBuff;
-			binary_data data = binary_data('a', 10000);
+			binary_data data = binary_data(10000, 'a');
 
 			reset_timer();
 			for(long i = 0; i < 1000;i++)
@@ -243,7 +243,7 @@ namespace oonet
 
 		bool test_buffer::TestPopFrontSpeed::operator()()
 		{	buffer myBuff;
-			binary_data data = binary_data('a', 100000000);
+			binary_data data = binary_data(100000000, 'a');
 
 			reset_timer();
 			for(long i = 0; i < 100000;i++)
@@ -256,7 +256,7 @@ namespace oonet
 
 		bool test_buffer::TestPeekFrontSpeed::operator()()
 		{	buffer myBuff;
-			binary_data data = binary_data('a', 10000000);
+			binary_data data = binary_data(10000000, 'a');
 
 			reset_timer();
 			for(long i = 0; i < 100000;i++)
@@ -269,7 +269,7 @@ namespace oonet
 
 		bool test_buffer::TestPushBackSpeed::operator()()
 		{	buffer myBuff;
-			binary_data data = binary_data('a', 10000);
+			binary_data data = binary_data(10000, 'a');
 
 			reset_timer();
 			for(long i = 0; i < 1000;i++)
@@ -282,7 +282,7 @@ namespace oonet
 
 		bool test_buffer::TestPopBackSpeed::operator()()
 		{	buffer myBuff;
-			binary_data data = binary_data('a', 100000000);
+			binary_data data = binary_data(100000000, 'a');
 
 			reset_timer();
 			for(long i = 0; i < 100000;i++)
@@ -295,7 +295,7 @@ namespace oonet
 
 		bool test_buffer::TestPeekBackSpeed::operator()()
 		{	buffer myBuff;
-			binary_data data = binary_data('a', 10000000);
+			binary_data data = binary_data(10000000, 'a');
 
 			reset_timer();
 			for(long i = 0; i < 100000;i++)

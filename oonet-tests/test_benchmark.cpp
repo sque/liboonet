@@ -111,7 +111,7 @@ namespace oonet
 		bool test_benchmark::TestTCPSpeed4G::operator()()
 		{	bench_server server(4000000000u);
 			netstream_threaded client;
-			binary_data test_d('a', 1000);
+			binary_data test_d(1000, 'a');
 
 			// Start server
 			server.start_listen(socket_address_inet(host_inet::ANY, port_inet(40421)), 10);
@@ -130,7 +130,7 @@ namespace oonet
 		bool test_benchmark::TestHTTPSpeed500Mb::operator()()
 		{	bench_http_server server(500000000);
 			netstream client;
-			binary_data test_d('a', 1000);
+			binary_data test_d(1000, 'a');
 			http::request tmp_req;
 			tmp_req.body() = test_d;
 			tmp_req.headers().add("Host", "www.google.com");

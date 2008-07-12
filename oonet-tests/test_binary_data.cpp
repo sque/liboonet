@@ -46,7 +46,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestEnormousAlloc::operator()()
-		{	binary_data * pb = new binary_data(Char_A, 3000000000u);
+		{	binary_data * pb = new binary_data(3000000000u, Char_A);
 			delete pb;
 			return false;
 		}
@@ -54,7 +54,7 @@ namespace oonet
 		bool test_binary_data::TestEnormousReAlloc::operator()()
 		{	binary_data b1, bigSafeBlock;
 
-			bigSafeBlock = binary_data(Char_A, 100000000);
+			bigSafeBlock = binary_data(100000000, Char_A);
 
 			// 10 GB memmory realloc
 			for(long i = 0;i < 10000;i++)
@@ -118,7 +118,7 @@ namespace oonet
 			int i;
 
 			// byte operator+=
-			b2 = binary_data(Char_M, 30) + binary_data(Char_A, 30);
+			b2 = binary_data(30, Char_M) + binary_data(30, Char_A);
 			b1 = binary_data::nothing;
 			for(i = 0;i < 30;i++)
 				b1 += cmem_ref(Char_M);
@@ -151,7 +151,7 @@ namespace oonet
 				Array_A[i] = Char_A;
 			}
 
-			b1 = binary_data(Char_M, 30);
+			b1 = binary_data(30, Char_M);
 			b2 = cmem_ref(Array_M, 30);
 			b3 = cmem_ref(Array_A, 30);
 			if (b1 != b2)
@@ -166,7 +166,7 @@ namespace oonet
 		bool test_binary_data::TestNotFoundEmpty::operator()()
 		{	binary_data b1;
 
-			if (b1.find(binary_data(Char_M, 1)) != binary_data::npos)
+			if (b1.find(binary_data(1, Char_M)) != binary_data::npos)
 				return false;
 			return true;
 		}
@@ -174,8 +174,8 @@ namespace oonet
 		bool test_binary_data::TestNotFound::operator()()
 		{	binary_data b1;
 
-			b1 = binary_data(Char_A, 30);
-			if (b1.find(binary_data(Char_M, 1)) != binary_data::npos)
+			b1 = binary_data(30, Char_A);
+			if (b1.find(binary_data(1, Char_M)) != binary_data::npos)
 				return false;
 			return true;
 		}
@@ -183,8 +183,8 @@ namespace oonet
 		bool test_binary_data::TestFindEmptyPattern::operator()()
 		{	binary_data b1;
 
-			b1 = binary_data(Char_A, 30);
-			b1.find(binary_data(Char_M, 0));
+			b1 = binary_data(30, Char_A);
+			b1.find(binary_data(0, Char_M));
 			return false;
 		}
 
@@ -192,30 +192,30 @@ namespace oonet
 		{	binary_data b1;
 			size_t pos;
 
-			b1 = binary_data(Char_A, 30) + binary_data(Char_M, 30);
+			b1 = binary_data(30, Char_A) + binary_data(30, Char_M);
 
 			// Simple test
-			pos = b1.find(binary_data(Char_M, 1));
+			pos = b1.find(binary_data(1, Char_M));
 			if (pos != 30)
 				return false;
-			pos = b1.find(binary_data(Char_M, 2));
+			pos = b1.find(binary_data(2, Char_M));
 			if (pos != 30)
 				return false;
-			pos = b1.find(binary_data(Char_M, 30));
+			pos = b1.find(binary_data(30, Char_M));
 			if (pos != 30)
 				return false;
 
 			// Simple test with offset
-			pos = b1.find(binary_data(Char_M, 1), 0);
+			pos = b1.find(binary_data(1, Char_M), 0);
 			if (pos != 30)
 				return false;
-			pos = b1.find(binary_data(Char_A, 1), 0);
+			pos = b1.find(binary_data(1, Char_A), 0);
 			if (pos != 0)
 				return false;
-			pos = b1.find(binary_data(Char_M, 1), 31);
+			pos = b1.find(binary_data(1, Char_M), 31);
 			if (pos != 31)
 				return false;
-			pos = b1.find(binary_data(Char_M, 10), 32);
+			pos = b1.find(binary_data(10, Char_M), 32);
 			if (pos != 32)
 				return false;
 
@@ -263,12 +263,12 @@ namespace oonet
 		{	binary_data b1;
 			size_t pos;
 
-			b1 = binary_data(Char_A, 100000000);
-			b1 += binary_data(Char_M, 1);
-			b1 += binary_data(Char_A, 10000000);
+			b1 = binary_data(100000000, Char_A);
+			b1 += binary_data(1, Char_M);
+			b1 += binary_data(10000000, Char_A);
 
 			reset_timer();	// This is the part we want
-			pos = b1.find(binary_data(Char_M, 1));
+			pos = b1.find(binary_data(1, Char_M));
 			if (pos != 100000000)
 				return false;
 
@@ -279,12 +279,12 @@ namespace oonet
 		{	binary_data b1;
 			size_t pos;
 
-			b1 = binary_data(Char_A, 100000000);
-			b1 += binary_data(Char_M, 10000);
-			b1 += binary_data(Char_A, 10000000);
+			b1 = binary_data(100000000, Char_A);
+			b1 += binary_data(10000, Char_M);
+			b1 += binary_data(10000000, Char_A);
 
 			reset_timer();	// This is the part we want
-			pos = b1.find(binary_data(Char_M, 10000));
+			pos = b1.find(binary_data(10000, Char_M));
 			if (pos != 100000000)
 				return false;
 
@@ -295,16 +295,16 @@ namespace oonet
 		{	binary_data b1;
 			size_t pos;
 
-			b1 = binary_data(Char_M, 1) + binary_data(Char_A, 1);
+			b1 = binary_data(1, Char_M) + binary_data(1, Char_A);
 			for(long i = 0;i < 26; i++)
 			{	b1 += b1;		}
 
 			b1 = b1.get_until(100000000);
-			b1 += binary_data(Char_M, 10000);
-			b1 += binary_data(Char_A, 10000000);
+			b1 += binary_data(10000, Char_M);
+			b1 += binary_data(10000000, Char_A);
 
 			reset_timer();	// This is the part we want
-			pos = b1.find(binary_data(Char_M, 10000));
+			pos = b1.find(binary_data(10000, Char_M));
 			if (pos != 100000000)
 				return false;
 
@@ -312,7 +312,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestGetFromWrong::operator()()
-		{	binary_data b1(Char_M, 30);
+		{	binary_data b1(30, Char_M);
 
 			if (b1.get_from(31) != binary_data::nothing)
 				return false;
@@ -322,26 +322,26 @@ namespace oonet
 		bool test_binary_data::TestGetFromGeneral::operator()()
 		{	binary_data b1, b2;
 
-			b1 = binary_data(Char_M, 30);
+			b1 = binary_data(30, Char_M);
 
 			// > We must be able to get the last offset and return empty without exception
 			b1.get_from(30);
 
-			b1 += binary_data(Char_A, 30);
-			b2 = binary_data(Char_A, 30);
+			b1 += binary_data(30, Char_A);
+			b2 = binary_data(30, Char_A);
 
 			// Test right offset
 			if (b1.get_from(30) != b2)
 				return false;
 
 			// Test offset from find with various size of patters
-			if (b1.get_from(b1.find(binary_data(Char_A, 1))) != b2)
+			if (b1.get_from(b1.find(binary_data(1, Char_A))) != b2)
 				return false;
 
-			if (b1.get_from(b1.find(binary_data(Char_A, 2))) != b2)
+			if (b1.get_from(b1.find(binary_data(2, Char_A))) != b2)
 				return false;
 
-			if (b1.get_from(b1.find(binary_data(Char_A, 10))) != b2)
+			if (b1.get_from(b1.find(binary_data(10, Char_A))) != b2)
 				return false;
 
 			// Test to get for disambiguation of zero-based
@@ -355,7 +355,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestGetUntilWrong::operator()()
-		{	binary_data b1(Char_M, 30);
+		{	binary_data b1(30, Char_M);
 
 			if (b1.get_until(31) != b1)
 				return false;
@@ -365,26 +365,26 @@ namespace oonet
 		bool test_binary_data::TestGetUntilGeneral::operator()()
 		{	binary_data b1, b2;
 
-			b1 = binary_data(Char_M, 30);
+			b1 = binary_data(30, Char_M);
 
 			// > We must be able to get all the data with get until
 			b1.get_until(30);
 
-			b1 += binary_data(Char_A, 30);
-			b2 = binary_data(Char_M, 30);
+			b1 += binary_data(30, Char_A);
+			b2 = binary_data(30, Char_M);
 
 			// Test right offset
 			if (b1.get_until(30) != b2)
 				return false;
 
 			// Test offset from find with various size of patters
-			if (b1.get_until(b1.find(binary_data(Char_A, 1))) != b2)
+			if (b1.get_until(b1.find(binary_data(1, Char_A))) != b2)
 				return false;
 
-			if (b1.get_until(b1.find(binary_data(Char_A, 2))) != b2)
+			if (b1.get_until(b1.find(binary_data(2, Char_A))) != b2)
 				return false;
 
-			if (b1.get_until(b1.find(binary_data(Char_A, 10))) != b2)
+			if (b1.get_until(b1.find(binary_data(10, Char_A))) != b2)
 				return false;
 
 			// We must be able to get from start and get empty string without exception
@@ -392,7 +392,7 @@ namespace oonet
 				return false;
 
 			// We must be able to get 1 byte
-			if (b1.get_until(1) != binary_data(Char_M, 1))
+			if (b1.get_until(1) != binary_data(1, Char_M))
 				return false;
 
 			return true;
@@ -401,7 +401,7 @@ namespace oonet
 		bool test_binary_data::TestSliceWrongOffset::operator()()
 		{	binary_data b1;
 
-			b1 = binary_data(Char_M, 1000);
+			b1 = binary_data(1000, Char_M);
 			if (b1.sub_data(1001, 0) != binary_data::nothing)
 				return false;
 			return true;
@@ -410,7 +410,7 @@ namespace oonet
 		bool test_binary_data::TestSliceWrongBoundries::operator()()
 		{	binary_data b1;
 
-			b1 = binary_data(Char_M, 1000);
+			b1 = binary_data(1000, Char_M);
 			if (b1.sub_data(999, 2) != b1.get_from(999))
 				return false;
 			return true;
@@ -419,22 +419,22 @@ namespace oonet
 		bool test_binary_data::TestSliceGeneral::operator()()
 		{	binary_data b1;
 
-			b1 = binary_data(Char_A, 1000);
-			b1 += binary_data(Char_M, 1000);
-			b1 += binary_data(Char_A, 1000);
+			b1 = binary_data(1000, Char_A);
+			b1 += binary_data(1000, Char_M);
+			b1 += binary_data(1000, Char_A);
 
 			// A general test
-			if (b1.sub_data(1000,1000) != binary_data(Char_M, 1000))
+			if (b1.sub_data(1000,1000) != binary_data(1000, Char_M))
 				return false;
 
 			// In limits tests
-			if (b1.sub_data(0, 1000) != binary_data(Char_A, 1000))
+			if (b1.sub_data(0, 1000) != binary_data(1000, Char_A))
 				return false;
-			if (b1.sub_data(2000, 1000) != binary_data(Char_A, 1000))
+			if (b1.sub_data(2000, 1000) != binary_data(1000, Char_A))
 				return false;
 			if (b1.sub_data(0, binary_data::npos) != b1)
 				return false;
-			if (b1.sub_data(2000, binary_data::npos) != binary_data(Char_A, 1000))
+			if (b1.sub_data(2000, binary_data::npos) != binary_data(1000, Char_A))
 				return false;
 
 			// zero size results
@@ -450,7 +450,7 @@ namespace oonet
 		bool test_binary_data::TestManualSlice::operator()()
 		{	binary_data b1, b2, body;
 
-			body = binary_data(Char_M, 1000000);
+			body = binary_data(1000000, Char_M);
 			b1 = cmem_ref(_T("askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf START"));
 			b1 += body;
 			b1 += cmem_ref(_T("STOP askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf"));
@@ -472,7 +472,7 @@ namespace oonet
 		{	binary_data b1, b2, body;
 			size_t offset, sz;
 
-			body = binary_data(Char_M, 1000000);
+			body = binary_data(1000000, Char_M);
 			b1 = cmem_ref(_T("askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf START"));
 			b1 += body;
 			b1 += cmem_ref(_T("STOP askdfja klsdjf;lakshdfjash ajdshf kjadshfkj ahsdfkjha skjdfhakjsdhf"));
@@ -491,7 +491,7 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestElementWrongOffeset::operator()()
-		{	binary_data b1(Char_M, 1000);
+		{	binary_data b1(1000, Char_M);
 			byte b;
 
 			b = b1[1001];
@@ -514,7 +514,7 @@ namespace oonet
 		}
 		
 		bool test_binary_data::TestAtElementWrongOffeset::operator()()
-		{	binary_data b1(Char_M, 1000);
+		{	binary_data b1(1000, Char_M);
 			byte b;
 
 			b = b1[1001];
@@ -583,8 +583,8 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestLessSpeed::operator()()
-		{	binary_data a((byte)'a', 50000);
-			binary_data b((byte)'a', 50000);
+		{	binary_data a(50000, (byte)'a');
+			binary_data b(50000, (byte)'a');
 			a += cmem_ref("1");
 			b += cmem_ref("2");
 

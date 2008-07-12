@@ -14,9 +14,8 @@ namespace oonet
 
 	// Mem-block is internal implementation of the real memory holder,
 	// binary_data is a shared_ptr around an object of mem-block
-	class binary_data::_mem_block
+	struct binary_data::_mem_block
 	{
-	public:
 		byte bt_dummy;	//!< An internal dummy byte when we dont have allocated mem
 		size_t sz_mem;	//!< Size of current allocated buffer
 		byte * p_mem;	//!< Pointer to our memory
@@ -59,148 +58,134 @@ namespace oonet
 		}
 
 		// Default constructor (empty)
-		_mem_block():
-			sz_mem(0),
-			p_mem(&bt_dummy)
-		{}
+		inline _mem_block()
+			: sz_mem(0), p_mem(&bt_dummy) {}
 
-		// Construct by data
-		_mem_block(const void * _p_data, size_t _s_data)
-			:sz_mem(0),
-			p_mem(&bt_dummy)
-		{
-			OONET_ASSERT(_p_data != NULL);
-
-			// Scale memory to fit data
-			_scale_mem(_s_data);
-
-			// Copy data
-			memcpy(p_mem, _p_data, _s_data);
+		// Construct and copy memory
+		inline _mem_block(const void * _ptr, size_t _size)
+			:sz_mem(0), p_mem(&bt_dummy)
+		{	OONET_ASSERT(_ptr != NULL);
+			_scale_mem(_size);
+			memcpy(p_mem, _ptr, _size);
 		}
-
-		// Construct by repeat pattern
-		_mem_block(const byte bt_repeated, size_t s_times)
+		
+		// Construct and reserve space
+		inline _mem_block(size_t reserved_space)
 			:sz_mem(0),
 			p_mem(&bt_dummy)
 		{
 			// Scale memory to fit new data
-			_scale_mem(s_times);
-
-			// Fill data with a byte
-			memset(p_mem, bt_repeated, s_times);
+			_scale_mem(reserved_space);
 		}
-
+		
 		// Destructor
-		~_mem_block()
+		inline ~_mem_block()
 		{
 			// Free allocated space
-			if (p_mem != &bt_dummy)
-				free(p_mem);
+			if (p_mem != &bt_dummy) free(p_mem);
 		}
 	};
 
 
 	// Create real copy if needed
-	void binary_data::_assure_local_copy()
+	void binary_data::assure_unique_copy()
 	{
 		// If we are not the only one create a hard copy
 		if(!p_mem_block.unique())
-		{	boost::shared_ptr<_mem_block> new_block(new _mem_block(p_mem_block->p_mem + off_data, s_data));
-
+		{	// Create a copy of only active data
+			boost::shared_ptr<_mem_block> new_block(new _mem_block(real_ptr, real_size));
 			p_mem_block = new_block;
-			off_data = 0;
+			real_ptr = p_mem_block->p_mem;
 		}
 	}
 
 	// Simple constructor
 	binary_data::binary_data()
 		:p_mem_block(new _mem_block()),
-		off_data(0),
-		s_data(0)
+		real_ptr(p_mem_block->p_mem),
+		real_size(0)
 	{
 	}
 
 	binary_data::binary_data(const binary_data & r)
 		:p_mem_block(r.p_mem_block),
-		off_data(r.off_data),
-		s_data(r.s_data)
+		real_ptr(r.real_ptr),
+		real_size(r.real_size)
 	{
 	}
 
-	// Constructor from a byte replication
-	binary_data::binary_data(const_reference bt_repeated, size_type s_times)
-		:p_mem_block(new _mem_block(bt_repeated, s_times)),
-		off_data(0),
-		s_data(s_times)
-	{
-	}
+	// Reserve unitialized memory
+	binary_data::binary_data(size_type startup_size)
+		:p_mem_block(new _mem_block(startup_size)),
+		real_ptr(p_mem_block->p_mem),
+		real_size(startup_size)
+	{	}
+	
+	// Reserve and initialize memory with default value
+	binary_data::binary_data(size_type startup_size, const_reference def_value)
+		:p_mem_block(new _mem_block(startup_size)),
+		real_ptr(p_mem_block->p_mem),
+		real_size(startup_size)
+	{	memset(real_ptr, def_value, startup_size);	}
+
 
 	// Construct from cmem_ref
 	binary_data::binary_data(const cmem_ref & _ref)
 		:p_mem_block(new _mem_block(_ref.mem_ptr(), _ref.mem_size())),
-		off_data(0),
-		s_data(_ref.mem_size())
+		real_ptr(p_mem_block->p_mem),
+		real_size(_ref.mem_size())
 	{}
 
 	// Destructor
 	binary_data::~binary_data()
-	{
-	}
+	{}
 
 	binary_data & binary_data::operator=(const binary_data & r)
 	{
 		p_mem_block = r.p_mem_block;
-		off_data = r.off_data;
-		s_data = r.s_data;
+		real_ptr = r.real_ptr;
+		real_size = r.real_size;
 
 		return *this;
 	}
-
-	binary_data::iterator binary_data::begin()
-	{	return p_mem_block->p_mem + off_data;	}
 	
-	binary_data::const_iterator binary_data::begin() const
-	{	return p_mem_block->p_mem + off_data;	}
-	
-	binary_data::iterator binary_data::end()
-	{	return p_mem_block->p_mem + off_data + s_data;	}
+	binary_data & binary_data::operator=(const cmem_ref & ref)
+	{
+		if(!p_mem_block.unique())
+		{	boost::shared_ptr<_mem_block> new_block(new _mem_block(ref.mem_ptr(), ref.mem_size()));
 
-	binary_data::const_iterator binary_data::end() const
-	{	return p_mem_block->p_mem + off_data + s_data;	}
-		
+			p_mem_block = new_block;
+			real_ptr = p_mem_block->p_mem;
+			real_size = ref.mem_size();
+		}
+		else if (ref.mem_size() == 0)
+		{
+			real_ptr = p_mem_block->p_mem;
+			real_size = 0;
+		}
+		else
+		{
+			p_mem_block->_scale_mem(ref.mem_size());
+			memcpy(p_mem_block->p_mem, ref.mem_ptr(), ref.mem_size());
+			real_ptr = p_mem_block->p_mem;
+			real_size = ref.mem_size();
+		}
+		return *this;
+	}
 		
 	// Access element operation
-	binary_data::const_reference binary_data::operator[](size_type offset) const throw()
-	{	return p_mem_block->p_mem[off_data + offset];	}
-
-	binary_data::reference binary_data::operator[](size_type offset) throw()
-	{	return p_mem_block->p_mem[off_data + offset];	}
-
 	binary_data::const_reference binary_data::at(size_type offset) const
-	{	if (offset > s_data)
+	{	if (offset > real_size)
 			throw std::out_of_range("binary_data::at(off) has invalid offset");
-		return p_mem_block->p_mem[off_data + offset];
+		return real_ptr[offset];
 	}
 
 	binary_data::reference binary_data::at(size_type offset)
-	{	if (offset > s_data)
+	{	if (offset > real_size)
 			throw std::out_of_range("binary_data::at(off) has invalid offset");
-		return p_mem_block->p_mem[off_data + offset];
+		return real_ptr[offset];
 	}
-	
-	// Add action
-	binary_data binary_data::operator+(const binary_data &r) const
-	{
-		// Create a temp
-		binary_data temp = *this;
-
-		// Add the right assignment
-		temp +=r;
-
-		// return the result
-		return temp;
-	}
-
+			
 	binary_data binary_data::operator+(const cmem_ref &r) const
 	{
 		// Create a temp
@@ -213,43 +198,56 @@ namespace oonet
 		return temp;
 	}
 	
-	// Push action
-	binary_data & binary_data::operator+=(const binary_data &r)
+	binary_data binary_data::operator+(const binary_data &r) const
 	{
-		_assure_local_copy();
+		// Create a temp
+		binary_data temp = *this;
+
+		// Add the right assignment
+		temp +=r;
+
+		// return the result
+		return temp;
+	}
+	
+	binary_data & binary_data::operator+=(const cmem_ref &r)
+	{
+		assure_unique_copy();
 
 		// move data at the begining
-		memmove(p_mem_block->p_mem + off_data, p_mem_block->p_mem, s_data);
-		off_data = 0;
+		memmove(p_mem_block->p_mem, real_ptr, real_ptr - p_mem_block->p_mem);
+		real_ptr = p_mem_block->p_mem;
 
 		// Scale memory to fit new data
-		p_mem_block->_scale_mem(s_data + r.s_data);
+		p_mem_block->_scale_mem(real_size + r.mem_size());
+		real_ptr = p_mem_block->p_mem;
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + s_data, r.c_array(), r.s_data);
+		memcpy(p_mem_block->p_mem + real_size, r.mem_ptr(), r.mem_size());
 
 		// Add size
-		s_data += r.s_data;
+		real_size += r.mem_size();
 
 		return *this;
 	}
-
-	binary_data & binary_data::operator+=(const cmem_ref &r)
+	
+	binary_data & binary_data::operator+=(const binary_data &r)
 	{
-		_assure_local_copy();
+		assure_unique_copy();
 
 		// move data at the begining
-		memmove(p_mem_block->p_mem + off_data, p_mem_block->p_mem, s_data);
-		off_data = 0;
+		memmove(p_mem_block->p_mem, real_ptr, real_ptr - p_mem_block->p_mem);
+		real_ptr = p_mem_block->p_mem;
 
 		// Scale memory to fit new data
-		p_mem_block->_scale_mem(s_data + r.mem_size());
+		p_mem_block->_scale_mem(real_size + r.real_size);
+		real_ptr = p_mem_block->p_mem;
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + s_data, r.mem_ptr(), r.mem_size());
+		memcpy(p_mem_block->p_mem + real_size, r.real_ptr, r.real_size);
 
 		// Add size
-		s_data += r.mem_size();
+		real_size += r.real_size;
 
 		return *this;
 	}
@@ -262,14 +260,14 @@ namespace oonet
 	bool binary_data::operator==(const binary_data &r) const throw()
 	{
 		// Check sizes
-		if (s_data != r.s_data)
+		if (real_size != r.real_size)
 			return false;
 
 		// Skip zero size
-		if (s_data == 0) return true;
+		if (real_size == 0) return true;
 
 		// Compare data
-		if (0 != memcmp(c_array(), r.c_array(), s_data))
+		if (0 != memcmp(real_ptr, r.real_ptr, real_size))
 			return false;
 
 		// Else everything is ok
@@ -277,15 +275,14 @@ namespace oonet
 	}
 
 	bool binary_data::operator<(const binary_data & r) const throw()
-	{	size_t min_len = (s_data < r.s_data)?s_data:r.s_data;
+	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
 
-		int res = memcmp(p_mem_block->p_mem + off_data,
-			r.p_mem_block->p_mem + r.off_data, min_len);
+		int res = memcmp(real_ptr, r.real_ptr, min_len);
 
 		if (res < 0)
 			return true;
 		// In case equal string till now... bigger is that with more characters
-		else if ((res == 0) && (r.s_data > min_len))
+		else if ((res == 0) && (r.real_size > min_len))
 			return true;
 
 		return false;
@@ -294,28 +291,28 @@ namespace oonet
 	// Get Ansi String object
 	string binary_data::to_string() const
 	{
-		return string((char *)c_array(), s_data);
+		return string((char *)c_array(), real_size);
 	}
 
 	// Get Winde String object
 	wstring binary_data::to_wstring() const
 	{	// Calculate size
-		float wstring_size = (float)s_data;
+		float wstring_size = (float)real_size;
 		wstring_size /= sizeof(wchar_t);
 		wstring_size = floor(wstring_size);
-		return wstring((wchar_t *)c_array(), (wstring::size_type)wstring_size);
+		return wstring((wchar_t *)real_ptr, (wstring::size_type)wstring_size);
 	}
 
 	// Get starting message until that size
-	binary_data binary_data::get_until(const size_type & offset) const throw()
+	binary_data binary_data::get_until(const size_type & size) const throw()
 	{
 		// If requested is more than available, then return all data
-		if (offset > s_data)
+		if (size > real_size)
 			return *this;
 
 		// Create a shallow copy and parametrize it
 		binary_data shallow_copy(*this);
-		shallow_copy.s_data = offset;
+		shallow_copy.real_size = size;
 		return shallow_copy;
 	}
 
@@ -323,13 +320,13 @@ namespace oonet
 	binary_data binary_data::get_from(const size_type & offset) const throw()
 	{
 		// If requested is more than available, then return empty
-		if (offset > s_data)
+		if (offset > real_size)
 			return nothing;
 
 		// Create a shallow copy and parametrize it
 		binary_data shallow_copy(*this);
-		shallow_copy.off_data += offset;
-		shallow_copy.s_data -= offset;
+		shallow_copy.real_ptr += offset;
+		shallow_copy.real_size -= offset;
 
 		return shallow_copy;
 	}
@@ -339,13 +336,13 @@ namespace oonet
 	{
 		// If requested size is more than available return until the end from the
 		// desired offset
-		if ((sz == binary_data::npos) || (offset + sz > s_data))
+		if ((sz == binary_data::npos) || (offset + sz > real_size))
 			return get_from(offset);
 
 		// Create a shallow copy and parametrize it
 		binary_data shallow_copy(*this);
-		shallow_copy.off_data += offset;
-		shallow_copy.s_data = sz;
+		shallow_copy.real_ptr += offset;
+		shallow_copy.real_size = sz;
 
 		return shallow_copy;
 	}
@@ -353,7 +350,6 @@ namespace oonet
 	// Find a pattern in the data block
 	binary_data::size_type binary_data::find(const cmem_ref & pattern, size_type offset) const
 	{	const byte * p, * p_end;
-		const byte * p_local_data = p_mem_block->p_mem + off_data;
 		byte first_ch;	// First character that we search
 
 		// Check if there are data
@@ -362,44 +358,27 @@ namespace oonet
 			"Pattern is empty! Cannot search for something that does not exists");
 
         // Check if data fits in search
-        if (pattern.mem_size() > s_data)
+        if (pattern.mem_size() > real_size)
             return npos;
 
 		// Check if offset is outside isze
-		if (offset >= s_data)
+		if (offset >= real_size)
 			return npos;
 
 		// Initialize values
-		p_end = p_local_data + s_data - pattern.mem_size() + 1;
+		p_end = real_ptr + real_size - pattern.mem_size() + 1;
 		first_ch = *pattern.mem_ptr();
 
 		// Search for pattern - general optimized (The class is general, so we cant optimize it more specificly)
-		p = p_local_data + offset;
+		p = real_ptr + offset;
 		while((p =(byte *) memchr(p, first_ch, p_end - p)))
 		{
 			if (0 == memcmp(p, pattern.mem_ptr(), pattern.mem_size()) )
-				return (p - p_local_data);
+				return (p - real_ptr);
 			p++;
 		}
 
 		// Not found
 		return npos;
 	}
-
-	// Clear
-	void binary_data::clear()
-	{	s_data = 0;		}
-
-	const binary_data::pointer binary_data::c_array() const throw()
-	{   return p_mem_block->p_mem + off_data;   }
-
-	binary_data::pointer binary_data::c_array() throw()
-	{   return p_mem_block->p_mem + off_data;   }
-
-	const byte * binary_data::mem_ptr() const
-	{	return p_mem_block->p_mem + off_data;	}
-	
-	byte * binary_data::mem_ptr()
-	{	return p_mem_block->p_mem + off_data;	}
-	
 };	// !oonet namespace

@@ -217,7 +217,7 @@ namespace oonet
 			// Format response
 			resp.status_code() = 404;
 			resp.reason_phrase() = cmem_ref("Not Found");
-			resp.body() = binary_data('a', 60000);
+			resp.body() = binary_data(60000, 'a');
 			respBinary = resp.render();
 			respBinary += respBinary;
 
@@ -262,7 +262,7 @@ namespace oonet
 			// Format response
 			resp.status_code() = 404;
 			resp.reason_phrase() = cmem_ref("Not Found");
-			resp.body() = binary_data('a', 1000);
+			resp.body() = binary_data(1000, 'a');
 			respBinary = resp.render();
 
 			// Format req
@@ -376,7 +376,7 @@ namespace oonet
 			// Format response
 			resp.status_code() = 404;
 			resp.reason_phrase() = cmem_ref("Not Found");
-			resp.body() = binary_data('a', 60000);
+			resp.body() = binary_data(60000, 'a');
 			respBinary2 = resp.render();
 
 			// Format req

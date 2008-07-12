@@ -78,7 +78,7 @@ namespace oonet
 
 		bool test_http_message::TestGetBody::operator()()
 		{	http::message a;
-			binary_data PredefBody = binary_data((byte)'a', 60000);
+			binary_data PredefBody = binary_data(60000, (byte)'a');
 
 			a.body() = PredefBody;
 			for (long i = 0;i < 10000; i++)
@@ -91,7 +91,7 @@ namespace oonet
 
 		bool test_http_message::TestGetTitle::operator()()
 		{	http::message a;
-			binary_data PredefTitle = binary_data((byte)'a', 60000);
+			binary_data PredefTitle = binary_data(60000, (byte)'a');
 
 			a.title() = PredefTitle;
 			for (long i = 0;i < 10000; i++)
@@ -104,7 +104,7 @@ namespace oonet
 
 		bool test_http_message::TestRender::operator()()
 		{	http::message a;
-			binary_data out, PredefBody = binary_data((byte)'a', 60000);
+			binary_data out, PredefBody = binary_data(60000, (byte)'a');
 			binary_data shouldBe = binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 			binary_data shouldBeLF = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody;
 
@@ -127,7 +127,7 @@ namespace oonet
 
 		bool test_http_message::TestRenderSpeed::operator()()
 		{	http::message a;
-			binary_data out, PredefBody = binary_data((byte)'a', 60000);
+			binary_data out, PredefBody = binary_data(60000, (byte)'a');
 			binary_data shouldBe= binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody;
 
 			// Populate a
@@ -145,7 +145,7 @@ namespace oonet
 
 		bool test_http_message::TestParseSpeedLF::operator()()
 		{	http::message a;
-			binary_data PredefBody = binary_data((byte)'a', 60000);
+			binary_data PredefBody = binary_data(60000, (byte)'a');
 			binary_data rendered = binary_data("GET / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + binary_data("1234");
 			binary_data remaining;
 			bool b_parsed;
@@ -173,7 +173,7 @@ namespace oonet
 
 		bool test_http_message::TestParseSpeedCRLF::operator()()
 		{	http::message a;
-			binary_data PredefBody = binary_data((byte)'a', 60000);
+			binary_data PredefBody = binary_data(60000, (byte)'a');
 			binary_data rendered = binary_data("GET / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody + binary_data("1234");
 			binary_data remaining;
 			bool b_parsed;
@@ -205,7 +205,7 @@ namespace oonet
 			string header_value;
 			binary_data trail_data("1234");
 			binary_data remaining;
-			binary_data PredefBody = binary_data((byte)'a', 60000);
+			binary_data PredefBody = binary_data(60000, (byte)'a');
 			binary_data PacketWBodyCRLF = binary_data("POST / HTTP/1.1\r\nContent-Length: 60000\r\n\r\n") + PredefBody + trail_data;
 			binary_data PacketWBodyLF = binary_data("POST / HTTP/1.1\nContent-Length: 60000\n\n") + PredefBody + trail_data;
 			binary_data PacketCRLF = binary_data("GET / HTTP/1.1\r\nHost: 123\r\n\r\n");
