@@ -11,8 +11,19 @@ namespace oonet
 		const byte Char_A = (byte) 'a';
 		const byte Char_NULL = (byte) NULL;
 
+		bool test_binary_data::TestEmptyConstructor::operator()()
+		{	binary_data b1;
+		
+			if (b1.size() != 0)
+				return false;
+			if (b1.max_size() != 0)
+				return false;
+				
+			return true;
+		}
+		
 		// Sub tests implementation
-		bool test_binary_data::TestStringConstructor::operator()()
+		bool test_binary_data::TestMemRefConstructor::operator()()
 		{	binary_data b1, b2;
 
 			b1 = cmem_ref("malaka!!");
@@ -29,7 +40,33 @@ namespace oonet
 			return true;
 		}
 
-		bool test_binary_data::TestEqOperator::operator()()
+		bool test_binary_data::TestCopyConstructor::operator()()
+		{	binary_data b1;
+
+			b1 = cmem_ref("malaka!!");
+			binary_data b2(b1);
+
+			// Check if they are different
+			if (b1 != b2)
+				return false;
+
+			return true;
+		}
+		
+		bool test_binary_data::TestRangeConstructor::operator()()
+		{	binary_data b1;
+
+			b1 = cmem_ref("malaka!!");
+			binary_data b2(b1.begin(), b1.end());
+
+			// Check if they are different
+			if (b1 != b2)
+				return false;
+
+			return true;
+		}
+
+		bool test_binary_data::TestOperatorEq::operator()()
 		{	binary_data b1, b2;
 
 			b1 = cmem_ref("lola");
@@ -490,16 +527,7 @@ namespace oonet
 			return true;
 		}
 
-		bool test_binary_data::TestElementWrongOffeset::operator()()
-		{	binary_data b1(1000, Char_M);
-			byte b;
-
-			b = b1[1001];
-			return true;
-
-		}
-
-		bool test_binary_data::TestElementGeneral::operator()()
+		bool test_binary_data::TestOperatorElement::operator()()
 		{	binary_data b1;
 
 			b1 = cmem_ref("lolalilolalo");
@@ -510,6 +538,9 @@ namespace oonet
 			if (b1[b1.size()-1] != 'o')
 				return false;
 
+			// Assure that wrong offset does no throw
+			binary_data b2(1000, Char_M);
+			byte b = b2[1001]; b=b;
 			return true;
 		}
 		
@@ -517,7 +548,11 @@ namespace oonet
 		{	binary_data b1(1000, Char_M);
 			byte b;
 
-			b = b1[1001];
+			try
+			{
+				b = b1.at(1001);
+			}catch(std::out_of_range)
+			{	return true;	}
 			return false;
 
 		}
@@ -526,17 +561,17 @@ namespace oonet
 		{	binary_data b1;
 
 			b1 = cmem_ref("lolalilolalo");
-			if (b1[0] != 'l')
+			if (b1.at(0) != 'l')
 				return false;
-			if (b1[1] != 'o')
+			if (b1.at(1) != 'o')
 				return false;
-			if (b1[b1.size()-1] != 'o')
+			if (b1.at(b1.size()-1) != 'o')
 				return false;
 
 			return true;
 		}
 
-		bool test_binary_data::TestLessGeneral::operator()()
+		bool test_binary_data::TestOperatorLess::operator()()
 		{	binary_data a(cmem_ref("A"));
 			binary_data b(cmem_ref("B"));
 			binary_data ab(cmem_ref("AB"));
@@ -581,8 +616,146 @@ namespace oonet
 
 			return true;
 		}
+		
+		bool test_binary_data::TestOperatorEqLess::operator()()
+		{	binary_data a(cmem_ref("A"));
+			binary_data b(cmem_ref("B"));
+			binary_data ab(cmem_ref("AB"));
+			binary_data ac(cmem_ref("AC"));
+			binary_data bb(cmem_ref("BB"));
 
-		bool test_binary_data::TestLessSpeed::operator()()
+			// Empty must return false
+			if (binary_data::nothing < binary_data::nothing)
+				return false;
+
+			// 1 character comparison
+			if (b <= a)
+				return false;
+			if (!(a <= b))
+				return false;
+			if (!(a<=a))
+				return false;
+
+			// Check multibyte
+			if (ac <= ab)
+				return false;
+			if (!(ab <= ac))
+				return false;
+			if (!(ac <= ac))
+				return false;
+
+			// Check equality test
+			if (!(b<=a||a<=b))
+				return false;
+
+			// Check different size
+			if (!(a <= ab))
+				return false;
+			if (ab <= a)
+				return false;
+
+			// Check smaller size that must be bigger as character
+			if (b <= ac)
+				return false;
+			if (!(ac <= b))
+				return false;
+
+			return true;
+		}
+		
+		bool test_binary_data::TestOperatorEqGreater::operator()()
+		{	binary_data a(cmem_ref("A"));
+			binary_data b(cmem_ref("B"));
+			binary_data ab(cmem_ref("AB"));
+			binary_data ac(cmem_ref("AC"));
+			binary_data bb(cmem_ref("BB"));
+
+			// Empty must return false
+			if (binary_data::nothing < binary_data::nothing)
+				return false;
+
+			// 1 character comparison
+			if (a >= b)
+				return false;
+			if (!(b >= a))
+				return false;
+			if (!(a>=a))
+				return false;
+
+			// Check multibyte
+			if (ab >= ac)
+				return false;
+			if (!(ac >= ab))
+				return false;
+			if (!(ac >= ac))
+				return false;
+
+			// Check equality test
+			if (!(b>=a||a>=b))
+				return false;
+
+			// Check different size
+			if (!(ab >= a))
+				return false;
+			if (a >= ab)
+				return false;
+
+			// Check smaller size that must be bigger as character
+			if (ac >= b)
+				return false;
+			if (!(b >= ac))
+				return false;
+
+			return true;
+		}
+		
+		bool test_binary_data::TestOperatorGreater::operator()()
+		{	binary_data a(cmem_ref("A"));
+			binary_data b(cmem_ref("B"));
+			binary_data ab(cmem_ref("AB"));
+			binary_data ac(cmem_ref("AC"));
+			binary_data bb(cmem_ref("BB"));
+
+			// Empty must return false
+			if (binary_data::nothing < binary_data::nothing)
+				return false;
+
+			// 1 character comparison
+			if (a > b)
+				return false;
+			if (!(b > a))
+				return false;
+
+			// Check multibyte
+			if (ab > ac)
+				return false;
+			if (!(ac > ab))
+				return false;
+
+			// Check equality test
+			if (!(b>a||a>b))
+				return false;
+
+			// Check not equal test
+			if (a>a||a>a)
+				return false;
+
+			// Check different size
+			if (!(ab > a))
+				return false;
+			if (a > ab)
+				return false;
+
+			// Check smaller size that must be bigger as character
+			if (ac > b)
+				return false;
+			if (!(b > ac))
+				return false;
+
+			return true;
+		}
+
+		bool test_binary_data::TestOperatorLessSpeed::operator()()
 		{	binary_data a(50000, (byte)'a');
 			binary_data b(50000, (byte)'a');
 			a += cmem_ref("1");
@@ -682,6 +855,115 @@ namespace oonet
 			if (b2.c_array() == p_old_pos)
 				return false;
 
+			return true;
+		}
+
+		bool test_binary_data::TestForwardIterator::operator()()
+		{	binary_data b1 = cmem_ref(L"koukouroukou1");
+			binary_data::iterator it;
+			binary_data::const_iterator const_it;
+			int count;
+			
+			count = 0;
+			for(it = b1.begin(); it != b1.end(); it++)
+			{	if (b1[count] != *it)
+					return false;
+			
+				count++;
+			}
+			// Check size
+			if (count != b1.size())
+				return false;
+				
+			count = 0;
+			for(const_it = b1.begin(); const_it != b1.end(); const_it++)
+			{	if (b1[count] != *const_it)
+					return false;
+			
+				count++;
+			}
+			// Check size
+			if (count != b1.size())
+				return false;
+			
+			
+			return true;
+		}
+		
+		bool test_binary_data::TestReverseIterator::operator()()
+		{	binary_data b2 = cmem_ref(L"koukouroukou1");
+			const binary_data & b1 = b2;
+			binary_data::reverse_iterator it;
+			binary_data::const_reverse_iterator const_it;
+			int count;
+			
+			count = b2.size();
+			for(it = b2.rbegin(); it != b2.rend(); it++)
+			{	count --;
+				if (b2[count] != *it)
+					return false;
+			}
+			// Check size
+			if (count != 0)
+				return false;
+				
+			count = b1.size();
+			for(const_it = b1.rbegin();const_it != b1.rend(); const_it++)
+			{	count --;
+				if (b1[count] != *const_it)
+					return false;
+			}
+			// Check size
+			if (count != 0)
+				return false;
+			
+			return true;
+		}
+		
+		bool test_binary_data::TestFrontBack::operator()()
+		{	binary_data b2 = cmem_ref("koukouroukou1");
+			const binary_data & const_b = b2;
+			binary_data b_one = cmem_ref('o');
+			const binary_data & const_one = b_one;
+			
+			if (b2.front() != byte('k'))
+				return false;
+			if (b2.back() != byte('1'))
+				return false;
+				
+			if (const_b.front() != byte('k'))
+				return false;
+			if (const_b.back() != byte('1'))
+				return false;
+			
+			if (b_one.front() != (byte)'o')
+				return false;
+			if (b_one.back() != (byte)'o')
+				return false;
+
+			if (const_one.front() != (byte)'o')
+				return false;
+			if (const_one.back() != (byte)'o')
+				return false;
+
+			return true;
+		}
+
+		bool test_binary_data::TestCArray::operator()()
+		{	binary_data b2 = cmem_ref("koukouroukou1");
+			binary_data::iterator it;
+			char cstr[] ="koukouroukou1";
+			 
+			int count = 0;			
+			for(it = b2.begin(); it != b2.end(); it++)
+			{	if (*it != cstr[count])
+					return false;
+				if (b2.c_array()[count] != cstr[count])
+					return false;
+				if (b2[count] != cstr[count])
+					return false;
+				count++;
+			}
 			return true;
 		}
 	}	// !test namespace

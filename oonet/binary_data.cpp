@@ -16,15 +16,15 @@ namespace oonet
 	// binary_data is a shared_ptr around an object of mem-block
 	struct binary_data::_mem_block
 	{
-		byte bt_dummy;	//!< An internal dummy byte when we dont have allocated mem
-		size_t sz_mem;	//!< Size of current allocated buffer
-		byte * p_mem;	//!< Pointer to our memory
+		byte bt_dummy;		//!< An internal dummy byte when we dont have allocated mem
+		size_t block_size;	//!< Size of current allocated buffer
+		byte * block_ptr;	//!< Pointer to our memory
 
 		void _scale_mem(size_t _sz_desired)
 		{	size_t sz_new;
 
 			// Check if we fit (Upper boundry) (Lowest boundry no need to calculate for shrinking) (Half of buff)
-			if ((_sz_desired <= sz_mem) && ((sz_mem == 1024) || (_sz_desired >= sz_mem/2)))
+			if ((_sz_desired <= block_size) && ((block_size == 1024) || (_sz_desired >= block_size/2)))
 				return;
 
 			// Calculate new size
@@ -35,13 +35,13 @@ namespace oonet
 			byte * p_temp;   // Temporary pointer
 			try
 			{
-				if (p_mem != &bt_dummy)
+				if (block_ptr != &bt_dummy)
 					// Reallocate
-					p_temp = (byte *)realloc(p_mem, sz_new);
+					p_temp = (byte *)realloc(block_ptr, sz_new);
 				else
 					// Allocate
 					p_temp = (byte*)malloc(sizeof(byte) * sz_new);
-				p_mem = p_temp;
+				block_ptr = p_temp;
 			}catch(std::bad_alloc)
 			{	p_temp = NULL;	}
 
@@ -51,7 +51,7 @@ namespace oonet
 				OONET_THROW_EXCEPTION(ExceptionBadAllocation, "Cannot allocate memory for binary_data");
 
 			// Save new size of buffer
-			sz_mem = sz_new;
+			block_size = sz_new;
 
 			// Return pointer
 			return;
@@ -59,20 +59,20 @@ namespace oonet
 
 		// Default constructor (empty)
 		inline _mem_block()
-			: sz_mem(0), p_mem(&bt_dummy) {}
+			: block_size(0), block_ptr(&bt_dummy) {}
 
-		// Construct and copy memory
+		// Construct, allocate and copy data
 		inline _mem_block(const void * _ptr, size_t _size)
-			:sz_mem(0), p_mem(&bt_dummy)
+			:block_size(0), block_ptr(&bt_dummy)
 		{	OONET_ASSERT(_ptr != NULL);
 			_scale_mem(_size);
-			memcpy(p_mem, _ptr, _size);
+			memcpy(block_ptr, _ptr, _size);
 		}
 		
 		// Construct and reserve space
 		inline _mem_block(size_t reserved_space)
-			:sz_mem(0),
-			p_mem(&bt_dummy)
+			:block_size(0),
+			block_ptr(&bt_dummy)
 		{
 			// Scale memory to fit new data
 			_scale_mem(reserved_space);
@@ -82,7 +82,7 @@ namespace oonet
 		inline ~_mem_block()
 		{
 			// Free allocated space
-			if (p_mem != &bt_dummy) free(p_mem);
+			if (block_ptr != &bt_dummy) free(block_ptr);
 		}
 	};
 
@@ -95,14 +95,14 @@ namespace oonet
 		{	// Create a copy of only active data
 			boost::shared_ptr<_mem_block> new_block(new _mem_block(real_ptr, real_size));
 			p_mem_block = new_block;
-			real_ptr = p_mem_block->p_mem;
+			real_ptr = p_mem_block->block_ptr;
 		}
 	}
 
 	// Simple constructor
 	binary_data::binary_data()
 		:p_mem_block(new _mem_block()),
-		real_ptr(p_mem_block->p_mem),
+		real_ptr(p_mem_block->block_ptr),
 		real_size(0)
 	{
 	}
@@ -117,14 +117,20 @@ namespace oonet
 	// Reserve unitialized memory
 	binary_data::binary_data(size_type startup_size)
 		:p_mem_block(new _mem_block(startup_size)),
-		real_ptr(p_mem_block->p_mem),
+		real_ptr(p_mem_block->block_ptr),
 		real_size(startup_size)
 	{	}
+	
+	binary_data::binary_data(const_iterator beg, const_iterator end)
+		:p_mem_block(new _mem_block(beg, end - beg)),
+		real_ptr(p_mem_block->block_ptr),
+		real_size(end - beg)
+	{}
 	
 	// Reserve and initialize memory with default value
 	binary_data::binary_data(size_type startup_size, const_reference def_value)
 		:p_mem_block(new _mem_block(startup_size)),
-		real_ptr(p_mem_block->p_mem),
+		real_ptr(p_mem_block->block_ptr),
 		real_size(startup_size)
 	{	memset(real_ptr, def_value, startup_size);	}
 
@@ -132,7 +138,7 @@ namespace oonet
 	// Construct from cmem_ref
 	binary_data::binary_data(const cmem_ref & _ref)
 		:p_mem_block(new _mem_block(_ref.mem_ptr(), _ref.mem_size())),
-		real_ptr(p_mem_block->p_mem),
+		real_ptr(p_mem_block->block_ptr),
 		real_size(_ref.mem_size())
 	{}
 
@@ -155,19 +161,19 @@ namespace oonet
 		{	boost::shared_ptr<_mem_block> new_block(new _mem_block(ref.mem_ptr(), ref.mem_size()));
 
 			p_mem_block = new_block;
-			real_ptr = p_mem_block->p_mem;
+			real_ptr = p_mem_block->block_ptr;
 			real_size = ref.mem_size();
 		}
 		else if (ref.mem_size() == 0)
 		{
-			real_ptr = p_mem_block->p_mem;
+			real_ptr = p_mem_block->block_ptr;
 			real_size = 0;
 		}
 		else
 		{
 			p_mem_block->_scale_mem(ref.mem_size());
-			memcpy(p_mem_block->p_mem, ref.mem_ptr(), ref.mem_size());
-			real_ptr = p_mem_block->p_mem;
+			memcpy(p_mem_block->block_ptr, ref.mem_ptr(), ref.mem_size());
+			real_ptr = p_mem_block->block_ptr;
 			real_size = ref.mem_size();
 		}
 		return *this;
@@ -215,15 +221,15 @@ namespace oonet
 		assure_unique_copy();
 
 		// move data at the begining
-		memmove(p_mem_block->p_mem, real_ptr, real_ptr - p_mem_block->p_mem);
-		real_ptr = p_mem_block->p_mem;
+		memmove(p_mem_block->block_ptr, real_ptr, real_ptr - p_mem_block->block_ptr);
+		real_ptr = p_mem_block->block_ptr;
 
 		// Scale memory to fit new data
 		p_mem_block->_scale_mem(real_size + r.mem_size());
-		real_ptr = p_mem_block->p_mem;
+		real_ptr = p_mem_block->block_ptr;
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + real_size, r.mem_ptr(), r.mem_size());
+		memcpy(p_mem_block->block_ptr + real_size, r.mem_ptr(), r.mem_size());
 
 		// Add size
 		real_size += r.mem_size();
@@ -236,15 +242,15 @@ namespace oonet
 		assure_unique_copy();
 
 		// move data at the begining
-		memmove(p_mem_block->p_mem, real_ptr, real_ptr - p_mem_block->p_mem);
-		real_ptr = p_mem_block->p_mem;
+		memmove(p_mem_block->block_ptr, real_ptr, real_ptr - p_mem_block->block_ptr);
+		real_ptr = p_mem_block->block_ptr;
 
 		// Scale memory to fit new data
 		p_mem_block->_scale_mem(real_size + r.real_size);
-		real_ptr = p_mem_block->p_mem;
+		real_ptr = p_mem_block->block_ptr;
 
 		// Copy new data at the end
-		memcpy(p_mem_block->p_mem + real_size, r.real_ptr, r.real_size);
+		memcpy(p_mem_block->block_ptr + real_size, r.real_ptr, r.real_size);
 
 		// Add size
 		real_size += r.real_size;
@@ -287,7 +293,49 @@ namespace oonet
 
 		return false;
 	}
+	
+	bool binary_data::operator<=(const binary_data & r) const throw()
+	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
 
+		int res = memcmp(real_ptr, r.real_ptr, min_len);
+
+		if (res < 0)
+			return true;
+		// In case equal string till now... bigger is that with more characters
+		else if ((res == 0) && (r.real_size >= real_size))
+			return true;
+
+		return false;
+	}
+	
+	bool binary_data::operator>(const binary_data & r) const throw()
+	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
+
+		int res = memcmp(real_ptr, r.real_ptr, min_len);
+
+		if (res > 0)
+			return true;
+		// In case equal string till now... bigger is that with more characters
+		else if ((res == 0) && (real_size > min_len))
+			return true;
+
+		return false;
+	}
+
+	bool binary_data::operator>=(const binary_data & r) const throw()
+	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
+
+		int res = memcmp(real_ptr, r.real_ptr, min_len);
+
+		if (res > 0)
+			return true;
+		// In case equal string till now... bigger is that with more characters
+		else if ((res == 0) && (real_size >= r.real_size))
+			return true;
+
+		return false;
+	}
+	
 	// Get Ansi String object
 	string binary_data::to_string() const
 	{

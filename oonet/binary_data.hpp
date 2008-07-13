@@ -31,20 +31,18 @@ namespace oonet
 		size_type real_size;	// Size of the real data on the internal memory block
 
 	public:
-		binary_data();					// Empty constructor
 		binary_data(const cmem_ref &);	// Construct from a memory reference
-		// Allocate unitialized memory
-		explicit binary_data(size_type startup_size);
+		explicit binary_data(size_type startup_size);	// Allocate unitialized memory
 		// Allocate and initialize memory with default value
 		binary_data(size_type startup_size, const_reference def_value);
-		~binary_data();
-
-		// CopyAble
-		binary_data(const binary_data & r);		
-		binary_data & operator=(const binary_data & r);
+		binary_data(const_iterator beg, const_iterator end);
 		binary_data & operator=(const cmem_ref & ref);
 		
 		// "Container" concept implementation
+		binary_data();					// Empty constructor
+		binary_data(const binary_data & r);	
+		binary_data & operator=(const binary_data & r);
+		~binary_data();
 		inline iterator begin(){	return real_ptr;	}
 		inline const_iterator begin() const{	return real_ptr;	}
 		inline iterator end() { return real_ptr + real_size;	}
