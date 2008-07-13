@@ -70,14 +70,6 @@ namespace oonet
 		// "Array" Concept implentation
 		inline const pointer c_array() const throw(){ return real_ptr;	}
 
-		// Compare container
-		bool operator==(const binary_data & r) const throw();
-		bool operator!=(const binary_data & r) const throw();
-		bool operator<(const binary_data & r) const throw();
-		bool operator>(const binary_data & r) const throw();
-		bool operator<=(const binary_data & r) const throw();
-		bool operator>=(const binary_data & r) const throw();
-
 		// "ConstMemoryContainer" Concept implementation
 		inline size_t mem_size() const{	return real_size;	}
 		inline const byte * mem_ptr() const{ return real_ptr;	}
@@ -105,6 +97,19 @@ namespace oonet
 	
 	// Global swap function
 	inline void swap(binary_data & dt1, binary_data & dt2){	dt1.swap(dt2);	}
+	
+	// Compare operators
+	bool operator==(const binary_data & x, const binary_data & y) throw();
+	inline bool operator<(const binary_data & x, const binary_data & y) throw()
+	{	return std::lexicographical_compare(x.begin(),x.end(),y.begin(),y.end());	}
+	inline bool operator!=(const binary_data & x, const binary_data & y) throw()
+	{	return !(x == y);		}
+	inline bool operator>(const binary_data & x, const binary_data & y) throw()
+	{	return y < x;	}
+	inline bool operator<=(const binary_data & x, const binary_data & y) throw()
+	{	return !(y < x);	}
+	inline bool operator>=(const binary_data & x, const binary_data & y) throw()
+	{	return !(x < y);	}
 };
 
 #endif // !OONET_BINARY_DATA_HPP_INCLUDED

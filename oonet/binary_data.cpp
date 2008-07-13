@@ -104,22 +104,21 @@ namespace oonet
 		:p_mem_block(new _mem_block()),
 		real_ptr(p_mem_block->block_ptr),
 		real_size(0)
-	{
-	}
+	{}
 
+	// Copy constructor
 	binary_data::binary_data(const binary_data & r)
 		:p_mem_block(r.p_mem_block),
 		real_ptr(r.real_ptr),
 		real_size(r.real_size)
-	{
-	}
+	{}
 
 	// Reserve unitialized memory
 	binary_data::binary_data(size_type startup_size)
 		:p_mem_block(new _mem_block(startup_size)),
 		real_ptr(p_mem_block->block_ptr),
 		real_size(startup_size)
-	{	}
+	{}
 	
 	// Range constructor
 	binary_data::binary_data(const_iterator beg, const_iterator end)
@@ -147,6 +146,7 @@ namespace oonet
 	binary_data::~binary_data()
 	{}
 
+	// Assign operator for binary_data
 	binary_data & binary_data::operator=(const binary_data & r)
 	{
 		p_mem_block = r.p_mem_block;
@@ -155,40 +155,39 @@ namespace oonet
 
 		return *this;
 	}
-	
-	binary_data & binary_data::operator=(const cmem_ref & ref)
-	{
-		if(!p_mem_block.unique())
-		{	boost::shared_ptr<_mem_block> new_block(new _mem_block(ref.mem_ptr(), ref.mem_size()));
 
-			p_mem_block = new_block;
+	// Assign operator for memory reference
+	binary_data & binary_data::operator=(const cmem_ref & ref)
+	{	real_size = ref.mem_size();
+	
+		// Fast reject equal to zero
+		if (real_size == 0)
+			return *this;
+		
+		// Create a unique copy if needed
+		if(!p_mem_block.unique())
+		{	boost::shared_ptr<_mem_block> p_new_block(new _mem_block(ref.mem_ptr(), ref.mem_size()));
+			p_mem_block = p_new_block;
 			real_ptr = p_mem_block->block_ptr;
-			real_size = ref.mem_size();
+			return *this;
 		}
-		else if (ref.mem_size() == 0)
-		{
-			real_ptr = p_mem_block->block_ptr;
-			real_size = 0;
-		}
-		else
-		{
-			p_mem_block->_scale_mem(ref.mem_size());
-			memcpy(p_mem_block->block_ptr, ref.mem_ptr(), ref.mem_size());
-			real_ptr = p_mem_block->block_ptr;
-			real_size = ref.mem_size();
-		}
+		
+		// Scale memory and fit it inside
+		p_mem_block->_scale_mem(real_size);
+		real_ptr = p_mem_block->block_ptr;
+		memcpy(real_ptr, ref.mem_ptr(), real_size);
 		return *this;
 	}
 		
 	// Access element operation
 	binary_data::const_reference binary_data::at(size_type offset) const
-	{	if (offset > real_size)
+	{	if (offset >= real_size)
 			throw std::out_of_range("binary_data::at(off) has invalid offset");
 		return real_ptr[offset];
 	}
 
 	binary_data::reference binary_data::at(size_type offset)
-	{	if (offset > real_size)
+	{	if (offset >= real_size)
 			throw std::out_of_range("binary_data::at(off) has invalid offset");
 		return real_ptr[offset];
 	}
@@ -218,22 +217,22 @@ namespace oonet
 	}
 	
 	binary_data & binary_data::operator+=(const cmem_ref &r)
-	{
+	{	size_type r_size = r.mem_size();
+	
 		assure_unique_copy();
-
-		// move data at the begining
+		
+		// move data at the begining if it is need
 		memmove(p_mem_block->block_ptr, real_ptr, real_ptr - p_mem_block->block_ptr);
-		real_ptr = p_mem_block->block_ptr;
-
+		
 		// Scale memory to fit new data
-		p_mem_block->_scale_mem(real_size + r.mem_size());
+		p_mem_block->_scale_mem(real_size + r_size);
 		real_ptr = p_mem_block->block_ptr;
 
 		// Copy new data at the end
-		memcpy(p_mem_block->block_ptr + real_size, r.mem_ptr(), r.mem_size());
+		memcpy(real_ptr + real_size, r.mem_ptr(), r_size);
 
 		// Add size
-		real_size += r.mem_size();
+		real_size += r_size;
 
 		return *this;
 	}
@@ -241,17 +240,16 @@ namespace oonet
 	binary_data & binary_data::operator+=(const binary_data &r)
 	{
 		assure_unique_copy();
-
-		// move data at the begining
+		
+		// move data at the begining if it is need
 		memmove(p_mem_block->block_ptr, real_ptr, real_ptr - p_mem_block->block_ptr);
-		real_ptr = p_mem_block->block_ptr;
-
+		
 		// Scale memory to fit new data
 		p_mem_block->_scale_mem(real_size + r.real_size);
 		real_ptr = p_mem_block->block_ptr;
 
 		// Copy new data at the end
-		memcpy(p_mem_block->block_ptr + real_size, r.real_ptr, r.real_size);
+		memcpy(real_ptr + real_size, r.real_ptr, r.real_size);
 
 		// Add size
 		real_size += r.real_size;
@@ -259,83 +257,6 @@ namespace oonet
 		return *this;
 	}
 	
-	// Opposite comparison
-	bool binary_data::operator!=(const binary_data &r) const throw()
-	{   return  (! operator==(r));    }
-
-	// Comparison action
-	bool binary_data::operator==(const binary_data &r) const throw()
-	{
-		// Check sizes
-		if (real_size != r.real_size)
-			return false;
-
-		// Skip zero size
-		if (real_size == 0) return true;
-
-		// Compare data
-		if (0 != memcmp(real_ptr, r.real_ptr, real_size))
-			return false;
-
-		// Else everything is ok
-		return true;
-	}
-
-	bool binary_data::operator<(const binary_data & r) const throw()
-	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
-
-		int res = memcmp(real_ptr, r.real_ptr, min_len);
-
-		if (res < 0)
-			return true;
-		// In case equal string till now... bigger is that with more characters
-		else if ((res == 0) && (r.real_size > min_len))
-			return true;
-
-		return false;
-	}
-	
-	bool binary_data::operator<=(const binary_data & r) const throw()
-	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
-
-		int res = memcmp(real_ptr, r.real_ptr, min_len);
-
-		if (res < 0)
-			return true;
-		// In case equal string till now... bigger is that with more characters
-		else if ((res == 0) && (r.real_size >= real_size))
-			return true;
-
-		return false;
-	}
-	
-	bool binary_data::operator>(const binary_data & r) const throw()
-	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
-
-		int res = memcmp(real_ptr, r.real_ptr, min_len);
-
-		if (res > 0)
-			return true;
-		// In case equal string till now... bigger is that with more characters
-		else if ((res == 0) && (real_size > min_len))
-			return true;
-
-		return false;
-	}
-
-	bool binary_data::operator>=(const binary_data & r) const throw()
-	{	size_t min_len = (real_size < r.real_size)?real_size:r.real_size;
-
-		int res = memcmp(real_ptr, r.real_ptr, min_len);
-
-		if (res > 0)
-			return true;
-		// In case equal string till now... bigger is that with more characters
-		else if ((res == 0) && (real_size >= r.real_size))
-			return true;
-
-		return false;
-	}
 	
 	// Get Ansi String object
 	string binary_data::to_string() const
@@ -440,6 +361,24 @@ namespace oonet
 		real_size = r.real_size;
 		r.real_ptr = tmp_ptr;
 		r.real_size = tmp_size;
+	}
+	
+	bool operator==(const binary_data & x, const binary_data & y) throw()
+	{
+		// Check sizes
+		if (x.size() != y.size()) return false;
+
+		// Skip zero size
+		if (x.size() == 0) return true;
+
+		// Skip same pointers
+		if (x.c_array() == y.c_array()) return true;
+			
+		// Compare data
+		if (0 != memcmp(x.c_array(), y.c_array(), x.size())) return false;
+
+		// Else everything is ok
+		return true;
 	}
 	
 };	// !oonet namespace

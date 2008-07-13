@@ -540,7 +540,7 @@ namespace oonet
 
 			// Assure that wrong offset does no throw
 			binary_data b2(1000, Char_M);
-			byte b = b2[1001]; b=b;
+			byte b = b2[1000]; b=b;
 			return true;
 		}
 		
@@ -550,7 +550,7 @@ namespace oonet
 
 			try
 			{
-				b = b1.at(1001);
+				b = b1.at(1000);
 			}catch(std::out_of_range)
 			{	return true;	}
 			return false;
@@ -766,7 +766,7 @@ namespace oonet
 				return false;
 
 			bool res;
-			for(int i = 0;i < 5000; i++)
+			for(int i = 0;i < 50000; i++)
 				res = b < a;
 
 			return true;
