@@ -966,5 +966,39 @@ namespace oonet
 			}
 			return true;
 		}
+
+		bool test_binary_data::TestSwap::operator()()
+		{	binary_data b1 = cmem_ref("koukouroukou1");
+			binary_data b2(b1), b3(b1);
+			binary_data a1 = cmem_ref("yokotsoko");
+			binary_data a2(a1), a3(a1);
+			
+			a1.swap(b1);
+			
+			if (a1 != b2)
+				return false;
+			if (b1 != a2)
+				return false;
+			
+			a1.assure_unique_copy();
+			a3.swap(a1);
+			if (a1 == b2)
+				return false;
+			if (b1 == a3)
+				return false;
+			if (a2  == b3)
+				return false;
+					
+			swap(b1, b2);
+		
+			if (a1 == b1)
+				return false;
+			if (b2 == a3)
+				return false;
+			if (a2  == b3)
+				return false;
+				
+			return true;
+		}
 	}	// !test namespace
 };	// !oonet namespace

@@ -93,8 +93,8 @@ namespace oonet
 		// If we are not the only one create a hard copy
 		if(!p_mem_block.unique())
 		{	// Create a copy of only active data
-			boost::shared_ptr<_mem_block> new_block(new _mem_block(real_ptr, real_size));
-			p_mem_block = new_block;
+			boost::shared_ptr<_mem_block> p_tmp_new_block(new _mem_block(real_ptr, real_size));
+			p_mem_block.swap(p_tmp_new_block);
 			real_ptr = p_mem_block->block_ptr;
 		}
 	}
@@ -121,6 +121,7 @@ namespace oonet
 		real_size(startup_size)
 	{	}
 	
+	// Range constructor
 	binary_data::binary_data(const_iterator beg, const_iterator end)
 		:p_mem_block(new _mem_block(beg, end - beg)),
 		real_ptr(p_mem_block->block_ptr),
@@ -429,4 +430,16 @@ namespace oonet
 		// Not found
 		return npos;
 	}
+	
+	void binary_data::swap(binary_data & r)
+	{	p_mem_block.swap(r.p_mem_block);
+		pointer tmp_ptr = real_ptr;
+		size_type tmp_size = real_size;
+		
+		real_ptr = r.real_ptr;
+		real_size = r.real_size;
+		r.real_ptr = tmp_ptr;
+		r.real_size = tmp_size;
+	}
+	
 };	// !oonet namespace

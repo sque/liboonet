@@ -47,6 +47,7 @@ namespace oonet
 			OONET_DECLARE_SUBTEST(TestSliceGeneral, "quality of sub_data()");
 			OONET_DECLARE_SUBTEST(TestSliceWrongOffset, "sub_data() wrong offset");
 			OONET_DECLARE_SUBTEST(TestSliceWrongBoundries, "sub_data() wrong boundries");
+			OONET_DECLARE_SUBTEST(TestSwap, "quality of swap()");
 															
 			OONET_DECLARE_SUBTEST_MUSTTHROW(TestEnormousAlloc, "Enormous allocation", "ExceptionBadAllocation");
 			OONET_DECLARE_SUBTEST_MUSTTHROW(TestEnormousReAlloc, "Enormous reallocation", "ExceptionBadAllocation");
@@ -107,6 +108,7 @@ namespace oonet
 				OONET_EXECUTE_SUBTEST(TestSliceGeneral);
 				OONET_EXECUTE_SUBTEST(TestSliceWrongOffset);
 				OONET_EXECUTE_SUBTEST(TestSliceWrongBoundries);
+				OONET_EXECUTE_SUBTEST(TestSwap);
 																
 				OONET_EXECUTE_SUBTEST(TestEnormousAlloc);
 				//OONET_EXECUTE_SUBTEST(TestEnormousReAlloc);
