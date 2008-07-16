@@ -45,7 +45,6 @@ namespace oonet
 			const static binary_data const_trace;
 			const static binary_data const_connect;
 
-
 			E_REQUEST_METHOD m_req_method;	//!< HTTP request method
 			binary_data m_http_version;		//!< HTTP version
 			binary_data m_custom_method;	//!< Extended request method (if used)

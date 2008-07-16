@@ -41,9 +41,9 @@ namespace oonet
 
 			// Prepare title
 			_snprintf(_s_title, 1024, "%s %03d %s",
-				const_http_ver1_1.to_string().c_str(),
+				to_string(const_http_ver1_1).c_str(),
 				m_status_code,
-				m_reason_phrase.to_string().c_str());
+				to_string(m_reason_phrase).c_str());
 
 			// Prepare Title
 			m_title = cmem_ref((const char *)_s_title);
@@ -77,7 +77,7 @@ namespace oonet
 				|| (bt_status_code.size() != 3))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"HTTP response without error code!");
-			m_status_code = (ushort)atol(bt_status_code.to_string().c_str());
+			m_status_code = (ushort)atol(to_string(bt_status_code).c_str());
 
 			// Get reason phrase
 			if (status_code_end_pos == string::npos)

@@ -111,11 +111,11 @@ namespace oonet
 			a.status_code() = 202;
 			a.reason_phrase() = binary_data("Created");
 
-			out = a.render(http::const_lf).to_string();
+			out = to_string(a.render(http::const_lf));
 			if (out != shouldbeLF)
 				return false;
 
-			out = a.render(http::const_crlf).to_string();
+			out = to_string(a.render(http::const_crlf));
 			if (out != shouldbeCRLF)
 				return false;
 

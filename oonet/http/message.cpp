@@ -34,11 +34,11 @@ namespace oonet
 			{
 				char cstr_tmp[30];
 				_snprintf(cstr_tmp, 30, "%d", m_body.size());
-				m_headers.erase_all_by_name(const_content_length.to_string());
-				m_headers.add(const_content_length.to_string(), cstr_tmp);
+				m_headers.erase_all_by_name(to_string(const_content_length));
+				m_headers.add(to_string(const_content_length), cstr_tmp);
 			}
 			else
-				m_headers.erase(m_headers.find(const_content_length.to_string()));
+				m_headers.erase(m_headers.find(to_string(const_content_length)));
 		}
 
 		// Copy operator
@@ -93,7 +93,7 @@ namespace oonet
 			body_start_pos += title_end_pos + nl_delimiter.size();
 
 			// Get content-length header
-			if (m_headers.find_first_integer(const_content_length.to_string(), body_size))
+			if (m_headers.find_first_integer(to_string(const_content_length), body_size))
 			{	if (body_size  < 0)
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 						"HTTP Packet says that contains body with size less than 0!?!"

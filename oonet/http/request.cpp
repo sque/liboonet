@@ -159,7 +159,7 @@ namespace oonet
 			if ((urlend_pos =  m_title.find(const_space, commandend_pos)) == binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
-			m_uri = url(title().sub_data(commandend_pos, urlend_pos - commandend_pos).to_string());
+			m_uri = url(to_string(title().sub_data(commandend_pos, urlend_pos - commandend_pos)));
 			if (m_uri.full() == "")
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");

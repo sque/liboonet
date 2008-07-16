@@ -145,7 +145,7 @@ namespace oonet
 			for(it = fields_set.begin();it != fields_set.end(); it++)
 			{
 				if (!is_first)
-					_formated_field += new_line.to_string();
+					_formated_field += to_string(new_line);
 				else
 					is_first = false;
 
@@ -196,8 +196,8 @@ namespace oonet
 					return binary_data::npos;	// Incomplete data
 
 				// Grab field
-				field_name = dt_remain.get_until(sep_pos).to_string();
-				fields_set.push_back(field_type(field_name, _trim_front(dt_remain.sub_data(sep_pos + 1, end_line_pos - sep_pos - 1).to_string())));
+				field_name = to_string(dt_remain.get_until(sep_pos));
+				fields_set.push_back(field_type(field_name, _trim_front(to_string(dt_remain.sub_data(sep_pos + 1, end_line_pos - sep_pos - 1)))));
 
 				start_dst += end_line_pos + nl_delimiter.size();
 				dt_remain = dt_remain.get_from(end_line_pos + nl_delimiter.size());

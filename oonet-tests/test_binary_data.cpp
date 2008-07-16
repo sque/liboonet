@@ -83,8 +83,13 @@ namespace oonet
 		}
 
 		bool test_binary_data::TestEnormousAlloc::operator()()
-		{	binary_data * pb = new binary_data(3000000000u, Char_A);
-			delete pb;
+		{	
+            try
+            {   binary_data tmp(3000000000u, Char_A);
+            }
+            catch(std::bad_alloc)
+            {   return true;    }
+			
 			return false;
 		}
 
@@ -221,8 +226,11 @@ namespace oonet
 		{	binary_data b1;
 
 			b1 = binary_data(30, Char_A);
-			b1.find(binary_data(0, Char_M));
-			return false;
+			if (0 != b1.find(binary_data(0, Char_M)))
+				return false;
+			if (5 != b1.find(binary_data(0, Char_M), 5))
+				return false;
+			return true;
 		}
 
 		bool test_binary_data::TestFindGeneral::operator()()
@@ -776,11 +784,11 @@ namespace oonet
 		{	binary_data b1 = cmem_ref("koukouroukou1");
 
 			//printf("%s\n", b1.GetStringA().c_str());
-			if (b1.to_string() != "koukouroukou1")
+			if (to_string(b1) != "koukouroukou1")
 				return false;
 
 			b1 = cmem_ref("kiki");
-			if (b1.to_string() != "kiki")
+			if (to_string(b1) != "kiki")
 				return false;
 
 			return true;
@@ -790,11 +798,11 @@ namespace oonet
 		{	binary_data b1 = cmem_ref(L"koukouroukou1");
 
 			//printf("TEST: -%s-\n", StringConverter(b1.GetStringW()).toAnsi().c_str());
-			if (b1.to_wstring() != L"koukouroukou1")
+			if (to_wstring(b1) != L"koukouroukou1")
 				return false;
 
 			b1 = cmem_ref(L"kiki");
-			if (b1.to_wstring() != L"kiki")
+			if (to_wstring(b1) != L"kiki")
 				return false;
 
 			return true;
@@ -833,12 +841,6 @@ namespace oonet
 				return false;
 
 			if (b3.c_array() != b1.c_array())
-				return false;
-
-			// Change b2 and check if a new allocation has been done
-			p_old_pos = b2.c_array();
-			b2 += cmem_ref("1");
-			if (b2.c_array() != p_old_pos)
 				return false;
 
 			// Assign b3 equal to b2

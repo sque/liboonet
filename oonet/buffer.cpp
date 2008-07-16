@@ -12,18 +12,14 @@ namespace oonet
 	void buffer::push_front(const binary_data & r)
 	{	mt::scoped_lock fun_lock(*this);
 
-		binary_data tmp(r);
-
-		tmp += bd_data;
-
-		bd_data = tmp;
+		bd_data.prepend(r);
 	}
 
 	// Push at end
 	void buffer::push_back(const binary_data & r)
 	{	mt::scoped_lock fun_lock(*this);
 
-		bd_data += r;
+		bd_data.append(r);
 	}
 
 	// Pop at front

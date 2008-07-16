@@ -37,7 +37,7 @@ namespace oonet
 			OONET_DECLARE_SUBTEST(TestFindGeneral, "quality of find()");
 			OONET_DECLARE_SUBTEST(TestNotFoundEmpty, "find() on empty string");
 			OONET_DECLARE_SUBTEST(TestNotFound, "find() for missing");
-			OONET_DECLARE_SUBTEST_MUSTTHROW(TestFindEmptyPattern, "find() with empty pattern", "ExceptionWrongArgument");
+			OONET_DECLARE_SUBTEST(TestFindEmptyPattern, "find() with empty pattern");
 			
 			// Modifiers
 			OONET_DECLARE_SUBTEST(TestGetUntilGeneral, "quality of get_until()");
@@ -49,7 +49,7 @@ namespace oonet
 			OONET_DECLARE_SUBTEST(TestSliceWrongBoundries, "sub_data() wrong boundries");
 			OONET_DECLARE_SUBTEST(TestSwap, "quality of swap()");
 															
-			OONET_DECLARE_SUBTEST_MUSTTHROW(TestEnormousAlloc, "Enormous allocation", "ExceptionBadAllocation");
+			OONET_DECLARE_SUBTEST(TestEnormousAlloc, "Enormous allocation");
 			OONET_DECLARE_SUBTEST_MUSTTHROW(TestEnormousReAlloc, "Enormous reallocation", "ExceptionBadAllocation");
 			OONET_DECLARE_SUBTEST_MUSTTHROW(TestAssertNullPointer, "Assert on Null pointer", "ExceptionAssertationFailed");
 			OONET_DECLARE_SUBTEST(TestAddCompare, "Add and compare");
