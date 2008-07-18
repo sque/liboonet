@@ -3,6 +3,7 @@
 @brief Implementation of http::message class
 */
 #include "./message.hpp"
+#include "./http_utils.hpp"
 
 namespace oonet
 {
@@ -76,21 +77,22 @@ namespace oonet
 
 		// Parse data and save to message
 		bool message::parse(const binary_data & dt_in, binary_data * dt_remain)
-		{	binary_data dt_headers_and_below, nl_delimiter;
+		{	binary_data dt_headers_and_below;
 			long body_size;
 			size_t title_end_pos;	// Position where title ends
 			size_t body_start_pos;	// Position where body starts
+            size_t newline_size;    // Size of new line
 
 			// Get title
-			if ((title_end_pos = _smart_find_new_line(dt_in, nl_delimiter)) == binary_data::npos)
+			if ((title_end_pos = algorithms::find_new_line(dt_in, newline_size)) == binary_data::npos)
 				return false;	// Not even title is here
 			m_title =  dt_in.get_until(title_end_pos);
-			dt_headers_and_below = dt_in.get_from(title_end_pos + nl_delimiter.size());
+			dt_headers_and_below = dt_in.get_from(title_end_pos + newline_size);
 
 			// Get headers
 			if ((body_start_pos = m_headers.parse(dt_headers_and_below)) == binary_data::npos)
 				return false;	// Incomplete Head!
-			body_start_pos += title_end_pos + nl_delimiter.size();
+			body_start_pos += title_end_pos + newline_size;
 
 			// Get content-length header
 			if (m_headers.find_first_integer(to_string(const_content_length), body_size))

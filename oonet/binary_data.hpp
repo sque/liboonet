@@ -99,6 +99,12 @@ namespace oonet
 				return it - real_ptr;
 			return npos;
 		}
+        inline size_type find(const byte _byte, size_type offset = 0) const
+		{	const_iterator it = std::find(real_ptr + offset, real_ptr + real_size,
+				_byte);
+			if (it != real_ptr + real_size) return it - real_ptr;
+			return npos;
+		}
 		binary_data sub_data(size_type offset, size_type sz = npos) const throw();
 		void assure_unique_copy();
 		inline void range_check(size_type offset) const

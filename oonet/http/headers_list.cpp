@@ -3,6 +3,7 @@
 @brief Implementation of http::headers_list class
 */
 #include "./headers_list.hpp"
+#include "./http_utils.hpp"
 
 namespace oonet
 {
@@ -18,42 +19,6 @@ namespace oonet
 		const binary_data const_crlfcrlf = const_crlf + const_crlf;
 		const binary_data const_space = cmem_ref(" ");
 		const binary_data const_colon = cmem_ref(":");
-
-		size_t _smart_find_new_line(const binary_data & dt_in, binary_data & nl_delimiter, size_t offset)
-		{	size_t nl_pos;
-
-			// Find LF
-			if ((nl_pos = dt_in.find(const_lf, offset)) == binary_data::npos)
-				return string::npos;	// Nothing found
-
-			// Check if previous letter was CR
-			if ((nl_pos > 0) && (dt_in[nl_pos -1] == '\r'))
-			{	// Found CRLF
-				nl_delimiter = const_crlf;
-				return nl_pos -1;
-			}
-			nl_delimiter = const_lf;
-			return nl_pos;
-		}
-
-		// Remove preceding LWS
-		string headers_list::_trim_front(const string & r)
-		{	size_t cpos;
-			for(cpos = 0;cpos != r.size();cpos ++)
-				if (r[cpos] != ' ')
-					break;
-			return r.substr(cpos);
-		}
-
-		// Remove trailing LWS
-		string headers_list::_trim_back(const string & r)
-		{   size_t len;
-			for(len = r.size();len != 0;len--)
-				if (r[len - 1] != ' ')
-					break;
-
-			return r.substr(0, len);
-		}
 
 		// Constructor
 		headers_list::headers_list(void)
@@ -138,7 +103,7 @@ namespace oonet
 		// Render headers in HTTP Format
 		binary_data headers_list::render(const binary_data & new_line)
 		{	const_iterator it;;
-			string _formated_field;
+			binary_data _formated_field;
 			bool is_first = true;
 
 			// Loop around all headers
@@ -154,16 +119,17 @@ namespace oonet
 				_formated_field += it->second;
 			}
 
-			return cmem_ref(_formated_field);
+			return _formated_field;
 		}
 
 		// Parse headers
 		size_t headers_list::parse(const binary_data & dt_in)
-		{	binary_data dt_remain, nl_delimiter;
+		{	binary_data dt_remain;
 			string field_name;
 			size_t start_dst = 0;		// Current distance from the start of block
 			size_t end_line_pos;		// Position at end of line
 			size_t sep_pos;				// Value/Name separator
+            size_t newline_size;        // New line size
 
 			// In case of empty we return not found
 			if (dt_in.empty())
@@ -181,26 +147,26 @@ namespace oonet
 				// Check if we found empty line
 				if (dt_remain[0] == '\n')
 					return start_dst + 1;
-				else if ((dt_remain.size() >= 2) && (dt_remain[0] == '\r') && (dt_remain[1] == '\n'))
+				else if ((dt_remain[0] == '\r') && (dt_remain.size() >= 2) && (dt_remain[1] == '\n'))
 					return start_dst + 2;
 
 				// find colon
-				if ((sep_pos = dt_remain.find(const_colon)) == binary_data::npos)
-					if (_smart_find_new_line(dt_remain, nl_delimiter) != binary_data::npos)
+				if ((sep_pos = dt_remain.find(constants::colon_char)) == binary_data::npos)
+					if (algorithms::find_new_line(dt_remain, newline_size) != binary_data::npos)
 						OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated http::Headers!");
 					else
 						return binary_data::npos;	// Not found
 
 				// find terminating new line
-				if ((end_line_pos = _smart_find_new_line(dt_remain, nl_delimiter, sep_pos)) == binary_data::npos)
+				if ((end_line_pos = algorithms::find_new_line(dt_remain, newline_size, sep_pos)) == binary_data::npos)
 					return binary_data::npos;	// Incomplete data
 
 				// Grab field
 				field_name = to_string(dt_remain.get_until(sep_pos));
-				fields_set.push_back(field_type(field_name, _trim_front(to_string(dt_remain.sub_data(sep_pos + 1, end_line_pos - sep_pos - 1)))));
+				fields_set.push_back(field_type(field_name, algorithms::trim_left_copy(to_string(dt_remain.sub_data(sep_pos + 1, end_line_pos - sep_pos - 1)))));
 
-				start_dst += end_line_pos + nl_delimiter.size();
-				dt_remain = dt_remain.get_from(end_line_pos + nl_delimiter.size());
+				start_dst += end_line_pos + newline_size;
+				dt_remain = dt_remain.get_from(end_line_pos + newline_size);
 			}
 
 			return binary_data::npos;	//Incomplete data

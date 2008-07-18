@@ -356,43 +356,43 @@ namespace oonet
 			binary_data text_splitted_7 = cmem_ref("test\r\n");
 			binary_data text_splitted_8 = cmem_ref("test\n");
 			binary_data text_splitted_9 = cmem_ref("test\r");
-			binary_data nl;
+			size_t nl_size;
 			size_t offset;
 
-			offset = http::_smart_find_new_line(text_splitted_1, nl);
-			if ((offset != 6) || (nl != http::const_crlf))
+			offset = algorithms::find_new_line(text_splitted_1, nl_size);
+			if ((offset != 6) || (nl_size != 2))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_2, nl);
-			if ((offset != 13) || (nl != http::const_crlf))
+			offset = algorithms::find_new_line(text_splitted_2, nl_size);
+			if ((offset != 13) || (nl_size != 2))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_3, nl);
-			if ((offset != 0) || (nl != http::const_crlf))
+			offset = algorithms::find_new_line(text_splitted_3, nl_size);
+			if ((offset != 0) || (nl_size != 2))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_4, nl);
-			if ((offset != 0) || (nl != http::const_lf))
+			offset = algorithms::find_new_line(text_splitted_4, nl_size);
+			if ((offset != 0) || (nl_size != 2))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_5, nl);
-			if ((offset != 0) || (nl != http::const_lf))
+			offset = algorithms::find_new_line(text_splitted_5, nl_size);
+			if ((offset != 0) || (nl_size != 2))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_6, nl);
-			if ((offset != 0) || (nl != http::const_crlf))
+			offset = algorithms::find_new_line(text_splitted_6, nl_size);
+			if ((offset != 0) || (nl_size != 2))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_7, nl);
-			if ((offset != 4) || (nl != http::const_crlf))
+			offset = algorithms::find_new_line(text_splitted_7, nl_size);
+			if ((offset != 4) || (nl_size != 2))
 
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_8, nl);
-			if ((offset != 4) || (nl != http::const_lf))
+			offset = algorithms::find_new_line(text_splitted_8, nl_size);
+			if ((offset != 4) || (nl_size != 1))
 				return false;
 
-			offset = http::_smart_find_new_line(text_splitted_9, nl);
+			offset = algorithms::find_new_line(text_splitted_9, nl_size);
 			if (offset != string::npos)
 				return false;
 
@@ -401,7 +401,7 @@ namespace oonet
 
 		bool test_http_headers_list::TestSmartNewLineSpeedCRLF::operator()()
 		{	binary_data text_splitted;
-			binary_data nl;
+			size_t nl_size;
 			size_t offset;
 
 			// Create text
@@ -413,10 +413,10 @@ namespace oonet
 			reset_timer();
 			for(long i = 0; i < 100000; i ++)
 			{
-				offset = http::_smart_find_new_line(text_splitted, nl);
+				offset = algorithms::find_new_line(text_splitted, nl_size);
 			}
 
-			if ((offset != 9200) || (nl != http::const_crlf))
+			if ((offset != 9200) || (nl_size != 2))
 				return false;
 
 			return true;
@@ -424,7 +424,7 @@ namespace oonet
 
 		bool test_http_headers_list::TestSmartNewLineSpeedLF::operator()()
 		{	binary_data text_splitted;
-			binary_data nl;
+			size_t nl_size;
 			size_t offset;
 
 			// Create text
@@ -436,10 +436,10 @@ namespace oonet
 			reset_timer();
 			for(long i = 0; i < 100000; i ++)
 			{
-				offset = http::_smart_find_new_line(text_splitted, nl);
+				offset = algorithms::find_new_line(text_splitted, nl_size);
 			}
 
-			if ((offset != 9200) || (nl != http::const_lf))
+			if ((offset != 9200) || (nl_size != 1))
 				return false;
 
 			return true;

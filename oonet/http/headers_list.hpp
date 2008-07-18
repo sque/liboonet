@@ -3,6 +3,7 @@
 
 #include "../oonet.hpp"
 #include "../binary_data.hpp"
+#include "./http_utils.hpp"
 
 #include <utility>
 #include <list>
@@ -21,18 +22,6 @@ namespace oonet
 		const extern binary_data const_lf;			//!< Constant LF
 		const extern binary_data const_space;		//!< Space constant
 		const extern binary_data const_colon;		//!< Colon character constant
-
-		//! Smart find of new line, can work with LF and CRLF
-		/**
-			Searches in a text for the first occurance of a new line character.
-			It works with LF and CRLF new lines. When new line is found, it returns
-			the offset where is found or std::string::npos if not found.
-		@param str [IN] The string to search for first occurance of new line.
-		@param nl_str [OUT] It saves the type of new line character that was found. If
-			nothing is found then the value of nl_str is undefined.
-		@return The offset where new line character was found
-		*/
-		size_t _smart_find_new_line(const binary_data & dt_in, binary_data & nl_delimiter, size_t offset = 0);
 
 		//! Class for managing HTTP headers.
 		/**
@@ -59,12 +48,6 @@ namespace oonet
 		private:
 			//! Headers map
 			fields_set_type fields_set;
-
-			//! Trim a string from whitespaces at the begining
-			string _trim_front(const string & r);
-
-			//! Trim  a string from whitespaces at the end
-			string _trim_back(const string & r);
 
 		public:
 			//! Default constructor
