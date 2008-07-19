@@ -224,7 +224,7 @@ namespace oonet
 			// Format req
 			req.uri() = http::url("/");
 			req.request_method() = http::request::REQUEST_GET;
-			req.headers().add("Host", "www.google.com");
+			req.headers().insert("Host", "www.google.com");
 
 			// Create http server
 			MiniHTTPServer myServer(respBinary);
@@ -268,7 +268,7 @@ namespace oonet
 			// Format req
 			req.uri() = http::url("/");
 			req.request_method() = http::request::REQUEST_GET;
-			req.headers().add("Host", "www.google.com");
+			req.headers().insert("Host", "www.google.com");
 
 			// Create http server
 			HTTPServer myServer;
@@ -306,7 +306,7 @@ namespace oonet
 			// Format req
 			req.uri() = http::url("/");
 			req.request_method() = http::request::REQUEST_GET;
-			req.headers().add("Host", "www.google.com");
+			req.headers().insert("Host", "www.google.com");
 
 			// Create http server
 			MiniHTTPServer myServer(respBinary, 4000);
@@ -341,7 +341,7 @@ namespace oonet
 			// Format req
 			req.uri() = http::url("/");
 			req.request_method() = http::request::REQUEST_GET;
-			req.headers().add("Host", "www.google.com");
+			req.headers().insert("Host", "www.google.com");
 
 			// Create http server
 			MiniHTTPServer myServer(respBinary, 100);
@@ -382,7 +382,7 @@ namespace oonet
 			// Format req
 			req.uri() = http::url("/");
 			req.request_method() = http::request::REQUEST_GET;
-			req.headers().add("Host", "www.google.com");
+			req.headers().insert("Host", "www.google.com");
 
 			// Create http server
 			MiniHTTPServer myServer1(respBinary);
@@ -443,7 +443,7 @@ namespace oonet
 			// Format req
 			req.uri() = http::url("/");
 			req.request_method() = http::request::REQUEST_GET;
-			req.headers().add("Host", "www.google.com");
+			req.headers().insert("Host", "www.google.com");
 
 			for(int i = 0;i < 1000;i++)
 			{

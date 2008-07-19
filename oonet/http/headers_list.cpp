@@ -20,54 +20,6 @@ namespace oonet
 		const binary_data const_space = cmem_ref(" ");
 		const binary_data const_colon = cmem_ref(":");
 
-		// Constructor
-		headers_list::headers_list(void)
-		{}
-
-		// Destructor
-		headers_list::~headers_list(void)
-		{}
-
-		// Copy constructor
-		headers_list::headers_list(const headers_list &r)
-		{	fields_set = r.fields_set;	}
-
-		// Copy operator
-		headers_list & headers_list::operator=(const headers_list & r)
-		{
-			fields_set = r.fields_set;
-			return *this;
-		}
-
-		headers_list::iterator headers_list::find(const string & _field_name)
-		{	iterator it;
-
-			for(it = fields_set.begin();it != fields_set.end(); it++)
-				if (it->first == _field_name)
-					return it;
-			return end();
-		}
-
-		headers_list::const_iterator headers_list::find(const string & _field_name) const
-		{	const_iterator it;
-
-			for(it = fields_set.begin();it != fields_set.end(); it++)
-				if (it->first == _field_name)
-					return it;
-			return end();
-		}
-
-		bool headers_list::find_first(const string & _field_name, string & _field_value) const
-		{	const_iterator it;
-
-			if ((it = find(_field_name)) != end())
-			{
-				_field_value = it->second;
-				return true;
-			}
-			return false;
-		}
-
 		bool headers_list::find_first_integer(const string & _field_name, long & _field_value_int) const
 		{	string _field_value;
 
@@ -77,27 +29,6 @@ namespace oonet
 			}
 
 			return false;
-		}
-
-		// Remove a header
-		size_t headers_list::erase_all_by_name(const string & _field_name)
-		{	iterator it, erase_it;
-			size_t count = 0;
-
-			it = fields_set.begin();
-			while(it != fields_set.end())
-			{
-				if (it->first == _field_name)
-				{	erase_it = it;
-					it++;
-					count++;
-					fields_set.erase(erase_it);
-					continue;
-				}
-				it ++;
-			}
-
-			return count;
 		}
 
 		// Render headers in HTTP Format
@@ -163,7 +94,7 @@ namespace oonet
 
 				// Grab field
 				field_name = std::string((char *)dt_remain.c_array(), off_colon);
-				fields_set.push_back(field_type(field_name, algorithms::trim_left_copy(
+				fields_set.insert(value_type(field_name, algorithms::trim_left_copy(
                     std::string((char *)(dt_remain.c_array() + off_colon + 1), off_endline - off_colon - 1))));
 
 				start_dst += off_endline + newline_size;

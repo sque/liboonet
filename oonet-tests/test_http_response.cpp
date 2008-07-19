@@ -28,7 +28,7 @@ namespace oonet
 			string header_value;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.title() = binary_data("200 OK");
 			a.status_code() = 404;
 			a.reason_phrase() = binary_data("Not Found");
@@ -66,7 +66,7 @@ namespace oonet
 			string header_value;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.title() = binary_data("200 OK");
 			a.status_code() = 404;
 			a.reason_phrase() = binary_data("Not Found");
@@ -107,7 +107,7 @@ namespace oonet
 			string out;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.status_code() = 202;
 			a.reason_phrase() = binary_data("Created");
 
@@ -128,7 +128,7 @@ namespace oonet
 			binary_data out;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.status_code() = 202;
 			a.reason_phrase() = binary_data("Created");
 

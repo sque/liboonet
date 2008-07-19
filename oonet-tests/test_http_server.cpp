@@ -173,7 +173,7 @@ namespace oonet
 			http::request myRequest;
 
 			// Format my request
-			myRequest.headers().add("Host", "www.google.com");
+			myRequest.headers().insert("Host", "www.google.com");
 			if (myServer.listening())
 				return false;
 
@@ -239,8 +239,8 @@ namespace oonet
 					return false;
 				return false;
 			}
-			catch(exception & e)
-			{	e=e; return true;	}
+			catch(exception)
+			{	return true;	}
 			return false;
 
 		}
@@ -253,7 +253,7 @@ namespace oonet
 
 			http::request myRequest;
 			// Format my request
-			myRequest.headers().add("Host", "www.google.com");
+			myRequest.headers().insert("Host", "www.google.com");
 			binary_data dRequest = myRequest.render();
 
 			for(long i = 0;i < 1000;i++)

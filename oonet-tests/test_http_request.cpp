@@ -28,7 +28,7 @@ namespace oonet
 			string header_value;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.title() = binary_data("GET / HTTP/1.1");
 			a.request_method() = http::request::REQUEST_POST;
 			a.uri() = http::url("/index.html");
@@ -66,7 +66,7 @@ namespace oonet
 			string header_value;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.title() = binary_data("GET / HTTP/1.1");
 			a.request_method() = http::request::REQUEST_POST;
 			a.uri() = http::url("/index.html");
@@ -107,7 +107,7 @@ namespace oonet
 			string out;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.request_method() = http::request::REQUEST_POST;
 			a.uri() = http::url("/index.html");
 
@@ -128,7 +128,7 @@ namespace oonet
 			binary_data out;
 
 			a.body() = binary_data("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.request_method() = http::request::REQUEST_POST;
 			a.uri() = http::url("/index.html");
 

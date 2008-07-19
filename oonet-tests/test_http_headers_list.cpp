@@ -20,9 +20,9 @@ namespace oonet
 		{	http::headers_list a;
 
 			// Populate headers
-			a.add("a", "1");
-			a.add("b", "2");
-			a.add("c", "3");
+			a.insert("a", "1");
+			a.insert("b", "2");
+			a.insert("c", "3");
 
 			http::headers_list b(a);
 
@@ -36,9 +36,9 @@ namespace oonet
 		{	http::headers_list a;
 
 			// Populate headers
-			a.add("a", "1");
-			a.add("b", "2");
-			a.add("c", "3");
+			a.insert("a", "1");
+			a.insert("b", "2");
+			a.insert("c", "3");
 
 			http::headers_list b;
 			b = a;
@@ -53,7 +53,7 @@ namespace oonet
 		{	http::headers_list a;
 
 			// Add empty header
-			a.add("", "1");
+			a.insert("", "1");
 
 			return false;
 		}
@@ -62,14 +62,14 @@ namespace oonet
 		{	http::headers_list a;
 
 			// Add some headers
-			a.add("a", "1");
-			a.add("b", "2");
-			a.add("c", "3");
+			a.insert("a", "1");
+			a.insert("b", "2");
+			a.insert("c", "3");
 
 			if (a.size() != 3)
 
 			// Redefine a headers
-			a.add("a", "123");
+			a.insert("a", "123");
 
 			if (a.size() != 3)
 				return false;
@@ -82,7 +82,7 @@ namespace oonet
 
 			// Add some headers
 			for(long i = 0;i < 10000;i++)
-				a.add("a", "1");
+				a.insert("a", "1");
 
 			if (a.size() != 10000)
 				return false;
@@ -94,9 +94,9 @@ namespace oonet
 		{	http::headers_list a;
 
 			// Set some headers
-			a.add("a", "1");
-			a.add("b", "2");
-			a.add("c", "3");
+			a.insert("a", "1");
+			a.insert("b", "2");
+			a.insert("c", "3");
 
 			if (a.size() != 3)
 				return false;
@@ -132,7 +132,7 @@ namespace oonet
 			char cTmp[1024];
 			for(long int i = 0; i < 100000;i++)
 			{	sprintf(cTmp, "Longgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg   header name - %ld", i);
-				a.add(cTmp, "empty asdfad a");
+				a.insert(cTmp, "empty asdfad a");
 			}
 
 			reset_timer();
@@ -148,17 +148,17 @@ namespace oonet
 		{	http::headers_list a;
 			binary_data rendered, shouldbe;
 
-			a.add("a", "1");
-			a.add("b", "2");
-			a.add("b", "3");
+			a.insert("a", "1");
+			a.insert("b", "2");
+			a.insert("b", "3");
 			rendered = a.render();
 
 			if (rendered != cmem_ref("a: 1\r\nb: 2\r\nb: 3"))
 				return false;
 
-			a.add("a", "1");
-			a.add("b", "2");
-			a.add("b", "3");
+			a.insert("a", "1");
+			a.insert("b", "2");
+			a.insert("b", "3");
 			rendered = a.render(http::const_lf);
 
 			//printf("-%s-", rendered.to_string().c_str());
@@ -178,8 +178,8 @@ namespace oonet
 		{	http::headers_list a;
 			binary_data rendered;
 
-			a.add("a", "1");
-			a.add("b", "3");
+			a.insert("a", "1");
+			a.insert("b", "3");
 
 			for(long i = 0;i < 100000;i++)
 				rendered = a.render(http::const_lf);
@@ -196,7 +196,7 @@ namespace oonet
 			char cTmp[100];
 			for(int i = 0; i < 100;i++)
 			{	sprintf(cTmp, "header name - %d", i);
-				a.add(cTmp, "empty asdfad a");
+				a.insert(cTmp, "empty asdfad a");
 			}
 
 			reset_timer();

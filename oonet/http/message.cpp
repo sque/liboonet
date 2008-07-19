@@ -36,7 +36,7 @@ namespace oonet
 				char cstr_tmp[30];
 				_snprintf(cstr_tmp, 30, "%d", m_body.size());
 				m_headers.erase_all_by_name(to_string(const_content_length));
-				m_headers.add(to_string(const_content_length), cstr_tmp);
+				m_headers.insert(to_string(const_content_length), cstr_tmp);
 			}
 			else
 				m_headers.erase(m_headers.find(to_string(const_content_length)));

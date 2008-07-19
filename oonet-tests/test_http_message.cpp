@@ -23,7 +23,7 @@ namespace oonet
 			string header_value;
 
 			a.body() = cmem_ref("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.title() = cmem_ref("GET / HTTP/1.1");
 
 			if (a.body()  != cmem_ref("koukouroukou"))
@@ -52,7 +52,7 @@ namespace oonet
 			string header_value;
 
 			a.body() = cmem_ref("koukouroukou");
-			a.headers().add("a", "123");
+			a.headers().insert("a", "123");
 			a.title() = cmem_ref("GET / HTTP/1.1");
 
 			if (a.body()  != cmem_ref("koukouroukou"))

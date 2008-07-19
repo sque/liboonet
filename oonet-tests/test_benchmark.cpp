@@ -133,7 +133,7 @@ namespace oonet
 			binary_data test_d(1000, 'a');
 			http::request tmp_req;
 			tmp_req.body() = test_d;
-			tmp_req.headers().add("Host", "www.google.com");
+			tmp_req.headers().insert("Host", "www.google.com");
 			tmp_req.request_method() = http::request::REQUEST_POST;
 			test_d = tmp_req.render();
 			binary_data blabla;
