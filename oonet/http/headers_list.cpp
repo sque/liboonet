@@ -123,20 +123,20 @@ namespace oonet
 		}
 
 		// Parse headers
-		size_t headers_list::parse(const binary_data & dt_in)
+		size_t headers_list::parse(const binary_data & _data)
 		{	binary_data dt_remain;
 			string field_name;
 			size_t start_dst = 0;		// Current distance from the start of block
-			size_t end_line_pos;		// Position at end of line
-			size_t sep_pos;				// Value/Name separator
+			size_t off_endline;		// Position at end of line
+			size_t off_colon;			// Value/Name separator
             size_t newline_size;        // New line size
 
 			// In case of empty we return not found
-			if (dt_in.empty())
+			if (_data.empty())
 				return binary_data::npos;
 
 			// Initialize data
-			dt_remain = dt_in;
+			dt_remain = _data;
 
 			// Delete old values
 			fields_set.clear();
@@ -151,22 +151,23 @@ namespace oonet
 					return start_dst + 2;
 
 				// find colon
-				if ((sep_pos = dt_remain.find(constants::colon_char)) == binary_data::npos)
-					if (algorithms::find_new_line(dt_remain, newline_size) != binary_data::npos)
-						OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated http::Headers!");
-					else
-						return binary_data::npos;	// Not found
+				if ((off_colon = dt_remain.find(constants::colon_char)) == binary_data::npos)
+					if (algorithms::find_new_line(dt_remain, newline_size) == binary_data::npos)
+                        return binary_data::npos;
+                    else
+                        OONET_THROW_EXCEPTION(ExceptionWrongFormat, "Wrong formated http::Headers!");
 
 				// find terminating new line
-				if ((end_line_pos = algorithms::find_new_line(dt_remain, newline_size, sep_pos)) == binary_data::npos)
+				if ((off_endline = algorithms::find_new_line(dt_remain, newline_size, off_colon)) == binary_data::npos)
 					return binary_data::npos;	// Incomplete data
 
 				// Grab field
-				field_name = to_string(dt_remain.get_until(sep_pos));
-				fields_set.push_back(field_type(field_name, algorithms::trim_left_copy(to_string(dt_remain.sub_data(sep_pos + 1, end_line_pos - sep_pos - 1)))));
+				field_name = std::string((char *)dt_remain.c_array(), off_colon);
+				fields_set.push_back(field_type(field_name, algorithms::trim_left_copy(
+                    std::string((char *)(dt_remain.c_array() + off_colon + 1), off_endline - off_colon - 1))));
 
-				start_dst += end_line_pos + newline_size;
-				dt_remain = dt_remain.get_from(end_line_pos + newline_size);
+				start_dst += off_endline + newline_size;
+				dt_remain = dt_remain.get_from(off_endline + newline_size);
 			}
 
 			return binary_data::npos;	//Incomplete data
