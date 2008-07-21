@@ -148,6 +148,9 @@ namespace oonet
     {   x.append(y);  return x;   }
     inline binary_data & operator+=(binary_data &x, const cmem_ref &y)
     {   x.append(y);  return x;   }
+    template<typename T>
+    inline binary_data & operator+=(binary_data &x, const T &y)
+    {   x.append(cmem_ref(y));  return x;   }
     	
 	// Cast operations
 	inline string to_string(const binary_data & x)

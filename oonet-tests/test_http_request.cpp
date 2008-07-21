@@ -111,11 +111,11 @@ namespace oonet
 			a.request_method() = http::request::REQUEST_POST;
 			a.uri() = http::url("/index.html");
 
-			out = to_string(a.render(http::const_lf));
+			out = to_string(a.render(http::constants::lf));
 			if (out != shouldbeLF)
 				return false;
 
-			out = to_string(a.render(http::const_crlf));
+			out = to_string(a.render(http::constants::crlf));
 			if (out != shouldbeCRLF)
 				return false;
 
@@ -134,7 +134,7 @@ namespace oonet
 
 			reset_timer();
 			for(long i = 0;i < 10000;i++)
-				out = a.render(http::const_lf);
+				out = a.render(http::constants::lf);
 			if (out != shouldbeLF)
 				return false;
 

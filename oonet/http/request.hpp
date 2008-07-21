@@ -53,13 +53,17 @@ namespace oonet
 		public:
 
 			//! Constructor
-			request(void);
+			inline request()
+                :m_req_method(REQUEST_GET),
+                m_uri("/"),
+                m_http_version(constants::http_ver1_1.as_binary_data)
+            {}
 
 			//! Copy constructor
 			request(const request & r);
 
 			//! Destructor
-			virtual ~request(void);
+			inline virtual ~request(){}
 
 			//! Copy Operator
 			request & operator=(const request & r);
@@ -70,7 +74,7 @@ namespace oonet
 				the message, it will render the title from variables: request::http_type, request::url and request::http_version.
 			@see http::Packet::render() for further explanation.
 			*/
-			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
+			virtual binary_data render(const constants::static_constant & nl_delimiter = constants::crlf);
 
 			//! Parse an HTTP request message
 			/**

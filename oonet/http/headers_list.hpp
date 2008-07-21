@@ -15,14 +15,6 @@ namespace oonet
 		//! Exception raised when the parsed item is not in proper format.
 		OONET_DECLARE_EXCEPTION(ExceptionWrongFormat);
 
-		// Constant values
-		const extern binary_data const_crlfcrlf;	//!< Constant CRLF CRLF
-		const extern binary_data const_crlf;		//!< Constant CRLF
-		const extern binary_data const_lflf;		//!< Constant LF LF
-		const extern binary_data const_lf;			//!< Constant LF
-		const extern binary_data const_space;		//!< Space constant
-		const extern binary_data const_colon;		//!< Colon character constant
-
 		//! Class for managing HTTP headers.
 		/**
 			It can parse a sting of headers and create an std::map<string, string>
@@ -114,7 +106,7 @@ namespace oonet
 			@param nl_delimiter The new line sequence to use for indicating new line
 			@remarks The output string will not have a leading or trailing new line.
 			*/
-			binary_data render(const binary_data & nl_delimiter = const_crlf);
+			binary_data render(const constants::static_constant & nl_delimiter = constants::crlf);
 
 			//! Parse headers from HTTP format
 			/**
@@ -127,7 +119,7 @@ namespace oonet
 			@throw ExceptionWrongFormat If the supplied string is not a valid HTTP
 				formatted headers.
 			*/
-			size_t parse(const binary_data & dt_in);
+			size_t parse(const binary_data & _data);
 		}; // !Headers class
 	};	// !http namespace
 };	// !oonet namespace

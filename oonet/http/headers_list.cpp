@@ -9,17 +9,6 @@ namespace oonet
 {
 	namespace http
 	{
-		// Static constants
-		const string LF = "\n";
-		const string CRLF = "\r\n";
-
-		const binary_data const_lf = cmem_ref("\n");
-		const binary_data const_crlf = cmem_ref("\r\n");
-		const binary_data const_lflf = const_lf + const_lf;
-		const binary_data const_crlfcrlf = const_crlf + const_crlf;
-		const binary_data const_space = cmem_ref(" ");
-		const binary_data const_colon = cmem_ref(":");
-
 		bool headers_list::find_first_integer(const string & _field_name, long & _field_value_int) const
 		{	string _field_value;
 
@@ -32,8 +21,8 @@ namespace oonet
 		}
 
 		// Render headers in HTTP Format
-		binary_data headers_list::render(const binary_data & new_line)
-		{	const_iterator it;;
+		binary_data headers_list::render(const constants::static_constant & nl_delimiter)
+		{	const_iterator it;
 			binary_data _formated_field;
 			bool is_first = true;
 
@@ -41,7 +30,7 @@ namespace oonet
 			for(it = fields_set.begin();it != fields_set.end(); it++)
 			{
 				if (!is_first)
-					_formated_field += to_string(new_line);
+					_formated_field += nl_delimiter;
 				else
 					is_first = false;
 

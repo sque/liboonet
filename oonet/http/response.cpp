@@ -8,17 +8,6 @@ namespace oonet
 {
 	namespace http
 	{
-		response::response(void):
-			message(),
-			m_status_code(200),
-			m_reason_phrase(cmem_ref("OK"))
-		{
-		}
-
-		response::~response(void)
-		{
-		}
-
 		// Copy constructor
 		response::response(const response &r):
 			message(r),
@@ -36,12 +25,12 @@ namespace oonet
 		}
 
 		// Render a message from data
-		binary_data response::render(const binary_data & nl_delimiter)
+		binary_data response::render(const constants::static_constant & nl_delimiter)
 		{	char _s_title[1024];
 
 			// Prepare title
 			_snprintf(_s_title, 1024, "%s %03d %s",
-				to_string(const_http_ver1_1).c_str(),
+				constants::http_ver1_1.as_string.c_str(),
 				m_status_code,
 				to_string(m_reason_phrase).c_str());
 
@@ -62,17 +51,17 @@ namespace oonet
 				return false;
 
 			// Get version of HTTP
-			if ((httpversionend_pos = m_title.find(const_space)) == binary_data::npos)
+			if ((httpversionend_pos = m_title.find(constants::space_char)) == binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"Wrong formated header!");
 			_httpversion = m_title.sub_data(0, httpversionend_pos);
-			if ((_httpversion != const_http_ver1_0) && (_httpversion != const_http_ver1_1))
+			if ((_httpversion != constants::http_ver1_0.as_binary_data) && (_httpversion != constants::http_ver1_1.as_binary_data))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"Unknown version of HTTP message!");
 
 			// Get status code
 			httpversionend_pos++;
-			status_code_end_pos = m_title.find(const_space, httpversionend_pos);
+			status_code_end_pos = m_title.find(constants::space_char, httpversionend_pos);
 			if (((bt_status_code = m_title.sub_data(httpversionend_pos, status_code_end_pos - httpversionend_pos)) == binary_data::nothing)
 				|| (bt_status_code.size() != 3))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,

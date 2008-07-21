@@ -26,22 +26,21 @@ namespace oonet
 			binary_data		m_body;		//!< The Body of the document
 			bool			b_has_body;	//!< A flag if message includes body
 
-			const static binary_data const_http_ver1_1;
-			const static binary_data const_http_ver1_0;
-			const static binary_data const_content_length;
 		public:
 
 			//! Default Constructor
-			message(void);
+			inline message()
+                :b_has_body(true){}
 
 			//! Copy constructor. Creates an object based on another instance.
 			/**
 				@param r The source object to copy data.
 			*/
-			message(const message &r);
+			inline message(const message &r)
+            {   *this = r;  }
 
 			//! Destructor
-			virtual ~message(void);
+			inline virtual ~message(){}
 
 			//! Copy operator
 			/**
@@ -56,7 +55,7 @@ namespace oonet
 			@param nl_str The string to use for new lines.
 			@return The rendered message, ready for transmition
 			*/
-			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
+			virtual binary_data render(const constants::static_constant & nl_delimiter = constants::crlf);
 
 			//! Parse HTTP traffic and extract the leading HTTP message
 			/**

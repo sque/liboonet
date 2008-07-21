@@ -118,7 +118,7 @@ namespace oonet
 				return false;
 
 			/// Render with LF
-			out = a.render(cmem_ref("\n"));
+			out = a.render(http::constants::lf);
 			if (out != shouldBeLF)
 				return false;
 

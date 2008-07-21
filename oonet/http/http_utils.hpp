@@ -46,9 +46,7 @@ namespace oonet
             const char colon_char = ':';
         }   // ! constants
         
-        // Data types
-        typedef constants::static_constant newline_type;
-        
+   
     }   // ! http
     
     namespace algorithms

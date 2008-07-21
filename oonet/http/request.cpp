@@ -17,18 +17,6 @@ namespace oonet
 		const binary_data request::const_trace = cmem_ref("TRACE");
 		const binary_data request::const_connect = cmem_ref("CONNECT");
 
-		request::request(void)
-		{
-			// Default options
-			m_req_method = REQUEST_GET;
-			m_uri = url("/");
-			m_http_version = const_http_ver1_1;
-		}
-
-		request::~request(void)
-		{
-		}
-
 		// Copy constructor
 		request::request(const request & r):
 			message(r)
@@ -55,60 +43,60 @@ namespace oonet
 		}
 
 		// Render message
-		binary_data request::render(const binary_data & nl_delimiter)
+		binary_data request::render(const constants::static_constant & nl_delimiter)
 		{
 			// Make up title
 			switch(m_req_method)
 			{
 			case REQUEST_GET:			// GET
 				m_title = const_get;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = false;
 				break;
 			case REQUEST_POST:			// POST
 				m_title = const_post;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_OPTIONS:		// OPTIONS
 				m_title = const_options;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_HEAD:			// HEAD
 				m_title = const_head;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_PUT:			// PUT
 				m_title = const_put;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_TRACE:			// TRACE
 				m_title = const_trace;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_DELETE:		// DELETE
 				m_title = const_delete;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_CONNECT:		// CONNECT
 				m_title = const_connect;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			case REQUEST_CUSTOM:		// CUSTOM (extended)
 				m_title = m_custom_method;
-				m_title += const_space;
+				m_title += constants::space_char;
 				b_has_body = true;
 				break;
 			}
 
 			m_title += cmem_ref(m_uri.full());
-			m_title += const_space;
+			m_title += constants::space_char;
 			m_title += m_http_version;
 
 			// Render the message
@@ -125,7 +113,7 @@ namespace oonet
 				return false;
 
 			// Get Command
-			if ((commandend_pos = m_title.find(const_space))== binary_data::npos)
+			if ((commandend_pos = m_title.find(constants::space_char))== binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
 			_command_string = m_title.sub_data(0, commandend_pos);
@@ -156,7 +144,7 @@ namespace oonet
 
 			// Get URL
 			commandend_pos ++;	// Start one position lower
-			if ((urlend_pos =  m_title.find(const_space, commandend_pos)) == binary_data::npos)
+			if ((urlend_pos =  m_title.find(constants::space_char, commandend_pos)) == binary_data::npos)
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
 			m_uri = url(to_string(title().sub_data(commandend_pos, urlend_pos - commandend_pos)));
@@ -167,7 +155,7 @@ namespace oonet
 			// Get version
 			urlend_pos ++;
 			m_http_version = m_title.get_from(urlend_pos);
-			if ((m_http_version != const_http_ver1_1) && (m_http_version != const_http_ver1_0))
+			if ((m_http_version != constants::http_ver1_1.as_binary_data) && (m_http_version != constants::http_ver1_0.as_binary_data))
 				OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 					"This is not an http request message");
 			return true;

@@ -9,25 +9,6 @@ namespace oonet
 {
 	namespace http
 	{
-		const binary_data message::const_http_ver1_1 = cmem_ref("HTTP/1.1");
-		const binary_data message::const_http_ver1_0 = cmem_ref("HTTP/1.0");
-		const binary_data message::const_content_length = cmem_ref("Content-Length");
-
-		message::message(void)
-			:b_has_body(true)
-		{
-		}
-
-		message::~message(void)
-		{
-		}
-
-		// Copy constructor
-		message::message(const message &r)
-		{
-			*this = r;
-		}
-
 		// Update headers
 		void message::_update_headers()
 		{
@@ -35,11 +16,11 @@ namespace oonet
 			{
 				char cstr_tmp[30];
 				_snprintf(cstr_tmp, 30, "%d", m_body.size());
-				m_headers.erase_all_by_name(to_string(const_content_length));
-				m_headers.insert(to_string(const_content_length), cstr_tmp);
+				m_headers.erase_all_by_name(constants::content_length.as_string);
+				m_headers.insert(constants::content_length.as_string, cstr_tmp);
 			}
 			else
-				m_headers.erase(m_headers.find(to_string(const_content_length)));
+				m_headers.erase(m_headers.find(constants::content_length.as_string));
 		}
 
 		// Copy operator
@@ -52,7 +33,7 @@ namespace oonet
 		}
 
 		// Render a message from data
-		binary_data message::render(const binary_data & nl_delimiter)
+		binary_data message::render(const constants::static_constant & nl_delimiter)
 		{	binary_data tmp_packet;
 
 			// Update Headers
@@ -95,7 +76,7 @@ namespace oonet
 			body_start_pos += title_end_pos + newline_size;
 
 			// Get content-length header
-			if (m_headers.find_first_integer(to_string(const_content_length), body_size))
+			if (m_headers.find_first_integer(constants::content_length.as_string, body_size))
 			{	if (body_size  < 0)
 					OONET_THROW_EXCEPTION(ExceptionWrongFormat,
 						"HTTP Packet says that contains body with size less than 0!?!"

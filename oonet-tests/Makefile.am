@@ -46,8 +46,6 @@ oonet_tests_SOURCES = main.cpp  \
 	test_socket_address_inet.hpp  \
 	test_socket.cpp  \
 	test_socket.hpp  \
-	TestStringConverter.cpp  \
-	TestStringConverter.h  \
 	test_thread.cpp  \
 	test_thread.hpp  \
 	test_url.cpp  \

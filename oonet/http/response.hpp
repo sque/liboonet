@@ -26,7 +26,11 @@ namespace oonet
 			binary_data m_reason_phrase;
 		public:
 			//! Default constructor
-			response(void);
+			inline response()
+                :message(),
+                m_status_code(200),
+                m_reason_phrase(cmem_ref("OK"))
+            {}
 
 			//! Copy constructor
 			response(const response &r);
@@ -35,7 +39,7 @@ namespace oonet
 			response & operator=(const response & r);
 
 			//! Default destructor
-			virtual ~response(void);
+			inline virtual ~response(){}
 
 			//! Render message with specific HTTP response parameters
 			/**
@@ -43,7 +47,7 @@ namespace oonet
 				the message, it will render the title from variables: response::ErrorCode and response::ErrorMsg.
 			@see http::Packet::render() for further explanation.
 			*/
-			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
+			virtual binary_data render(const constants::static_constant & nl_delimiter = constants::crlf);
 
 			//! Parse an HTTP response message
 			/**

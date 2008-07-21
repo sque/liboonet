@@ -159,14 +159,14 @@ namespace oonet
 			a.insert("a", "1");
 			a.insert("b", "2");
 			a.insert("b", "3");
-			rendered = a.render(http::const_lf);
+			rendered = a.render(http::constants::lf);
 
 			//printf("-%s-", rendered.to_string().c_str());
 			if (rendered != cmem_ref("a: 1\nb: 2\nb: 3\na: 1\nb: 2\nb: 3"))
 				return false;
 
 			a = http::headers_list();
-			rendered = a.render(http::const_lf);
+			rendered = a.render(http::constants::lf);
 
 			if (rendered != binary_data::nothing)
 				return false;
@@ -182,7 +182,7 @@ namespace oonet
 			a.insert("b", "3");
 
 			for(long i = 0;i < 100000;i++)
-				rendered = a.render(http::const_lf);
+				rendered = a.render(http::constants::lf);
 
 			if (rendered != cmem_ref("a: 1\nb: 3"))
 				return false;
@@ -201,7 +201,7 @@ namespace oonet
 
 			reset_timer();
 			for(long i = 0;i < 100000;i++)
-				rendered = a.render(http::const_lf);
+				rendered = a.render(http::constants::lf);
 
 			return true;
 		}
@@ -319,7 +319,7 @@ namespace oonet
 			// As per rfc 2616 http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
 			// Headers may be zero!
 			a.clear();
-			if (a.parse(http::const_crlf) != 2)
+			if (a.parse(http::constants::crlf.as_binary_data) != 2)
 				return false;
 			if (a.size() != 0)
 				return false;
