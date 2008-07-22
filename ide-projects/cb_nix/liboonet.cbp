@@ -40,6 +40,7 @@
 		<Compiler>
 			<Add directory="../../liboonet" />
 		</Compiler>
+		<Unit filename="../../oonet/algorithms.hpp" />
 		<Unit filename="../../oonet/base64.cpp" />
 		<Unit filename="../../oonet/base64.hpp" />
 		<Unit filename="../../oonet/binary_data.cpp" />
@@ -56,6 +57,9 @@
 		<Unit filename="../../oonet/http/client.hpp" />
 		<Unit filename="../../oonet/http/headers_list.cpp" />
 		<Unit filename="../../oonet/http/headers_list.hpp" />
+		<Unit filename="../../oonet/http/http.hpp" />
+		<Unit filename="../../oonet/http/http_utils.cpp" />
+		<Unit filename="../../oonet/http/http_utils.hpp" />
 		<Unit filename="../../oonet/http/message.cpp" />
 		<Unit filename="../../oonet/http/message.hpp" />
 		<Unit filename="../../oonet/http/request.cpp" />
@@ -68,6 +72,7 @@
 		<Unit filename="../../oonet/http/server_clienthandler.hpp" />
 		<Unit filename="../../oonet/http/url.cpp" />
 		<Unit filename="../../oonet/http/url.hpp" />
+		<Unit filename="../../oonet/mem_ref.hpp" />
 		<Unit filename="../../oonet/mutex.hpp" />
 		<Unit filename="../../oonet/mutex_impl_posix.cpp" />
 		<Unit filename="../../oonet/netserver.hpp" />
@@ -91,8 +96,6 @@
 		<Unit filename="../../oonet/socket_address_inet.cpp" />
 		<Unit filename="../../oonet/socket_address_inet.hpp" />
 		<Unit filename="../../oonet/socket_impl_posix.cpp" />
-		<Unit filename="../../oonet/string_converter.cpp" />
-		<Unit filename="../../oonet/string_converter.h" />
 		<Unit filename="../../oonet/test.cpp" />
 		<Unit filename="../../oonet/test.hpp" />
 		<Unit filename="../../oonet/thread.cpp" />

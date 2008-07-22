@@ -166,3 +166,4 @@ namespace oonet
 };
 
 #endif // !OONET_BINARY_DATA_HPP_INCLUDED
+

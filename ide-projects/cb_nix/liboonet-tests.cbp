@@ -12,7 +12,7 @@
 				<Option external_deps="liboonet_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-nospeed" />
+				<Option parameters="http::client" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -47,8 +47,6 @@
 			<Add library="pthread" />
 			<Add directory="." />
 		</Linker>
-		<Unit filename="../../oonet-tests/TestStringConverter.cpp" />
-		<Unit filename="../../oonet-tests/TestStringConverter.h" />
 		<Unit filename="../../oonet-tests/main.cpp" />
 		<Unit filename="../../oonet-tests/oonet-tests.h" />
 		<Unit filename="../../oonet-tests/test_benchmark.cpp" />

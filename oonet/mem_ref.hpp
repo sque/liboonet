@@ -336,3 +336,4 @@ namespace oonet
 }; // oonet namespace
 
 #endif // !OONET_MEM_REF_HPP_INCLUDED
+

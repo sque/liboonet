@@ -55,8 +55,8 @@ namespace oonet
 			//! Constructor
 			inline request()
                 :m_req_method(REQUEST_GET),
-                m_uri("/"),
-                m_http_version(constants::http_ver1_1.as_binary_data)
+                m_http_version(constants::http_ver1_1.as_binary_data),
+                m_uri("/")
             {}
 
 			//! Copy constructor
