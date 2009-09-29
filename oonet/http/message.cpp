@@ -77,15 +77,35 @@ namespace oonet
 		// Parse data and save to message
 		bool message::parse(const binary_data & dt_in, binary_data * dt_remain)
 		{	binary_data dt_headers_and_below, nl_delimiter;
+			binary_data dt_clear = dt_in;	// Clear packet data without leading new lines
+			
 			long body_size;
-			size_t title_end_pos;	// Position where title ends
-			size_t body_start_pos;	// Position where body starts
+			size_t title_end_pos;			// Position where title ends
+			size_t body_start_pos;			// Position where body starts
+			size_t leading_garbagenl = 0;	// Leading garbage new lines
+
+			// Clean up leading new lines that should be ignored
+			while(1)
+			{	if (dt_clear.sub_data(0,2) == const_crlf)
+				{
+					leading_garbagenl += const_crlf.size();
+					dt_clear = dt_clear.get_from(const_crlf.size());
+					continue;
+				}
+				else if (dt_clear.sub_data(0, 1) == const_lf)
+				{
+					leading_garbagenl += const_lf.size();
+					dt_clear = dt_clear.get_from(const_lf.size());
+					continue;
+				}
+				break;
+			}
 
 			// Get title
-			if ((title_end_pos = _smart_find_new_line(dt_in, nl_delimiter)) == binary_data::npos)
+			if ((title_end_pos = _smart_find_new_line(dt_clear, nl_delimiter)) == binary_data::npos)
 				return false;	// Not even title is here
-			m_title =  dt_in.get_until(title_end_pos);
-			dt_headers_and_below = dt_in.get_from(title_end_pos + nl_delimiter.size());
+			m_title =  dt_clear.get_until(title_end_pos);
+			dt_headers_and_below = dt_clear.get_from(title_end_pos + nl_delimiter.size());
 
 			// Get headers
 			if ((body_start_pos = m_headers.parse(dt_headers_and_below)) == binary_data::npos)
@@ -100,7 +120,7 @@ namespace oonet
 					);
 
 				// Validate if we have body
-				if ((dt_in.size() - body_start_pos) < (size_t)body_size)
+				if ((dt_clear.size() - body_start_pos) < (size_t)body_size)
 					return false;	// Incomplete data stream
 				b_has_body = true;
 			}
@@ -113,11 +133,11 @@ namespace oonet
 			}
 
 			// Get body
-			m_body = dt_in.sub_data(body_start_pos, body_size);
+			m_body = dt_clear.sub_data(body_start_pos, body_size);
 
 			// Calculate remaining data
 			if (dt_remain)
-				*dt_remain = dt_in.get_from(body_start_pos + body_size);
+				*dt_remain = dt_in.get_from(leading_garbagenl + body_start_pos + body_size);
 
 			return true;
 		}

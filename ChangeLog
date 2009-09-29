@@ -1,2 +1,17 @@
-* 0.1
+* 0.2.2
+	* Fix: #407243 New lines are not properly parsed by http module.
+	* Fix: #438583 Data corruption on binary_data::operator+=
+* 0.2.1
+	* Fix: StringConverter working with zero size str.
+* 0.2.0
+	* New: Transparent CoW (copy on write) support at binary_data class.
+	* New: oonet::mt::scoped_lock.
+	* Changed: oonet::multireference has been removed and we now use boost::shared_ptr
+	* Dropped: InetClient, InetPeer, InetServer
+	* New: netstream for synchronous network streams
+	* New: netsteram_threaded for automatic data gathering
+	* New: netserver<> for implementing "listen and dispatch" server
+	* Improved: http parse/render performance
+	* Improved: http rfc compatibility.
+* 0.1.0
 	Initial version

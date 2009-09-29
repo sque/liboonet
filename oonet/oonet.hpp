@@ -8,8 +8,8 @@
 					It works with almost no external dependency on Windows, GNU/Linux and OSX
 	Date:			28 / 8 /2003
 	Website:		http://launchpad.net/liboonet
-	Version:		0.1
-	Revision:		10 Mar 2008
+	Version:		0.2.2
+	Revision:		31 Jul 2008
 
 	" TERMS OF USE "
 	READ THIS BEFORE YOU USE THIS LIBRARY
@@ -62,8 +62,8 @@
 // Library version
 #define OONET_VERSION_MAJOR 0
 #define OONET_VERSION_MINOR 2
-#define OONET_VERSION_MICRO 0
-#define OONET_VERSION_PHRASE "beta-2"
+#define OONET_VERSION_MICRO 2
+#define OONET_VERSION_PHRASE ""
 
 /************************************/
 // Examine OS
@@ -174,20 +174,6 @@
         #define _tmain main
     #endif
 #endif  // !_T
-
-
-// Externsive debug info on console output
-/*#if defined(OONET_DEBUG_LEVEL_1)
-    #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL2: %s"), x)
-    #define OONET_DEBUG_L2(x)
-#elif defined(OONET_DEBUG_LEVEL_2)
-    #define OONET_DEBUG_L1(x) _tprintf(_T(" DBGL1: %s"), x)
-    #define OONET_DEBUG_L2(x) _tprintf(_T(" DBGL2: %s"), x)
-#else
-    #define OONET_DEBUG_L1(x)
-    #define OONET_DEBUG_L2(x)
-#endif
-*/
 
 /*******************************
  * Configuration

@@ -22,6 +22,8 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestRenderSpeed, "render() speed 10K");
 			OONET_DECLARESUBTEST(TestParse, "parse() quality");
 			OONET_DECLARESUBTESTEXC(TestParseWrong1, "parse() wrong length", "ExceptionWrongFormat");
+			OONET_DECLARESUBTEST(TestParseEmptyCRLF, "parse() with lead crlf");
+			OONET_DECLARESUBTEST(TestParseEmptyLF, "parse() with lead lf");
 			OONET_DECLARESUBTEST(TestParseIncomplete1, "parse() incomplete");
 			OONET_DECLARESUBTEST(TestParseIncomplete2, "parse() incomplete");
 			OONET_DECLARESUBTEST(TestParseSpeedLF, "parse()\'\\n\' speed 10k");
@@ -42,6 +44,8 @@ namespace oonet
 				OONET_REGISTERSUBTEST(TestParseSpeedLF);
 				OONET_REGISTERSUBTEST(TestParseSpeedCRLF);
 				OONET_REGISTERSUBTEST(TestParseWrong1);
+				OONET_REGISTERSUBTEST(TestParseEmptyCRLF);
+				OONET_REGISTERSUBTEST(TestParseEmptyLF);
 				OONET_REGISTERSUBTEST(TestParseIncomplete1);
 				OONET_REGISTERSUBTEST(TestParseIncomplete2);
 

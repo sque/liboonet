@@ -228,7 +228,7 @@ namespace oonet
 		_assure_local_copy();
 
 		// move data at the begining
-		memmove(p_mem_block->p_mem + off_data, p_mem_block->p_mem, s_data);
+		memmove(p_mem_block->p_mem, p_mem_block->p_mem + off_data, s_data);
 		off_data = 0;
 
 		// Scale memory to fit new data

@@ -8,7 +8,9 @@
 namespace oonet
 {
 	wstring StringConverter::_convert_to_wide(const string &r)
-	{
+	{	// Skip empty strings
+		if (r.size() == 0)
+			return wstring();
 #if (OONET_OS == OONET_OS_WIN32)
 		// Calculate size of wchar needed
 		size_t sAr = r.size() * sizeof(wchar_t);
@@ -49,7 +51,11 @@ namespace oonet
 #endif
 
 	}
-	string StringConverter::_convert_to_mbr(const wstring &r) 	{
+	string StringConverter::_convert_to_mbr(const wstring &r)
+	{
+		// Skip empty strings
+		if (r.size() == 0)
+			return string();
 #if (OONET_OS == OONET_OS_WIN32)
 		// Calculate size of char needed
 		size_t sAr = r.size() + 2;

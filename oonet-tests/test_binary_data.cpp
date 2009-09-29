@@ -513,6 +513,27 @@ namespace oonet
 			return true;
 		}
 
+		bool test_binary_data::TestSelfPlusOperator::operator()()
+		{	binary_data b1("lolalilolalo");
+			binary_data b2("bw2e3r4t5y6");
+			binary_data b3("pl,okm");
+			binary_data sum("lolalilolalobw2e3r4t5y6");
+			binary_data sum2("lilolalobw2e3r4t5y6");
+			binary_data sum3("lilolalobw2e3r4t5y6pl,okm");
+			b1 += b2;
+			if (b1 != sum)
+				return false;
+
+			b1 = b1.get_from(4);
+			if (b1 != sum2)
+				return false;
+			b1 += b3;
+			if (b1 != sum3)
+				return false;
+
+			return true;
+		}
+
 		bool test_binary_data::TestLessGeneral::operator()()
 		{	binary_data a("A");
 			binary_data b("B");

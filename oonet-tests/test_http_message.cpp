@@ -275,6 +275,44 @@ namespace oonet
 			return false;
 		}
 
+		bool test_http_message::TestParseEmptyCRLF::operator()()
+		{	http::message a;
+			binary_data PacketCRLF = binary_data("\r\nGET / HTTP/1.1\r\nHost: 123\r\n\r\ntest");
+			binary_data remaining;
+			string header_value;
+
+			bool b_parsed = a.parse(PacketCRLF, &remaining);
+			if (! a.body().empty())
+				return false;
+			if (a.title() != binary_data("GET / HTTP/1.1"))
+				return false;
+			if (!(a.headers().find_first("Host", header_value) && (header_value == "123")))
+				return false;
+			if ((!b_parsed) || (remaining != binary_data("test")))
+				return false;
+
+			return true;
+		}
+
+		bool test_http_message::TestParseEmptyLF::operator()()
+		{	http::message a;
+			binary_data PacketCRLF = binary_data("\nGET / HTTP/1.1\r\nHost: 123\r\n\r\ntest");
+			binary_data remaining;
+			string header_value;
+
+			bool b_parsed = a.parse(PacketCRLF, &remaining);
+			if (! a.body().empty())
+				return false;
+			if (a.title() != binary_data("GET / HTTP/1.1"))
+				return false;
+			if (!(a.headers().find_first("Host", header_value) && (header_value == "123")))
+				return false;
+			if ((!b_parsed) || (remaining != binary_data("test")))
+				return false;
+
+			return true;
+		}
+
 		bool test_http_message::TestParseIncomplete1::operator()()
 		{	http::message a;
 			binary_data PacketNoDoubleNewLine = binary_data("POST / HTTP/1.1\r\nContent: 1\n") ;

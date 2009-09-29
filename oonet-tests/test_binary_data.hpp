@@ -39,6 +39,7 @@ namespace oonet
 			OONET_DECLARESUBTEST(TestRealSlice, "Same with sub_data()");
 			OONET_DECLARESUBTESTEXC(TestElementWrongOffeset, "operator[] wrong offset", "ExceptionNotFound");
 			OONET_DECLARESUBTEST(TestElementGeneral, "operator[] general quality");
+			OONET_DECLARESUBTEST(TestSelfPlusOperator, "operator+= general quality");
 			OONET_DECLARESUBTEST(TestLessGeneral, "operator< general quality");
 			OONET_DECLARESUBTEST(TestLessSpeed, "operator< speed");
 			OONET_DECLARESUBTEST(TestAStringExporter, "Test exporting to AString");
@@ -77,6 +78,7 @@ namespace oonet
 				OONET_REGISTERSUBTEST(TestRealSlice);
 				OONET_REGISTERSUBTEST(TestElementWrongOffeset);
 				OONET_REGISTERSUBTEST(TestElementGeneral);
+				OONET_REGISTERSUBTEST(TestSelfPlusOperator);
 				OONET_REGISTERSUBTEST(TestLessGeneral);
 				OONET_REGISTERSUBTEST(TestLessSpeed);
 				OONET_REGISTERSUBTEST(TestAStringExporter);
