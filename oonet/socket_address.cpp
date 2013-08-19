@@ -3,6 +3,7 @@
 @brief Implementation of socket_address class
 */
 #include "./socket_address.hpp"
+#include <string.h>
 
 namespace oonet
 {

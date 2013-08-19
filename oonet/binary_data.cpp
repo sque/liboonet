@@ -5,6 +5,7 @@
 #include "./binary_data.hpp"
 
 #include <math.h>
+#include <string.h>
 
 namespace oonet
 {

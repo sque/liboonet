@@ -4,6 +4,7 @@
 */
 
 #include "./base64.hpp"
+#include <string.h>
 
 namespace oonet
 {
