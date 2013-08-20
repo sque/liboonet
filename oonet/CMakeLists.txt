@@ -1,5 +1,5 @@
 
-set(OONET_SOURCES oonet.cpp
+set(OONET_SOURCES 
 	base64.cpp
 	binary_data.cpp
 	buffer.cpp
@@ -9,18 +9,19 @@ set(OONET_SOURCES oonet.cpp
 	mutex_impl_posix.cpp
 	netstream.cpp
 	netstream_threaded.cpp
+	oonet.cpp
 	port_inet.cpp
 	semaphore_impl_posix.cpp
 	socket_address.cpp
 	socket_address_inet.cpp
 	socket.cpp
 	socket_impl_posix.cpp
-	string_converter.cpp
 	test.cpp
 	thread.cpp
 	thread_impl_posix.cpp
 	http/client.cpp
 	http/headers_list.cpp
+	http/http_utils.cpp
 	http/message.cpp
 	http/request.cpp
 	http/response.cpp
@@ -28,6 +29,7 @@ set(OONET_SOURCES oonet.cpp
 	http/server.cpp
 	http/url.cpp
 )
+
 
 add_library(oonet ${OONET_SOURCES})
 
