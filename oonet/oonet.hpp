@@ -8,8 +8,8 @@
 					It works with almost no external dependency on Windows, GNU/Linux and OSX
 	Date:			28 / 8 /2003
 	Website:		http://launchpad.net/liboonet
-	Version:		0.2.2
-	Revision:		31 Jul 2008
+	Version:		1.0.0
+	Revision:		30 Aug 2013
 
 	" TERMS OF USE "
 	READ THIS BEFORE YOU USE THIS LIBRARY
@@ -60,9 +60,9 @@
 
 /************************************/
 // Library version
-#define OONET_VERSION_MAJOR 0
-#define OONET_VERSION_MINOR 2
-#define OONET_VERSION_MICRO 2
+#define OONET_VERSION_MAJOR 1
+#define OONET_VERSION_MINOR 0
+#define OONET_VERSION_MICRO 0
 #define OONET_VERSION_PHRASE ""
 
 /************************************/
