@@ -11,7 +11,7 @@ namespace oonet
 	{
 		//! A general class for handling HTTP request Packets.
 		/**
-			Comes from http::Packet and will give more resolution
+			Inherits from http::message and will give more resolution
 			on parsing and rendering. Except of 3 major parts, you
 			can now parse the title too. This is done transperantly
 			as render() and parse() are overloaded to implement additional
@@ -67,21 +67,21 @@ namespace oonet
 
 			//! Render message with specific title componments
 			/**
-				This is overloaded from http::Packet::render() and before renderning
+				This is overloaded from http::message::render() and before renderning
 				the message, it will render the title from variables: request::http_type, request::url and request::http_version.
-			@see http::Packet::render() for further explanation.
+			@see http::message::render() for further explanation.
 			*/
 			virtual binary_data render(const binary_data & nl_delimiter = const_crlf);
 
 			//! Parse an HTTP request message
 			/**
-				This is overloaded function from http::Packet::parse() and after
+				This is overloaded function from http::message::parse() and after
 				parsing its major componments it will parse the title and
 				populate the variables request::http_type, request::url and request::http_version.
-				Additionally to the exceptions tha may be thrown from http::Packet::parse()
+				Additionally to the exceptions tha may be thrown from http::message::parse()
 				this overloaded function will throw too:
 			@throw ExceptionWrongFormat if the title of HTTP message is not an HTTP request's title.
-			@see http::Packet::parse() for further explanation.
+			@see http::message::parse() for further explanation.
 			*/
 			virtual bool parse(const binary_data & dt_in, binary_data * dt_remain = NULL);
 

@@ -64,6 +64,8 @@ namespace oonet
 				and internal variables will be populated with its parts.
 				HTTP message must start from the begining of data.
 			@param data The data block to find an HTTP message
+			@param dt_remain If parsing succeded, it will be populated with the
+				remaining data from the parser.
 			@return The size of datablock that the message was found.
 			@throw ExceptionIncomplete If the traffic seems to be valid HTTP traffic
 				but there is no complete message inside, data are missing.
